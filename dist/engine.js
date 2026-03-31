@@ -1223,6 +1223,7 @@ function getProcedure(name) {
 
 // src/systems/glossary.ts
 var glossaryRegistry = [];
+var glossaryVersion = 0;
 async function parseGlossary(fetchTextFileFn) {
   let text;
   try {
@@ -1261,6 +1262,7 @@ function addGlossaryTerm(term, description) {
   } else {
     glossaryRegistry.push({ term, description });
   }
+  glossaryVersion += 1;
 }
 
 // src/core/interpreter.ts
@@ -1934,14 +1936,14 @@ function purchaseItem(key) {
 
 // src/ui/narrative.ts
 var _glossaryCache = [];
-var _glossaryCacheLen = -1;
+var _glossaryCacheVersion = -1;
 function getGlossaryRegexes() {
-  if (glossaryRegistry.length === _glossaryCacheLen) return _glossaryCache;
+  if (glossaryVersion === _glossaryCacheVersion) return _glossaryCache;
   _glossaryCache = glossaryRegistry.map((entry) => ({
     re: new RegExp(`\\b(${entry.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})\\b`, "gi"),
     span: `<span class="lore-term" tabindex="0" data-tooltip="${escapeHtml(entry.description)}">`
   }));
-  _glossaryCacheLen = glossaryRegistry.length;
+  _glossaryCacheVersion = glossaryVersion;
   return _glossaryCache;
 }
 function escapeHtml(val) {
@@ -2206,6 +2208,7 @@ function showInputPrompt(varName, prompt, onSubmit) {
   requestAnimationFrame(() => field.focus({ preventScroll: true }));
 }
 function renderFromLog(log, { skipAnimations = true } = {}) {
+  _narrativeLog = log.slice();
   for (const el of [..._narrativeContent.children]) {
     if (el !== _choiceArea) el.remove();
   }
@@ -2225,8 +2228,9 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? "");
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
         div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
-        const formatted = formatText(entry.text).replace(/\\n/g, "\n").replace(/\n/g, "<br>");
-        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><span class="system-block-text">${formatted}</span>`;
+        const paras = formatText(entry.text).replace(/\\n/g, "\n").split("\n");
+        const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
+        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

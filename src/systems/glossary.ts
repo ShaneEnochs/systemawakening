@@ -11,6 +11,7 @@ export interface GlossaryEntry {
 }
 
 export let glossaryRegistry: GlossaryEntry[] = [];
+export let glossaryVersion = 0;
 
 // ---------------------------------------------------------------------------
 // parseGlossary — reads glossary.txt and populates glossaryRegistry.
@@ -63,6 +64,7 @@ export function addGlossaryTerm(term: string, description: string): void {
   } else {
     glossaryRegistry.push({ term, description });
   }
+  glossaryVersion += 1;
 }
 
 // ---------------------------------------------------------------------------

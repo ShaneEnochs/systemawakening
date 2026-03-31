@@ -16,23 +16,23 @@ import {
   awaitingChoice, setAwaitingChoice,
 } from '../core/state.js';
 import type { ChoiceOption } from '../core/state.js';
-import { glossaryRegistry } from '../systems/glossary.js';
+import { glossaryRegistry, glossaryVersion } from '../systems/glossary.js';
 
 // ---------------------------------------------------------------------------
 // Glossary regex cache — compiled once per unique registry snapshot.
 // Invalidated whenever the glossary length changes (entries are append-only).
 // ---------------------------------------------------------------------------
 interface CompiledGlossaryEntry { re: RegExp; span: string }
-let _glossaryCache:    CompiledGlossaryEntry[] = [];
-let _glossaryCacheLen = -1;
+let _glossaryCache:        CompiledGlossaryEntry[] = [];
+let _glossaryCacheVersion = -1;
 
 function getGlossaryRegexes(): CompiledGlossaryEntry[] {
-  if (glossaryRegistry.length === _glossaryCacheLen) return _glossaryCache;
+  if (glossaryVersion === _glossaryCacheVersion) return _glossaryCache;
   _glossaryCache = glossaryRegistry.map(entry => ({
     re:   new RegExp(`\\b(${entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi'),
     span: `<span class="lore-term" tabindex="0" data-tooltip="${escapeHtml(entry.description)}">`,
   }));
-  _glossaryCacheLen = glossaryRegistry.length;
+  _glossaryCacheVersion = glossaryVersion;
   return _glossaryCache;
 }
 
@@ -432,6 +432,7 @@ export function showInputPrompt(varName: string, prompt: string, onSubmit: (valu
 // re-executing scene code, we replay the visible record of what was shown.
 // ---------------------------------------------------------------------------
 export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true }: { skipAnimations?: boolean } = {}): void {  // eslint-disable-line no-unused-vars
+  _narrativeLog = (log as NarrativeLogEntry[]).slice();
   for (const el of [..._narrativeContent.children]) {
     if (el !== _choiceArea) el.remove();
   }
@@ -454,8 +455,9 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? '');
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
         div.className = `system-block${isEssence ? ' essence-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
-        const formatted = formatText(entry.text).replace(/\\n/g, '\n').replace(/\n/g, '<br>');
-        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><span class="system-block-text">${formatted}</span>`;
+        const paras = formatText(entry.text).replace(/\\n/g, '\n').split('\n');
+        const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
+        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

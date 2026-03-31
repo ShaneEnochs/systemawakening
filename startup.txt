@@ -61,5 +61,4 @@
 *create loop_counter 0
 
 *scene_list
-  tutorial
   prologue

@@ -24,12 +24,31 @@ Regardless, you're here, and you feel...
   #A little disappointed, but still happy to be here.
     Is it what you expected? No. But this is still Hargrove. You've spent the last six years wanting this, and now you're standing right in front of it. Sure, it's a few unremarkable buildings and some very tidy landscaping, but you decide that's fine.
    
-    It has to be, because you're certainly not getting back on that bus.
+    It has to be, because you can't afford the bus ride back home.
+    *goto callie_arrives
 
   #Elated! By the time you leave, you'll be an S-ranker!
     Nothing can bring you down! This has been your dream, and now you've achieved the first part of it. Well, the first part was being accepted, so standing here in front of Hargrove is the second part. See? You're well on your way.
+    *goto callie_arrives
 
   #Irritated. You feel misled about this place.
     This must be why the American academies have so much mystery around them: we don't want the rest of the world to know that this is all there is to them. What doesn't make sense is you know for a fact several generations of incredibly strong hunters have come out of this place.
    
     There has to be something you're not seeing. But what?
+    *goto callie_arrives
+
+*label callie_arrives
+
+"${first_name}!" you hear someone call out.
+
+Callie jogs up to you, three separate duffels swinging wildly on her shoulders. She's wearing a bright red hoodie and a pair of black leggings, and her blonde hair is pulled back into a messy ponytail. 
+
+"Hey, Callie," you say with a smile. "I thought you weren't supposed to get here until tomorrow."
+
+She puts her hands on her hips, taking deep breaths, then bends and places her hands on her knees and the deep breaths turn into desperate gasps. "Uh huh," she manages to get out finally. "Mom and Dad decided me going off to college is the perfect time to go on a cruise, so they dropped me off today instead so they could get to the airport."
+
+"Haven't you been begging them to take you on a cruise for like... years?" you ask.
+
+Callie frowns. "Yes. Yes I have. But it's fine. When I graduate, I'll be able to make enough money to go on a cruise whenever I want, and I'm not taking them. I'll take you though," she says, grinning.
+
+"Deal!""

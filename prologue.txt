@@ -1,0 +1,424 @@
+*title [Prologue] The End of the World
+
+*checkpoint "Prologue — The End of the World"
+
+*label opening
+
+*temp checked_matt false
+
+You don't remember falling asleep, which means your body simply made the decision without consulting you. You suppose that somewhere around hour seventy it convened an internal committee, reached a unanimous verdict, and that was that. The cot beneath you is pre-[System] military surplus, made of nothing but canvas and aluminum tubing, and obviously designed by someone who believed comfort was a form of weakness and meant to demonstrate as much.
+
+You lie still and run a quiet internal check. Your mana is still regenerating from recharging the monster detection system set up outside. Your body is... operational? Sure, we'll go with that. As for your mind, it's present. The grief is exactly where you left it, locked away in a room you've been reinforcing for eight years, and the door is holding strong. Thankfully, through extensive and largely involuntary practice, you've gotten quite skilled at this specific form of maintenance.
+
+You listen to Callie's machine hum to your left, her tools clinking against the magically-infused metal it's made of. You take a deep breath of the stale but safe recycled air.
+
+*page_break Get up.
+
+The gear rack, full of salvaged armor and weapons, was your contribution to the sanctuary's decor — assembled during the first week when you needed something to do other than think about the exact dimensions of how screwed the three of you were. It is, if you're being honest, the finest piece of non-magical construction in the room, which is either a point of pride or a damning commentary on where a lot of your skill points went.
+
+You begin checking the clasps and tensions anyway, running through the routine you've performed every morning for months, because rituals are load-bearing, and you've learned not to dismantle the ones that work. Most of the armor is dulled or broken in a way that no amount of maintenance could ever fully correct, though it's still better than the best pre-[System] armor ever devised, which is not a great look for someone whose final [Class] evolution is called [legendary][Shield of Humanity][/legendary]. You have a skill that lets you mend minor damage, but you're no blacksmith.
+
+The weapons here are in better shape, though.
+
+*choice
+  #Check the consumables.
+    You check the consumables. 
+    
+    Two greater healing potions, three mana potions, one ward scroll, a collection of charged mana grenades that are, at your current level, roughly as tactically relevant as a strongly-worded letter, but you've kept them anyway. Nostalgia, maybe. The final tally is honest, though not particularly comforting. 
+    
+    You've found those two qualities very rarely travel together.
+    *goto gear_done
+  #Check the weapons.
+    You check the weapons. 
+    
+    There's a small chip in one of the blades you've been meaning to address for three days. You find the whetstone and work on it with more focus than the job strictly requires, because you've learned that the mind will think about whatever you point it at, and pointing it at a small imperfection in a blade is considerably better than pointing it at the mile of solid rock above your head or the fact that the world is completely overrun with monsters. The chip is minor, but the distraction is the point. 
+    
+    You are absolutely self-aware enough to know this but do it anyway, which you've helpfully decided counts as a coping strategy rather than a character flaw. There are no therapists left to tell you any different.
+    *goto gear_done
+  #Everything's in order.
+    Well, everything's in order, you suppose. Just three people at the approximate ceiling of [System] enhanced capability, sitting in a magically conjured room at the end of the world, waiting for a time machine to finish charging. All the gear checks out, and there's nothing to fix. The only remaining problems that you could possibly work on are internal, so unfortunately a whetstone won't help there.
+    *goto gear_done
+
+*label gear_done
+
+Matt is awake, of course. He's sitting on the edge of his own cot, elbows on his knees, turning something small between his fingers. A coin, you realize: the old-world kind, predating everything that matters now and worth precisely nothing to anyone alive. You don't recognize the denomination, though.
+
+Matt looks up, catches you watching, and holds the coin up for you to see.
+
+"Found it in my boot," he says. "Weird, right?"
+
+You nod.
+
+*choice
+  #"How much is it worth?"
+    *goto worth
+  #"Too bad we can't take it with us."
+    *goto take_with
+  #Sit beside him.
+    *goto sit_matt
+
+*label worth
+"How much is it worth?" you ask.
+
+"Before?" He turns it over, giving it genuine consideration. "Couple dollars, maybe?" He pauses. "I'm not sure. It looks pretty old. Could probably trade it to a collector or a historian or something, if any of those things still existed, which they don't, so..." 
+
+He pockets it, smiling slightly. "Sentimental value only."
+*set checked_matt true
+*goto matt_moment
+
+*label take_with
+"It's too bad we can't take it with us," you say. "Might have been worth something when we get back."
+
+He's quiet for a moment, then pockets it. 
+
+"Yeah," he says. "Maybe. I don't know about you and Callie, but money wasn't my biggest concern in the early days. At least we know what's coming this time around."
+*set checked_matt true
+*goto matt_moment
+
+*label sit_matt
+You sit down beside him. 
+
+The cots are close enough that you don't have to move much to be next to each other, and Matt doesn't even look at you when you do. He  silently shifts over just enough to make room.
+
+You've noticed this before about Matt. Unlike a lot of people you've met in your life, he understands the difference between a silence that needs filling and one that you can be happy sitting in without it being awkward, and he's never once gotten them confused. You appreciate that about him. 
+
+You know Callie told him things about you when he first joined the two of you, and you suspect that's part of it, but a lot of it is just him, you think.
+*set checked_matt true
+*goto matt_moment
+
+*label matt_moment
+
+The two of you sit in the quiet for a few minutes, something the three of you have learned is too  finite a resource since the [System] arrived on your world. 
+
+Your eyes wander the room. The runes beyond the blast doors are pulsing slow and gold, which means the outer wards are holding strong and nothing has found the entrance yet. You deliberately stop yourself from trying to guess how likely that is to remain the case.
+
+"She let me bring her food," Matt says, nodding toward Callie. "She didn't even look at it though. Just held out her hand and then put it down beside her. I don't even know if she actually ate it." 
+
+He looks at you for insight, but you don't really have any. That's just Callie, and by now Matt should know that. He probably does, you decide. He's just the kind of person who would find it worth mentioning.
+
+*choice
+  #"That tracks."
+    *goto that_tracks
+  #"You didn't watch her to make sure?"
+    *goto make_sure
+  #"Go make her eat something now."
+    *goto do_it_now
+
+*label that_tracks
+"That tracks," you say.
+
+Matt nods, smiling. "Callie told me you used to have to remind her to eat during finals."
+
+You feel something begin welling up in your chest, but you push it back into the box where it belongs. "Yeah, she's always had her priorities, and taking care of herself has always ranked pretty low on that list, unfortunately. I'll go check on her."
+*goto matt_end
+
+*label make_sure
+"You didn't watch her to make sure?" you ask, grinning.
+
+Matt laughs. "I did actually, for about forty-five seconds," he says, entirely without shame. "Then she told me I was disturbing her concentration and I had to leave."
+
+You laugh with him. "Yeah, she does that. I'll go check on her."
+*goto matt_end
+
+*label do_it_now
+"Go make her eat something now," you say.
+
+He raises an eyebrow at you. "How about [i]you[/i] go make her eat something," he says. "The day she listens to me about anything... well, it certainly isn't today."
+
+You give a chuckle. "Fair enough," you say. "Though it's probably best I go with the guise of checking on her [i]machine[/i] instead."
+*goto matt_end
+
+*label matt_end
+
+*page_break
+
+*comment ── Approach to Callie. Old friendship, world context woven through.
+
+You get up and cross the room to the nook that Callie has designated her workshop.
+
+The [i]time machine[/i] takes up most of the back wall, and looking at it still does something strange to your head. It's a particular variety of vertigo, but not the kind that comes from heights or spinning or falling. It's from looking at something that you know in the most primal parts of your brain shouldn't exist: something that spits in the face of physics and so far beyond what anyone in the world should be capable of building that you simply doesn't know how to process it. 
+
+Once upon a time, you might have thought this would be what it would feel like to look upon an eldritch horror, but having done that many times now, the comparison doesn't hold.
+
+Copper conduits spiral around an ironite-obsidian central housing. Cores from Tier 8 and 9 space-time themed dungeons are slotted into a lattice created from [System]-generated materials the three of you gathered for years, having no way of imagining this is what they'd eventually be used for. It's made from every high-tier drop the three of you managed to hoard, stripped down and reassembled by Callie into something the [System] didn't even have a category for.
+
+Behind a viewport of reinforced magi-steel glass, at the center of the contraption, a miniscule single point of incredibly bright light shines.
+
+A singularity.
+
+*page_break "Hey, Callie."
+
+"Hey, Callie."
+
+Callie doesn't look up, but you recognize the expression on her face — she's close to a breakthrough. She's focused to the point where the rest of the world, even her own health, has been downgraded to background noise, filed under [i]deal with it later,[/i] and left on read.
+
+The dark rings under her eyes show that she's far past exhaustion now, and it's turned into something that looks more like a medical condition. Her hair is held back with a piece of wire, which you're pretty certain is one of the wires from your ward scrolls that she asked to borrow four days ago for [i]just a second.[/i] She likely found a way to molecularly take them apart and integrate them into her machine, somehow. 
+
+You have known Callie Owens since your second year of college, before the [System] descended and the long, catastrophic sequence of events that transformed the two of you from people who argued about the best place near campus to eat into people who have witnessed the world end together. 
+
+And now here you are, improbably, preparing to do something about it.
+
+You knew her when she was [i]just[/i] the most frighteningly capable person you ever met. Now, having the Legendary class [legendary][Thesis Incarnate][/legendary], there may not be a word in any language to describe what she has become.
+
+*choice
+  #Don't say anything. Just stand close enough that she knows you're there.
+    She still doesn't look up, but after a moment, something in the line of her shoulders changes. It's a small, specific movement you've seen a hundred times before, in libraries and late-night study sessions and now here, at the end of everything. 
+    
+    It means she has registered your presence and is appreciative of it, though there is zero chance she will be verbalizing either of those things.
+
+    After a few moments, her hands stop their work, and she meets your eyes with a tired smile.
+
+    "Hey," she says. "Look."
+    *goto callie_status
+  #"Callie?"
+    For a few moments, she continues her work without acknowledging you, but then having found an appropriate stopping point, she looks up at you and gives a tired smile.
+
+    "Hey," she says. "Look."
+    *goto callie_status
+  #"You look terrible."
+    "Thank you," she says, with complete sincerity. "I feel terrible. My machine, however, is doing [i]great[/i] and is functionally flawless, so I consider it to be a reasonable exchange. Look."
+    *goto callie_status
+
+*label callie_status
+
+She mentally gives the command to make her HUD visible to you, and a blue screen appears in the air, displaying a series of readouts and graphs you have no hope of understanding but have to admit look very impressive. You have no doubt whatever they're displaying is perfectly accurate and are the result of Callie's genius, but most of it might as well be hieroglyphics to you.
+
+Well, that's not true. Thanks to a [Skill] you picked up in the early days called [Polyglot], you understand most written and spoken languages, including Egyptian hieroglyphics.
+
+"What am I looking at?" you ask.
+
+Callie squints at the display, and the data arranges itself into a much simpler format for you.
+
+*system
+MACHINE STATUS: 67% charge.
+Estimated stabilization: 2 hours, 10 minutes.
+*end_system
+
+*choice
+  #"I can't believe we're really here now."
+    You shake your head in amazement. "I can't believe we're really here now. I mean, I never doubted you for a moment, but now," you say, gesturing at the machine, "this is really happening. We're actually going to do this. We're going to go back in time. You built a time machine."
+    *goto world_context
+  #Just nod and look at the numbers.
+    You nod, looking at the numbers. It's hard to process that in a little over two hours, the three of you will be using an honest-to-God time machine to travel to the past. What a ludicrous concept, and yet here you are, on the verge of doing it. 
+    *goto world_context
+
+*label world_context
+
+You look back at Callie, who incredibly appears to be several steps beyond feeling pride at creating something that even with the [System] should be completely impossible, and is now focusing on the next and final task: making sure it finishes charging without anything going wrong.
+
+Two hours and ten minutes. 
+
+*page_break Four months ago.
+
+Four months ago, the portal mages had closed the last entrance that connected the surface to the city of Solace. The city was built without any traditional methods of accessing it, so there were no gates or tunnels; just a mile of solid rock between the final sanctuary of humans and the horrors above.
+
+Solace was the last coalition of surviving nations, built into the earth's hollow because there was nowhere else to go but down. Legions of geomancers carved through the rock, artificers and architecture mages laid the streets and buildings, and glamourers used potent illusions created a false sky and sun on the ceiling of the cavern that was always in the position of high noon, though it brightened and dimmed to the luminosity of moonlight depending on the time of day. All of this was done so the survivors could look up at something other than stone in despair. 
+
+Unfortunately, despair was an old friend of everyone here, so it was felt, regardless. How could anything else be expected? The world was overrun with literal monsters, and the only place left to hide from them was in a cave. 
+
+It was such an ironic turn of fate that the civilization of mankind began in caves and it would end in one as well.
+
+*page_break But the plan mostly worked, for all of four months.
+
+After the portals were closed, as far as anyone knows, there wasn't a single living human being left on the surface. The monsters, predictably, had done what monsters do when left entirely to their own devices: autonomously summoned more of their kind, fought, and consumed each other to grow more powerful and eventually evolved. They got smarter, and they eventually began looking for wherever humanity had tried to hide.
+
+It didn't take long for them to start looking down.
+
+But in two hours and ten minutes, none of it will matter anymore. You find, to your astonishment, that you almost manage to convince yourself into believing it.
+
+Almost...
+
+*page_break One hour and thirty-five minutes later.
+
+*label malphas_warning
+
+*temp coin_kept false
+*temp said_dont false
+*temp sat_with_matt false
+*temp went_to_door false
+
+*comment Variables for later class influence:
+*comment grief_carried — how the MC processes loss
+*comment trust_instinct — whether MC delegates or controls
+*comment carries_dead — whether MC holds onto the past
+
+*temp grief_carried 0
+*comment Negative = compartmentalizes, Positive = sits with it
+
+*temp trust_instinct 0
+*comment Negative = control, Positive = delegates/trusts others
+
+*temp carries_dead 0
+*comment Negative = lets go, Positive = carries them forward
+
+You are playing poker with Matt when the notification appears.
+
+*system
+WARNING: [b][legendary]Highest Demon Lord, Malphas[/legendary] (Tier-10 Legendary Infernal World Boss)[/b] has been detected within 10 kilometers of your location and is moving in your general direction.
+*end_system
+
+There have been countless times in the past eight years when you have experienced such overwhelming fear that you thought the physical weight of it may suffocate you. Seeing that notification has let you know that you haven't had a true understanding of how strong the sensation of fear could be until this very moment. You don't just feel it in your chest, stomach, and tightness of your shoulders. This fear has reached into your bones, into the very marrow, and has crossed into the metaphysical realm of your soul where it has taken root. 
+
+What you feel in this moment is beyond the primal, fundamental emotion of fear or even terror. This is the pure, distilled and unadulterated essence of a dread so supreme and encompassing that it has no name, because no one in the approximately 300,000 years of Homo sapien existence has anyone ever experienced what the three of you are experiencing in this moment.
+
+"My God," you hear Matt whisper. "They actually did it. Tier-10."
+
+The strongest World Boss you knew with certainty that had existed before this moment was a Tier-8 hive-mind titan called Auren the Undivided. It existed as both a single creature and a swarm, and destroying 95% of its mass does absolutely nothing to its ability to wreak devastation if the core node survives. It had taken the combined efforts of every single survivor in Solace, over two million of the strongest fighters left on the entire planet, nearly six hours to bring it down.
+
+The most insidious power that World Bosses have, besides their overwhelming strength and impossible durability, is their ability to summon lower-tier Commanders, who in turn can summon legions of monsters under their control. The battle against Auren was an absolute bloodbath, made worse by the fact that it could rapidly replenish its body by absorbing its minions, resulting in the loss of nearly every inhabitant and the destruction of most of the city itself.
+
+The three people in this room are the only survivors of that fight.
+
+And now [i]this thing[/i] has appeared.
+
+The difference in power between even regular monster tiers is a vast gulf. The power difference between a Tier-8 and a Tier-10 World Boss is... well, it's hard to even comprehend. If a Tier-8 World Boss had nearly broken through everything humans had to offer, what would a Tier-10, the absolute pinnacle of monster evolution as far as [System] scientists had been able to determine, be capable of?
+
+*choice
+  #Check the ward status.
+    *set trust_instinct +1
+    *goto check_wards
+  #Check the [Last Bastion]'s mana reserve.
+    *set trust_instinct -1
+    *goto check_mana
+  #Look at Matt.
+    *set trust_instinct +1
+    *set grief_carried +1
+    *goto look_at_matt_first
+
+*label check_wards
+You move to the ward monitor and pull up the readings. Outer ward integrity at 100%. The arcane trigger traps are armed and waiting in the entrance corridor, exactly where you set them. Whatever is coming hasn't arrived yet, but you already know that. When the first monster throws itself against the barriers and traps, you'll get a notification. Your terror is making you hyper-aware that literally anything can happen, though. 
+
+Matt appears at your shoulder. "It won't come alone," he says.
+
+"No," you agree. "It won't."
+*goto matt_assessment
+
+*label check_mana
+You mentally call up the screen for this place. 
+
+*system
+[legendary][b]Last Bastion[/b][/legendary]
+[legendary]Legendary[/legendary]
+Description: Creates an underground bunker at the safest location within 2 kilometers, chosen by the [System]. The entrance is a 5-meter stairwell lined with wards and runes to damage intruders. Below it, an enchanted tunnel ends at a reinforced blast door. The chamber beyond provides 10 square meters per person, stocked with food, water, recycled air, and medical supplies for six months.
+Capacity: 10 per skill level. Only those you designate at the time of casting may enter and exit freely.
+The bunker draws from a separate and dedicated mana reserve that charges at the speed of your mana regeneration, but only when your personal mana pool is full. Allies may contribute their mana directly to the reserve, and mana stones may be used to add up to 1,000,000 mana per year.
+After six months, the bunker collapses. Any non-living contents disappear. All living inhabitants are teleported to a safe location above ground.
+Activation cost: 2,000,000 mana from dedicated reserve only.
+Cooldown: 1 year.
+Notice:
+This [Skill] is currently in effect.
+Time until Bastion collapse: 3 months, 17 days, 8 hours, 22 minutes.
+Mana in reserves for defense: 847,000
+*end_system
+
+You try to do the math of how long the defenses might hold against a siege by a Tier-10 World Boss, its Commanders, and the legions of monsters they have probably already summoned, but you honestly have no idea. This is the first time you've used [Last Bastion], so while you have a general understanding of the mechanics of this place, you have no real-world experience to draw on for how much abuse the wards will take. Creating it cost two million mana, which took a year to gather between your own mana regeneration and every mana stone the three of you had ever gathered. 847,000 mana is more than ten times the amount of your maximum mana, and you are one, if not the, most powerful shield mages to have lived. Your [Skill]s could survive a lot of punishment, so your best hypothesis is this place should be able to hold out a hundred times longer than you could on your own. 
+
+Matt appears beside you. "It won't come alone," he says.
+
+"No," you agree. "It won't."
+*goto matt_assessment
+
+*label look_at_matt_first
+You look at Matt, and he's already looking at you. He has the coin in his hand that he was playing with before. A moment of silent communication passes between you, and you both understand what this means for the three of you. A clock none of you can see is now counting down, racing against the clock of the time machine being ready in thirty-three minutes.
+
+Neither of you know which will hit zero first, but the monumental weight of understanding that whatever happens in the next hour will be the most important actions any humans have ever taken settles across you. What happens in that time will determine not just the fate of the three of you, but the fate of every human being who has lived since the [System] arrived, and every human being who potentially ever will live. The stakes are so high that they break your brain more than a little bit, and you have to take a moment to let it all sink in.
+
+You can see that it's sinking in for Matt too.
+
+"It won't come alone," he says.
+
+"No," you agree. "It won't."
+*goto matt_assessment
+
+*comment ── Section 2: Matt Assessment / Callie Directive
+
+*label matt_assessment
+
+You both turn to Callie, who has yet to even acknowledge the notification. She hasn't even looked up, and her hands haven't stopped moving.
+
+"Callie," you say, an edge of concern in your voice.
+
+"I know," she says. "I'm working."
+
+"How long?" asks Matt.
+
+"Same as before. Maybe less, if I can find a way to push the calibration sequence." Her hands are a blur and her eyes move rapidly over HUD displays only she can see. "Don't let anything touch my machine."
+
+You and Matt exchange glances.
+
+*page_break "We won't."
+
+"We won't," you assure her in the most sincere and sure tone you can manage.
+
+You pull up your own displays. The entrance to this place is a stairwell akin to a subway entrance that is protected by an incredibly powerful barrier. Beyond that, deadly trigger trap runes are carved into the wall and are designed to fire on contact and chain through the stairway corridor repeatedly if something manages to get past the entrance. At the bottom of the stairway is a corridor with additional barriers and explosive triggers that should function like a series of deadly mantraps. Lastly, even if monsters manage to survive all of that, the actual bunker where the three of you are is sealed behind a magically reinforced blast door that nothing short of a thermonuclear explosion right outside should be able to damage.
+
+You try not to think about how nuclear weapons stop becoming effective against monsters around Tier-7 and are completely ineffective against even the weakest of World Bosses. 
+
+So this place will certainly fall, but if it can hold out long enough for the machine to finish its calibration sequence, it won't matter. 
+
+If the monsters manage to get through the blast door before the three of you are on your way to the past, though...
+
+*page_break Eight minutes later.
+
+You receive a notification that the entrance barrier has taken damage. You check the status of that particular ward, and it's still holding, but its integrity is dropping at roughly 1% per second. The monsters have arrived.
+
+*award_essence 14
+*notify "[b][epic]Greater Demon Legionnaire[/epic] (Tier-6 Epic Infernal Minion)[/b] has been defeated. 2 Essence awarded (2,000 Essence * 0.001 due to level disparity.)" 1000
+
+*notify "[b][epic]Greater Demon Legionnaire[/epic] (Tier-6 Epic Infernal Minion)[/b] has been defeated. 2 Essence awarded (2,000 Essence * 0.001 due to level disparity.)" 1000
+
+*notify "[b][epic]Greater Demon Legionnaire[/epic] (Tier-6 Epic Infernal Minion)[/b] has been defeated. 2 Essence awarded (2,000 Essence * 0.001 due to level disparity.)" 1000
+
+*notify "[b][epic]Greater Demon Legionnaire[/epic] (Tier-6 Epic Infernal Minion)[/b] has been defeated. 2 Essence awarded (2,000 Essence * 0.001 due to level disparity.)" 1000
+
+*notify "[b][epic]Greater Demon Legionnaire[/epic] (Tier-6 Epic Infernal Minion)[/b] has been defeated. 2 Essence awarded (2,000 Essence * 0.001 due to level disparity.)" 3000
+
+Those kill notifications are going to get really old, really fast. You mentally create a filter to stop the notifications from flooding your HUD, but you can still see the status of the barrier dropping from the monsters throwing themselves against it.
+
+"They're here," you say to your companions. "Looks like it's just the minions so far, but we know what's coming next."
+
+*choice
+  #Keep an eye on the barrier status and let Callie know when it gets below 10%.
+    *set trust_instinct +1
+    You keep a close eye on the status of the barrier, ready to alert Callie when it drops below 10%. That'll be when this situation goes from not being a problem to being a imminent threat. You could pump more mana into the wards protecting the entrance, but that would drain the mana reserves for the rest of the defenses. It's probably best not to start messing with the mana flow until you know for sure it's necessary. 
+
+    You don't want to accidentally cause the defenses to fail early by draining too much of the reserves, but you also don't want to hesitate too long and get everyone killed. It's a delicate balance.
+
+    Matt approaches the blast door, and you walk over to him.
+    *goto at_the_door
+  #Go to the door and prepare to defend it.
+    *set trust_instinct -1
+    Realizing that this door is the last line of defense between hordes of demonic creatures and the three of you, you decide that it's best to reinforce it as much as possible and let the Bastion's normal defenses do their job without interference. You head to the blast door, and see Matt has the same idea. He takes a deep breath and nods to you, the looks out the magi-steel glass toward the end of the corridor where the monsters will eventually throw themselves into a magical meat grinder of wards and traps.
+    *goto at_the_door
+  #Increase the mana flow to the entrance wards to try to hold them off longer.
+    *set trust_instinct -1
+    You mentally call up the mana flow controls on your HUD and study them for a moment. Thankfully, most things with [System] are incredibly intuitive, which has kept people theorizing on the origins of it. It seems so specifically tailored to human use that it's hard to imagine it was designed for anything else. It automatically translated all information into your native language, and every control is laid out in a way that makes perfect sense to you, even if you have no prior experience with the specific function.
+
+    You find the controls for the mana flow to the entrance wards after only a moment of searching. You bump up the flow by 20%, and thanks to your Mind stat, you perform the mental math instantly. It'll buy you a few more minutes, at most, but dedicating any more to the very first line of defense would be reckless. The heavy hitters haven't even arrived yet, and by the time they do, you expect the entrance to be breached.
+
+    Matt approaches the blast door, and you walk over to him.
+
+    "How long, you reckon?" Matt asks, slipping into his deep Appalachian drawl while looking through the window.
+
+    "Not long," you say. You throw together a predictive algorithm in your HUD to try to estimate how long it'll be until the monsters get through the entrance, make it through the corridor, and reach the blast door. The algorithm is based on the rate at which the entrance barrier is taking damage, the rate at which the mana reserves are depleting, and a whole lot of guesswork based on your experience of monster hordes and how World Bosses and their Commanders operate. You make your screen visible to Matt.
+
+    *system
+    Estimated time to breach: 17 - 39 minutes.
+    *end_system
+    *goto ending_for_now
+    
+*label at_the_door
+
+"How long, you reckon?" Matt asks, slipping into his deep Appalachian drawl while looking through the window.
+
+"Not long," you say. You throw together a predictive algorithm in your HUD to try to estimate how long it'll be until the monsters get through the entrance, make it through the corridor, and reach the blast door. The algorithm is based on the rate at which the entrance barrier is taking damage, the rate at which the mana reserves are depleting, and a whole lot of guesswork based on your experience of monster hordes and how World Bosses and their Commanders operate. You make your screen visible to Matt.
+
+*system
+Estimated time to breach: 15 - 37 minutes.
+*end_system
+
+*page_break
+
+*label ending_for_now
+
+*ending "You've Reached the End (so far)" "Thank you so much for playing what I have so far of this game. This project is ongoing and will be updated with new content as I write it, so if you enjoyed this, please consider following me for updates."

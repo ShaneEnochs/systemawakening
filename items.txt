@@ -1,0 +1,23 @@
+// items.txt — Item Registry for System Awakening
+//
+// Format:
+//   *item key "Label" essence_cost [rarity] [stock]
+//     Description text. Each new indented line is a separate paragraph.
+//
+// Fields:
+//   key          — single word (letters, numbers, underscores)
+//   essence_cost — Essence required to purchase (0 = free)
+//   rarity       — optional: common | uncommon | rare | epic | legendary  (default: common)
+//   stock        — optional: how many are available before selling out
+//                  omit or leave blank for unlimited stock
+//
+// Examples:
+//   *item health_potion "Health Potion" 25 common 10    ← 10 available, disappears when sold out
+//   *item rare_sword "Rare Sword" 200 rare              ← unlimited stock
+//
+// Rules:
+//   • Purchased items are added to playerState.inventory automatically
+//   • Sold-out items are hidden from the store automatically
+//   • Description lines must be indented at least one space
+//   • A new *item directive or end of file terminates the previous description
+

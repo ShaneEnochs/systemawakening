@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="description" content="A LitRPG interactive fiction game."/>
+<meta name="theme-color" content="#0d0f1a"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>"/>
+<title></title>
+<script>
+  (function(){var t=localStorage.getItem('sa_theme');if(t==='light'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Single unified stylesheet (skill_styles.css merged in) -->
+<link rel="stylesheet" href="style.css?v=12"/>
+<style>
+  .save-code-section { margin-top: 16px; border-top: 1px solid var(--border-dim); padding-top: 14px; }
+  .save-code-label { font-family: var(--font-heading, 'Cinzel', serif); font-size: 0.85rem; color: var(--text-faint); margin-bottom: 8px; text-align: center; letter-spacing: 0.05em; }
+  .save-code-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .save-code-btn { flex: 1; font-size: 0.8rem; }
+  .save-code-textarea { width: 100%; box-sizing: border-box; background: var(--bg-system); color: var(--text-primary); border: 1px solid var(--border-dim); border-radius: 6px; padding: 8px; font-family: var(--font-mono, 'Inconsolata', monospace); font-size: 0.75rem; resize: vertical; min-height: 52px; line-height: 1.4; }
+  .save-code-textarea::placeholder { color: var(--text-faint); }
+  .save-code-textarea:focus { outline: 1px solid var(--cyan); border-color: var(--cyan); }
+</style>
+<script type="module" src="dist/engine.js"></script>
+</head>
+<body>
+
+<div id="app">
+<header id="game-header">
+  <div id="header-top">
+    <div id="game-title"></div>
+    <div class="header-actions">
+      <button id="theme-toggle-btn" class="header-btn" title="Switch to light mode" aria-label="Toggle light or dark mode">☀</button>
+      <button id="undo-btn" class="header-btn hidden" title="Undo last choice" disabled>↩ Undo</button>
+      <button id="save-btn" class="header-btn hidden" title="Save / Load game">Save·Load</button>
+      <button id="status-toggle" aria-label="Toggle status panel">Status</button>
+    </div>
+  </div>
+  <div id="chapter-bar">
+    <div id="chapter-title">—</div>
+  </div>
+</header>
+
+<main id="game-main">
+  <section id="narrative-panel">
+    <div id="narrative-content" aria-live="polite" aria-atomic="false">
+      <div id="choice-area"></div>
+    </div>
+  </section>
+  <aside id="status-panel" class="status-hidden"></aside>
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SPLASH / TITLE SCREEN
+     ═══════════════════════════════════════════════════ -->
+<div id="splash-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Title Screen">
+  <div class="splash-box">
+
+    <!-- Background canvas for circuit/binary rain -->
+    <canvas id="splash-bg-canvas" class="splash-bg-canvas"></canvas>
+    <div class="splash-vignette"></div>
+
+    <!-- Main content — hidden as a unit when save slots are shown -->
+    <div id="splash-main">
+
+    <!-- Summoning circle -->
+    <div class="splash-sigil-wrap" id="splashSigilWrap">
+      <div class="splash-sigil-ambient"></div>
+      <svg id="splashSigilSvg" class="splash-sigil-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Layers drawn by splash-init.js inline script below -->
+      </svg>
+      <div class="splash-sigil-center">
+        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 1 L43 22 L22 43 L1 22 Z" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.9"/>
+          <path d="M22 9 L35 22 L22 35 L9 22 Z"  stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.55"/>
+          <path d="M22 16 L28 22 L22 28 L16 22 Z" fill="currentColor" opacity="0.95"/>
+          <circle cx="22" cy="22" r="2.4" fill="#ffffff" opacity="0.98"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Content wrapper (allows horizontal layout in landscape) -->
+    <div class="splash-content">
+
+    <!-- Title (populated by engine via setGameTitle) -->
+    <div class="overlay-title splash-title"></div>
+
+    <!-- Eyebrow -->
+    <div class="splash-eyebrow">A LitRPG Interactive Fiction Novel</div>
+
+    <!-- Ornament divider -->
+    <div class="splash-ornament">
+      <div class="splash-orn-line"></div>
+      <div class="splash-orn-diamond"></div>
+      <div class="splash-orn-line splash-orn-line--rev"></div>
+    </div>
+
+    <!-- Tagline (populated by engine via setGameByline) -->
+    <p class="splash-tagline" id="splash-tagline"></p>
+
+    <!-- Stale save notice -->
+    <div id="splash-stale-notice" class="splash-stale-notice hidden" role="alert">
+      ⚠ An older save was found but is not compatible with this version.
+      It has been removed. Please start a new game.
+    </div>
+
+    <!-- Lower two-column: buttons + last session stats -->
+    <div class="splash-lower">
+
+      <!-- Action buttons -->
+      <div class="splash-btn-col">
+        <div class="splash-col-label">Actions</div>
+        <button id="splash-new-btn" class="splash-action-btn splash-action-btn--primary">
+          <span class="splash-btn-icon">▶</span>New Game
+        </button>
+        <button id="splash-load-btn" class="splash-action-btn splash-action-btn--secondary">
+          <span class="splash-btn-icon">↺</span>Continue
+        </button>
+      </div>
+
+      <!-- Last session stats -->
+      <div class="splash-session-col">
+        <div class="splash-col-label">Last Session</div>
+
+        <div class="splash-stat-item" id="splash-stat-body">
+          <div class="splash-stat-header">
+            <span class="splash-stat-name">Body</span>
+            <span class="splash-stat-val" id="splash-stat-body-val">—</span>
+          </div>
+          <div class="splash-stat-track">
+            <div class="splash-stat-fill" id="splash-stat-body-fill"></div>
+          </div>
+        </div>
+
+        <div class="splash-stat-item" id="splash-stat-mind">
+          <div class="splash-stat-header">
+            <span class="splash-stat-name">Mind</span>
+            <span class="splash-stat-val" id="splash-stat-mind-val">—</span>
+          </div>
+          <div class="splash-stat-track">
+            <div class="splash-stat-fill" id="splash-stat-mind-fill"></div>
+          </div>
+        </div>
+
+        <div class="splash-stat-item" id="splash-stat-spirit">
+          <div class="splash-stat-header">
+            <span class="splash-stat-name">Spirit</span>
+            <span class="splash-stat-val" id="splash-stat-spirit-val">—</span>
+          </div>
+          <div class="splash-stat-track">
+            <div class="splash-stat-fill" id="splash-stat-spirit-fill"></div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /.splash-lower -->
+
+    <!-- Footer -->
+    <div class="splash-footer">
+      <div class="splash-footer-text">
+        Build <span id="splash-build-number">1.0.0</span> · System: Year Zero<br>
+        Developed &amp; Authored by <span>Shane Enochs</span>
+      </div>
+    </div>
+
+    </div><!-- /.splash-content -->
+
+    </div><!-- /#splash-main -->
+
+    <!-- Save slots (shown when Continue is clicked) -->
+    <div id="splash-slots" class="splash-slots hidden">
+      <div class="splash-slots-header">
+        <span class="splash-slots-label">Select a save slot</span>
+        <button id="splash-slots-back" class="slot-back-btn">← Back</button>
+      </div>
+      <div class="slot-list">
+        <!-- Auto-save -->
+        <div class="slot-card" id="slot-card-auto" data-slot="auto">
+          <div class="slot-badge">Auto</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-auto">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-auto"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-auto" disabled>Load</button>
+          </div>
+        </div>
+        <!-- Slot 1 -->
+        <div class="slot-card" id="slot-card-1" data-slot="1">
+          <div class="slot-badge">Slot 1</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-1">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-1"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-1" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-1" aria-label="Delete slot 1">✕</button>
+          </div>
+        </div>
+        <!-- Slot 2 -->
+        <div class="slot-card" id="slot-card-2" data-slot="2">
+          <div class="slot-badge">Slot 2</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-2">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-2"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-2" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-2" aria-label="Delete slot 2">✕</button>
+          </div>
+        </div>
+        <!-- Slot 3 -->
+        <div class="slot-card" id="slot-card-3" data-slot="3">
+          <div class="slot-badge">Slot 3</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-3">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-3"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-3" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-3" aria-label="Delete slot 3">✕</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /#splash-slots -->
+
+  </div><!-- /.splash-box -->
+</div><!-- /#splash-overlay -->
+
+<!-- ═══════════════════════════════════════════════════
+     SAVE MENU (in-game)
+     ═══════════════════════════════════════════════════ -->
+<div id="save-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Save / Load Game">
+  <div class="overlay-box save-menu-box">
+    <div class="overlay-title save-menu-title">Save · Load</div>
+    <p class="save-menu-hint">Choose a slot to save or load your progress.</p>
+
+    <div class="slot-list">
+      <!-- Auto-save -->
+      <div class="slot-card" id="save-card-auto" data-slot="auto">
+        <div class="slot-badge">Auto</div>
+        <div class="slot-info">
+          <span class="slot-name" id="save-slot-name-auto">— Empty —</span>
+          <span class="slot-meta" id="save-slot-meta-auto"></span>
+        </div>
+        <div class="slot-actions">
+          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-auto" disabled>Load</button>
+        </div>
+      </div>
+      <!-- Slot 1 -->
+      <div class="slot-card" id="save-card-1" data-slot="1">
+        <div class="slot-badge">Slot 1</div>
+        <div class="slot-info">
+          <span class="slot-name" id="save-slot-name-1">— Empty —</span>
+          <span class="slot-meta" id="save-slot-meta-1"></span>
+        </div>
+        <div class="slot-actions">
+          <button class="slot-load-btn slot-load-btn--save" id="save-to-1">Save</button>
+          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-1" disabled>Load</button>
+          <button class="slot-load-btn slot-load-btn--export" id="save-export-1">Export</button>
+          <button class="slot-delete-btn hidden" id="save-delete-1" aria-label="Delete slot 1">✕</button>
+        </div>
+      </div>
+      <!-- Slot 2 -->
+      <div class="slot-card" id="save-card-2" data-slot="2">
+        <div class="slot-badge">Slot 2</div>
+        <div class="slot-info">
+          <span class="slot-name" id="save-slot-name-2">— Empty —</span>
+          <span class="slot-meta" id="save-slot-meta-2"></span>
+        </div>
+        <div class="slot-actions">
+          <button class="slot-load-btn slot-load-btn--save" id="save-to-2">Save</button>
+          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-2" disabled>Load</button>
+          <button class="slot-load-btn slot-load-btn--export" id="save-export-2">Export</button>
+          <button class="slot-delete-btn hidden" id="save-delete-2" aria-label="Delete slot 2">✕</button>
+        </div>
+      </div>
+      <!-- Slot 3 -->
+      <div class="slot-card" id="save-card-3" data-slot="3">
+        <div class="slot-badge">Slot 3</div>
+        <div class="slot-info">
+          <span class="slot-name" id="save-slot-name-3">— Empty —</span>
+          <span class="slot-meta" id="save-slot-meta-3"></span>
+        </div>
+        <div class="slot-actions">
+          <button class="slot-load-btn slot-load-btn--save" id="save-to-3">Save</button>
+          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-3" disabled>Load</button>
+          <button class="slot-load-btn slot-load-btn--export" id="save-export-3">Export</button>
+          <button class="slot-delete-btn hidden" id="save-delete-3" aria-label="Delete slot 3">✕</button>
+        </div>
+      </div>
+    </div>
+    <!-- Import row -->
+    <div class="save-import-row">
+      <label for="save-import-file" class="overlay-btn overlay-btn--secondary save-import-label">
+        ↑ Import Save
+      </label>
+      <input type="file" id="save-import-file" accept=".json" class="hidden" />
+      <select id="save-import-slot" class="save-import-slot-select" aria-label="Import to slot">
+        <option value="1">→ Slot 1</option>
+        <option value="2">→ Slot 2</option>
+        <option value="3">→ Slot 3</option>
+      </select>
+    </div>
+    <!-- Save Code System -->
+    <div class="save-code-section">
+      <div class="save-code-label">Save Code</div>
+      <div class="save-code-row">
+        <button id="save-code-copy" class="overlay-btn overlay-btn--secondary save-code-btn">Copy Code</button>
+        <button id="save-code-load" class="overlay-btn overlay-btn--secondary save-code-btn">Load Code</button>
+      </div>
+      <textarea id="save-code-field" class="save-code-textarea" placeholder="Paste a save code here to load, or click Copy Code to generate one..." rows="3" spellcheck="false"></textarea>
+    </div>
+    <div class="checkpoint-section" id="checkpoint-section">
+      <button class="checkpoint-toggle" id="checkpoint-toggle">▸ Checkpoints</button>
+      <div class="checkpoint-list hidden" id="checkpoint-list"></div>
+    </div>
+    <div class="save-menu-footer">
+      <button id="ingame-restart-btn" class="overlay-btn overlay-btn--danger">↺ Restart</button>
+      <button id="save-menu-close" class="overlay-btn overlay-btn--secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CHARACTER CREATION
+     ═══════════════════════════════════════════════════ -->
+<div id="char-creation-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="New Survivor">
+  <div class="overlay-box char-box">
+    <!-- Character portrait — place image at media/portrait.png (or .webp/.jpg) -->
+    <div class="char-portrait-frame" aria-hidden="true">
+      <img src="media/portrait.png" alt="" class="char-portrait-img"
+           onerror="this.style.display='none'"/>
+    </div>
+
+    <div class="char-field-group">
+      <label class="char-label" for="input-first-name">First Name</label>
+      <div class="char-input-wrap">
+        <input type="text" id="input-first-name" class="char-input" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Enter first name"/>
+        <span class="char-counter" id="counter-first">14</span>
+      </div>
+      <span class="char-error hidden" id="error-first-name"></span>
+    </div>
+
+    <div class="char-field-group">
+      <label class="char-label" for="input-last-name">Last Name</label>
+      <div class="char-input-wrap">
+        <input type="text" id="input-last-name" class="char-input" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Enter last name"/>
+        <span class="char-counter" id="counter-last">14</span>
+      </div>
+      <span class="char-error hidden" id="error-last-name"></span>
+    </div>
+
+    <div class="char-field-group">
+      <label class="char-label">Pronouns</label>
+      <div class="pronoun-cards" role="radiogroup" aria-label="Select pronouns">
+        <button class="pronoun-card" data-pronouns="he/him" data-subject="he" data-object="him" data-possessive="his" data-possessive-pronoun="his" data-reflexive="himself" role="radio" aria-checked="false" tabindex="-1">
+          he / him
+        </button>
+        <button class="pronoun-card" data-pronouns="she/her" data-subject="she" data-object="her" data-possessive="her" data-possessive-pronoun="hers" data-reflexive="herself" role="radio" aria-checked="false" tabindex="-1">
+          she / her
+        </button>
+        <button class="pronoun-card" data-pronouns="they/them" data-subject="they" data-object="them" data-possessive="their" data-possessive-pronoun="theirs" data-reflexive="themself" role="radio" aria-checked="true" tabindex="-1">
+          they / them
+        </button>
+      </div>
+    </div>
+
+    <div class="char-field-group">
+      <label class="char-label">Starting Path</label>
+      <div class="scene-toggle" role="radiogroup" aria-label="Select starting path">
+        <button class="scene-toggle-btn selected" id="scene-btn-tutorial" data-scene="tutorial" role="radio" aria-checked="true" tabindex="0">
+          Tutorial
+        </button>
+        <button class="scene-toggle-btn" id="scene-btn-prologue" data-scene="prologue" role="radio" aria-checked="false" tabindex="-1">
+          Prologue
+        </button>
+      </div>
+      <span class="scene-toggle-hint" id="scene-toggle-hint">Recommended for new players</span>
+    </div>
+
+    <button id="char-begin-btn" class="overlay-btn char-begin-btn" disabled>Begin</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STORE OVERLAY (Skills + Items)
+     ═══════════════════════════════════════════════════ -->
+<div id="store-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Store — Skills and Items" style="opacity:0;">
+  <div class="overlay-box store-modal-box"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ENDING SCREEN
+     ═══════════════════════════════════════════════════ -->
+<div id="ending-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ending-title">
+  <div class="overlay-box" id="ending-box">
+    <div class="overlay-title" id="ending-title"></div>
+    <div id="ending-icon">◈</div>
+    <div id="ending-content"></div>
+    <div id="ending-stats"></div>
+    <button id="ending-action-btn" class="overlay-btn">Play Again</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TOAST NOTIFICATION
+     ═══════════════════════════════════════════════════ -->
+<div id="toast" class="toast hidden" aria-live="polite"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SPLASH SCREEN — SUMMONING CIRCLE + BACKGROUND
+     Inline script so it runs immediately when splash is shown,
+     independent of the game engine module.
+     ═══════════════════════════════════════════════════ -->
+<script>
+(function() {
+  // ── Summoning Circle ──────────────────────────────────────────────────────
+  function initSplashSigil() {
+    const wrap = document.getElementById('splashSigilWrap');
+    const SVG  = document.getElementById('splashSigilSvg');
+    if (!wrap || !SVG) return;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const CX = 110, CY = 110;
+
+    function el(tag, attrs) {
+      const e = document.createElementNS(NS, tag);
+      for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+      return e;
+    }
+
+    function pt(cx, cy, r, angleDeg) {
+      const a = (angleDeg - 90) * Math.PI / 180;
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    }
+
+    function regularPolyPath(cx, cy, r, n, offsetDeg) {
+      offsetDeg = offsetDeg || 0;
+      const pts = Array.from({length: n}, function(_, i) { return pt(cx, cy, r, (360/n)*i + offsetDeg); });
+      return pts.map(function(p, i) { return (i===0?'M':'L') + p[0].toFixed(3) + ',' + p[1].toFixed(3); }).join(' ') + 'Z';
+    }
+
+    function starPath(cx, cy, r1, r2, points, offsetDeg) {
+      offsetDeg = offsetDeg || 0;
+      var d = '';
+      for (var i = 0; i < points * 2; i++) {
+        var r = i % 2 === 0 ? r1 : r2;
+        var p = pt(cx, cy, r, (360 / (points*2)) * i + offsetDeg);
+        d += (i===0?'M':'L') + p[0].toFixed(3) + ',' + p[1].toFixed(3);
+      }
+      return d + 'Z';
+    }
+
+    var GLYPHS = [
+      [[0,-5],[0,5]],
+      [[-3,-5],[0,5],[3,-5]],
+      [[-3,-5],[-3,5],[3,5],[3,-5]],
+      [[-3,-5],[3,0],[-3,5]],
+      [[0,-5],[-4,2],[4,2]],
+      [[-3,-4],[3,-4],[0,5]],
+      [[-3,-5],[3,-5],[3,5],[-3,5],[-3,-5],[3,5]],
+      [[-3,0],[3,0],[0,-5],[0,5]],
+      [[-3,-5],[3,5],[-3,5],[3,-5]],
+      [[0,-5],[3,0],[0,5],[-3,0],[0,-5]],
+      [[-3,-5],[3,-5],[0,5],[-3,-5]],
+      [[-3,0],[0,-5],[3,0],[0,5]],
+    ];
+
+    var gOuter    = el('g', {id:'sgo'});
+    var gRing2    = el('g', {id:'sgr2'});
+    var gStar     = el('g', {id:'sgs'});
+    var gInner    = el('g', {id:'sgi'});
+    var gInnerRing = el('g', {id:'sgir'});
+    SVG.append(gOuter, gRing2, gStar, gInner, gInnerRing);
+
+    // ── Build SVG layers in batches so we don't block the main thread ──
+    // Each layer function builds its elements into a DocumentFragment,
+    // then appends once — yielding between layers via requestAnimationFrame.
+
+    function buildLayer1() {
+      var R_OUTER = 104;
+      var frag = document.createDocumentFragment();
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R_OUTER+3,fill:'none',stroke:'rgba(0,212,245,0.75)','stroke-width':'2'}));
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R_OUTER-3,fill:'none',stroke:'rgba(0,212,245,0.25)','stroke-width':'0.5'}));
+      var GLYPH_COUNT = 24;
+      for (var i = 0; i < GLYPH_COUNT; i++) {
+        var angleDeg = (360 / GLYPH_COUNT) * i;
+        var gp = pt(CX, CY, R_OUTER - 1, angleDeg);
+        var glyph = GLYPHS[i % GLYPHS.length];
+        var polyPts = glyph.map(function(p) { return p.join(','); }).join(' ');
+        frag.appendChild(el('polyline', {
+          points: polyPts, fill: 'none',
+          stroke: 'rgba(0,212,245,0.7)', 'stroke-width': '0.8',
+          'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+          transform: 'translate(' + gp[0].toFixed(2) + ',' + gp[1].toFixed(2) + ') rotate(' + angleDeg + ') scale(0.65)'
+        }));
+      }
+      for (var i = 0; i < GLYPH_COUNT * 2; i++) {
+        var a2 = (360 / (GLYPH_COUNT * 2)) * i;
+        var t1 = pt(CX, CY, R_OUTER + 1, a2), t2 = pt(CX, CY, R_OUTER - 1, a2);
+        frag.appendChild(el('line', {x1:t1[0],y1:t1[1],x2:t2[0],y2:t2[1],stroke:'rgba(0,212,245,0.4)','stroke-width':'0.6'}));
+      }
+      gOuter.appendChild(frag);
+    }
+
+    function buildLayer2() {
+      var R2 = 86;
+      var frag = document.createDocumentFragment();
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R2,fill:'none',stroke:'rgba(0,212,245,0.35)','stroke-width':'0.7','stroke-dasharray':'4 3'}));
+      for (var i = 0; i < 12; i++) {
+        var a3 = (360/12)*i;
+        var np = pt(CX, CY, R2, a3);
+        var sz = i % 3 === 0 ? 4.2 : 2.4;
+        frag.appendChild(el('rect', {
+          x:(np[0]-sz/2).toFixed(2), y:(np[1]-sz/2).toFixed(2),
+          width:sz, height:sz,
+          fill: i%3===0 ? 'rgba(0,212,245,0.7)' : 'none',
+          stroke:'rgba(0,212,245,0.6)', 'stroke-width':'0.7',
+          transform:'rotate(45,' + np[0].toFixed(2) + ',' + np[1].toFixed(2) + ')'
+        }));
+      }
+      gRing2.appendChild(frag);
+    }
+
+    function buildLayer3() {
+      var R3 = 74;
+      gStar.appendChild(el('path', {d:starPath(CX,CY,R3,R3*0.45,9,0), fill:'none', stroke:'rgba(0,212,245,0.45)', 'stroke-width':'0.8', 'stroke-linejoin':'round'}));
+      gStar.appendChild(el('path', {d:starPath(CX,CY,R3*0.65,R3*0.32,7,20), fill:'none', stroke:'rgba(0,212,245,0.35)', 'stroke-width':'0.7', 'stroke-linejoin':'round'}));
+      gStar.appendChild(el('circle', {cx:CX,cy:CY,r:R3+2,fill:'none',stroke:'rgba(0,212,245,0.22)','stroke-width':'0.5'}));
+    }
+
+    function buildLayer4() {
+      var R4 = 54;
+      var frag = document.createDocumentFragment();
+      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4,3,0), fill:'none', stroke:'rgba(0,212,245,0.5)', 'stroke-width':'0.9', 'stroke-linejoin':'round'}));
+      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4,3,180), fill:'none', stroke:'rgba(0,212,245,0.4)', 'stroke-width':'0.8', 'stroke-linejoin':'round'}));
+      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4*0.82,4,45), fill:'none', stroke:'rgba(0,212,245,0.3)', 'stroke-width':'0.7'}));
+      for (var i = 0; i < 6; i++) {
+        var sp = pt(CX, CY, R4, 60*i);
+        frag.appendChild(el('line', {x1:CX,y1:CY,x2:sp[0].toFixed(2),y2:sp[1].toFixed(2),stroke:'rgba(0,212,245,0.18)','stroke-width':'0.5'}));
+      }
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R4+5,fill:'none',stroke:'rgba(0,212,245,0.28)','stroke-width':'0.6'}));
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R4-1,fill:'none',stroke:'rgba(0,212,245,0.15)','stroke-width':'0.5','stroke-dasharray':'2 4'}));
+      gInner.appendChild(frag);
+    }
+
+    function buildLayer5() {
+      var R5 = 33;
+      var frag = document.createDocumentFragment();
+      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R5,fill:'none',stroke:'rgba(0,212,245,0.4)','stroke-width':'0.7'}));
+      for (var i = 0; i < 16; i++) {
+        var a4 = (360/16)*i;
+        var isMain = i % 4 === 0;
+        var r5a = pt(CX, CY, R5 - (isMain?5:2), a4), r5b = pt(CX, CY, R5 + (isMain?5:2), a4);
+        frag.appendChild(el('line', {
+          x1:r5a[0],y1:r5a[1],x2:r5b[0],y2:r5b[1],
+          stroke: isMain ? 'rgba(0,212,245,0.7)' : 'rgba(0,212,245,0.35)',
+          'stroke-width': isMain ? '0.9' : '0.5'
+        }));
+      }
+      gInnerRing.appendChild(frag);
+    }
+
+    // Build layers across multiple frames so CSS entry animations stay smooth
+    var layers = [buildLayer1, buildLayer2, buildLayer3, buildLayer4, buildLayer5];
+    var layerIdx = 0;
+    function buildNextLayer() {
+      if (layerIdx < layers.length) {
+        layers[layerIdx]();
+        layerIdx++;
+        requestAnimationFrame(buildNextLayer);
+      }
+    }
+    requestAnimationFrame(buildNextLayer);
+
+    // ── Deferred rotation start ──
+    // Animation — use CSS transform on wrapper divs for GPU compositing
+    // This avoids SVG attribute reflow which causes jank on desktop
+    var groups = [
+      {el:gOuter,     dps: 6,  dir:  1},
+      {el:gRing2,     dps: 9,  dir: -1},
+      {el:gStar,      dps: 14, dir:  1},
+      {el:gInner,     dps: 4,  dir: -1},
+      {el:gInnerRing, dps: 10, dir:  1},
+    ];
+    var angles = [0,0,0,0,0];
+    var lastT  = null;
+
+    // Pre-apply will-change so the browser promotes each layer upfront
+    groups.forEach(function(g) {
+      g.el.style.transformOrigin = CX + 'px ' + CY + 'px';
+      g.el.style.willChange = 'transform';
+    });
+
+    // Landscape query — when the sigil is a faded bg, slow rotation to avoid shimmer
+    var landscapeMq = window.matchMedia('(orientation: landscape) and (min-width: 860px)');
+
+    function tickSigil(ts) {
+      if (!lastT) lastT = ts;
+      // Clamp dt to max 50ms (handles tab backgrounding / first frame spikes)
+      var dt = Math.min((ts - lastT) / 1000, 0.05);
+      lastT = ts;
+      // In landscape bg mode, use much slower rotation to avoid aliasing shimmer
+      var speedScale = landscapeMq.matches ? 0.25 : 1;
+      groups.forEach(function(g, i) {
+        angles[i] += g.dir * g.dps * dt * speedScale;
+        // Use CSS transform instead of SVG attribute — lets GPU composite the layer
+        g.el.style.transform = 'rotate(' + angles[i].toFixed(2) + 'deg)';
+      });
+      requestAnimationFrame(tickSigil);
+    }
+
+    // Defer rotation start until after CSS entry animations settle (~1.7s)
+    setTimeout(function() { requestAnimationFrame(tickSigil); }, 1700);
+  }
+
+  // ── Background canvas: circuit nodes + binary rain ────────────────────────
+  function initSplashBackground() {
+    var canvas = document.getElementById('splash-bg-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth  || window.innerWidth;
+      canvas.height = canvas.offsetHeight || window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var GRID = 54, nodes = [];
+
+    function buildGrid() {
+      nodes = [];
+      var cols = Math.ceil(canvas.width  / GRID) + 2;
+      var rows = Math.ceil(canvas.height / GRID) + 2;
+      for (var r = -1; r < rows; r++) {
+        for (var c = -1; c < cols; c++) {
+          if (Math.random() < 0.52) {
+            nodes.push({
+              x: c*GRID + (Math.random()-0.5)*16,
+              y: r*GRID + (Math.random()-0.5)*16,
+              r: Math.random()*1.3+0.35,
+              alpha: Math.random()*0.13+0.03,
+              phase: Math.random()*Math.PI*2,
+              conn: []
+            });
+          }
+        }
+      }
+      var maxD = GRID * 1.8;
+      for (var i = 0; i < nodes.length; i++) {
+        for (var j = i+1; j < nodes.length; j++) {
+          var dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y;
+          if (Math.sqrt(dx*dx+dy*dy) < maxD && Math.random() < 0.25)
+            nodes[i].conn.push(j);
+        }
+      }
+    }
+    buildGrid();
+    window.addEventListener('resize', buildGrid);
+
+    var bCols = [];
+    function buildBin() {
+      var count = Math.floor(canvas.width / 18);
+      bCols = [];
+      for (var i = 0; i < count; i++) {
+        bCols.push({x: i*18+9, y: Math.random()*canvas.height,
+          speed: 20+Math.random()*36, alpha: Math.random()*0.05+0.01,
+          len: 4+Math.floor(Math.random()*7)});
+      }
+    }
+    buildBin();
+    window.addEventListener('resize', buildBin);
+
+    var bgLastT = null;
+    function drawBg(ts) {
+      if (!bgLastT) bgLastT = ts;
+      var bgDt = Math.min((ts - bgLastT) / 1000, 0.05);
+      bgLastT = ts;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var t = ts * 0.001;
+
+      ctx.lineWidth = 0.35;
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        for (var k = 0; k < n.conn.length; k++) {
+          var a = 0.02*(0.5+0.5*Math.sin(t*0.4+n.phase));
+          ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(nodes[n.conn[k]].x,nodes[n.conn[k]].y);
+          ctx.strokeStyle = 'rgba(0,212,245,'+a+')'; ctx.stroke();
+        }
+      }
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        var a = n.alpha*(0.5+0.5*Math.sin(t*0.8+n.phase));
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(0,212,245,'+a+')'; ctx.fill();
+      }
+
+      ctx.font = '10px Inconsolata, monospace';
+      for (var i = 0; i < bCols.length; i++) {
+        var col = bCols[i];
+        col.y += col.speed * bgDt;
+        if (col.y > canvas.height + col.len*13) { col.y = -col.len*13; col.alpha = Math.random()*0.05+0.01; }
+        for (var j = 0; j < col.len; j++) {
+          ctx.fillStyle = 'rgba(0,212,245,'+(col.alpha*(1-j/col.len))+')';
+          ctx.fillText(Math.random()<0.5?'0':'1', col.x, col.y-j*13);
+        }
+      }
+      requestAnimationFrame(drawBg);
+    }
+    requestAnimationFrame(drawBg);
+  }
+
+  // Run once DOM is ready — stagger heavy work so CSS animations stay smooth
+  function bootSplash() {
+    // Build sigil SVG in batched layers (yields between frames)
+    initSplashSigil();
+    // Defer canvas background until after CSS entry animations settle (~1.8s)
+    setTimeout(initSplashBackground, 1800);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootSplash);
+  } else {
+    bootSplash();
+  }
+})();
+</script>
+
+</body>
+</html>

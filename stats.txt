@@ -1,0 +1,27 @@
+*stat_group "Identity"
+*stat first_name "First Name"
+*stat last_name "Last Name"
+*stat class_name "Class"
+
+*stat_group "Progress"
+*stat_color level accent-cyan
+*stat level "Level"
+*stat essence "Essence"
+*stat next_lvl "To Next Level"
+
+*stat_group "Vitals"
+*stat_color health accent-green
+*stat health "Health"
+*stat mana "Mana"
+*stat max_mana "Max Mana"
+
+*stat_group "Attributes"
+*stat_registered
+
+*inventory
+
+*skills_registered
+
+*achievements
+
+*journal_section

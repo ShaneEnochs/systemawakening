@@ -293,10 +293,33 @@ function buildLogTabHtml(): string {
     achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Achievements</div><ul class="skill-accordion-list" style="margin-bottom:14px;">${achvAccordionItems}</ul>`;
   }
   if (jentries.length > 0) {
-    const journalItems = [...jentries].reverse().map(j =>
-      `<li class="journal-entry">${escapeHtml(j.text)}</li>`
-    ).join('');
-    achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Journal</div><ul class="journal-list">${journalItems}</ul>`;
+    // Group by chapter, preserving insertion order; newest chapter first.
+    const chapterOrder: string[] = [];
+    const chapterMap: Record<string, typeof jentries> = {};
+    for (const j of jentries) {
+      const ch = j.chapter || 'Prologue';
+      if (!chapterMap[ch]) { chapterMap[ch] = []; chapterOrder.push(ch); }
+      chapterMap[ch].push(j);
+    }
+    // Reverse so newest chapter appears at top
+    const orderedChapters = [...chapterOrder].reverse();
+
+    const chapterAccordions = orderedChapters.map(ch => {
+      const entries = chapterMap[ch];
+      const items   = [...entries].reverse().map(j =>
+        `<li class="journal-entry">${escapeHtml(j.text)}</li>`
+      ).join('');
+      return `<li class="skill-accordion">
+        <button class="skill-accordion-btn">
+          <span class="skill-accordion-name">${escapeHtml(ch)}</span>
+          <span class="skill-accordion-chevron">▾</span>
+        </button>
+        <div class="skill-accordion-desc" style="display:none;">
+          <ul class="journal-list">${items}</ul>
+        </div>
+      </li>`;
+    }).join('');
+    achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Journal</div><ul class="skill-accordion-list">${chapterAccordions}</ul>`;
   }
   if (glossaryRegistry.length > 0) {
     const glossaryItems = glossaryRegistry.map(entry =>

@@ -1,5 +1,25 @@
 # Changelog
 
+## Phase 10 — UX Polish (4 changes)
+**Date:** 2026-04-01
+
+### Change 1 — Remove Tutorial Toggle from Character Creation
+Always start at the prologue scene. Removed the "Starting Path" radio-group from `index.html` (`#char-creation-overlay`), deleted `sceneBtns`/`selectScene` logic from `src/ui/overlays.ts`, hardcoded `startScene: 'prologue'` in the begin-button handler, and removed the scene-toggle reset block from `showCharacterCreation()`. Deleted `.scene-toggle`, `.scene-toggle-btn` CSS from `style.css` (`.scene-toggle-hint` placeholder rule kept for possible future use, then cleaned). No e2e tests referenced scene-toggle buttons.
+
+### Change 2 — Customizable System Block Label
+Authors can now write `*system [WARNING]` or `*system [ALERT] Inline text.` to render a custom label in place of `[ SYSTEM ]`. Updated `ParseSystemBlockResult` in `parser.ts` to include an optional `label` field; `parseSystemBlock` now accepts and parses a `[LABEL]` from the opening line. The `*system` command handler in `interpreter.ts` was expanded to detect inline `[LABEL] text` and bare-label `[LABEL]\n...\n*end_system` patterns, passing the label to `addSystem`. `addSystem` in `narrative.ts` now accepts `label?: string` and uses `` `[ ${label || 'SYSTEM'} ]` ``; the `NarrativeLogEntry` interface gained a `systemLabel?` field. `renderFromLog` reads `entry.systemLabel` for consistent save/load/undo replay. The `[ INPUT ]` label on input prompts is unchanged.
+
+### Change 3 — Glossary Mobile Tooltips
+Replaced the CSS-only `::after` tooltip on `.lore-term` spans with a JS-driven module (`src/ui/tooltip.ts`). The module creates a single shared `#lore-tooltip` div appended to `<body>` and uses event delegation on `narrativeContent` for `mouseenter`/`mouseleave` (desktop hover) and `click` (tap/keyboard toggle). On viewports ≤768 px the tooltip renders as a bottom sheet with a semi-transparent backdrop dismiss. On desktop it positions itself above the term, flipping below if there is insufficient space above. The CSS-only `::after` pseudo-element rules were removed from `style.css`; new `.lore-tooltip`, `.lore-tooltip--sheet`, `.lore-tooltip--visible`, `.lore-tooltip-term`, `.lore-tooltip-desc`, and `.lore-tooltip-backdrop` styles were added. `initTooltip(dom.narrativeContent)` is called in `engine.ts` boot.
+
+### Change 4 — Chapter-Grouped Journal Entries
+Journal entries in the Log tab are now grouped under collapsible chapter-title accordions (newest chapter first). `src/systems/journal.ts` gained `_currentChapter` state, `setCurrentChapter()`, and `getCurrentChapter()` exports; `addJournalEntry` now stamps each entry with the current chapter (defaulting to `'Prologue'` before any `*title` fires). The `*title` handler in `interpreter.ts` calls `setCurrentChapter(interpolated)` alongside `setChapterTitle`. `buildLogTabHtml()` in `panels.ts` was refactored to group non-achievement entries by chapter, building `<li class="skill-accordion">` wrappers that reuse the existing accordion toggle logic. `saves.ts` serializes `getCurrentChapter()` as `cc` in the SA1 payload and restores it via `setCurrentChapter` in `restoreFromSave`. Chapters with no entries are never rendered; achievements and glossary sections are unchanged.
+
+**Tests:** 222 passed, 0 failed.
+**Build:** `dist/engine.js` rebuilt (131.5 kb).
+**Type-check:** `npx tsc --noEmit` — zero errors.
+**Lint:** `npm run lint` — no issues.
+
 ## Phase 1 — TypeScript Strict Mode
 **Date:** 2026-03-20
 **What was done:** Confirmed that `strict: true` was already set in `tsconfig.json` and that all source files were already strict-compliant. Running `npx tsc --noEmit` produced zero errors. All existing unit tests (205) passed. Build succeeded producing `dist/engine.js`. The codebase already had proper type annotations on all function parameters, `catch (err: unknown)` narrowing patterns, and typed DOM interfaces.

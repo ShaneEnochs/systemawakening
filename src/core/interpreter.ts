@@ -22,7 +22,7 @@ import type { ParsedLine, AwaitingChoiceState, ChoiceOption } from './state.js';
 
 export interface InterpreterCallbacks {
   addParagraph:       (text: string) => void;
-  addSystem:          (text: string) => void;
+  addSystem:          (text: string, label?: string) => void;
   clearNarrative:     () => void;
   applyTransition:    () => void;
   renderChoices:      (choices: ChoiceOption[]) => void;
@@ -58,7 +58,7 @@ import { parseLines, indexLabels, parseChoice, parseSystemBlock, parseRandomChoi
 import { addInventoryItem, removeInventoryItem, itemBaseName }     from '../systems/inventory.js';
 import { saveGameToSlot, saveCheckpoint }                          from '../systems/saves.js';
 import { grantSkill, revokeSkill, playerHasSkill }                 from '../systems/skills.js';
-import { addJournalEntry }                                         from '../systems/journal.js';
+import { addJournalEntry, setCurrentChapter }                      from '../systems/journal.js';
 import { getProcedure }                                            from '../systems/procedures.js';
 import { addGlossaryTerm }                                         from '../systems/glossary.js';
 
@@ -304,6 +304,7 @@ registerCommand('*title', (t) => {
   const raw = t.replace(/^\*title\s*/, '').trim();
   const interpolated = cb.formatText ? cb.formatText(raw).replace(/<[^>]+>/g, '') : raw;
   cb.setChapterTitle(interpolated);
+  setCurrentChapter(interpolated);
   advanceIp();
 });
 
@@ -353,18 +354,49 @@ registerCommand('*goto', (t) => {
 });
 
 // *system [text] / *system … *end_system
+// Supports an optional [LABEL] immediately after *system:
+//   *system [WARNING]\n...\n*end_system   — multi-line with custom label
+//   *system [ALERT] Power levels critical.  — inline with custom label
+//   *system Text here.                      — inline, default SYSTEM label
 registerCommand('*system', (t) => {
-  if (t.trimEnd() === '*system') {
-    const parsed = parseSystemBlock(ip, { currentLines });
+  const rest = t.replace(/^\*system\s*/, '');
+  if (rest.trimEnd() === '') {
+    // bare *system — multi-line block with no label on opening line
+    const parsed = parseSystemBlock(ip, { currentLines }, '');
     if (!parsed.ok) {
       cb.showEngineError(`Unclosed *system block in "${currentScene}". Add *end_system.`);
       setIp(currentLines.length);
       return;
     }
-    cb.addSystem(parsed.text);
+    cb.addSystem(parsed.text, parsed.label);
     setIp(parsed.endIp);
+  } else if (rest.trim().startsWith('[')) {
+    // Opening line has content after *system — check if it's [LABEL] only (multi-line) or [LABEL] text (inline)
+    const labelMatch = rest.trim().match(/^\[([^\]]+)\](.*)/s);
+    if (labelMatch) {
+      const label = labelMatch[1].trim();
+      const afterLabel = labelMatch[2].trim();
+      if (afterLabel === '') {
+        // Multi-line: *system [LABEL]\n...\n*end_system
+        const parsed = parseSystemBlock(ip, { currentLines }, rest);
+        if (!parsed.ok) {
+          cb.showEngineError(`Unclosed *system block in "${currentScene}". Add *end_system.`);
+          setIp(currentLines.length);
+          return;
+        }
+        cb.addSystem(parsed.text, label);
+        setIp(parsed.endIp);
+      } else {
+        // Inline: *system [LABEL] text
+        cb.addSystem(afterLabel, label);
+        advanceIp();
+      }
+    } else {
+      cb.addSystem(rest.trim());
+      advanceIp();
+    }
   } else {
-    cb.addSystem(t.replace(/^\*system\s*/, '').trim());
+    cb.addSystem(rest.trim());
     advanceIp();
   }
 });

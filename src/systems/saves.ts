@@ -20,6 +20,7 @@ import {
   setChapterTitleState,
   getStartupDefaults,
 } from '../core/state.js';
+import { getCurrentChapter, setCurrentChapter } from './journal.js';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -72,6 +73,7 @@ function buildSaveCodePayload(label: string | null, narrativeLog: unknown[]): Re
     s:  currentScene,
     ip: pageBreakIp ?? ip,
     ct: chapterTitle,
+    cc: getCurrentChapter(),
     ps,
     nl: narrativeLog || [],
     ts: Date.now(),
@@ -138,6 +140,7 @@ export function decodeSaveCode(code: string): { ok: true; save: any } | { ok: fa
       scene:          json.s,
       ip:             json.ip,
       chapterTitle:   json.ct,
+      currentChapter: json.cc || null,
       playerState:    fullPlayerState,
       narrativeLog:   json.nl || [],
       awaitingChoice: json.ac || null,
@@ -257,6 +260,7 @@ export function importSaveFromJSON(json: any, targetSlot: string | number): { ok
     s:  json.scene,
     ip: json.ip ?? 0,
     ct: json.chapterTitle || '',
+    cc: json.currentChapter || null,
     ps: deltaPs,
     nl: json.narrativeLog || [],
     ts: json.timestamp || Date.now(),
@@ -393,6 +397,10 @@ export async function restoreFromSave(save: any, {
 
   if (save.chapterTitle) {
     setChapterTitle(save.chapterTitle);
+  }
+
+  if (save.currentChapter) {
+    setCurrentChapter(save.currentChapter);
   }
 
   clearNarrative();

@@ -28,9 +28,10 @@ interface ParseSystemBlockContext {
 }
 
 interface ParseSystemBlockResult {
-  text:  string;
-  endIp: number;
-  ok:    boolean;
+  text:   string;
+  endIp:  number;
+  ok:     boolean;
+  label?: string;  // custom label extracted from [LABEL] on the *system line
 }
 
 // ---------------------------------------------------------------------------
@@ -119,16 +120,21 @@ export function parseChoice(startIndex: number, indent: number, ctx: ParseChoice
 // ---------------------------------------------------------------------------
 // parseSystemBlock — collects lines between *system and *end_system into a
 // single string, preserving relative indentation of the inner content.
+// Optionally parses a [LABEL] from the opening *system line.
 // ---------------------------------------------------------------------------
-export function parseSystemBlock(startIndex: number, ctx: ParseSystemBlockContext): ParseSystemBlockResult {
+export function parseSystemBlock(startIndex: number, ctx: ParseSystemBlockContext, openingLineRest = ''): ParseSystemBlockResult {
   const { currentLines } = ctx;
   const parts = [];
   let baseIndent = null;
   let i = startIndex + 1;
 
+  // Extract optional [LABEL] from the opening line remainder
+  const labelMatch = openingLineRest.trim().match(/^\[([^\]]+)\]/);
+  const label = labelMatch ? labelMatch[1].trim() : undefined;
+
   while (i < currentLines.length) {
     const t = currentLines[i].trimmed;
-    if (t === '*end_system') return { text: parts.join('\n'), endIp: i + 1, ok: true };
+    if (t === '*end_system') return { text: parts.join('\n'), endIp: i + 1, ok: true, label };
     if (baseIndent === null && t) baseIndent = currentLines[i].indent;
     const raw = currentLines[i].raw;
     parts.push(
@@ -139,7 +145,7 @@ export function parseSystemBlock(startIndex: number, ctx: ParseSystemBlockContex
     i += 1;
   }
 
-  return { text: '', endIp: currentLines.length, ok: false };
+  return { text: '', endIp: currentLines.length, ok: false, label };
 }
 
 // ---------------------------------------------------------------------------

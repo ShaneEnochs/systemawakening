@@ -672,14 +672,16 @@ Expected: *selectable_if (condition) #Option text`;
   }
   return { choices, end: i };
 }
-function parseSystemBlock(startIndex, ctx) {
+function parseSystemBlock(startIndex, ctx, openingLineRest = "") {
   const { currentLines: currentLines2 } = ctx;
   const parts = [];
   let baseIndent = null;
   let i = startIndex + 1;
+  const labelMatch = openingLineRest.trim().match(/^\[([^\]]+)\]/);
+  const label = labelMatch ? labelMatch[1].trim() : void 0;
   while (i < currentLines2.length) {
     const t = currentLines2[i].trimmed;
-    if (t === "*end_system") return { text: parts.join("\n"), endIp: i + 1, ok: true };
+    if (t === "*end_system") return { text: parts.join("\n"), endIp: i + 1, ok: true, label };
     if (baseIndent === null && t) baseIndent = currentLines2[i].indent;
     const raw = currentLines2[i].raw;
     parts.push(
@@ -687,7 +689,7 @@ function parseSystemBlock(startIndex, ctx) {
     );
     i += 1;
   }
-  return { text: "", endIp: currentLines2.length, ok: false };
+  return { text: "", endIp: currentLines2.length, ok: false, label };
 }
 function parseRandomChoice(startIndex, indent, ctx) {
   const { currentLines: currentLines2 } = ctx;
@@ -762,6 +764,30 @@ function removeInventoryItem(item) {
   return true;
 }
 
+// src/systems/journal.ts
+var _currentChapter = "Prologue";
+function setCurrentChapter(chapter) {
+  _currentChapter = chapter || "Prologue";
+}
+function getCurrentChapter() {
+  return _currentChapter;
+}
+function addJournalEntry(text, type = "entry", unique = false) {
+  if (!Array.isArray(playerState.journal)) playerState.journal = [];
+  const normalised = text.trim();
+  if (unique && playerState.journal.some((e) => e.text === normalised && e.type === type)) {
+    return false;
+  }
+  playerState.journal.push({ text: normalised, type, chapter: _currentChapter, timestamp: Date.now() });
+  return true;
+}
+function getJournalEntries() {
+  return Array.isArray(playerState.journal) ? playerState.journal : [];
+}
+function getAchievements() {
+  return getJournalEntries().filter((e) => e.type === "achievement");
+}
+
 // src/systems/saves.ts
 var SAVE_VERSION = 9;
 var SAVE_KEY_AUTO = "sa_save_auto";
@@ -799,6 +825,7 @@ function buildSaveCodePayload(label, narrativeLog) {
     s: currentScene,
     ip: pageBreakIp ?? ip,
     ct: chapterTitle,
+    cc: getCurrentChapter(),
     ps,
     nl: narrativeLog || [],
     ts: Date.now()
@@ -846,6 +873,7 @@ function decodeSaveCode(code) {
       scene: json.s,
       ip: json.ip,
       chapterTitle: json.ct,
+      currentChapter: json.cc || null,
       playerState: fullPlayerState,
       narrativeLog: json.nl || [],
       awaitingChoice: json.ac || null,
@@ -946,6 +974,7 @@ function importSaveFromJSON(json, targetSlot) {
     s: json.scene,
     ip: json.ip ?? 0,
     ct: json.chapterTitle || "",
+    cc: json.currentChapter || null,
     ps: deltaPs,
     nl: json.narrativeLog || [],
     ts: json.timestamp || Date.now()
@@ -1043,6 +1072,9 @@ async function restoreFromSave(save, {
   setPageBreakIp(null);
   if (save.chapterTitle) {
     setChapterTitle2(save.chapterTitle);
+  }
+  if (save.currentChapter) {
+    setCurrentChapter(save.currentChapter);
   }
   clearNarrative2();
   applyTransition2();
@@ -1163,23 +1195,6 @@ function purchaseSkill(key) {
   playerState.essence = essence - entry.essenceCost;
   grantSkill(k);
   return true;
-}
-
-// src/systems/journal.ts
-function addJournalEntry(text, type = "entry", unique = false) {
-  if (!Array.isArray(playerState.journal)) playerState.journal = [];
-  const normalised = text.trim();
-  if (unique && playerState.journal.some((e) => e.text === normalised && e.type === type)) {
-    return false;
-  }
-  playerState.journal.push({ text: normalised, type, timestamp: Date.now() });
-  return true;
-}
-function getJournalEntries() {
-  return Array.isArray(playerState.journal) ? playerState.journal : [];
-}
-function getAchievements() {
-  return getJournalEntries().filter((e) => e.type === "achievement");
 }
 
 // src/systems/procedures.ts
@@ -1423,6 +1438,7 @@ registerCommand("*title", (t) => {
   const raw = t.replace(/^\*title\s*/, "").trim();
   const interpolated = cb.formatText ? cb.formatText(raw).replace(/<[^>]+>/g, "") : raw;
   cb.setChapterTitle(interpolated);
+  setCurrentChapter(interpolated);
   advanceIp();
 });
 registerCommand("*set_game_title", (t) => {
@@ -1463,17 +1479,40 @@ registerCommand("*goto", (t) => {
   setIp(labels[label]);
 });
 registerCommand("*system", (t) => {
-  if (t.trimEnd() === "*system") {
-    const parsed = parseSystemBlock(ip, { currentLines });
+  const rest = t.replace(/^\*system\s*/, "");
+  if (rest.trimEnd() === "") {
+    const parsed = parseSystemBlock(ip, { currentLines }, "");
     if (!parsed.ok) {
       cb.showEngineError(`Unclosed *system block in "${currentScene}". Add *end_system.`);
       setIp(currentLines.length);
       return;
     }
-    cb.addSystem(parsed.text);
+    cb.addSystem(parsed.text, parsed.label);
     setIp(parsed.endIp);
+  } else if (rest.trim().startsWith("[")) {
+    const labelMatch = rest.trim().match(/^\[([^\]]+)\](.*)/s);
+    if (labelMatch) {
+      const label = labelMatch[1].trim();
+      const afterLabel = labelMatch[2].trim();
+      if (afterLabel === "") {
+        const parsed = parseSystemBlock(ip, { currentLines }, rest);
+        if (!parsed.ok) {
+          cb.showEngineError(`Unclosed *system block in "${currentScene}". Add *end_system.`);
+          setIp(currentLines.length);
+          return;
+        }
+        cb.addSystem(parsed.text, label);
+        setIp(parsed.endIp);
+      } else {
+        cb.addSystem(afterLabel, label);
+        advanceIp();
+      }
+    } else {
+      cb.addSystem(rest.trim());
+      advanceIp();
+    }
   } else {
-    cb.addSystem(t.replace(/^\*system\s*/, "").trim());
+    cb.addSystem(rest.trim());
     advanceIp();
   }
 });
@@ -2073,16 +2112,17 @@ function addParagraph(text, cls = "narrative-paragraph") {
   _narrativeContent.insertBefore(p, _choiceArea);
   _narrativeLog.push({ type: "paragraph", text });
 }
-function addSystem(text) {
+function addSystem(text, label) {
   const div = document.createElement("div");
   const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
   div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
+  const blockLabel = label ? label : "SYSTEM";
   const paras = formatText(text).replace(/\\n/g, "\n").split("\n");
   const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
-  div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
+  div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
   _narrativeContent.insertBefore(div, _choiceArea);
-  _narrativeLog.push({ type: "system", text });
+  _narrativeLog.push({ type: "system", text, ...label ? { systemLabel: label } : {} });
 }
 function clearNarrative() {
   for (const el of [..._narrativeContent.children]) {
@@ -2228,9 +2268,10 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? "");
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
         div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
+        const blockLabel = entry.systemLabel ? entry.systemLabel : "SYSTEM";
         const paras = formatText(entry.text).replace(/\\n/g, "\n").split("\n");
         const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
-        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
+        div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }
@@ -2501,10 +2542,33 @@ function buildLogTabHtml() {
     achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Achievements</div><ul class="skill-accordion-list" style="margin-bottom:14px;">${achvAccordionItems}</ul>`;
   }
   if (jentries.length > 0) {
-    const journalItems = [...jentries].reverse().map(
-      (j) => `<li class="journal-entry">${escapeHtml(j.text)}</li>`
-    ).join("");
-    achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Journal</div><ul class="journal-list">${journalItems}</ul>`;
+    const chapterOrder = [];
+    const chapterMap = {};
+    for (const j of jentries) {
+      const ch = j.chapter || "Prologue";
+      if (!chapterMap[ch]) {
+        chapterMap[ch] = [];
+        chapterOrder.push(ch);
+      }
+      chapterMap[ch].push(j);
+    }
+    const orderedChapters = [...chapterOrder].reverse();
+    const chapterAccordions = orderedChapters.map((ch) => {
+      const entries = chapterMap[ch];
+      const items = [...entries].reverse().map(
+        (j) => `<li class="journal-entry">${escapeHtml(j.text)}</li>`
+      ).join("");
+      return `<li class="skill-accordion">
+        <button class="skill-accordion-btn">
+          <span class="skill-accordion-name">${escapeHtml(ch)}</span>
+          <span class="skill-accordion-chevron">\u25BE</span>
+        </button>
+        <div class="skill-accordion-desc" style="display:none;">
+          <ul class="journal-list">${items}</ul>
+        </div>
+      </li>`;
+    }).join("");
+    achievementsHtml += `<div class="status-label status-section-header" style="margin-bottom:8px;">Journal</div><ul class="skill-accordion-list">${chapterAccordions}</ul>`;
   }
   if (glossaryRegistry.length > 0) {
     const glossaryItems = glossaryRegistry.map(
@@ -3297,41 +3361,6 @@ function wireCharCreation() {
       }
     });
   });
-  const sceneBtns = [..._charOverlay.querySelectorAll(".scene-toggle-btn")];
-  const sceneHint = _charOverlay.querySelector("#scene-toggle-hint");
-  const SCENE_HINTS = {
-    tutorial: "Recommended for new players",
-    prologue: "Skip straight to the story"
-  };
-  function selectScene(btn) {
-    sceneBtns.forEach((b) => {
-      b.classList.remove("selected");
-      b.setAttribute("aria-checked", "false");
-      b.setAttribute("tabindex", "-1");
-    });
-    btn.classList.add("selected");
-    btn.setAttribute("aria-checked", "true");
-    btn.setAttribute("tabindex", "0");
-    if (sceneHint) sceneHint.textContent = SCENE_HINTS[btn.dataset.scene ?? ""] ?? "";
-  }
-  sceneBtns.forEach((btn) => {
-    btn.addEventListener("click", () => selectScene(btn));
-    btn.addEventListener("keydown", (e) => {
-      const idx = sceneBtns.indexOf(btn);
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        e.preventDefault();
-        selectScene(sceneBtns[(idx + 1) % sceneBtns.length]);
-        sceneBtns[(idx + 1) % sceneBtns.length].focus();
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        selectScene(sceneBtns[(idx - 1 + sceneBtns.length) % sceneBtns.length]);
-        sceneBtns[(idx - 1 + sceneBtns.length) % sceneBtns.length].focus();
-      } else if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        selectScene(btn);
-      }
-    });
-  });
   function updateBeginBtn() {
     const ok = !validateName(_inputFirstName.value, "First name") && !validateName(_inputLastName.value, "Last name") && !!_charOverlay.querySelector(".pronoun-card.selected");
     _charBeginBtn.disabled = !ok;
@@ -3340,8 +3369,7 @@ function wireCharCreation() {
     if (validateName(_inputFirstName.value, "First name") || validateName(_inputLastName.value, "Last name")) return;
     const selected = _charOverlay.querySelector(".pronoun-card.selected");
     if (!selected) return;
-    const sceneSelected = _charOverlay.querySelector(".scene-toggle-btn.selected");
-    const startScene = sceneSelected?.dataset.scene ?? "tutorial";
+    const startScene = "prologue";
     _charOverlay.classList.add("hidden");
     const overlay = _charOverlay;
     if (typeof overlay._trapRelease === "function") {
@@ -3381,14 +3409,6 @@ function showCharacterCreation() {
     c.setAttribute("aria-checked", def ? "true" : "false");
     c.setAttribute("tabindex", def ? "0" : "-1");
   });
-  _charOverlay.querySelectorAll(".scene-toggle-btn").forEach((b) => {
-    const def = b.dataset.scene === "tutorial";
-    b.classList.toggle("selected", def);
-    b.setAttribute("aria-checked", def ? "true" : "false");
-    b.setAttribute("tabindex", def ? "0" : "-1");
-  });
-  const hint = _charOverlay.querySelector("#scene-toggle-hint");
-  if (hint) hint.textContent = "Recommended for new players";
   _charOverlay.classList.remove("hidden");
   _charOverlay.style.opacity = "1";
   requestAnimationFrame(() => {
@@ -3623,6 +3643,105 @@ function wireSaveUI(dom, opts) {
   }
 }
 
+// src/ui/tooltip.ts
+var _tooltip = null;
+var _backdrop = null;
+var _activeTerm = null;
+function createTooltipDom() {
+  _tooltip = document.createElement("div");
+  _tooltip.id = "lore-tooltip";
+  _tooltip.className = "lore-tooltip";
+  _tooltip.setAttribute("role", "tooltip");
+  _tooltip.setAttribute("aria-live", "polite");
+  document.body.appendChild(_tooltip);
+  _backdrop = document.createElement("div");
+  _backdrop.className = "lore-tooltip-backdrop";
+  _backdrop.addEventListener("click", hideTooltip);
+  document.body.appendChild(_backdrop);
+}
+function showTooltip(term) {
+  if (!_tooltip) return;
+  const text = term.textContent ?? "";
+  const description = term.dataset.tooltip ?? "";
+  const isSheet = window.innerWidth <= 768;
+  _tooltip.innerHTML = `<span class="lore-tooltip-term">${escapeHtml2(text)}</span><span class="lore-tooltip-desc">${escapeHtml2(description)}</span>`;
+  _tooltip.classList.toggle("lore-tooltip--sheet", isSheet);
+  _tooltip.classList.add("lore-tooltip--visible");
+  if (isSheet) {
+    if (_backdrop) _backdrop.classList.add("lore-tooltip-backdrop--visible");
+  } else {
+    positionAboveTerm(term);
+  }
+  _activeTerm = term;
+}
+function positionAboveTerm(term) {
+  if (!_tooltip) return;
+  const rect = term.getBoundingClientRect();
+  const ttWidth = Math.min(260, window.innerWidth - 20);
+  _tooltip.style.width = `${ttWidth}px`;
+  _tooltip.style.maxWidth = `${ttWidth}px`;
+  let left = rect.left + rect.width / 2 - ttWidth / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - ttWidth - 8));
+  _tooltip.style.left = `${left + window.scrollX}px`;
+  _tooltip.style.top = "-9999px";
+  const ttHeight = _tooltip.offsetHeight || 80;
+  const spaceAbove = rect.top;
+  const topPos = spaceAbove >= ttHeight + 8 ? rect.top + window.scrollY - ttHeight - 8 : rect.bottom + window.scrollY + 8;
+  _tooltip.style.top = `${topPos}px`;
+}
+function hideTooltip() {
+  if (!_tooltip) return;
+  _tooltip.classList.remove("lore-tooltip--visible");
+  if (_backdrop) _backdrop.classList.remove("lore-tooltip-backdrop--visible");
+  _activeTerm = null;
+}
+function escapeHtml2(val) {
+  return String(val ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function initTooltip(narrativeContent) {
+  createTooltipDom();
+  narrativeContent.addEventListener("mouseenter", (e) => {
+    const term = e.target.closest(".lore-term");
+    if (!term) return;
+    showTooltip(term);
+  }, true);
+  narrativeContent.addEventListener("mouseleave", (e) => {
+    const term = e.target.closest(".lore-term");
+    if (!term) return;
+    hideTooltip();
+  }, true);
+  narrativeContent.addEventListener("click", (e) => {
+    const term = e.target.closest(".lore-term");
+    if (!term) return;
+    e.stopPropagation();
+    if (_activeTerm === term && _tooltip?.classList.contains("lore-tooltip--visible")) {
+      hideTooltip();
+    } else {
+      showTooltip(term);
+    }
+  });
+  narrativeContent.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const term = e.target.closest(".lore-term");
+    if (!term) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (_activeTerm === term && _tooltip?.classList.contains("lore-tooltip--visible")) {
+      hideTooltip();
+    } else {
+      showTooltip(term);
+    }
+  });
+  document.addEventListener("click", () => {
+    hideTooltip();
+  });
+  window.addEventListener("resize", () => {
+    if (_activeTerm && _tooltip?.classList.contains("lore-tooltip--visible")) {
+      showTooltip(_activeTerm);
+    }
+  }, { passive: true });
+}
+
 // engine.ts
 var sceneCache = /* @__PURE__ */ new Map();
 var labelsCache = /* @__PURE__ */ new Map();
@@ -3751,6 +3870,7 @@ async function boot() {
     addImage
   });
   wireSaveUI(dom, { scheduleStatsRender, setChapterTitle });
+  initTooltip(dom.narrativeContent);
   try {
     await parseStartup(fetchTextFile, evalValue);
     captureStartupDefaults();

@@ -37,12 +37,13 @@ function getGlossaryRegexes(): CompiledGlossaryEntry[] {
 }
 
 export interface NarrativeLogEntry {
-  type:     string;
-  text?:    string;
-  varName?: string;
-  prompt?:  string;
-  value?:   string | null;
-  label?:   string;    // chapter-card label (e.g. "Prologue", "Chapter 1")
+  type:        string;
+  text?:       string;
+  varName?:    string;
+  prompt?:     string;
+  value?:      string | null;
+  label?:      string;    // chapter-card label (e.g. "Prologue", "Chapter 1")
+  systemLabel?: string;  // custom label for system blocks (e.g. "WARNING", "ALERT")
   // image-specific fields
   alt?:     string;
   width?:   number | null;
@@ -234,18 +235,19 @@ export function addParagraph(text: string, cls = 'narrative-paragraph'): void {
 // ---------------------------------------------------------------------------
 // addSystem — renders a system block
 // ---------------------------------------------------------------------------
-export function addSystem(text: string): void {
+export function addSystem(text: string, label?: string): void {
   const div       = document.createElement('div');
   const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
   div.className = `system-block${isEssence ? ' essence-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
 
+  const blockLabel = label ? label : 'SYSTEM';
   const paras = formatText(text).replace(/\\n/g, '\n').split('\n');
   const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
-  div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
+  div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
   _narrativeContent.insertBefore(div, _choiceArea);
 
-  _narrativeLog.push({ type: 'system', text });
+  _narrativeLog.push({ type: 'system', text, ...(label ? { systemLabel: label } : {}) });
 }
 
 // ---------------------------------------------------------------------------
@@ -455,9 +457,10 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? '');
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
         div.className = `system-block${isEssence ? ' essence-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
+        const blockLabel = entry.systemLabel ? entry.systemLabel : 'SYSTEM';
         const paras = formatText(entry.text).replace(/\\n/g, '\n').split('\n');
         const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
-        div.innerHTML = `<span class="system-block-label">[ SYSTEM ]</span><div class="system-block-text">${formatted}</div>`;
+        div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

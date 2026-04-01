@@ -32,6 +32,7 @@ import {
 } from './src/ui/narrative.js';
 import { init as initPanels, runStatsScene, showEndingScreen } from './src/ui/panels.js';
 import { init as initOverlays, trapFocus, showToast, showSplash } from './src/ui/overlays.js';
+import { initTooltip } from './src/ui/tooltip.js';
 
 // ---------------------------------------------------------------------------
 // Caches shared by interpreter and engine
@@ -143,6 +144,7 @@ async function boot(): Promise<void> {
     runStatsScene, fetchTextFile, getNarrativeLog, addImage,
   });
   wireSaveUI(dom, { scheduleStatsRender, setChapterTitle });
+  initTooltip(dom.narrativeContent);
 
   try {
     await parseStartup(fetchTextFile, evalValue);

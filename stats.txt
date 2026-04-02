@@ -10,8 +10,7 @@
 *stat next_lvl "To Next Level"
 
 *stat_group "Vitals"
-*stat_color health accent-green
-*stat health "Health"
+*stat status "Status"
 *stat mana "Mana"
 *stat max_mana "Max Mana"
 

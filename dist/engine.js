@@ -2117,10 +2117,10 @@ function addSystem(text, label) {
   const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
   div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
-  const blockLabel = label ? label : "SYSTEM";
+  const labelHtml = label ? `<span class="system-block-label">[ ${escapeHtml(label)} ]</span>` : "";
   const paras = formatText(text).replace(/\\n/g, "\n").split("\n");
   const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
-  div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
+  div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
   _narrativeContent.insertBefore(div, _choiceArea);
   _narrativeLog.push({ type: "system", text, ...label ? { systemLabel: label } : {} });
 }
@@ -2268,10 +2268,10 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? "");
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
         div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
-        const blockLabel = entry.systemLabel ? entry.systemLabel : "SYSTEM";
+        const labelHtml = entry.systemLabel ? `<span class="system-block-label">[ ${escapeHtml(entry.systemLabel)} ]</span>` : "";
         const paras = formatText(entry.text).replace(/\\n/g, "\n").split("\n");
         const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
-        div.innerHTML = `<span class="system-block-label">[ ${escapeHtml(blockLabel)} ]</span><div class="system-block-text">${formatted}</div>`;
+        div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

@@ -2117,7 +2117,7 @@ function addSystem(text, label) {
   const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
   div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
-  const labelHtml = label ? `<span class="system-block-label">[ ${escapeHtml(label)} ]</span>` : "";
+  const labelHtml = label ? `<span class="system-block-label">[${escapeHtml(label)}]</span>` : "";
   const paras = formatText(text).replace(/\\n/g, "\n").split("\n");
   const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
   div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
@@ -2268,7 +2268,7 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
         const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? "");
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
         div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
-        const labelHtml = entry.systemLabel ? `<span class="system-block-label">[ ${escapeHtml(entry.systemLabel)} ]</span>` : "";
+        const labelHtml = entry.systemLabel ? `<span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span>` : "";
         const paras = formatText(entry.text).replace(/\\n/g, "\n").split("\n");
         const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
         div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;

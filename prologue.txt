@@ -1,14 +1,5 @@
-*title [Forward] A Mostly Accurate Retelling
 
-If you're reading this, it means that we were successful in our mission to time travel, but we were wrong in thinking that we would keep our memories of the alternate timeline. Thankfully, Callie (yes, [i]that[/i] Callie) is a genius and figured out how to store this data safely, so you can read about what happened the first time around and get a leg up on the things that are to come that we wish we had.
-
-I'll start at the very beginning, since otherwise you won't have the context for the really big things that happen later. Also, don't worry about the length of time that it takes to read through this message. Callie said that while you have this screen open, you'll be in some kind of time dilation where for every hour you experience, less than a second passes outside. She tried explaining it to me a few times, but you know how Callie is when she tries to dumb things down for us.
-
-Anyway, here's how it all happened.
-
-*page_break Eight years ago...
-
-*title [Chapter 1] The Hargrove Institute
+*title [Chapter 1] Arrival at Hargrove Institute
 
 The campus of the Hargrove Institute for System Studies is... underwhelming. Stepping down from the bus, you genuinely wonder if you've been dropped off at some remote satellite location rather than the main campus. The grounds consist of a handful of brick buildings surrounded by tidy landscaping and completely lacking any and all grandeur you had anticipated from this school.
 
@@ -22,261 +13,293 @@ Regardless, you're finally here, and you feel...
 
 *choice
   #A little disappointed, but still happy to be here.
-    You spent years hyping this place up in your head, so walking into what essentially looks like a corporate business park is a pretty massive letdown. But the plain metal sign by the entrance confirms you made it to the right address, and you survived a brutal selection process to claim your spot in this class. If the country's elite hunters prefer plain concrete over dramatic aesthetics, you will just have to deal with it. Besides, you definitely can't afford the bus fare back home anyway.
+    You spent years hyping this place up in your head, so walking into what essentially looks like a corporate business park is a pretty massive letdown. But the plain metal sign by the entrance confirms you made it to the right address, and you were selected to claim your spot in this class. If the country's elite rankers prefer plain concrete over dramatic aesthetics, you'll just have to deal with it, won't you? Besides, you can't afford the bus fare back home anyway.
+    *page_break
     *goto callie_arrives
 
   #Elated! By the time you leave, you'll be an S-ranker!
-    Absolutely nothing is going to put a dent in your mood right now. You spent your entire adolescence obsessing over this exact goal, and getting the acceptance letter was only the first step. Stepping onto this completely ordinary pavement means your career as a hunter has officially started, and a boring campus layout is not going to stop you from climbing straight to the S-rank leaderboards. You are more than ready to get to work.
+    Absolutely nothing is going to put a dent in your mood right now. You spent your entire adolescence obsessing over this exact goal, and getting the acceptance letter was only the first step. Stepping onto this completely ordinary pavement means your career as a ranker has officially started, and a boring campus layout is not going to stop you from climbing straight to the leaderboards. You are more than ready to get to work.
+    *page_break
     *goto callie_arrives
 
   #Irritated. You feel misled about this place.
-    This mundane setup has to be the real reason the government enforces such strict media blackouts around hunter academies. They clearly want to hide the embarrassing fact that their premier training facility looks exactly like a mid-level accounting firm. You know for a fact that generations of insanely strong fighters have graduated from this exact program, so the boring exterior just doesn't make any sense. There has to be some kind of hidden layer to this place that you are missing.
+    This mundane setup has to be the real reason the government enforces such strict media blackouts around System academies. They clearly want to hide the embarrassing fact that their premier training facility looks exactly like a mid-level accounting firm.
+   
+    However, you know for a fact that generations of insanely strong fighters have graduated from this exact program, so there has to be some kind of hidden layer to this place that you are missing.
+    *page_break
     *goto callie_arrives
 
 *label callie_arrives
 
-"${first_name}!" you hear someone call out.
+"${first_name}!" you hear a familiar voice call out.
 
-Callie jogs up to you with three separate heavy duffels swinging wildly from her shoulders. She is wearing a bright red hoodie and black leggings, her blonde hair pulled back into a hasty, messy ponytail.
+Callie Owens jogs up to you with three separate heavy duffels swinging wildly from her shoulders. She is wearing a bright red hoodie and black leggings, her blonde hair pulled back into a hasty, messy ponytail.
 
 "Hey, Callie," you say with a smile. "I thought you weren't supposed to get here until tomorrow."
 
-She drops her bags and bends over to rest her hands on her knees, taking a moment to catch her breath before answering. "Mom and Dad decided my college drop-off was the perfect opportunity to go on a cruise, so they dumped me here a day early to catch their flight."
+She drops her heavy duffels onto the pavement and bends over, resting her hands on her knees to catch her breath. "Yeah, but Dad let me resurrect one of the junkers in the yard," she says. "I pointed out that if I got it running, it would get him out of having to drive me up here."
 
-"Haven't you been begging them to take you on a cruise for years?" you ask.
+"Ah," you say.
 
-Callie frowns at the reminder. "Yes I have, but it is entirely fine. When I graduate, I will make enough money to go on a cruise whenever I want. I am definitely not taking them, but I will absolutely take you." She offers a quick grin.
+"Yeah," she says, offering a humorless smile. "It didn't take much convincing."
 
-*page_break "Deal!"
+You nod, knowing exactly what she means and feeling the familiar, quiet anger on her behalf in your chest but choose to say nothing.
 
-You have known Callie since sophomore year of high school.
+Callie straightens and rubs the back of her neck, suddenly avoiding your eyes and looking distinctly abashed. "But... I had a bit of a problem because I couldn't get the engine to turn over with the cheap scrap parts I could actually afford. So... I might have gone ahead and selected my class."
 
-During the first few weeks of Introduction to Electronics, she was just the remarkably quiet girl sitting two benches over. She was always punctual, taking her seat before the bell even rang, and she kept her workspace aggressively neat in a room otherwise filled with tangled wire and bad solder. Everything she did was deliberate.
+"Callie!" you say, your voice rising a notch. "We agreed to wait. We were supposed to pick our classes together."
 
-You honestly did not think much of it at the time.
+"I know, I know," she said, wincing. "But I honestly couldn't have gotten it running otherwise, and I needed it to run."
 
-*page_break
+You let out a long breath, fighting back your irritation. You do understand. The alternative would have been sitting for hours in a cramped car with her dad for hours. His car may not have been able to make the trip, and she probably would have had to trigger it anyway. "What level are you?"
 
-The assignment that day was simple enough, designed primarily to build confidence before the difficult material began. Mr. Otieno had walked the class through it twice, instructing everyone to build a basic circuit on a breadboard where a switch controls a light.
+"Just level one," she says quickly, holding up both hands. "I promise. I literally just locked in the class and fixed the car. I haven't done anything else."
 
-You were about halfway through the process and second-guessing your resistor placement when Mr. Otieno abruptly stopped pacing the room.
+The tension bleeds out of your shoulders. "Guessing you chose Artificer?"
 
-He was standing completely still at Callie's bench.
+A genuine, bright grin breaks through her guilt. "You know it."
 
-She was already finished, but her breadboard looked absolutely nothing like the simple diagram provided on the worksheet. Instead of a modest tangle of jumper wire, she had constructed something resembling a miniature, highly organized city. Every single wire was cut to the exact length required, and every component was aligned perfectly parallel or perpendicular to the board. The light was not just switched on; it was actively tracking her hand's movement and smoothly shifting its brightness in response.
+*page_break Chapter 1.1: Holograms and Ice Cream
 
-Mr. Otieno stared at the creation for a long moment.
+*title [Chapter 1.1] Holograms and Milkshakes
 
-"Miss Mercer," he finally said. "Would you like to explain what this is?"
+[b]One Year Ago[/b]
 
-Callie looked up with faint surprise, almost as if she had forgotten the rest of the room existed for the last forty minutes.
+You knew Callie since your senior year of high school, where she spent the first few weeks of Introduction to Electronics as just a quiet girl sitting two benches over. She always claimed her seat before the bell rang and maintained an aggressively neat workspace in a shop choked with tangled wires and rogue solder drops, but otherwise faded into the background.
 
-"It's the assignment," she replied evenly. "Mostly."
+And then came the first hands-on assignment.
 
-*page_break
+Designed primarily to build confidence before the difficult material began, the initial task required everyone to follow a diagram and build a basic circuit where a manual switch controlled a single LED light.
 
-She proceeded to walk him through the entire build, though she might as well have been speaking Greek. You completely lost the thread within the first thirty seconds as she casually discussed passive infrared sensors and the inherent inefficiency of binary switching in low-voltage applications. She was not trying to show off or speak above anyone's head. She just explained her reasoning the same way you would describe your daily commute, assuming everyone else could clearly see the exact same roads.
+You were halfway through the process and actively second-guessing your enrollment in the class when Mr. Ortega let out a low whistle at Callie's bench. She had already finished, but her workstation lacked anything resembling the standard circuit board layout. She had instead constructed a rapidly spinning LED light bar, powered by a tiny motor and battery she had found. As the contraption whirred, the lights projected a perfect, glowing top-down schematic of the exact basic circuit the rest of the class struggled to assemble.
 
-Mr. Otieno nodded along with the careful, deliberate rhythm of a man desperately trying to buy time.
+You, Mr. Ortega, and eventually the entire class stared at the hovering projection for a long while.
 
-The rest of the class had completely stopped working to watch the exchange.
+"Miss Owens," Mr. Ortega finally said. "Would you like to explain what this is?"
 
-"Right," Mr. Otieno said eventually, straightening up and stepping back. "Yes. That's... yes. Full marks, Miss Mercer. Obviously."
+Callie shifted under all of the attention.
 
-Callie accepted this as a completely reasonable outcome and immediately went back to aligning her unused components into a precise little row.
+"It is the assignment," she replied. "Well, mostly."
 
-You looked down at your own breadboard to find your resistor plugged in backward and your solder completely cold.
+She walked him through the entire build, though she might as well have been speaking Greek to the rest of the room. You lost the thread within the first ten seconds as she explained motor synchronization, refresh rates, and how she calculated the rotational timing required to stabilize the projected image. She wasn't trying to show off, even if you first assumed she was. Rather, that's just how Callie's mind worked. When given a task, she couldn't help but take it to the next level. Or sometimes twenty levels ahead, as in that particular case.
 
-When you glanced back over at her, she was fully packed up four minutes before the bell, leaving her workspace exactly as she found it.
+Mr. Ortega nodded along until she finished. "Right," he said, straightening up and stepping back from her bench. "Yes. That is... well that's really great work. Full marks. Obviously."
 
-That was the true beginning of it.
-
-*page_break
-
-The thing you kept coming back to in those early days was the simple fact that she was never mean about her intelligence.
-
-She was just uncomfortably, relentlessly honest. When she told a girl in English class that her essay argument was logically circular, she did it unprompted but without any malice. She delivered the critique the same way someone might point out a piece of spinach stuck in your teeth, viewing it as a genuinely helpful service.
-
-When a group of seniors invited her to their lunch table, she politely declined by explaining that making conversation made it too difficult to focus on chewing her food. They stood there looking as though they had just been slapped, but Callie completely lacked any sense of superiority. There was absolutely no posturing or performance in her behavior. She just stated the truth and always seemed baffled when it landed badly with other people.
-
-*page_break
-
-She arrived at every destination early, ate lunch alone at the exact same table by the window, and always brought the exact same sandwich cut into four perfect triangles.
-
-She did not appear lonely, or if she was, she was completely unaware of the feeling.
-
-You easily could have ignored her the way everyone else did.
+You remember looking at her and feeling...
 
 *choice
-  #You started sitting near her at lunch. Not with her, just near her.
-    You did not want to crowd her space, but you wanted to be close enough that the option to talk was there if she ever wanted it.
-    *goto lunch_approach
+  #Captivated by her.
+    The messy workbench and the spinning motor faded away in your mind, leaving only the bright intensity in her eyes as she explained her creation. You realized behind her quiet demeanor was absolute brilliance. You wanted nothing more than to catch her attention.
+    *set first_impression "attraction"
+    *goto pay_attention
 
-#You went to the library and checked out a couple of books.
-    You had a vague feeling about her behavior and wanted to properly understand it before making any kind of approach.
-    *goto library_approach
+  #Suddenly very aware of your own limitations.
+    You stared down at your half-finished, pathetic little circuit board, then back up at her spinning hologram. The gulf between your abilities was wide and more than a little intimidating. If her mind worked like this on a starter assignment, you had absolutely no business sitting in the same room with her. You shrank back against your stool, praying Mr. Ortega wouldn't ask to see your dismal progress next.
+    *set first_impression "intimidated"
+    *goto pay_attention
 
-#You asked around about her first.
-    You were not looking for gossip, just some basic context from anyone who might know her better.
-    *goto ask_around
+  #Inspired.
+    Her creation blew the ceiling completely off everyone's expectations. You looked at your own mess of tangled wires attached to your board and felt a sudden, burning urge to tear them apart and start over. You wanted to push the limits, to see what else you could build if you threw out the instruction manual entirely like she did.
+    *set first_impression "inspired"
+    *goto pay_attention
 
-*label lunch_approach
+  #Puzzled.
+    Why would someone with a mind like that hide in the back row of an entry-level shop class? Her spinning schematic was undeniably brilliant, yet it felt like using a sledgehammer to drive a thumbtack. You needed to figure out exactly what made her tick.
+    *set first_impression "curious"
+    *goto pay_attention
 
-It took nine solid days of sitting nearby before she actually acknowledged your presence.
+*label pay_attention
 
-You were not actively trying to force a reaction out of her. You simply showed up, ate your food, and read a book while minding your own business. On the fourth day, she wordlessly moved her thermos three inches to the left to make a little extra room on the table.
+Two days later, the sky opened up immediately after the final bell, and a sudden, freezing downpour buffeted the town. You were driving home, making a mental note for the seventh time in the last six months to get new wipers, when you spotted a lone figure trudging along the shoulder of the road. Her heavy backpack dragged her down, and the bright red hoodie you recognized from shop class was entirely soaked through. You pulled over and popped open the passenger door. She hesitated for only a fraction of a second before caving to the bitter cold and climbing inside.
 
-On day nine, she finally spoke without bothering to look up from her meal. "You don't talk much."
+"Thanks," she said through chattering teeth and shivers as she dumped her dripping bag onto the floorboard. Water pooled on the rubber mat.
 
-"I didn't want to bother you," you replied.
-
-She considered this statement seriously for a moment. "You're not bothering me. You're very quiet, and I don't mind quiet."
-
-"Good to know," you said.
-
-"I'm Callie."
-
-"I know. I'm ${first_name}."
-
-"I know," she said, before taking another bite of her sandwich.
-
-*goto callie_payoff
-
-*label library_approach
-
-You checked out two books and read them over the course of a weekend, occasionally experiencing a quiet moment of clarity as certain behavioral traits finally clicked into place.
-
-You never told Callie about the research. You just wanted to ensure that when you finally spoke to her, you would not mistake her blunt honesty for hostility or accidentally treat her like a puzzle that needed solving.
-
-The following Monday, you sat down one seat over from her at a slight angle, offering company without creating an imposition.
-
-She did not look up immediately, but when she did, she pointed out that you had moved into her light a little bit.
-
-You quickly shifted your chair and asked if the new angle was better.
-
-She checked the light coming through the window and nodded. "Yes. Thank you."
-
-Her voice was so straightforward and unguarded that it caught you completely by surprise. You had been expecting a complex puzzle, but she was just a person.
-
-*goto callie_payoff
-
-*label ask_around
-
-You found out approximately nothing useful from your classmates.
-
-A guy in your history class confidently declared that she was weird, treating it as a completely sufficient answer. Your friend Marcus mentioned a rumor that she was a genius, while a girl named Priya recalled a time Callie spent twenty minutes correcting a teacher's grading error without showing a single ounce of triumph.
-
-That particular story told you everything you really needed to know.
-
-You sat down at her table the very next day, prompting her to look up, register your presence, and immediately look back at her food.
-
-"That seat's fine," she noted casually.
-
-"Thanks," you said.
-
-"I wasn't being polite. I just meant the chair is actually level, since some of them rock."
-
-"Good to know."
-
-She ate her food while you ate yours in relative silence. It was an incredibly small conversation, but you left the cafeteria looking forward to the next one.
-
-*goto callie_payoff
-
-*label callie_payoff
-
-It took a few weeks of consistent lunches to finally establish a comfortable rhythm together.
-
-Callie completely ignored the concept of small talk because she genuinely did not understand its purpose, a fact she stated directly the very first time you tried asking about her weekend.
-
-She pointed out that asking generic questions was a very long way around actually having a conversation, suggesting you should just talk to her if you had something to say.
-
-So you took her advice and talked about the things that actually interested you. She listened with an intense, focused attention that you eventually realized was just her standard way of processing information. She never faked her interest, meaning you always knew exactly when she was genuinely invested in a topic.
-
-She also remembered the smallest details about you, like your absolute hatred of ice in your drinks and your strange habit of tapping a pen three times before writing. She never explicitly mentioned noticing these quirks; she simply accommodated them without a word.
-
-By the time junior year started, she had become your closest friend. It happened the same way most important things do: gradually at first, and then all at once.
-
-*page_break
-
-A sharp whistle cuts across the lawn, dragging your attention violently back to the present moment.
-
-A woman stands near the main building with two fingers pressed to her lips, radiating the amused energy of an administrator who has corralled confused freshmen a hundred times before. She wears the universal costume of institutional authority, complete with a heavy clipboard and a branded lanyard.
-
-"New students!" she calls out across the grass. "Over here, please. Leave your bags where they are, and they will be brought directly to your rooms."
-
-Callie straightens up so fast that all three of her heavy duffels slide dangerously off her shoulders. She manages to catch two of them, but the third hits the grass with a heavy thud, and she simply leaves it behind.
-
-"Coming," she says to nobody in particular.
-
-You fall into step beside her as the twenty or so new arrivals slowly converge, all of you silently sizing each other up without wanting to be caught staring.
-
-The woman introduces herself as Director Osei without bothering to stop her brisk walk toward the building's entrance. She speaks with the practiced cadence of someone who is entirely used to rooms going completely silent the moment she opens her mouth.
-
-"Welcome to Hargrove. I know exactly what it looks like from out here," she says, letting a brief pause hang in the air. "It's supposed to."
-
-*page_break
-
-The building looks exactly like an uninspired administrative block from the outside, featuring beige brick walls and completely drawn blinds. A remarkably plain sign beside the door reads RECORDS AND ENROLLMENT.
-
-Inside, you find a short corridor containing an empty reception desk, a dying potted fern, and a linoleum floor that clicks sharply under your boots.
-
-Director Osei pushes her way through a set of double doors at the end of the hall without slowing down.
-
-You follow her directly into a room that contains absolutely nothing.
-
-There are no windows, no pieces of furniture, and no other doors leading out. It is just bare concrete walls, a matching ceiling, and a floor featuring a subtle seam that runs around the edge of the room in a perfect rectangle.
-
-The double doors swing shut behind the very last student with a heavy, final thunk as the locks engage.
-
-"Feet together, please," Director Osei commands. "Step away from the edges."
-
-*page_break
-
-The entire floor suddenly drops out from under you.
-
-It is not a terrifying freefall, but rather a smooth and massive descent that leaves your stomach lagging a half-second behind the rest of your body. Someone in the back of the group lets out a startled gasp as the concrete walls slide rapidly upward, making you realize this was never a room at all. It is a massive elevator shaft.
-
-The daylight filtering in from above shrinks from a bright rectangle to a thin line before vanishing entirely.
-
-As you pass the third and fourth floors, a pale amber glow begins rising from the depths to meet the descending platform.
-
-Five floors underground, the massive elevator slows its descent and comes to a complete halt with a deep, satisfied hum.
-
-The air down here feels entirely different against your skin. It is remarkably cool and still, carrying the heavy, ozone-rich scent of an impending thunderstorm that has been tightly compressed into the space. Whatever facility exists down here is clearly drawing a massive amount of power.
-
-*page_break
-
-The underground hallway looks absolutely nothing like the mundane administrative building resting on the surface.
-
-The arched ceiling sits several meters high and is lined with glowing amber panels that pulse softly like a slow heartbeat. The dark stone walls are dressed in sleek metal conduits and thick cable lines, creating an atmosphere that feels simultaneously ancient and brutally functional. Your footsteps fail to echo on the polished concrete floor, the sound simply swallowed up by the vast space.
-
-Director Osei leads the group forward in complete silence.
-
-Callie suddenly appears right at your elbow.
-
-"Okay," she whispers into the quiet space. "I take it back. This is definitely more."
-
-You glance over to see her staring straight ahead, completely failing to hide a massive grin.
-
-The hallway curves gently to the right, following the natural shape of the bedrock, before opening up entirely.
-
-*page_break
-
-The underground auditorium is carved directly into the living rock and looks large enough to seat at least three hundred people. Tiered seating descends steeply toward a wide circular stage, while an enormous, glowing amber seal hangs suspended above the space. It proudly displays the name of the Hargrove Institute for System Studies.
-
-The Latin phrase engraved underneath the seal does not translate to anything simple or inspirational like knowledge or excellence.
-
-It translates to: [i]What hunts must first learn to be still.[/i]
-
-Director Osei takes the stage without any fanfare, having abandoned her clipboard somewhere along the way. She clearly does not need it down here.
-
-"Sit," she instructs the group. "And listen carefully, because I will only say this once."
+You cranked the heater up to full blast.
 
 *choice
-  #You find a seat near the front. You want to hear every single word.
-    You are absolutely not missing anything important on your very first day in this place.
-    *goto orientation_front
+  #"Miss the bus?"
+    "Miss the bus?" you asked.
+   
+    You pulled back onto the road while she squeezed the rainwater out of her blonde ponytail.
 
-#You hang back and find a seat right next to Callie.
-    Whatever Director Osei is about to say, you would much rather process the information with your best friend beside you.
-    *goto orientation_callie
+    "The bus route takes forty-five minutes to cover a distance I can walk in twenty," Callie explained. "It's inefficient." She glared at the rain battering against the windshield. "Usually."
+    *goto car_ride_continue
+   
+  #"So... do you often randomly build holograms in your spare time?"
+    "So... do you often randomly build holograms in your spare time?" you asked.
+   
+    You pulled back onto the road while she squeezed the rainwater out of her blonde ponytail.
+
+    "I may have gone a little far with that one," she admitted, looking slightly abashed. "I have a tendency to want to push boundaries to see what I can do, and sometimes it comes over me at inappropriate times, like during class. I didn't mean to cause such a big commotion."
+    *goto commotion
+
+  #"Feel free to pick a radio station."
+    You pulled back onto the road while she squeezed the rainwater out of her blonde ponytail.
+
+    Callie didn't hesitate. Her hand shot out and spun the dial away from your default station, landing immediately on a frantic punk rock broadcast. She leaned back and tapped her fingers against her damp jeans in perfect rhythm.
+    *goto car_ride_continue
+
+*label commotion
+
+*label commotion
+
+*choice
+  #"I thought it was really cool."
+    "I thought it was really cool," you said. "Definitely better than watching everyone else struggle to wire a basic switch."
+
+    Callie's head snapped toward you, her shivering momentarily forgotten. "Really?" Her eyes lit up with sudden, eager energy. "Thank you. I spent three nights calibrating the motor synchronization to get the refresh rate exactly right."
+
+    She slumped back against the seat and pulled her wet sleeves down over her hands. "Everyone else acted so weird about it after class. It felt like they were actively angry with me, and I honestly couldn't figure out why. I just followed the prompt to its logical conclusion. Is it my fault they stopped at the bare minimum?"
+    *goto car_ride_continue
+
+  #"It made the rest of us look bad."
+    "It made the rest of us look bad," you said.
+
+    Callie shrank back against the passenger door, the sudden movement wringing another few drops of rainwater from her hoodie. She stared down at her lap, her cheeks flushing red.
+
+    "I didn't mean to do that," she said softly, her voice barely audible over the noise of the heater. "I wasn't trying to show anyone up or make anyone feel stupid. Like I said, I just get caught up in the build and forget there are other people in the room."
+    *goto car_ride_continue
+
+  #Say nothing.
+    You kept your eyes on the slick road, letting the rhythmic squeak of your dying windshield wipers fill the silence. Callie pulled her knees up to her chest, and the tension in her shoulders slowly unwound as she realized you weren't going to press the issue.
+    *goto car_ride_continue
+ 
+*label car_ride_continue
+
+You turned down the main road leading toward her neighborhood. Callie wiped a circle of condensation off the passenger window and peered out at the grey afternoon. The neon sign for the Frosty Mug cut through the gloom.
+
+"If we survive this storm," Callie said, her eyes fixed on the glowing storefront. "I will buy you a milkshake to repay the rescue mission."
+
+You laughed out loud. Your brother, Michael, worked the afternoon shift at the Frosty Mug. You knew for an absolute fact he was currently trapped behind the counter wearing a ridiculous paper hat and a branded apron. Taking her up on the offer meant securing a free dairy-free shake alongside premium blackmail material against your brother.
+
+*choice
+  #"We are absolutely getting ice cream. I need to mock my brother."
+    *goto ice_cream_parlor
+
+  #"Maybe next time. Let's get you dry and home."
+    *goto drop_callie_home
+
+*label ice_cream_parlor
+
+"We are absolutely getting ice cream," you said. "Plus, there's the added benefit of getting to mock my brother."
+
+You hit your turn signal and pulled into the Frosty Mug parking lot. The bell above the door jingled as the two of you stepped inside and into the wonderful aroma of warm spun sugar and waffle cones.
+
+Behind the counter, Michael stood hunched over a cash register. He wore a striped apron and a paper hat folded into a sharp peak. He looked up, and his mandatory customer-service smile died the second he saw you.
+
+You grinned.
+
+"You have got to be kidding me," Michael said, shoulders deflating.
+
+"My friend Callie here offered to buy me a milkshake," you said, resting your forearms on the counter. "I couldn't pass up the chance to see my little brother."
+
+Callie stepped up beside you, still dripping rainwater onto the linoleum floor. "I like your hat," she said with complete sincerity.
+
+Michael stared at her for a second, visibly confused. He sighed and tapped the register screen. "Thanks. What can I get you?"
+
+Callie tipped her head back to study the massive, brightly colored menu board stretching across the entire back wall. Her eyes darted across dozens of flavor combinations and shrank back slightly, appearing slightly overwhelmed by the sheer volume of choices.
+
+"Umm... What would you recommend?" she asked. "This is my first time here."
+
+Michael shrugged. "Everything is good."
+
+"Real helpful," you said with a frown, then bumped your shoulder against hers.
+
+*choice
+  #"You can't go wrong with vanilla."
+    "You can't go wrong with standard vanilla," you said. "It's a classic for a reason. Safe, reliable, and entirely predictable."
+
+    Callie wrinkled her nose and shook her head, scattering a few rogue raindrops onto the counter. "Vanilla's boring. I want something with actual texture." She pointed at a glossy poster advertising a seasonal brownie bowl. "Can you take that and just blend the whole thing into a cup?"
+    *goto order_shake
+
+  #"They make a coffee shake that's really good."
+    "Do you like coffee?" you asked. "They make a coffee shake that's really good. It has espresso blended straight into the ice cream."
+
+    Callie's eyes lit up. The overwhelming menu suddenly seemed much less intimidating when presented with a purely functional option. "That actually sounds perfect. I have a project that I want to finish testing tonight anyway." She turned to Michael. "Can you add extra espresso?"
+
+    *goto order_shake
+
+  #"Get the most complicated thing on the menu."
+    "Get the most complicated thing on the menu," you said, grinning at your brother. "Challenge the staff. Make him work for his wage."
+
+    Michael shot you a venomous glare.
+
+    Callie ignored the sibling bantering completely and considered the menu again. "I guess give me cookie dough. That's usually good."
+    *goto order_shake
+
+*label order_shake
+
+Michael grumbled but punched the orders into the register, making sure to hit the dairy-free button for your usual chocolate shake.
+
+Callie paid, and you spent the next twenty minutes sitting in a cracked vinyl booth that you chose specifically because it was under a heater vent, but drinking the cold shakes still made Callie shiver. At least you got to enjoy watching Michael suffer through the evening rush before taking her home.
+
+*page_break
+
+*goto drop_callie_home_skip
+
+*label drop_callie_home
+
+"Maybe next time," you said. "Let's get you home and dry before you catch pneumonia or something."
+
+"Probably a good idea," Callie said. She wrapped her arms around her chest and huddled closer to the heater vents.
+
+*label drop_callie_home_skip
+
+You followed her directions, steering away from the main roads and into an older, neglected section of town that you weren't familiar with. The houses grew smaller, and the streetlights flickered over cracked pavement.
+
+"You can just let me out here," Callie said, pointing to the corner of a narrow, overgrown alleyway.
+
+The rain battered the windshield in a relentless sheet of grey.
+
+*choice
+  #"It's pouring. I'll drop you off at your house."
+    "It's pouring," you said. "I'll drop you off at your house."
+
+    Callie visibly tensed, but stared straight ahead. "You really don't have to."
+
+    "I'm not dropping you off in a flood," you said. "Which way?"
+
+    Her shoulders slumped a little, and she pointed. "Down the alley, last house on the left."
+
+    You spun the wheel. The tires crunched over gravel and puddles in deep ruts. At the end of the narrow lane sat a rough looking, single-story house, with a front porch that dipped noticeably to one side. A faded blue tarp covered a part of the room, and three rusted, hollowed-out car chassis sank into the overgrown weeds filling the front yard.
+
+    You shifted into park, and a cold knot formed in the pit of your stomach as you stared through the rain at the rotting front steps.
+
+    You felt...
+   
+    *choice
+      #Sadness and confusion.
+        You felt sadness and confusion at the juxtoposition of Callie's brilliant mind and the decay surrounding her house.  
+        *goto callie_goodbye
+
+      #Anger.
+        You felt a sudden flash of anger and hostility toward whoever let a girl that smart live in a collapsing junkyard. You wanted to throw the car in reverse and take her literally anywhere else. But that wasn't your decision.
+        *goto callie_goodbye
+
+      #Protective.
+        You felt very protective in that moment. You gripped the steering wheel, suddenly hyper-aware of how fragile she looked in that in her oversized hoodie. You wanted to throw the car in reverse and take her literally anywhere else. But that wasn't your decision.
+        *goto callie_goodbye
+
+  #"Are you sure? It's coming down really hard."
+    "Are you sure?" you asked. "It's coming down really hard."
+
+    "I'm sure," Callie said. She grabbed her soaked backpack from the floorboard. "It's just a short walk."
+   
+    You nod and offer a smile.
+    *goto callie_goodbye
+
+*label callie_goodbye
+
+Callie paused with her hand on the door handle, then looked back at you. "Thanks again," she said softly. "For the ride, and for not being weird."
+
+"Any time," you said.
+
+She pushed the door open and sprinted out into the downpour. You waited until she disappeared from view, then put the car in reverse and headed home.
+
+*page_break [Chapter 1.2] Bigger on the Inside
+
+*title [Chapter 1.2] Bigger on the Inside
+
+[b]Present Day[/b]
+
+To be continued...

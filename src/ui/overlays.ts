@@ -335,45 +335,6 @@ export function showSplash(): void {
     }
   }
 
-  // ── Last Session stat bars ─────────────────────────────────────────────────
-  // Prefer the most recent save's playerState over boot defaults, so the
-  // splash shows real last-session numbers rather than startup.txt defaults.
-  const STAT_MAX = 250;
-  const statSlots: Array<{ key: string; valId: string; fillId: string }> = [
-    { key: 'body',   valId: 'splash-stat-body-val',   fillId: 'splash-stat-body-fill'   },
-    { key: 'mind',   valId: 'splash-stat-mind-val',   fillId: 'splash-stat-mind-fill'   },
-    { key: 'spirit', valId: 'splash-stat-spirit-val', fillId: 'splash-stat-spirit-fill' },
-  ];
-
-  // Find the most recent save to display stats from
-  const saveForStats = (['auto', 1, 2, 3] as Array<'auto'|1|2|3>)
-    .map(slot => loadSaveFromSlot(slot))
-    .filter(Boolean)
-    .sort((a: any, b: any) => (b.timestamp ?? 0) - (a.timestamp ?? 0))[0] as any;
-
-  // Use save's playerState if available, fall back to live playerState
-  const statsSource: Record<string, unknown> = saveForStats?.playerState ?? playerState;
-
-  statSlots.forEach(({ key, valId, fillId }) => {
-    const raw    = statsSource[key];
-    const num    = typeof raw === 'number' ? raw : parseFloat(String(raw ?? ''));
-    const valEl  = document.getElementById(valId);
-    const fillEl = document.getElementById(fillId) as HTMLElement | null;
-
-    if (valEl) {
-      valEl.innerHTML = !isNaN(num)
-        ? `${Math.round(num)}<span class="splash-stat-max">/${STAT_MAX}</span>`
-        : '—';
-    }
-    if (fillEl) {
-      // Reset to zero first, then animate to the correct width on the next frame
-      fillEl.style.transform = 'scaleX(0)';
-      requestAnimationFrame(() => {
-        fillEl.style.transform = `scaleX(${!isNaN(num) ? Math.min(num / STAT_MAX, 1) : 0})`;
-      });
-    }
-  });
-
   // ── Build number ───────────────────────────────────────────────────────────
   const buildEl = document.getElementById('splash-build-number');
   if (buildEl) {

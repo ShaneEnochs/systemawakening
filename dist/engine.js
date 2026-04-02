@@ -2790,14 +2790,17 @@ function renderSkillsTab(container, essence) {
       const rarity = skill.rarity || "common";
       const rarCls = ` skill-rarity--${rarity}`;
       html += `
-        <div class="store-card store-card--rarity-${rarity} ${cardCls}" data-key="${escapeHtml(skill.key)}" data-type="skill">
-          <div class="store-card-body">
+        <div class="store-card store-card--skill store-card--rarity-${rarity} ${cardCls}" data-key="${escapeHtml(skill.key)}" data-type="skill" data-expanded="false">
+          <div class="store-card-header">
             <span class="store-card-name${rarCls}">${escapeHtml(skill.label)}</span>
-            <div class="store-card-desc">${escapeDesc(skill.description)}</div>
+            <span class="store-card-chevron">\u25B8</span>
           </div>
-          <div class="store-card-actions">
-            <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
-            <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+          <div class="store-card-collapse">
+            <div class="store-card-desc">${escapeDesc(skill.description)}</div>
+            <div class="store-card-actions">
+              <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
+              <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+            </div>
           </div>
         </div>`;
     });
@@ -2806,6 +2809,16 @@ function renderSkillsTab(container, essence) {
     html = `<div class="store-empty">No skills available.</div>`;
   }
   container.innerHTML = html;
+  container.querySelectorAll(".store-card-header").forEach((header) => {
+    header.addEventListener("click", () => {
+      const card = header.closest(".store-card");
+      if (!card) return;
+      const expanded = card.dataset.expanded === "true";
+      card.dataset.expanded = expanded ? "false" : "true";
+      const chevron = header.querySelector(".store-card-chevron");
+      if (chevron) chevron.textContent = expanded ? "\u25B8" : "\u25BE";
+    });
+  });
   container.querySelectorAll(".store-purchase-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const key = btn.dataset.key ?? "";
@@ -3196,29 +3209,6 @@ function showSplash() {
       notice.classList.add("hidden");
     }
   }
-  const STAT_MAX = 250;
-  const statSlots = [
-    { key: "body", valId: "splash-stat-body-val", fillId: "splash-stat-body-fill" },
-    { key: "mind", valId: "splash-stat-mind-val", fillId: "splash-stat-mind-fill" },
-    { key: "spirit", valId: "splash-stat-spirit-val", fillId: "splash-stat-spirit-fill" }
-  ];
-  const saveForStats = ["auto", 1, 2, 3].map((slot) => loadSaveFromSlot(slot)).filter(Boolean).sort((a, b) => (b.timestamp ?? 0) - (a.timestamp ?? 0))[0];
-  const statsSource = saveForStats?.playerState ?? playerState;
-  statSlots.forEach(({ key, valId, fillId }) => {
-    const raw = statsSource[key];
-    const num = typeof raw === "number" ? raw : parseFloat(String(raw ?? ""));
-    const valEl = document.getElementById(valId);
-    const fillEl = document.getElementById(fillId);
-    if (valEl) {
-      valEl.innerHTML = !isNaN(num) ? `${Math.round(num)}<span class="splash-stat-max">/${STAT_MAX}</span>` : "\u2014";
-    }
-    if (fillEl) {
-      fillEl.style.transform = "scaleX(0)";
-      requestAnimationFrame(() => {
-        fillEl.style.transform = `scaleX(${!isNaN(num) ? Math.min(num / STAT_MAX, 1) : 0})`;
-      });
-    }
-  });
   const buildEl = document.getElementById("splash-build-number");
   if (buildEl) {
     const bn = playerState["build_number"];

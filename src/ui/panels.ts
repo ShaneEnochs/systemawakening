@@ -571,14 +571,17 @@ function renderSkillsTab(container: Element, essence: number): void {
       const rarity    = skill.rarity || 'common';
       const rarCls    = ` skill-rarity--${rarity}`;
       html += `
-        <div class="store-card store-card--rarity-${rarity} ${cardCls}" data-key="${escapeHtml(skill.key)}" data-type="skill">
-          <div class="store-card-body">
+        <div class="store-card store-card--skill store-card--rarity-${rarity} ${cardCls}" data-key="${escapeHtml(skill.key)}" data-type="skill" data-expanded="false">
+          <div class="store-card-header">
             <span class="store-card-name${rarCls}">${escapeHtml(skill.label)}</span>
-            <div class="store-card-desc">${escapeDesc(skill.description)}</div>
+            <span class="store-card-chevron">▸</span>
           </div>
-          <div class="store-card-actions">
-            <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
-            <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+          <div class="store-card-collapse">
+            <div class="store-card-desc">${escapeDesc(skill.description)}</div>
+            <div class="store-card-actions">
+              <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
+              <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+            </div>
           </div>
         </div>`;
     });
@@ -589,6 +592,17 @@ function renderSkillsTab(container: Element, essence: number): void {
   }
 
   container.innerHTML = html;
+
+  container.querySelectorAll<HTMLElement>('.store-card-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const card = header.closest<HTMLElement>('.store-card');
+      if (!card) return;
+      const expanded = card.dataset.expanded === 'true';
+      card.dataset.expanded = expanded ? 'false' : 'true';
+      const chevron = header.querySelector<HTMLElement>('.store-card-chevron');
+      if (chevron) chevron.textContent = expanded ? '▸' : '▾';
+    });
+  });
 
   container.querySelectorAll<HTMLElement>('.store-purchase-btn').forEach(btn => {
     btn.addEventListener('click', () => {

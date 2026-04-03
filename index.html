@@ -109,15 +109,78 @@
       It has been removed. Please start a new game.
     </div>
 
-    <!-- Action buttons -->
-    <div class="splash-actions">
-      <button id="splash-new-btn" class="splash-action-btn splash-action-btn--primary">
-        <span class="splash-btn-icon">▶</span>New Game
-      </button>
-      <button id="splash-load-btn" class="splash-action-btn splash-action-btn--secondary">
-        <span class="splash-btn-icon">↺</span>Continue
-      </button>
-    </div>
+    <!-- Two-column: New Game | Load Game -->
+    <div class="splash-lower">
+
+      <!-- Left: New Game -->
+      <div class="splash-new-col">
+        <button id="splash-new-btn" class="splash-action-btn splash-action-btn--primary">
+          <span class="splash-btn-icon">▶</span>New Game
+        </button>
+      </div>
+
+      <!-- Right: Load Game — always visible, autosave + manual saves -->
+      <div class="splash-load-col" id="splash-slots">
+        <div class="splash-col-label">Load Game</div>
+
+        <!-- Auto-save (visually distinct) -->
+        <div class="slot-card slot-card--splash slot-card--autosave" id="slot-card-auto" data-slot="auto">
+          <div class="slot-badge slot-badge--auto">Auto</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-auto">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-auto"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-auto" disabled>Load</button>
+          </div>
+        </div>
+
+        <!-- Manual saves divider -->
+        <div class="splash-saves-divider">Manual Saves</div>
+
+        <!-- Slot 1 -->
+        <div class="slot-card slot-card--splash" id="slot-card-1" data-slot="1">
+          <div class="slot-badge">Slot 1</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-1">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-1"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-1" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-1" aria-label="Delete slot 1">✕</button>
+          </div>
+        </div>
+        <!-- Slot 2 -->
+        <div class="slot-card slot-card--splash" id="slot-card-2" data-slot="2">
+          <div class="slot-badge">Slot 2</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-2">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-2"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-2" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-2" aria-label="Delete slot 2">✕</button>
+          </div>
+        </div>
+        <!-- Slot 3 -->
+        <div class="slot-card slot-card--splash" id="slot-card-3" data-slot="3">
+          <div class="slot-badge">Slot 3</div>
+          <div class="slot-info">
+            <span class="slot-name" id="slot-name-3">— Empty —</span>
+            <span class="slot-meta" id="slot-meta-3"></span>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-load-btn" id="slot-load-3" disabled>Load</button>
+            <button class="slot-delete-btn hidden" id="slot-delete-3" aria-label="Delete slot 3">✕</button>
+          </div>
+        </div>
+      </div><!-- /.splash-load-col -->
+
+    </div><!-- /.splash-lower -->
+
+    <!-- Hidden stubs for compatibility (event handlers in save-manager are no-ops without visible buttons) -->
+    <button id="splash-load-btn" class="hidden" aria-hidden="true" tabindex="-1"></button>
+    <button id="splash-slots-back" class="hidden" aria-hidden="true" tabindex="-1"></button>
 
     <!-- Footer -->
     <div class="splash-footer">
@@ -130,63 +193,6 @@
     </div><!-- /.splash-content -->
 
     </div><!-- /#splash-main -->
-
-    <!-- Save slots (shown when Continue is clicked) -->
-    <div id="splash-slots" class="splash-slots hidden">
-      <div class="splash-slots-header">
-        <span class="splash-slots-label">Select a save slot</span>
-        <button id="splash-slots-back" class="slot-back-btn">← Back</button>
-      </div>
-      <div class="slot-list">
-        <!-- Auto-save -->
-        <div class="slot-card" id="slot-card-auto" data-slot="auto">
-          <div class="slot-badge">Auto</div>
-          <div class="slot-info">
-            <span class="slot-name" id="slot-name-auto">— Empty —</span>
-            <span class="slot-meta" id="slot-meta-auto"></span>
-          </div>
-          <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-auto" disabled>Load</button>
-          </div>
-        </div>
-        <!-- Slot 1 -->
-        <div class="slot-card" id="slot-card-1" data-slot="1">
-          <div class="slot-badge">Slot 1</div>
-          <div class="slot-info">
-            <span class="slot-name" id="slot-name-1">— Empty —</span>
-            <span class="slot-meta" id="slot-meta-1"></span>
-          </div>
-          <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-1" disabled>Load</button>
-            <button class="slot-delete-btn hidden" id="slot-delete-1" aria-label="Delete slot 1">✕</button>
-          </div>
-        </div>
-        <!-- Slot 2 -->
-        <div class="slot-card" id="slot-card-2" data-slot="2">
-          <div class="slot-badge">Slot 2</div>
-          <div class="slot-info">
-            <span class="slot-name" id="slot-name-2">— Empty —</span>
-            <span class="slot-meta" id="slot-meta-2"></span>
-          </div>
-          <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-2" disabled>Load</button>
-            <button class="slot-delete-btn hidden" id="slot-delete-2" aria-label="Delete slot 2">✕</button>
-          </div>
-        </div>
-        <!-- Slot 3 -->
-        <div class="slot-card" id="slot-card-3" data-slot="3">
-          <div class="slot-badge">Slot 3</div>
-          <div class="slot-info">
-            <span class="slot-name" id="slot-name-3">— Empty —</span>
-            <span class="slot-meta" id="slot-meta-3"></span>
-          </div>
-          <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-3" disabled>Load</button>
-            <button class="slot-delete-btn hidden" id="slot-delete-3" aria-label="Delete slot 3">✕</button>
-          </div>
-        </div>
-      </div>
-    </div><!-- /#splash-slots -->
 
   </div><!-- /.splash-box -->
 </div><!-- /#splash-overlay -->

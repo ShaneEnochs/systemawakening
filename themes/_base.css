@@ -1,0 +1,3076 @@
+/* ============================================================
+   GAME ENGINE — _base.css
+   Shared structural styles, layout, and component rules.
+   Theme files (digital.css, fantasy.css, etc.) provide all
+   CSS custom properties (design tokens) and visual overrides.
+
+   Table of contents:
+     1. (Design Tokens — provided by theme file)
+     2. Reset & Base
+     3. Shared Patterns (system-box, btn-base, accent borders)
+     4. App Layout
+     5. Header
+     6. Narrative Panel & Text
+     7. System Message Blocks
+     8. Choice Area
+     9. Status Panel
+     10. Overlays (base)
+     11. Splash Screen
+     12. Save Slot Cards
+     13. Save Menu
+     14. Character Creation
+     15. Ending Screens (overlay + inline)
+     16. Level-Up / Stat Allocation
+     17. Skill System
+     18. Store System
+     18. Input Prompt
+     19. Journal / Achievements
+     20. Toast Notification
+     21. Animations
+     22. Utility
+     23. Responsive — tablet (max-width: 768px)
+     24. Responsive — small phone (max-width: 400px)
+   ============================================================ */
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  background-image: var(--bg-body-image, none);
+}
+
+
+/* ============================================================
+   3. SHARED PATTERNS
+   ============================================================ */
+
+/* --- System box: mono-font panel with left accent border --- */
+.system-box {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  background: var(--bg-system);
+  border: 1px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+  padding: 12px 16px;
+  margin: 1.4em 0;
+  position: relative;
+}
+
+/* Accent border color modifiers */
+.system-box--cyan   { border-left-color: var(--cyan);  color: var(--cyan); }
+.system-box--amber  { border-left-color: var(--amber); color: var(--amber); }
+.system-box--green  { border-left-color: var(--green);  color: var(--green); }
+.system-box--red    { border-left-color: var(--red);    color: var(--red); }
+
+/* --- Button base --- */
+.btn-base {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  border: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+/* Primary: solid fill (cyan default) */
+.btn-primary {
+  color: var(--bg-deep);
+  background: var(--cyan);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 16px var(--cyan-glow-md);
+}
+.btn-primary:disabled {
+  background: var(--border-dim);
+  color: var(--text-faint);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Primary amber variant */
+.btn-primary--amber {
+  background: var(--amber);
+}
+.btn-primary--amber:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 16px var(--amber-glow);
+}
+
+/* Primary green variant */
+.btn-primary--green {
+  background: var(--green);
+}
+.btn-primary--green:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 16px var(--green-glow);
+}
+
+/* Ghost: transparent with border */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border-dim);
+}
+.btn-ghost:hover:not(:disabled) {
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+  background: var(--cyan-glow);
+}
+.btn-ghost:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Ghost danger variant */
+.btn-ghost--danger {
+  color: var(--red);
+  border-color: rgba(224, 85, 85, 0.4);
+}
+.btn-ghost--danger:hover {
+  background: var(--red-glow);
+  color: #ff8080;
+  border-color: var(--red);
+  box-shadow: none;
+}
+
+/* Accent color utilities */
+.accent-cyan  { color: var(--cyan); }
+.accent-green { color: var(--green); }
+.accent-amber { color: var(--amber); }
+.accent-red   { color: var(--red); }
+
+/* Inline accent spans — authored via [cyan]...[/cyan] etc. in prose/system blocks/stat values.
+   Scoped to narrative paragraphs, system blocks, and status values at (0,2,0) specificity.
+   Child em/strong selectors at (0,3,0) ensure color is never overridden by markdown rules.
+   !important is intentional: a color tag in prose must always render as written. */
+
+/* --- Core theme colors --- */
+.narrative-paragraph .inline-accent-cyan,
+.system-block        .inline-accent-cyan,
+.status-value        .inline-accent-cyan,
+.narrative-paragraph .inline-accent-cyan em,
+.narrative-paragraph .inline-accent-cyan strong,
+.system-block        .inline-accent-cyan em,
+.system-block        .inline-accent-cyan strong      { color: var(--cyan)           !important; }
+
+.narrative-paragraph .inline-accent-green,
+.system-block        .inline-accent-green,
+.status-value        .inline-accent-green,
+.narrative-paragraph .inline-accent-green em,
+.narrative-paragraph .inline-accent-green strong,
+.system-block        .inline-accent-green em,
+.system-block        .inline-accent-green strong     { color: var(--green)          !important; }
+
+.narrative-paragraph .inline-accent-amber,
+.system-block        .inline-accent-amber,
+.status-value        .inline-accent-amber,
+.narrative-paragraph .inline-accent-amber em,
+.narrative-paragraph .inline-accent-amber strong,
+.system-block        .inline-accent-amber em,
+.system-block        .inline-accent-amber strong     { color: var(--amber)          !important; }
+
+.narrative-paragraph .inline-accent-red,
+.system-block        .inline-accent-red,
+.status-value        .inline-accent-red,
+.narrative-paragraph .inline-accent-red em,
+.narrative-paragraph .inline-accent-red strong,
+.system-block        .inline-accent-red em,
+.system-block        .inline-accent-red strong       { color: var(--red)            !important; }
+
+/* --- Rarity colors + named aliases --- */
+.narrative-paragraph .inline-accent-white,
+.narrative-paragraph .inline-accent-common,
+.system-block        .inline-accent-white,
+.system-block        .inline-accent-common,
+.status-value        .inline-accent-white,
+.status-value        .inline-accent-common,
+.narrative-paragraph .inline-accent-white em,
+.narrative-paragraph .inline-accent-white strong,
+.narrative-paragraph .inline-accent-common em,
+.narrative-paragraph .inline-accent-common strong,
+.system-block        .inline-accent-white em,
+.system-block        .inline-accent-white strong,
+.system-block        .inline-accent-common em,
+.system-block        .inline-accent-common strong    { color: var(--rarity-common)    !important; }
+
+.narrative-paragraph .inline-accent-uncommon,
+.system-block        .inline-accent-uncommon,
+.status-value        .inline-accent-uncommon,
+.narrative-paragraph .inline-accent-uncommon em,
+.narrative-paragraph .inline-accent-uncommon strong,
+.system-block        .inline-accent-uncommon em,
+.system-block        .inline-accent-uncommon strong  { color: var(--rarity-uncommon)  !important; }
+
+.narrative-paragraph .inline-accent-blue,
+.narrative-paragraph .inline-accent-rare,
+.system-block        .inline-accent-blue,
+.system-block        .inline-accent-rare,
+.status-value        .inline-accent-blue,
+.status-value        .inline-accent-rare,
+.narrative-paragraph .inline-accent-blue em,
+.narrative-paragraph .inline-accent-blue strong,
+.narrative-paragraph .inline-accent-rare em,
+.narrative-paragraph .inline-accent-rare strong,
+.system-block        .inline-accent-blue em,
+.system-block        .inline-accent-blue strong,
+.system-block        .inline-accent-rare em,
+.system-block        .inline-accent-rare strong      { color: var(--rarity-rare)      !important; }
+
+.narrative-paragraph .inline-accent-purple,
+.narrative-paragraph .inline-accent-epic,
+.system-block        .inline-accent-purple,
+.system-block        .inline-accent-epic,
+.status-value        .inline-accent-purple,
+.status-value        .inline-accent-epic,
+.narrative-paragraph .inline-accent-purple em,
+.narrative-paragraph .inline-accent-purple strong,
+.narrative-paragraph .inline-accent-epic em,
+.narrative-paragraph .inline-accent-epic strong,
+.system-block        .inline-accent-purple em,
+.system-block        .inline-accent-purple strong,
+.system-block        .inline-accent-epic em,
+.system-block        .inline-accent-epic strong      { color: var(--rarity-epic)      !important; }
+
+.narrative-paragraph .inline-accent-gold,
+.narrative-paragraph .inline-accent-legendary,
+.system-block        .inline-accent-gold,
+.system-block        .inline-accent-legendary,
+.status-value        .inline-accent-gold,
+.status-value        .inline-accent-legendary,
+.narrative-paragraph .inline-accent-gold em,
+.narrative-paragraph .inline-accent-gold strong,
+.narrative-paragraph .inline-accent-legendary em,
+.narrative-paragraph .inline-accent-legendary strong,
+.system-block        .inline-accent-gold em,
+.system-block        .inline-accent-gold strong,
+.system-block        .inline-accent-legendary em,
+.system-block        .inline-accent-legendary strong { color: var(--rarity-legendary) !important; }
+
+/* --- Neutral shades --- */
+.narrative-paragraph .inline-accent-silver,
+.system-block        .inline-accent-silver,
+.status-value        .inline-accent-silver,
+.narrative-paragraph .inline-accent-silver em,
+.narrative-paragraph .inline-accent-silver strong,
+.system-block        .inline-accent-silver em,
+.system-block        .inline-accent-silver strong    { color: var(--silver)           !important; }
+
+.narrative-paragraph .inline-accent-dim,
+.system-block        .inline-accent-dim,
+.status-value        .inline-accent-dim,
+.narrative-paragraph .inline-accent-dim em,
+.narrative-paragraph .inline-accent-dim strong,
+.system-block        .inline-accent-dim em,
+.system-block        .inline-accent-dim strong       { color: var(--text-dim)         !important; }
+
+.narrative-paragraph .inline-accent-faint,
+.system-block        .inline-accent-faint,
+.status-value        .inline-accent-faint,
+.narrative-paragraph .inline-accent-faint em,
+.narrative-paragraph .inline-accent-faint strong,
+.system-block        .inline-accent-faint em,
+.system-block        .inline-accent-faint strong     { color: var(--text-faint)       !important; }
+
+/* Scoped overrides so *stat_color entries render correctly when both
+   .status-value and an .accent-* class appear on the same element. */
+.status-value.accent-cyan  { color: var(--cyan); }
+.status-value.accent-green { color: var(--green); }
+.status-value.accent-amber { color: var(--amber); }
+.status-value.accent-red   { color: var(--red); }
+
+/* ── Rarity color overrides ── MUST BE LAST in color section ──
+   These supersede all other color rules including inline accents.
+   Applied via class on any element in any context. */
+.skill-rarity--common,
+.skill-rarity--common em,
+.skill-rarity--common strong    { color: var(--rarity-common)    !important; }
+
+.skill-rarity--uncommon,
+.skill-rarity--uncommon em,
+.skill-rarity--uncommon strong  { color: var(--rarity-uncommon)  !important; }
+
+.skill-rarity--rare,
+.skill-rarity--rare em,
+.skill-rarity--rare strong      { color: var(--rarity-rare)      !important; }
+
+.skill-rarity--epic,
+.skill-rarity--epic em,
+.skill-rarity--epic strong      { color: var(--rarity-epic)      !important; }
+
+.skill-rarity--legendary,
+.skill-rarity--legendary em,
+.skill-rarity--legendary strong { color: var(--rarity-legendary) !important; }
+
+/* ── Epic glow ── */
+.inline-accent-epic,
+.skill-rarity--epic {
+  text-shadow: 0 0 6px rgba(176, 106, 255, 0.45),
+               0 0 14px rgba(176, 106, 255, 0.2);
+}
+
+/* ── Legendary glow ── */
+.inline-accent-legendary,
+.skill-rarity--legendary {
+  text-shadow: 0 0 6px rgba(240, 165, 0, 0.5),
+               0 0 14px rgba(240, 165, 0, 0.2),
+               0 0 24px rgba(240, 165, 0, 0.08);
+}
+
+/* ── Epic container accent ── */
+.store-card--rarity-epic,
+.skill-accordion--rarity-epic {
+  border-left: 2px solid rgba(176, 106, 255, 0.4);
+  background: rgba(176, 106, 255, 0.03);
+}
+
+/* ── Legendary container accent ── */
+.store-card--rarity-legendary,
+.skill-accordion--rarity-legendary {
+  border-left: 2px solid rgba(240, 165, 0, 0.35);
+  background: rgba(240, 165, 0, 0.03);
+}
+
+
+/* ============================================================
+   4. APP LAYOUT
+   ============================================================ */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   5. HEADER
+   ============================================================ */
+
+#game-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border-dim);
+  background: var(--bg-header, var(--bg-panel));
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+#game-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--bg-header-accent, linear-gradient(90deg, transparent, var(--cyan-dim), transparent));
+  opacity: 0.4;
+}
+
+#header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 28px;
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+
+/* Replaces inline style="display:flex;align-items:center;gap:10px;" */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#chapter-bar {
+  border-top: 1px solid var(--border-dim);
+  padding: 5px 28px;
+  background: var(--bg-chapter-bar, var(--bg-panel));
+}
+
+#game-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-shadow: 0 0 20px var(--cyan-glow-md);
+}
+
+#chapter-title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: var(--ls-normal);
+  color: var(--text-primary);
+  text-align: center;
+  transition: opacity var(--transition);
+}
+
+#status-toggle {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: block;
+}
+
+#status-toggle:hover {
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+}
+
+/* Level-up ready glow on the Status button */
+@keyframes statusLevelupGlow {
+  0%, 100% {
+    color: var(--text-dim);
+    border-color: var(--border-dim);
+    box-shadow: none;
+  }
+  50% {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow-md), 0 0 20px var(--cyan-glow);
+  }
+}
+
+#status-toggle.levelup-ready {
+  animation: statusLevelupGlow 2s ease-in-out infinite;
+}
+
+#status-toggle.levelup-ready:hover {
+  animation: none;
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow-md);
+}
+
+/* Header buttons (save, undo) — shared base */
+.header-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+}
+
+#save-btn:hover { color: var(--cyan); border-color: var(--cyan-dim); }
+
+#undo-btn:hover:not(:disabled) { color: var(--cyan); border-color: var(--cyan-dim); }
+#undo-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+
+/* ============================================================
+   6. NARRATIVE PANEL & TEXT
+   ============================================================ */
+
+#game-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  overflow-x: clip;
+}
+
+#narrative-panel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-right: none;
+}
+
+@keyframes sceneFade {
+  0%   { opacity: 1; }
+  20%  { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+#narrative-panel.scene-fade {
+  animation: sceneFade 500ms ease-out;
+}
+
+#narrative-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 36px 48px calc(48px + env(safe-area-inset-bottom));
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+}
+
+#narrative-content::-webkit-scrollbar       { width: 4px; }
+#narrative-content::-webkit-scrollbar-track  { background: transparent; }
+#narrative-content::-webkit-scrollbar-thumb  { background: var(--border-dim); border-radius: 2px; }
+#narrative-content::-webkit-scrollbar-thumb:hover { background: var(--border-glow); }
+
+@keyframes chapterCardReveal {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  margin: 0 0 1.4em;
+  text-align: center;
+  animation: chapterCardReveal 0.6s ease forwards;
+  pointer-events: none;
+  border-top: 1px solid var(--chapter-border-color, var(--border-dim));
+  border-bottom: 1px solid var(--chapter-border-color, var(--border-dim));
+  background: var(--bg-chapter-card, transparent);
+}
+
+.chapter-card-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  margin-bottom: 6px;
+}
+
+.chapter-card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  text-shadow: var(--chapter-title-glow, none);
+}
+
+.narrative-paragraph {
+  margin-bottom: 1.2em;
+  color: var(--text-primary);
+}
+
+.narrative-paragraph:last-child { margin-bottom: 0; }
+.narrative-paragraph em         { color: var(--text-primary); font-style: italic; }
+.narrative-paragraph strong     { font-weight: 600; }
+
+
+/* ============================================================
+   7. SYSTEM MESSAGE BLOCKS
+   ============================================================ */
+
+.system-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--cyan);
+  background: var(--bg-system);
+  border: 1px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+  padding: 12px 16px;
+  margin: 0 0 1.2em 0;
+  display: block;
+  font-size: var(--text-sm);
+  letter-spacing: var(--ls-normal);
+  color: var(--cyan);
+  opacity: 1;
+}
+
+.system-block-text {
+  display: block;
+}
+
+.system-block-para {
+  margin: 0 0 0.9em;
+}
+.system-block-para:last-child { margin-bottom: 0; }
+
+/* Essence variant */
+.system-block.essence-block                    { border-left-color: var(--cyan); color: var(--cyan); }
+.system-block.essence-block .system-block-label { color: var(--cyan-dim); }
+
+/* Level-up variant */
+.system-block.levelup-block                    { border-left-color: var(--cyan); color: var(--cyan); border-color: rgba(0, 212, 245, 0.3); }
+.system-block.levelup-block .system-block-label { color: rgba(0, 212, 245, 0.6); }
+
+
+/* ============================================================
+   8. CHOICE AREA
+   ============================================================ */
+
+#choice-area {
+  position: relative;
+  padding: 28px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.choice-btn {
+  max-width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  text-align: left;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  padding: 14px 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.choice-btn::before {
+  content: var(--choice-indicator, '▸');
+  font-size: 0.8em;
+  color: var(--cyan-dim);
+  margin-right: 10px;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.choice-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 100%;
+  background: var(--choice-hover-sweep, var(--cyan-glow));
+  transition: width 0.25s ease;
+  z-index: 0;
+}
+
+.choice-btn span { position: relative; z-index: 1; }
+
+.choice-btn:hover          { border-color: var(--cyan-dim); color: #fff; transform: translateX(4px); }
+.choice-btn:hover::before  { opacity: 1; color: var(--cyan); }
+.choice-btn:hover::after   { width: 100%; }
+.choice-btn:active          { transform: translateX(2px) scale(0.99); }
+
+/* Disabled choice button — prevents hover styles appearing on unselectable options. */
+
+.choice-btn--disabled,
+.choice-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  color: var(--text-faint);
+  border-color: var(--border-dim);
+  pointer-events: none;
+}
+
+.choice-btn--disabled:hover,
+.choice-btn:disabled:hover {
+  border-color: var(--border-dim);
+  color: var(--text-faint);
+  transform: none;
+}
+
+.choice-btn--disabled::after,
+.choice-btn:disabled::after {
+  width: 0;
+}
+
+.choice-btn--disabled::before,
+.choice-btn:disabled::before {
+  opacity: 0.3;
+  color: var(--text-faint);
+}
+
+.choice-note {
+  font-style: italic;
+  font-size: 0.88em;
+  color: var(--text-dim);
+  display: block;
+  margin-top: 3px;
+}
+.choice-stat-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  padding: 2px 7px;
+  margin-left: 10px;
+  vertical-align: middle;
+  white-space: nowrap;
+  border-radius: 2px;
+  transition: opacity var(--transition-fast);
+}
+ 
+.choice-stat-badge--met {
+  color: var(--cyan);
+  border: 1px solid rgba(0, 212, 245, 0.4);
+  background: rgba(0, 212, 245, 0.07);
+}
+ 
+.choice-stat-badge--unmet {
+  color: var(--text-faint);
+  border: 1px solid var(--border-dim);
+  background: transparent;
+}
+ 
+/* Dim the badge when the button is disabled (unmet condition) */
+button:disabled .choice-stat-badge { opacity: 0.5; }
+
+/* ============================================================
+   9. STATUS PANEL
+   ============================================================ */
+
+#status-panel {
+  width: min(280px, 86vw);
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 0;
+  background: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: transform var(--transition);
+  /* Always a drawer */
+  position: absolute;
+  top: 0;
+  right: env(safe-area-inset-right);
+  height: 100%;
+  max-width: 100%;
+  z-index: 20;
+  transform: translateX(100%);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#status-panel.status-visible { transform: translateX(0); }
+
+#status-panel::-webkit-scrollbar       { width: 3px; }
+#status-panel::-webkit-scrollbar-thumb { background: var(--border-dim); }
+
+/* --- Status panel tab bar --- */
+.status-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.status-tab {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 9px 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.status-tab:hover {
+  color: var(--text-primary);
+  background: rgba(0, 212, 245, 0.04);
+}
+
+.status-tab--active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  background: rgba(0, 212, 245, 0.06);
+}
+
+/* Tab content pane */
+.status-tab-content {
+  padding: 16px 16px 20px;
+  flex: 1;
+}
+
+.status-section              { padding: 16px 0; border-bottom: 1px solid var(--border-dim); }
+.status-section:last-child   { border-bottom: none; }
+.status-section-header       { margin-bottom: 10px; font-weight: 700; }
+
+.status-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.status-value {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.status-row .status-label { margin-bottom: 0; }
+
+@keyframes statFlashUp {
+  0%   { color: var(--green); text-shadow: 0 0 8px rgba(76, 220, 138, 0.5); }
+  100% { color: inherit; text-shadow: none; }
+}
+
+@keyframes statFlashDown {
+  0%   { color: var(--red); text-shadow: 0 0 8px rgba(224, 85, 85, 0.5); }
+  100% { color: inherit; text-shadow: none; }
+}
+
+.stat-flash--up   { animation: statFlashUp   800ms ease-out; }
+.stat-flash--down { animation: statFlashDown 800ms ease-out; }
+
+/* XP bar */
+.xp-bar-track { height: 3px; background: var(--border-dim); margin-top: 6px; overflow: hidden; }
+.xp-bar-fill  { height: 100%; background: linear-gradient(90deg, var(--cyan-dim), var(--cyan)); transition: width 0.6s ease; box-shadow: 0 0 8px var(--cyan-glow-md); }
+
+/* Stat grid (2-col layout in sidebar) */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+.stat-row  { display: flex; justify-content: space-between; align-items: center; }
+.stat-name { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--ls-normal); color: var(--text-faint); }
+.stat-val  { font-family: var(--font-mono); font-size: var(--text-base); color: var(--cyan); min-width: 24px; text-align: right; transition: color 0.3s ease, text-shadow 0.3s ease; }
+.stat-val.increased { color: var(--cyan); text-shadow: 0 0 8px rgba(0, 212, 245, 0.5); }
+
+/* Tag list (inventory, etc.) */
+.tag-list    { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.tag-list li { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-primary); padding: 4px 8px; border: 1px solid var(--border-dim); background: var(--bg-deep); letter-spacing: var(--ls-tight); }
+.tag-empty   { color: var(--text-faint); border-color: transparent; background: transparent; }
+
+
+/* ============================================================
+   10. OVERLAYS (base)
+   ============================================================ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay-backdrop, rgba(0, 0, 0, 0.75));
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.overlay-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  max-width: 500px;
+  width: 90%;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.overlay-box::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--overlay-box-glow, linear-gradient(135deg, var(--cyan-glow), transparent 60%));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.overlay-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: var(--ls-wide);
+  color: var(--cyan);
+  text-shadow: 0 0 30px var(--cyan-glow-md);
+  margin-bottom: 20px;
+}
+
+/* Overlay button — display-font style */
+.overlay-btn {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.overlay-btn:hover { background: #fff; box-shadow: 0 0 20px var(--cyan-glow-md); }
+
+.overlay-btn--secondary {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border-dim);
+}
+.overlay-btn--secondary:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--cyan-dim);
+  box-shadow: none;
+}
+
+.overlay-btn--danger {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid rgba(224, 85, 85, 0.4);
+}
+.overlay-btn--danger:hover {
+  background: var(--red-glow);
+  color: #ff8080;
+  border-color: var(--red);
+  box-shadow: none;
+}
+
+/* Death / win ending variants */
+#ending-box.death-box            { border-color: rgba(224, 85, 85, 0.4); }
+#ending-box.death-box::before    { background: linear-gradient(135deg, var(--red-glow), transparent 60%); }
+#ending-box.death-box .overlay-title { color: var(--red); text-shadow: 0 0 30px var(--red-glow); }
+
+#ending-box.ending-box-win            { border-color: rgba(0, 212, 245, 0.4); }
+#ending-box.ending-box-win::before    { background: linear-gradient(135deg, var(--cyan-glow), transparent 60%); }
+#ending-box.ending-box-win .overlay-title { color: var(--cyan); text-shadow: 0 0 30px var(--cyan-glow); }
+
+#ending-icon    { font-size: 2.5rem; margin-bottom: 16px; }
+#ending-content { font-family: var(--font-body); font-size: var(--text-md); color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+#ending-stats   { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-faint); line-height: 2; margin-bottom: 24px; text-align: left; border-top: 1px solid var(--border-dim); padding-top: 16px; }
+
+
+/* ============================================================
+   11. SPLASH SCREEN
+   ============================================================ */
+
+/* The overlay itself uses .overlay base styles (fixed, centered, blurred bg).
+   We override the inner box entirely with .splash-box.               */
+
+.splash-box {
+  position: relative;
+  width: min(520px, 96vw);
+  /* On mobile: fill most of the screen. On desktop: cap height and allow scroll if needed. */
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 36px 38px 28px;
+  background: var(--bg-splash-box, var(--bg-panel));
+  border: 1px solid var(--border-dim);
+  backdrop-filter: blur(14px);
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Override .overlay-box max-width / padding */
+  max-width: none;
+}
+
+/* Top accent line */
+.splash-box::before {
+  content: '';
+  position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+  background: var(--splash-accent-top, linear-gradient(90deg, transparent, var(--cyan), transparent));
+  opacity: 0.75;
+}
+/* Bottom accent line */
+.splash-box::after {
+  content: '';
+  position: absolute; bottom: 0; left: 12%; right: 12%; height: 1px;
+  background: var(--splash-accent-bottom, linear-gradient(90deg, transparent, var(--border-glow), transparent));
+  opacity: 0.5;
+}
+
+/* Background canvas — fills the splash box (theme can hide) */
+.splash-bg-canvas {
+  display: var(--splash-canvas-display, block);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Vignette over the canvas */
+.splash-vignette {
+  position: absolute; inset: 0;
+  background: var(--bg-splash-vignette, radial-gradient(ellipse at 50% 40%, transparent 20%, rgba(0,0,0,0.75) 100%));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Theme-specific background layer (CSS-only, between canvas and content) */
+.splash-theme-bg {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: var(--splash-theme-bg, none);
+}
+
+/* All content sits above canvas + vignette + theme bg */
+.splash-box > *:not(.splash-bg-canvas):not(.splash-vignette):not(.splash-theme-bg) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Entry animation */
+.splash-box {
+  animation: splashBoxIn 1s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes splashBoxIn {
+  from { opacity: 0; transform: scale(0.96) translateY(14px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Sigil / emblem area ── */
+.splash-sigil-wrap {
+  display: var(--splash-sigil-display, block);
+  position: relative;
+  width: clamp(160px, 38vw, 210px);
+  height: clamp(160px, 38vw, 210px);
+  margin: 0 auto 16px;
+  opacity: 0;
+  animation: splashFadeUp 0.7s ease 0.35s both;
+  flex-shrink: 0;
+}
+
+.splash-sigil-ambient {
+  position: absolute; inset: -20px; border-radius: 50%;
+  background: var(--splash-sigil-glow, radial-gradient(ellipse, var(--cyan-glow) 0%, transparent 65%));
+  animation: splashBreathe 4s ease-in-out infinite;
+}
+
+@keyframes splashBreathe {
+  0%,100% { opacity: 0.5; transform: scale(0.93); }
+  50%      { opacity: 1;   transform: scale(1.07); }
+}
+
+.splash-sigil-svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;          /* runes stay inside outer ring */
+}
+
+.splash-sigil-center {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.splash-sigil-center svg {
+  width: 50px; height: 50px;
+  color: var(--cyan);
+  filter: drop-shadow(0 0 8px rgba(0,212,245,0.5))
+          drop-shadow(0 0 22px rgba(0,212,245,0.2));
+  animation: splashBreathe 4s ease-in-out infinite;
+}
+
+/* ── Title (populated by engine) ── */
+/* .splash-title inherits from .overlay-title but we restyle it here */
+.splash-title {
+  font-size: clamp(1.75rem, 5.5vw, 2.4rem) !important;
+  letter-spacing: 0.18em !important;
+  margin-bottom: 4px !important;
+  /* Force natural wrap: "System:" on line 1, "Year Zero" on line 2 */
+  max-width: 11ch;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  line-height: 1.15 !important;
+  word-break: normal;
+  overflow-wrap: normal;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 0.75s both;
+}
+
+/* ── Eyebrow ── */
+.splash-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 0.6s both;
+}
+
+/* ── Ornament divider ── */
+.splash-ornament {
+  display: flex; align-items: center; gap: 10px;
+  margin: 13px 0;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 0.88s both;
+}
+
+.splash-orn-line {
+  flex: 1; height: 1px;
+  background: var(--splash-orn-gradient, linear-gradient(90deg, transparent, var(--cyan-glow-md)));
+}
+.splash-orn-line--rev {
+  background: var(--splash-orn-gradient-rev, linear-gradient(90deg, var(--cyan-glow-md), transparent));
+}
+
+.splash-orn-diamond {
+  width: 6px; height: 6px;
+  background: var(--cyan); transform: rotate(45deg);
+  box-shadow: var(--splash-orn-diamond-glow, 0 0 8px var(--cyan)); flex-shrink: 0;
+}
+
+/* ── Tagline (populated by engine) ── */
+.splash-tagline {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 0.98s both;
+}
+
+/* ── Stale save notice ── */
+.splash-stale-notice {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--ls-tight);
+  color: var(--cyan);
+  background: var(--cyan-glow);
+  border: 1px solid var(--cyan-dim);
+  padding: 8px 14px;
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Two-column lower section ── */
+.splash-lower {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 0;
+  align-items: start;
+  align-items: start;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 1.1s both;
+}
+
+/* ── Left: New Game column ── */
+.splash-new-col {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  border-right: 1px solid rgba(42,47,74,0.4);
+}
+
+.splash-new-col .splash-action-btn {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  flex: 1;
+}
+
+/* ── Right: Load Game column ── */
+.splash-load-col {
+  padding-left: 20px;
+}
+
+.splash-col-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+/* Divider between autosave and manual saves */
+.splash-saves-divider {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 8px 0 5px;
+  border-top: 1px solid rgba(42,47,74,0.35);
+  margin-top: 4px;
+}
+
+/* Compact slot card variant for splash screen */
+.slot-card--splash {
+  padding: 7px 10px;
+  gap: 10px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid rgba(42,47,74,0.3);
+  background: transparent;
+}
+.slot-card--splash:last-child { border-bottom: none; }
+.slot-card--splash .slot-name  { font-size: var(--text-sm); }
+
+/* Autosave: cyan left-border accent + tinted background */
+.slot-card--autosave {
+  border-left: 2px solid rgba(0,212,245,0.45) !important;
+  padding-left: 8px !important;
+  background: rgba(0,212,245,0.03) !important;
+}
+.slot-card--autosave .slot-badge { color: var(--cyan); }
+
+/* ── Action buttons ── */
+
+.splash-action-btn {
+  width: 100%; padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem; letter-spacing: 0.18em;
+  text-transform: uppercase; cursor: pointer;
+  transition: all 0.18s ease;
+  /* Center icon + label as a unit */
+  text-align: center; display: flex; align-items: center;
+  justify-content: center; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.splash-action-btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 50%, rgba(0,212,245,0.04));
+  opacity: 0; transition: opacity 0.18s;
+}
+.splash-action-btn:hover::after { opacity: 1; }
+
+.splash-btn-icon {
+  width: 22px; height: 22px;
+  border: 1px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; flex-shrink: 0;
+  transition: all 0.18s ease;
+  /* Optical centering — ▶ and ↺ glyphs sit left of center without this nudge */
+  padding-left: 2px;
+}
+
+.splash-action-btn--primary {
+  background: var(--cyan-glow);
+  color: var(--cyan);
+  border: 1px solid var(--cyan-glow-md);
+}
+.splash-action-btn--primary:hover {
+  background: var(--cyan-glow-md);
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px var(--cyan-glow);
+}
+.splash-action-btn--primary:hover .splash-btn-icon {
+  background: var(--cyan); color: var(--bg-deep);
+}
+
+.splash-action-btn--secondary {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid rgba(42,47,74,0.7);
+}
+.splash-action-btn--secondary:hover {
+  border-color: var(--border-dim);
+  color: var(--text-primary);
+  background: rgba(42,47,74,0.2);
+}
+
+
+/* ── Footer ── */
+.splash-footer {
+  margin-top: 20px; padding-top: 14px;
+  border-top: 1px solid rgba(42,47,74,0.3);
+  text-align: center;
+  opacity: 0;
+  animation: splashFadeUp 0.6s ease 1.55s both;
+}
+
+.splash-footer-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  color: var(--text-faint); text-transform: uppercase; line-height: 1.8;
+}
+.splash-footer-text span { color: var(--text-dim); }
+
+/* ── Shared splash animation ── */
+@keyframes splashFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ============================================================
+   LANDSCAPE ORIENTATION — Splash Screen
+   Wide layout: sigil on the left, content on the right
+   ============================================================ */
+
+@media (orientation: landscape) and (min-width: 860px) {
+  .splash-box {
+    width: min(720px, 94vw);
+    max-height: 94vh;
+    padding: 32px 38px 24px;
+  }
+
+  /* Keep vertical (column) layout — sigil becomes a background element */
+  #splash-main {
+    position: relative;
+  }
+
+  .splash-sigil-wrap {
+    /* Position as a centered background watermark */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 320px;
+    margin: 0;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+    /* Override the fade-up animation to just fade in (no translate) */
+    animation: splashSigilBgIn 1.2s ease 0.35s both;
+    /* GPU-promote for smooth compositing at low opacity */
+    will-change: opacity;
+  }
+
+  /* Disable the breathing ambient glow in bg mode — too distracting */
+  .splash-sigil-ambient {
+    display: none;
+  }
+
+  /* Stop the breathing pulse on center diamond — causes visible jitter at low opacity */
+  .splash-sigil-center svg {
+    animation: none;
+  }
+
+  .splash-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .splash-title {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .splash-footer {
+    margin-top: 14px;
+    padding-top: 10px;
+  }
+}
+
+@keyframes splashSigilBgIn {
+  from { opacity: 0; }
+  to   { opacity: 0.15; }
+}
+
+/* Extra-wide landscape: even more room */
+@media (orientation: landscape) and (min-width: 1100px) {
+  .splash-box {
+    width: min(780px, 90vw);
+  }
+
+  .splash-sigil-wrap {
+    width: 380px;
+    height: 380px;
+  }
+}
+
+
+/* ── Mobile: stack layout vertically ── */
+@media (max-width: 560px) {
+  .splash-lower {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .splash-new-col {
+    border-right: none;
+    border-bottom: 1px solid rgba(42,47,74,0.4);
+    padding-right: 0;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+  }
+
+  .splash-load-col {
+    padding-left: 0;
+  }
+}
+
+/* Light-theme splash overrides are in the theme file (digital.css, etc.) */
+
+/* ============================================================
+   12. SAVE SLOT CARDS
+   ============================================================ */
+
+.slot-back-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color var(--transition-fast);
+}
+.slot-back-btn:hover { color: var(--cyan); }
+
+.slot-list { display: flex; flex-direction: column; gap: 8px; }
+
+.slot-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  padding: 12px 14px;
+  transition: border-color var(--transition-fast);
+}
+
+.slot-card:not(.slot-card--empty):hover { border-color: var(--border-glow); }
+.slot-card--empty                        { opacity: 0.45; border-style: dashed; }
+
+.slot-badge   { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-normal); text-transform: uppercase; color: var(--cyan-dim); min-width: 48px; }
+.slot-info    { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.slot-name    { font-family: var(--font-display); font-size: var(--text-base); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slot-meta    { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-tight); color: var(--text-faint); }
+.slot-actions { display: flex; align-items: center; gap: 8px; }
+
+.slot-load-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.slot-load-btn:hover:not(:disabled)  { background: #fff; }
+.slot-load-btn:disabled              { background: var(--border-dim); color: var(--text-faint); cursor: not-allowed; opacity: 0.5; }
+
+/* Load variant — ghost style */
+.slot-load-btn--load                       { background: transparent; color: var(--cyan-dim); border: 1px solid var(--cyan-dim); }
+.slot-load-btn--load:hover:not(:disabled)  { background: var(--cyan-glow); color: var(--cyan); border-color: var(--cyan); }
+.slot-load-btn--load:disabled              { background: transparent; color: var(--text-faint); border-color: var(--border-dim); cursor: not-allowed; opacity: 0.4; }
+
+/* Save variant — amber tint so Save buttons are visually distinct from Load. */
+.slot-load-btn--save                       { background: var(--amber); color: var(--bg-deep); border: none; }
+.slot-load-btn--save:hover:not(:disabled)  { background: #ffc533; }
+.slot-load-btn--save:disabled              { background: var(--border-dim); color: var(--text-faint); cursor: not-allowed; opacity: 0.5; }
+
+.slot-delete-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: all var(--transition-fast);
+  line-height: 1;
+}
+.slot-delete-btn:hover { color: var(--red); border-color: var(--red); background: var(--red-glow); }
+
+/* Save-flash animation */
+.slot-card--saved { animation: slotSaveFlash 0.55s ease forwards; }
+
+.save-import-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--border-dim);
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+ 
+.save-import-label {
+  cursor: pointer;
+  display: inline-block;
+}
+ 
+.save-import-slot-select {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border-dim);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+  outline: none;
+}
+ 
+.save-import-slot-select:focus {
+  border-color: var(--cyan-dim);
+}
+ 
+/* Slot export button — same base style as load button */
+.slot-load-btn--export {
+  color: var(--text-dim);
+  border-color: var(--border-dim);
+}
+ 
+.slot-load-btn--export:hover:not(:disabled) {
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+}
+
+
+/* ============================================================
+   13. SAVE MENU
+   ============================================================ */
+
+.save-menu-box   { max-width: 480px; max-height: 85vh; overflow-y: auto; }
+.save-menu-title { font-size: var(--text-md); letter-spacing: var(--ls-wide); margin-bottom: 8px; }
+.save-menu-hint  { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); letter-spacing: var(--ls-tight); margin-bottom: 18px; }
+
+/* Replaces inline style on save menu footer */
+.save-menu-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+
+
+/* ============================================================
+   14. CHARACTER CREATION
+   ============================================================ */
+
+.char-box {
+  max-width: 460px;
+  padding: 28px 36px 28px;
+  text-align: left;
+  background-image: var(--bg-char-pattern, none);
+  background-size: var(--bg-char-pattern-size, auto);
+  background-position: center;
+}
+
+/* 9B — system-scan entrance animation */
+@keyframes charScanIn {
+  0%   { opacity: 0; transform: translateY(6px); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0);   filter: blur(0); }
+}
+
+.char-box > * {
+  opacity: 0;
+  animation: charScanIn 400ms ease forwards;
+}
+
+.char-box > :nth-child(1) { animation-delay:   0ms; }
+.char-box > :nth-child(2) { animation-delay: 100ms; }
+.char-box > :nth-child(3) { animation-delay: 200ms; }
+.char-box > :nth-child(4) { animation-delay: 300ms; }
+.char-box > :nth-child(5) { animation-delay: 400ms; }
+.char-box > :nth-child(6) { animation-delay: 480ms; }
+
+/* 9A — character portrait / HUD silhouette frame */
+.char-portrait-frame {
+  position: relative;
+  width: 120px;
+  height: 144px;
+  margin: 0 auto 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-dim);
+  background: var(--bg-deep);
+}
+
+.char-portrait-frame svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.char-portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.char-header      { margin-bottom: 28px; text-align: center; }
+.char-header .system-block-label { display: inline-block; font-size: var(--text-sm); letter-spacing: 0.22em; color: var(--cyan-dim); opacity: 1; margin-bottom: 0; }
+.char-field-group { margin-bottom: 12px; }
+
+.char-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 5px;
+}
+
+.char-input-wrap { position: relative; display: flex; align-items: center; }
+
+.char-input {
+  flex: 1;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-dim);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  padding: 10px 44px 10px 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  caret-color: var(--cyan);
+}
+
+.char-input:focus     { border-color: var(--cyan-dim); box-shadow: 0 0 0 2px var(--cyan-glow); }
+.char-input--error    { border-color: var(--red); box-shadow: 0 0 0 2px var(--red-glow); }
+.char-input--default  { color: var(--amber); }
+.char-counter         { position: absolute; right: 12px; font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--text-faint); pointer-events: none; user-select: none; }
+.char-error           { display: block; font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-tight); color: var(--red); margin-top: 5px; }
+
+/* Pronoun cards */
+.pronoun-cards { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.pronoun-card {
+  flex: 1;
+  min-width: calc(33% - 10px);
+  background: var(--bg-deep);
+  border: 1px solid var(--border-dim);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--ls-tight);
+  padding: 8px 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.pronoun-card:hover         { border-color: var(--cyan-dim); color: var(--text-primary); }
+.pronoun-card.selected      { border-color: var(--cyan); background: var(--cyan-glow); color: var(--cyan); }
+.pronoun-card:focus-visible { box-shadow: 0 0 0 2px var(--cyan-glow-md); }
+
+.scene-toggle-hint {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  margin-top: 6px;
+  letter-spacing: var(--ls-tight);
+}
+
+.char-begin-btn          { width: 100%; margin-top: 4px; letter-spacing: var(--ls-wide); }
+.char-begin-btn:disabled { background: var(--border-dim); color: var(--text-faint); cursor: not-allowed; box-shadow: none; }
+
+
+/* ============================================================
+   15. ENDING SCREENS (overlay + inline)
+   ============================================================ */
+
+.ending-inline-block {
+  margin-top: 2em;
+  padding: 28px 28px 32px;
+  border: 1px solid var(--cyan-glow-md);
+  border-left: 2px solid var(--cyan);
+  background: var(--bg-ending-inline, transparent);
+}
+
+.ending-inline-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-wide);
+  color: var(--cyan-dim);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.ending-inline-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: var(--ls-wide);
+  color: var(--cyan);
+  text-shadow: 0 0 24px var(--cyan-glow);
+  margin-bottom: 8px;
+}
+
+.ending-inline-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.ending-inline-stats {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-faint);
+  line-height: 2;
+  border-top: 1px solid var(--border-dim);
+  padding-top: 14px;
+  margin-bottom: 22px;
+}
+
+.ending-inline-btn {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 12px 36px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ending-inline-btn:hover { background: #fff; box-shadow: 0 0 24px var(--cyan-glow); }
+
+
+/* ============================================================
+   16. LEVEL-UP / STAT ALLOCATION
+   ============================================================ */
+
+/* Level-up modal [ LEVEL UP ] label is green */
+.levelup-modal-box .system-block-label {
+  color: var(--cyan);
+  opacity: 0.85;
+}
+
+/* Stat allocation grid */
+.stat-alloc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+.stat-alloc-item { background: var(--bg-deep); border: 1px solid var(--border-dim); padding: 10px 6px; text-align: center; transition: all var(--transition-fast); }
+.stat-alloc-item.selected { border-color: var(--cyan); background: var(--cyan-glow); }
+.stat-alloc-name { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-normal); color: var(--text-dim); display: block; margin-bottom: 5px; text-transform: uppercase; }
+.stat-alloc-val  { font-family: var(--font-display); font-size: 1.05rem; color: var(--cyan); display: inline-block; min-width: 2ch; text-align: center; }
+.stat-alloc-val.buffed { color: var(--cyan); }
+
+/* +/- buttons */
+.alloc-btn { font-family: var(--font-mono); font-size: 0.9rem; line-height: 1; width: 22px; height: 22px; background: var(--bg-panel); border: 1px solid var(--border-dim); color: var(--text-dim); cursor: pointer; transition: all var(--transition-fast); padding: 0; }
+.alloc-btn:not(:disabled):hover { border-color: var(--cyan); color: var(--cyan); background: var(--bg-card); }
+.alloc-btn:disabled { opacity: 0.25; cursor: default; }
+
+/* Replaces inline style on alloc-btn row */
+.stat-alloc-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Level-up confirmed block (rendered in narrative log after stat allocation) */
+.levelup-inline-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--cyan);
+  background: var(--bg-system);
+  border-left: 2px solid var(--cyan);
+  border-top: 1px solid rgba(0, 212, 245, 0.25);
+  border-bottom: 1px solid rgba(0, 212, 245, 0.25);
+  padding: 16px 16px 20px;
+  margin: 1.4em 0;
+  position: relative;
+}
+
+.levelup-points-remaining       { font-size: var(--text-sm); color: var(--cyan); letter-spacing: var(--ls-tight); margin-left: auto; }
+
+.levelup-confirm-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 8px 24px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.levelup-confirm-btn:hover { background: #fff; box-shadow: 0 0 16px var(--cyan-glow); }
+
+.levelup-confirm-btn--locked {
+  background: transparent;
+  color: var(--text-faint);
+  border: 1px solid var(--border-dim);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.levelup-confirm-btn--locked:hover { background: transparent; box-shadow: none; color: var(--text-faint); }
+
+/* Confirmed state */
+.levelup-inline-block--confirmed {
+  opacity: 0.55;
+  border-left-color: rgba(0, 212, 245, 0.3);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  padding: 10px 16px;
+  animation: none;
+}
+
+.levelup-confirmed-text { color: var(--text-dim); }
+
+/* --- Status panel Level Up button --- */
+.status-levelup-row {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.status-levelup-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: transparent;
+  border: 1px solid rgba(0, 212, 245, 0.35);
+  padding: 7px 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 100%;
+  position: relative;
+}
+
+.status-levelup-btn:hover {
+  color: #fff;
+  border-color: var(--cyan);
+  background: rgba(0, 212, 245, 0.08);
+  box-shadow: 0 0 12px var(--cyan-glow);
+}
+
+.status-levelup-btn:active {
+  transform: scale(0.98);
+}
+
+/* Pulse animation matching the Status button glow */
+@keyframes levelupPulse {
+  0%, 100% {
+    border-color: rgba(0, 212, 245, 0.35);
+    box-shadow: none;
+    color: var(--cyan);
+  }
+  50% {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow-md), 0 0 20px var(--cyan-glow);
+    color: #fff;
+  }
+}
+.status-levelup-btn { animation: levelupPulse 2s ease-in-out infinite; }
+.status-levelup-btn:hover { animation: none; }
+
+/* --- Level-up modal overlay --- */
+#levelup-overlay {
+  transition: opacity 0.25s ease;
+}
+
+.levelup-modal-box {
+  max-width: 440px;
+  width: 90vw;
+  padding: 24px 28px 28px;
+  background: var(--bg-deep);
+  border: 1px solid var(--cyan);
+  box-shadow: var(--shadow-glow, none);
+}
+
+.levelup-modal-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.levelup-modal-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--cyan);
+  margin-top: 8px;
+}
+
+.levelup-modal-title strong {
+  color: #fff;
+}
+
+.levelup-modal-subtitle {
+  margin-top: 6px;
+}
+
+.levelup-modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Level-again prompt (Yes / No after confirm) --- */
+.levelup-again-prompt {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.levelup-again-footer {
+  gap: 12px;
+}
+
+.levelup-again-btn {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.levelup-again-btn--yes {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.levelup-again-btn--yes:hover {
+  background: #fff;
+  box-shadow: 0 0 20px var(--cyan-glow);
+}
+
+.levelup-again-btn--no {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.levelup-again-btn--no:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border-color: var(--cyan-dim);
+  box-shadow: none;
+}
+
+
+/* ============================================================
+   17. SKILL SYSTEM (merged from skill_styles.css)
+   ============================================================ */
+
+/* --- Skill category headers (Core Class Skills / Active / Passives) --- */
+.skill-category-header {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 10px 2px 4px;
+  margin-top: 6px;
+  border-bottom: 1px solid var(--border-dim);
+  margin-bottom: 6px;
+}
+.skill-category-header:first-child { margin-top: 0; }
+
+/* --- Sidebar skill accordion --- */
+.skill-accordion-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Reset tag-list bleed */
+.skill-accordion-list li {
+  font-family: unset;
+  font-size: unset;
+  color: unset;
+  padding: 0;
+  border: none;
+  background: transparent;
+  letter-spacing: unset;
+}
+
+.skill-accordion {
+  border: 1px solid var(--border-dim);
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+
+.skill-accordion-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.skill-accordion-btn:hover       { background: rgba(0, 212, 245, 0.06); }
+.skill-accordion-btn--open       { background: rgba(0, 212, 245, 0.08); border-bottom: 1px solid var(--border-dim); }
+
+.skill-accordion-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--cyan);
+  letter-spacing: var(--ls-tight);
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-accordion-chevron {
+  font-size: var(--text-sm);
+  color: var(--cyan-dim);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.skill-accordion-btn--open .skill-accordion-chevron { transform: rotate(180deg); }
+
+.skill-accordion-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text-dim);
+  line-height: 1.55;
+  padding: 8px 10px 10px;
+  border-top: 1px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.desc-para {
+  margin: 0 0 0.9em;
+}
+.desc-para:last-child { margin-bottom: 0; }
+
+/* Achievement accordion variant */
+.skill-accordion--achievement .skill-accordion-name { color: var(--cyan); }
+
+/* --- Browse Skills button (level-up footer) --- */
+.skill-browse-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.skill-browse-btn:hover {
+  border-color: rgba(0, 212, 245, 0.5);
+  color: var(--cyan);
+  background: var(--cyan-glow);
+}
+
+/* --- Skill browser panel (inside level-up) --- */
+.skill-browser {
+  margin-top: 14px;
+  border: 1px solid var(--border-dim);
+  border-left: 2px solid rgba(0, 212, 245, 0.5);
+  background: var(--bg-system);
+  overflow: hidden;
+}
+
+.skill-browser-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.skill-browser-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  color: rgba(0, 212, 245, 0.6);
+}
+
+.skill-browser-sp-pool       { display: flex; align-items: center; gap: 6px; }
+.skill-browser-sp-pool-label { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-normal); color: var(--text-faint); text-transform: uppercase; }
+.skill-browser-sp-pool-val   { font-family: var(--font-mono); font-size: var(--text-base); color: var(--cyan); font-weight: 600; min-width: 18px; text-align: right; }
+
+.skill-browser-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 6px 12px 4px;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.skill-browser-section-label--owned {
+  color: rgba(0, 212, 245, 0.4);
+  border-top: 1px solid var(--border-dim);
+  margin-top: 2px;
+}
+
+.skill-browser-empty {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  padding: 12px;
+}
+
+/* Skill card */
+.skill-browser-card {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-dim);
+  transition: background var(--transition-fast);
+}
+.skill-browser-card:last-child { border-bottom: none; }
+.skill-browser-card:hover:not(.skill-browser-card--owned):not(.skill-browser-card--unaffordable) { background: rgba(0, 212, 245, 0.04); }
+.skill-browser-card--unaffordable { opacity: 0.45; }
+.skill-browser-card--owned        { opacity: 0.55; }
+
+.skill-browser-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.skill-browser-card-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--cyan);
+  letter-spacing: var(--ls-tight);
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-browser-card-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.skill-browser-sp-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-faint);
+  border: 1px solid var(--border-dim);
+  border-radius: 2px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  background: var(--bg-deep);
+}
+.skill-browser-sp-badge--can-afford { color: var(--cyan); border-color: rgba(0, 212, 245, 0.5); background: var(--cyan-glow); }
+
+.skill-browser-card-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* Owned badge */
+.skill-browser-owned-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 212, 245, 0.3);
+  border-radius: 2px;
+  padding: 3px 9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(0, 212, 245, 0.06);
+}
+
+/* Unlock button */
+.skill-purchase-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 5px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.skill-purchase-btn:hover:not(:disabled) { background: #fff; box-shadow: 0 0 14px var(--cyan-glow); }
+.skill-purchase-btn:disabled { background: transparent; color: var(--text-faint); border: 1px solid var(--border-dim); cursor: not-allowed; opacity: 0.5; }
+
+
+/* ============================================================
+   18. STORE SYSTEM
+   ============================================================ */
+
+/* --- Status panel Store button --- */
+.status-store-row {
+  padding: 8px 12px 4px;
+}
+
+.status-store-btn {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: transparent;
+  border: 1px solid rgba(0, 212, 245, 0.35);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.status-store-btn:hover {
+  background: var(--cyan-glow);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan-glow);
+  color: #fff;
+}
+
+.status-store-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- Store overlay --- */
+#store-overlay {
+  transition: opacity 0.25s ease;
+}
+
+.store-modal-box {
+  max-width: 560px;
+  width: 92%;
+  padding: 0;
+  border: 1px solid var(--cyan-glow-md);
+  box-shadow: var(--shadow-glow, none);
+  background: var(--bg-panel);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- Store header --- */
+.store-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.store-header .system-block-label {
+  color: rgba(0, 212, 245, 0.7);
+}
+
+.store-essence-pool {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.store-essence-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.store-essence-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--cyan);
+  font-weight: 600;
+  min-width: 18px;
+  text-align: right;
+}
+
+.store-close-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  background: transparent;
+  border: 1px solid var(--border-dim);
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.store-close-btn:hover {
+  color: var(--cyan);
+  border-color: rgba(0, 212, 245, 0.5);
+}
+
+/* --- Tabs --- */
+.store-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
+}
+
+.store-tab {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.store-tab:hover {
+  color: var(--text-primary);
+  background: rgba(0, 212, 245, 0.04);
+}
+
+.store-tab--active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  background: rgba(0, 212, 245, 0.06);
+}
+
+/* --- Store content scrollable area --- */
+.store-content {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* --- Section labels --- */
+.store-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 8px 14px 4px;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.store-section-label--owned {
+  color: rgba(0, 212, 245, 0.4);
+  border-top: 1px solid var(--border-dim);
+  margin-top: 4px;
+}
+
+/* --- Store card (shared) --- */
+.store-card {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-dim);
+  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.store-card:last-child { border-bottom: none; }
+.store-card:hover:not(.store-card--owned):not(.store-card--unaffordable) { background: rgba(0, 212, 245, 0.04); }
+.store-card--unaffordable { opacity: 0.45; }
+.store-card--owned        { opacity: 0.55; }
+
+.store-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.store-card-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--cyan);
+  letter-spacing: var(--ls-tight);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.store-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* --- Skill cards (accordion) --- */
+.store-card--skill {
+  display: block;
+}
+
+.store-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 0;
+  user-select: none;
+}
+
+.store-card--skill .store-card-name {
+  margin-bottom: 0;
+}
+
+.store-card-chevron {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  margin-left: 10px;
+  transition: color var(--transition-fast);
+}
+
+.store-card--skill:hover .store-card-chevron {
+  color: var(--cyan);
+}
+
+.store-card-collapse {
+  display: none;
+  padding-top: 10px;
+}
+
+.store-card--skill[data-expanded="true"] .store-card-collapse {
+  display: block;
+}
+
+.store-card--skill .store-card-actions {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: unset;
+  margin-top: 10px;
+}
+
+.store-cost-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-faint);
+  border: 1px solid var(--border-dim);
+  border-radius: 2px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  background: var(--bg-deep);
+}
+
+.store-cost-badge--can-afford {
+  color: var(--cyan);
+  border-color: rgba(0, 212, 245, 0.5);
+  background: var(--cyan-glow);
+}
+
+.store-card-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+.store-owned-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-normal);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 212, 245, 0.3);
+  border-radius: 2px;
+  padding: 3px 9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(0, 212, 245, 0.06);
+}
+
+.store-purchase-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 5px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.store-purchase-btn:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 14px var(--cyan-glow);
+}
+
+.store-purchase-btn:disabled {
+  background: transparent;
+  color: var(--text-faint);
+  border: 1px solid var(--border-dim);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.store-empty {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  padding: 24px 14px;
+  text-align: center;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  gap: 12px;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.35;
+}
+
+.empty-state-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  text-align: center;
+  margin: 0;
+}
+
+
+/* ============================================================
+   18. INPUT PROMPT
+   ============================================================ */
+
+.input-prompt-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--cyan);
+  background: var(--bg-system);
+  border-left: 2px solid var(--cyan);
+  border-top: 1px solid var(--border-glow);
+  border-bottom: 1px solid var(--border-glow);
+  padding: 14px 16px;
+  margin: 1.4em 0;
+  position: relative;
+}
+
+.input-prompt-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--text-primary);
+  margin: 6px 0 12px;
+}
+
+.input-prompt-row   { display: flex; gap: 10px; align-items: center; }
+
+.input-prompt-field {
+  flex: 1;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-dim);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  padding: 9px 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  caret-color: var(--cyan);
+  min-width: 0;
+}
+
+.input-prompt-field:focus { border-color: var(--cyan-dim); box-shadow: 0 0 0 2px var(--cyan-glow); }
+
+.input-prompt-submit {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--cyan);
+  border: none;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.input-prompt-submit:hover:not(:disabled) { background: #fff; }
+.input-prompt-submit:disabled { background: var(--border-dim); color: var(--text-faint); cursor: not-allowed; opacity: 0.5; }
+
+.input-prompt-block--submitted {
+  opacity: 0.55;
+  border-left-color: var(--border-dim);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+
+/* ============================================================
+   19. JOURNAL / ACHIEVEMENTS
+   ============================================================ */
+
+.journal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.journal-entry {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-primary);
+  padding: 5px 8px;
+  border: 1px solid var(--border-dim);
+  background: var(--bg-deep);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.journal-entry--achievement {
+  color: var(--cyan);
+  border-color: rgba(0, 212, 245, 0.35);
+  background: rgba(0, 212, 245, 0.04);
+}
+
+.journal-achievement-icon::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+
+/* ============================================================
+   20. TOAST NOTIFICATION
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: min(480px, calc(100% - 48px));
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--ls-normal);
+  padding: 10px 20px;
+  z-index: 200;
+  pointer-events: none;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* Level-up toast — centered, slightly narrower than full game width */
+.toast--levelup {
+  bottom: auto;
+  top: 50%;
+  width: min(600px, calc(100% - 40px));
+  transform: translateX(-50%) translateY(calc(-50% + 8px));
+  font-size: var(--text-sm);
+  padding: 16px 28px;
+  border: 1px solid var(--cyan);
+  box-shadow: 0 0 30px var(--cyan-glow-md), 0 0 60px var(--cyan-glow);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+
+.toast-show { opacity: 0; animation: toastIn 0.25s ease forwards; }
+.toast-hide { animation: toastOut 0.3s ease forwards; }
+
+.toast--levelup.toast-show { animation: toastInCenter 0.25s ease forwards; }
+.toast--levelup.toast-hide { animation: toastOutCenter 0.3s ease forwards; }
+
+.toast--rarity-uncommon  { border-left: 3px solid var(--rarity-uncommon); }
+.toast--rarity-rare      { border-left: 3px solid var(--rarity-rare); }
+.toast--rarity-epic      { border-left: 3px solid var(--rarity-epic);
+                           box-shadow: -4px 0 12px rgba(176, 106, 255, 0.15); }
+.toast--rarity-legendary { border-left: 3px solid var(--rarity-legendary);
+                           box-shadow: -4px 0 12px rgba(240, 165, 0, 0.15); }
+
+
+
+
+/* ============================================================
+   21. ANIMATIONS
+   Narrative stagger animations (fadeSlideIn, choiceSlideIn,
+   systemFlicker, scanline, levelupReveal, tagAppear, overlayIn)
+   have been removed. All narrative elements render at full
+   opacity immediately. The following are retained for UI
+   feedback only and do not affect game state or rendering.
+   ============================================================ */
+
+@keyframes statPulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); color: var(--cyan); } 100% { transform: scale(1); } }
+
+@keyframes toastIn  { to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(-50%) translateY(8px); } }
+
+@keyframes toastInCenter  { to { opacity: 1; transform: translateX(-50%) translateY(-50%); } }
+@keyframes toastOutCenter { to { opacity: 0; transform: translateX(-50%) translateY(calc(-50% + 8px)); } }
+
+@keyframes slotSaveFlash {
+  0%   { border-color: var(--border-dim); }
+  25%  { border-color: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow-md); }
+  70%  { border-color: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow-md); }
+  100% { border-color: var(--border-glow); box-shadow: none; }
+}
+
+
+/* ============================================================
+   22. UTILITY
+   ============================================================ */
+
+.hidden        { display: none; }
+.sys-highlight { color: var(--cyan); font-weight: 600; }
+
+
+/* ============================================================
+   23. RESPONSIVE — tablet (max-width: 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Status toggle already always visible */
+  #game-main { position: relative; overflow-x: clip; }
+
+  /* Status panel sizing on mobile */
+  #status-panel {
+    width: min(260px, 86vw);
+  }
+
+  /* Narrative padding */
+  #narrative-content { padding: 24px 20px calc(32px + env(safe-area-inset-bottom)); }
+
+  /* Header */
+  #header-top    { padding: 8px 16px; padding-top: calc(8px + env(safe-area-inset-top)); }
+  #chapter-bar   { padding: 4px 16px; }
+  #game-title    { font-size: var(--text-sm); }
+  #chapter-title { font-size: var(--text-xs); }
+
+  /* Overlays */
+  .overlay-box   { width: 95%; padding: 28px 20px; }
+  .overlay-title { font-size: 1.1rem; letter-spacing: var(--ls-normal); }
+  .overlay-btn   { font-size: var(--text-sm); padding: 10px 24px; }
+
+  .splash-box       { padding: 32px 24px 28px; }
+  .save-menu-box    { max-width: 100%; }
+  .char-box         { max-width: 100%; padding: 28px 20px 24px; }
+
+  /* Level-up */
+  .stat-alloc-grid       { grid-template-columns: repeat(2, 1fr); }
+  .levelup-inline-block  { padding: 12px 12px 16px; }
+  .levelup-modal-box     { max-width: 100%; padding: 20px 16px 24px; }
+  .levelup-modal-title   { font-size: var(--text-base); }
+  .levelup-confirm-btn   { font-size: var(--text-2xs); padding: 7px 16px; }
+  .levelup-again-btn--yes { font-size: var(--text-sm); padding: 8px 20px; }
+  .levelup-again-btn--no  { font-size: var(--text-sm); padding: 8px 20px; }
+  .levelup-again-footer  { flex-wrap: wrap; }
+
+  /* Skill browser */
+  .skill-browser-card-top     { flex-wrap: wrap; gap: 8px; }
+  .skill-browser-card-actions { width: 100%; justify-content: flex-end; }
+  .skill-browser              { margin-top: 10px; }
+  .skill-browser-card         { padding: 10px 12px; }
+  .skill-browser-header       { padding: 6px 10px; }
+
+  /* Store */
+  .store-modal-box         { max-width: 100%; max-height: 85vh; }
+  .store-card-actions      { flex-direction: row; }
+  .store-card              { padding: 10px 12px; }
+  .store-header            { padding: 10px 12px; }
+  .store-tab               { font-size: var(--text-2xs); padding: 8px 12px; }
+
+  /* Choice buttons */
+  .choice-btn { padding: 12px 16px; font-size: 0.95rem; }
+
+  /* Input prompt */
+  .input-prompt-row    { flex-direction: column; }
+  .input-prompt-submit { width: 100%; }
+
+  /* Save slots */
+  .slot-card     { padding: 10px 12px; gap: 10px; }
+  .slot-actions  { gap: 6px; }
+  .slot-load-btn { padding: 5px 10px; font-size: var(--text-2xs); }
+  .slot-badge    { font-size: var(--text-2xs); min-width: 36px; }
+
+  /* System blocks */
+  .system-block { margin: 1em 0; padding: 10px 12px; }
+
+  /* Pronoun cards */
+  .pronoun-card { min-width: calc(50% - 10px); }
+}
+
+/* Status panel is always a drawer — no desktop override needed */
+
+
+/* ============================================================
+   24. RESPONSIVE — small phone (max-width: 400px)
+   ============================================================ */
+
+@media (max-width: 400px) {
+  .stat-alloc-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .stat-alloc-item { padding: 8px 4px; }
+  .stat-alloc-name { font-size: 0.52rem; }
+  .stat-alloc-val  { font-size: 0.9rem; }
+
+  .levelup-confirm-btn { font-size: var(--text-2xs); padding: 7px 16px; }
+  .skill-browse-btn    { font-size: var(--text-2xs); padding: 6px 12px; }
+
+  #narrative-content { padding: 18px 14px calc(24px + env(safe-area-inset-bottom)); }
+
+  #header-top    { padding: 6px 12px; padding-top: calc(6px + env(safe-area-inset-top)); }
+  #game-title    { font-size: var(--text-xs); letter-spacing: var(--ls-normal); }
+
+  .overlay-box   { padding: 22px 16px; }
+  .overlay-title { font-size: 1.1rem; letter-spacing: var(--ls-normal); }
+  .overlay-btn   { font-size: var(--text-sm); padding: 10px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ensure char creation children are visible if animations are disabled */
+  .char-box > * {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Narrative images — *image directive (Phase 5)
+   --------------------------------------------------------------------------- */
+
+.narrative-image-wrapper {
+  margin: 1.2em 0;
+  text-align: center;
+}
+
+.narrative-image {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  display: block;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Checkpoint section in save menu (Phase 7)
+   --------------------------------------------------------------------------- */
+
+.checkpoint-section {
+  margin-top: 12px;
+  border-top: 1px solid var(--border-dim);
+  padding-top: 10px;
+}
+
+.checkpoint-toggle {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  padding: 4px 0;
+  letter-spacing: var(--ls-tight);
+}
+.checkpoint-toggle:hover { color: var(--cyan); }
+
+.checkpoint-list {
+  margin-top: 6px;
+}
+
+.checkpoint-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.checkpoint-label {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.checkpoint-time {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.checkpoint-empty {
+  font-style: italic;
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  padding: 8px 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Glossary / Lore-Term Tooltips (Phase 8)
+   --------------------------------------------------------------------------- */
+.lore-term {
+  border-bottom: 1px dotted var(--accent-cyan, #5eead4);
+  cursor: help;
+  position: relative;
+  color: inherit;
+}
+
+.lore-term:focus {
+  outline: 1px dotted var(--accent-cyan, #5eead4);
+  outline-offset: 2px;
+}
+
+/* JS-driven tooltip — desktop positioned */
+.lore-tooltip {
+  position: absolute;
+  z-index: 200;
+  background: var(--bg-overlay, #1e293b);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: var(--text-xs, 0.75rem);
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-style: normal;
+  line-height: 1.5;
+  color: var(--text-primary, #e2e8f0);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  white-space: normal;
+}
+.lore-tooltip--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lore-tooltip-term {
+  display: block;
+  font-weight: 600;
+  color: var(--accent-cyan, #5eead4);
+  margin-bottom: 4px;
+  letter-spacing: 0.03em;
+}
+.lore-tooltip-desc {
+  display: block;
+}
+
+/* Bottom-sheet variant for mobile */
+.lore-tooltip--sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  width: 100% !important;
+  max-width: none !important;
+  border-radius: 14px 14px 0 0;
+  padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* Backdrop for bottom-sheet dismiss */
+.lore-tooltip-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.4);
+}
+.lore-tooltip-backdrop--visible {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   Theme Toggle Button (Phase 9)
+   --------------------------------------------------------------------------- */
+#theme-toggle-btn {
+  font-size: var(--text-sm);
+  min-width: 32px;
+  text-align: center;
+  padding: 5px 8px;
+}
+
+#theme-toggle-btn:hover {
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+}
+
+/* Light theme overrides are in the theme file (digital.css, etc.) */

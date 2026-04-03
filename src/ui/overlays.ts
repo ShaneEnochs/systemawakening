@@ -345,9 +345,6 @@ export function showSplash(): void {
 
   _splashOverlay.classList.remove('hidden');
   _splashOverlay.style.opacity = '1';
-  _splashSlots.classList.add('hidden');
-  // Ensure the main content is visible (it gets hidden when save slots are shown)
-  document.getElementById('splash-main')?.classList.remove('hidden');
 }
 
 export function hideSplash(): void {

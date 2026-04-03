@@ -3216,8 +3216,6 @@ function showSplash() {
   }
   _splashOverlay.classList.remove("hidden");
   _splashOverlay.style.opacity = "1";
-  _splashSlots.classList.add("hidden");
-  document.getElementById("splash-main")?.classList.remove("hidden");
 }
 function hideSplash() {
   _splashOverlay.classList.add("hidden");

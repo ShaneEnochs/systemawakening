@@ -14,8 +14,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet"/>
 
-<!-- Single unified stylesheet (skill_styles.css merged in) -->
-<link rel="stylesheet" href="style.css?v=12"/>
+<!-- Theme system: _base.css + one theme file. Swap digital.css for fantasy.css etc. -->
+<link rel="stylesheet" href="themes/_base.css?v=13"/>
+<link rel="stylesheet" href="themes/digital.css?v=13"/>
 <style>
   .save-code-section { margin-top: 16px; border-top: 1px solid var(--border-dim); padding-top: 14px; }
   .save-code-label { font-family: var(--font-heading, 'Cinzel', serif); font-size: 0.85rem; color: var(--text-faint); margin-bottom: 8px; text-align: center; letter-spacing: 0.05em; }
@@ -61,9 +62,11 @@
 <div id="splash-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Title Screen">
   <div class="splash-box">
 
-    <!-- Background canvas for circuit/binary rain -->
+    <!-- Background canvas for circuit/binary rain (hidden by some themes) -->
     <canvas id="splash-bg-canvas" class="splash-bg-canvas"></canvas>
     <div class="splash-vignette"></div>
+    <!-- Theme-specific background layer (CSS-only) -->
+    <div class="splash-theme-bg"></div>
 
     <!-- Main content — hidden as a unit when save slots are shown -->
     <div id="splash-main">
@@ -378,6 +381,8 @@
     const wrap = document.getElementById('splashSigilWrap');
     const SVG  = document.getElementById('splashSigilSvg');
     if (!wrap || !SVG) return;
+    // Skip if theme hides the sigil
+    if (getComputedStyle(wrap).display === 'none') return;
 
     const NS = 'http://www.w3.org/2000/svg';
     const CX = 110, CY = 110;
@@ -577,6 +582,8 @@
   function initSplashBackground() {
     var canvas = document.getElementById('splash-bg-canvas');
     if (!canvas) return;
+    // Skip if theme hides the canvas
+    if (getComputedStyle(canvas).display === 'none') return;
     var ctx = canvas.getContext('2d');
 
     function resize() {

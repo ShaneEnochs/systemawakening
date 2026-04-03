@@ -1,0 +1,436 @@
+/* ============================================================
+   THEME: Digital / LitRPG System Interface
+   Dark sci-fi aesthetic with cyan/amber accents, glowing borders,
+   monospace UI chrome, and a summoning-circle splash screen.
+
+   Fonts required (add to <head>):
+     Cinzel (display), Crimson Text (body), Inconsolata (mono)
+   ============================================================ */
+
+:root {
+  /* --- Backgrounds --- */
+  --bg-deep:       #0d0f1a;
+  --bg-panel:      #13162a;
+  --bg-card:       #181c30;
+  --bg-system:     #0a1020;
+
+  /* --- Borders --- */
+  --border-dim:    #2a2f4a;
+  --border-glow:   #1e4a6a;
+
+  /* --- Accent colors --- */
+  --cyan:          #00d4f5;
+  --cyan-dim:      #0099b8;
+  --cyan-glow:     rgba(0, 212, 245, 0.15);
+  --cyan-glow-md:  rgba(0, 212, 245, 0.3);
+
+  --amber:         #f0a500;
+  --amber-dim:     #b07a00;
+  --amber-glow:    var(--cyan-glow);
+
+  --green:         #4cdc8a;
+  --green-glow:    var(--cyan-glow);
+
+  --red:           #e05555;
+  --red-glow:      rgba(224, 85, 85, 0.2);
+
+  /* --- Rarity colors --- */
+  --rarity-common:    var(--text-primary);
+  --rarity-uncommon:  #4cdc8a;
+  --rarity-rare:      #4a9eff;
+  --rarity-epic:      #b06aff;
+  --rarity-legendary: #f0a500;
+
+  /* --- Extra named colors (inline accent tags) --- */
+  --white:   #d8ddf0;
+  --blue:    #4a9eff;
+  --purple:  #b06aff;
+  --gold:    #f0a500;
+  --silver:  #a8b0c8;
+
+  /* --- Text --- */
+  --text-primary:  #d8ddf0;
+  --text-dim:      #9ba2c0;
+  --text-faint:    #6a7198;
+
+  /* --- Fonts --- */
+  --font-display:  'Cinzel', serif;
+  --font-body:     'Crimson Text', serif;
+  --font-mono:     'Inconsolata', monospace;
+
+  /* --- Type scale --- */
+  --text-2xs:      0.7rem;
+  --text-xs:       0.78rem;
+  --text-sm:       0.875rem;
+  --text-base:     0.95rem;
+  --text-md:       1rem;
+  --text-lg:       1.3rem;
+  --text-xl:       1.6rem;
+
+  /* --- Letter spacing --- */
+  --ls-tight:      0.06em;
+  --ls-normal:     0.12em;
+  --ls-wide:       0.2em;
+
+  /* --- Radii --- */
+  --radius:        4px;
+  --radius-md:     8px;
+
+  /* --- Transitions --- */
+  --transition:    0.3s ease;
+  --transition-fast: 0.15s ease;
+
+  /* --- Theme-specific visual properties --- */
+  --bg-body-image:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 80, 120, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(80, 0, 120, 0.06) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+
+  --bg-header:       rgba(13, 15, 26, 0.9);
+  --bg-header-accent: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+  --bg-chapter-bar:  rgba(10, 12, 22, 0.5);
+  --bg-overlay-backdrop: rgba(5, 7, 15, 0.85);
+  --overlay-box-glow: linear-gradient(135deg, var(--cyan-glow), transparent 60%);
+
+  /* Chapter cards */
+  --chapter-border-color: rgba(0, 212, 245, 0.15);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(0, 212, 245, 0.03) 50%, transparent 100%);
+  --chapter-title-glow: 0 0 20px rgba(0, 212, 245, 0.3);
+
+  /* Choice buttons */
+  --choice-indicator: '▸';
+  --choice-hover-sweep: var(--cyan-glow);
+
+  /* Splash screen */
+  --bg-splash-box: linear-gradient(155deg, rgba(13,17,36,0.96) 0%, rgba(7,10,20,0.98) 100%);
+  --splash-accent-top: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  --splash-accent-bottom: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+  --bg-splash-vignette: radial-gradient(ellipse at 50% 40%, transparent 20%, rgba(4,6,14,0.82) 100%);
+  --splash-sigil-display: block;
+  --splash-canvas-display: block;
+  --splash-sigil-glow: radial-gradient(ellipse, rgba(0,212,245,0.11) 0%, transparent 65%);
+  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(0,212,245,0.22));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(0,212,245,0.22), transparent);
+  --splash-orn-diamond-glow: 0 0 8px var(--cyan);
+  --splash-theme-bg: none;
+
+  /* Character creation */
+  --bg-char-pattern:
+    linear-gradient(rgba(0, 212, 245, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 245, 0.02) 1px, transparent 1px);
+  --bg-char-pattern-size: 24px 24px;
+
+  /* Ending screen */
+  --bg-ending-inline: linear-gradient(135deg, rgba(0, 212, 245, 0.05) 0%, transparent 60%);
+
+  /* Glow effects */
+  --shadow-glow: 0 0 40px var(--cyan-glow), inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ============================================================
+   LIGHT VARIANT — Digital Theme
+   ============================================================ */
+
+[data-theme="light"] {
+  /* --- Backgrounds --- */
+  --bg-deep:       #f0ece4;
+  --bg-panel:      #e8e2d8;
+  --bg-card:       #ffffff;
+  --bg-system:     #e4dfd6;
+
+  /* --- Borders --- */
+  --border-dim:    #b0a898;
+  --border-glow:   #8a7e70;
+
+  /* --- Accent colors (darkened for light-background contrast) --- */
+  --cyan:          #006070;
+  --cyan-dim:      #004a55;
+  --cyan-glow:     rgba(0, 96, 112, 0.14);
+  --cyan-glow-md:  rgba(0, 96, 112, 0.25);
+
+  --amber:         #9a6800;
+  --amber-dim:     #7a5200;
+  --amber-glow:    rgba(154, 104, 0, 0.15);
+
+  --green:         #147040;
+  --green-glow:    rgba(20, 112, 64, 0.14);
+
+  --red:           #a83535;
+  --red-glow:      rgba(168, 53, 53, 0.15);
+
+  /* --- Rarity colors (darker for readability on light) --- */
+  --rarity-common:    #2a2e3e;
+  --rarity-uncommon:  #147040;
+  --rarity-rare:      #2060b8;
+  --rarity-epic:      #6830b8;
+  --rarity-legendary: #9a6800;
+
+  /* --- Named inline colors --- */
+  --white:   #2a2e3e;
+  --blue:    #2060b8;
+  --purple:  #6830b8;
+  --gold:    #9a6800;
+  --silver:  #4a5468;
+
+  /* --- Text --- */
+  --text-primary:  #1a1e2e;
+  --text-dim:      #3e4458;
+  --text-faint:    #6a7088;
+
+  /* --- Theme-specific light overrides --- */
+  --bg-body-image: none;
+  --bg-header:       rgba(240, 236, 228, 0.9);
+  --bg-chapter-bar:  rgba(232, 226, 216, 0.6);
+  --bg-overlay-backdrop: rgba(0, 0, 0, 0.35);
+  --overlay-box-glow: linear-gradient(135deg, var(--cyan-glow), transparent 60%);
+
+  --chapter-border-color: rgba(0, 74, 85, 0.3);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(0, 74, 85, 0.08) 50%, transparent 100%);
+  --chapter-title-glow: 0 0 16px rgba(0, 74, 85, 0.4);
+
+  --bg-splash-box: linear-gradient(155deg, rgba(240,236,228,0.97) 0%, rgba(232,226,216,0.99) 100%);
+  --bg-splash-vignette: radial-gradient(ellipse at 50% 40%, transparent 20%, rgba(232,226,216,0.75) 100%);
+  --splash-sigil-glow: radial-gradient(ellipse, rgba(0,96,112,0.12) 0%, transparent 65%);
+  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(0,74,85,0.45));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(0,74,85,0.45), transparent);
+  --splash-orn-diamond-glow: 0 0 6px rgba(0,74,85,0.5);
+
+  --bg-char-pattern:
+    linear-gradient(rgba(0, 74, 85, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 74, 85, 0.03) 1px, transparent 1px);
+
+  --bg-ending-inline: linear-gradient(135deg, rgba(0, 74, 85, 0.06) 0%, transparent 60%);
+  --shadow-glow: 0 0 20px rgba(0, 74, 85, 0.1);
+}
+
+
+/* ============================================================
+   LIGHT — Splash Screen
+   ============================================================ */
+
+[data-theme="light"] .splash-new-col {
+  border-right-color: rgba(0,0,0,0.1);
+}
+
+[data-theme="light"] .splash-box::before {
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.5;
+}
+[data-theme="light"] .splash-box::after {
+  background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+  opacity: 0.6;
+}
+
+[data-theme="light"] .splash-sigil-center svg {
+  color: var(--cyan);
+  filter: drop-shadow(0 0 6px rgba(0,96,112,0.5))
+          drop-shadow(0 0 14px rgba(0,96,112,0.25));
+}
+
+/* JS-generated sigil — override bright cyan for light backgrounds */
+[data-theme="light"] .splash-sigil-svg circle,
+[data-theme="light"] .splash-sigil-svg line,
+[data-theme="light"] .splash-sigil-svg path,
+[data-theme="light"] .splash-sigil-svg rect,
+[data-theme="light"] .splash-sigil-svg polyline {
+  stroke: rgba(0, 74, 85, 0.65);
+}
+[data-theme="light"] .splash-sigil-svg rect[fill^="rgba(0,212,245"] {
+  fill: rgba(0, 74, 85, 0.7);
+}
+
+[data-theme="light"] .splash-title {
+  color: var(--text-primary) !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .splash-stale-notice {
+  color: var(--cyan);
+  background: rgba(0,74,85,0.08);
+  border-color: var(--cyan-dim);
+}
+
+[data-theme="light"] .splash-action-btn--primary {
+  background: rgba(0,74,85,0.1);
+  color: var(--cyan);
+  border-color: rgba(0,74,85,0.5);
+}
+[data-theme="light"] .splash-action-btn--primary:hover {
+  background: rgba(0,74,85,0.18);
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px rgba(0,74,85,0.18);
+}
+[data-theme="light"] .splash-action-btn--primary:hover .splash-btn-icon {
+  background: var(--cyan);
+  color: #f0ece4;
+}
+
+[data-theme="light"] .splash-action-btn--secondary {
+  color: var(--text-dim);
+  border-color: var(--border-dim);
+}
+[data-theme="light"] .splash-action-btn--secondary:hover {
+  background: rgba(0,0,0,0.05);
+  border-color: #a09484;
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .splash-footer {
+  border-top-color: rgba(0,0,0,0.1);
+}
+
+/* Light-theme landscape: sigil bg slightly more visible */
+@media (orientation: landscape) and (min-width: 860px) {
+  [data-theme="light"] .splash-sigil-wrap {
+    opacity: 0.1;
+    animation: splashSigilBgInLight 1.2s ease 0.35s both;
+  }
+}
+@keyframes splashSigilBgInLight {
+  from { opacity: 0; }
+  to   { opacity: 0.1; }
+}
+
+
+/* ============================================================
+   LIGHT — Component overrides
+   ============================================================ */
+
+[data-theme="light"] .char-portrait-frame {
+  background: #e4dfd6;
+  border-color: rgba(0, 74, 85, 0.35);
+}
+
+/* Remove glow text-shadows that look muddy on light backgrounds */
+[data-theme="light"] .inline-accent-epic,
+[data-theme="light"] .skill-rarity--epic {
+  text-shadow: none;
+}
+
+[data-theme="light"] .inline-accent-legendary,
+[data-theme="light"] .skill-rarity--legendary {
+  text-shadow: none;
+}
+
+[data-theme="light"] .stat-val.increased {
+  text-shadow: none;
+}
+
+[data-theme="light"] .store-card--rarity-epic,
+[data-theme="light"] .skill-accordion--rarity-epic {
+  box-shadow: none;
+}
+
+[data-theme="light"] .store-card--rarity-legendary,
+[data-theme="light"] .skill-accordion--rarity-legendary {
+  box-shadow: none;
+}
+
+[data-theme="light"] .toast--rarity-epic {
+  box-shadow: none;
+}
+
+[data-theme="light"] .toast--rarity-legendary {
+  box-shadow: none;
+}
+
+[data-theme="light"] .store-header {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .store-header .system-block-label {
+  color: var(--cyan);
+}
+
+[data-theme="light"] .store-card:hover:not(.store-card--owned):not(.store-card--unaffordable) {
+  background: rgba(0, 74, 85, 0.06);
+}
+
+
+/* ============================================================
+   LIGHT — Button hover/color fixes
+   ============================================================ */
+
+[data-theme="light"] .overlay-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 74, 85, 0.12);
+}
+
+[data-theme="light"] .btn-primary:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--cyan-dim);
+}
+
+[data-theme="light"] .btn-primary--amber:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--amber-dim);
+}
+
+[data-theme="light"] .btn-primary--green:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--green);
+}
+
+[data-theme="light"] .choice-btn:hover {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .slot-load-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(0, 74, 85, 0.12);
+}
+
+[data-theme="light"] .slot-load-btn--save {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .slot-load-btn--save:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .levelup-again-btn--yes:hover {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .overlay-btn {
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-tight);
+  color: #ffffff;
+}
+
+[data-theme="light"] .overlay-btn--secondary {
+  color: var(--text-dim);
+}
+
+[data-theme="light"] .overlay-btn--danger {
+  color: var(--red);
+}
+
+[data-theme="light"] .slot-load-btn {
+  color: #ffffff;
+}
+
+[data-theme="light"] .slot-load-btn--load {
+  color: var(--cyan-dim);
+}
+
+[data-theme="light"] .ending-inline-btn:hover {
+  color: #ffffff;
+  background: var(--cyan-dim);
+}
+
+[data-theme="light"] .levelup-confirm-btn:hover {
+  color: #ffffff;
+  background: var(--cyan-dim);
+}
+
+[data-theme="light"] .skill-purchase-btn:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--cyan-dim);
+}
+
+[data-theme="light"] .input-prompt-submit:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--cyan-dim);
+}

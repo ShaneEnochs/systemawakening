@@ -1,0 +1,716 @@
+/* ============================================================
+   THEME: High Fantasy / Parchment
+   Warm earth tones, aged parchment backgrounds, gold/burgundy
+   accents, decorative borders, and a medieval aesthetic.
+
+   Fonts required (add to <head>):
+     Cinzel (display), Crimson Text (body), Inconsolata (mono)
+     Optional: EB Garamond for body text (more period-appropriate)
+   ============================================================ */
+
+:root {
+  /* --- Backgrounds --- */
+  --bg-deep:       #1a1510;
+  --bg-panel:      #211c14;
+  --bg-card:       #2a2318;
+  --bg-system:     #16120c;
+
+  /* --- Borders --- */
+  --border-dim:    #4a3e2e;
+  --border-glow:   #6b5a3e;
+
+  /* --- Accent colors (gold/burgundy palette) --- */
+  --cyan:          #c8a55a;
+  --cyan-dim:      #9e8040;
+  --cyan-glow:     rgba(200, 165, 90, 0.12);
+  --cyan-glow-md:  rgba(200, 165, 90, 0.25);
+
+  --amber:         #d4853a;
+  --amber-dim:     #a86828;
+  --amber-glow:    rgba(212, 133, 58, 0.15);
+
+  --green:         #5a9e5a;
+  --green-glow:    rgba(90, 158, 90, 0.15);
+
+  --red:           #b84040;
+  --red-glow:      rgba(184, 64, 64, 0.2);
+
+  /* --- Rarity colors (warm palette) --- */
+  --rarity-common:    var(--text-primary);
+  --rarity-uncommon:  #5a9e5a;
+  --rarity-rare:      #5588c0;
+  --rarity-epic:      #9068b8;
+  --rarity-legendary: #d4a030;
+
+  /* --- Extra named colors --- */
+  --white:   #e0d8c8;
+  --blue:    #5588c0;
+  --purple:  #9068b8;
+  --gold:    #d4a030;
+  --silver:  #9a9488;
+
+  /* --- Text --- */
+  --text-primary:  #e0d8c8;
+  --text-dim:      #a89880;
+  --text-faint:    #786850;
+
+  /* --- Fonts --- */
+  --font-display:  'Cinzel', serif;
+  --font-body:     'Crimson Text', serif;
+  --font-mono:     'Crimson Text', serif;
+
+  /* --- Type scale --- */
+  --text-2xs:      0.7rem;
+  --text-xs:       0.78rem;
+  --text-sm:       0.875rem;
+  --text-base:     0.95rem;
+  --text-md:       1rem;
+  --text-lg:       1.3rem;
+  --text-xl:       1.6rem;
+
+  /* --- Letter spacing --- */
+  --ls-tight:      0.04em;
+  --ls-normal:     0.08em;
+  --ls-wide:       0.16em;
+
+  /* --- Radii (slightly rounded for a softer feel) --- */
+  --radius:        5px;
+  --radius-md:     10px;
+
+  /* --- Transitions --- */
+  --transition:    0.3s ease;
+  --transition-fast: 0.15s ease;
+
+  /* --- Theme-specific visual properties --- */
+  --bg-body-image:
+    radial-gradient(ellipse at 30% 50%, rgba(120, 80, 30, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, rgba(80, 40, 20, 0.05) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+
+  --bg-header:       rgba(26, 21, 16, 0.92);
+  --bg-header-accent: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.3), transparent);
+  --bg-chapter-bar:  rgba(22, 18, 12, 0.5);
+  --bg-overlay-backdrop: rgba(10, 8, 5, 0.8);
+  --overlay-box-glow: none;
+
+  /* Chapter cards */
+  --chapter-border-color: rgba(200, 165, 90, 0.2);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(200, 165, 90, 0.04) 50%, transparent 100%);
+  --chapter-title-glow: none;
+
+  /* Choice buttons */
+  --choice-indicator: '◆';
+  --choice-hover-sweep: rgba(200, 165, 90, 0.08);
+
+  /* Splash screen — hide digital elements, show parchment */
+  --bg-splash-box: linear-gradient(155deg, rgba(30, 24, 16, 0.97) 0%, rgba(22, 18, 12, 0.98) 100%);
+  --splash-accent-top: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.4), transparent);
+  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 90, 62, 0.4), transparent);
+  --bg-splash-vignette: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(10, 8, 5, 0.7) 100%);
+  --splash-sigil-display: none;
+  --splash-canvas-display: none;
+  --splash-sigil-glow: none;
+  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.3));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(200, 165, 90, 0.3), transparent);
+  --splash-orn-diamond-glow: 0 0 6px rgba(200, 165, 90, 0.4);
+
+  /* Splash parchment texture background */
+  --splash-theme-bg:
+    radial-gradient(ellipse at 50% 50%, rgba(200, 165, 90, 0.06) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+
+  /* Character creation */
+  --bg-char-pattern: none;
+  --bg-char-pattern-size: auto;
+
+  /* Ending screen */
+  --bg-ending-inline: linear-gradient(135deg, rgba(200, 165, 90, 0.05) 0%, transparent 60%);
+
+  /* No glow effects */
+  --shadow-glow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ============================================================
+   FANTASY — Component style overrides
+   These rules change the visual character beyond what CSS
+   variables alone can handle.
+   ============================================================ */
+
+/* System blocks: parchment card style instead of left-accent border */
+.system-box {
+  border: 1px solid var(--border-dim);
+  border-left: 3px double var(--cyan);
+  border-radius: var(--radius);
+}
+
+.system-block {
+  border: 1px solid var(--border-dim);
+  border-left: 3px double var(--cyan);
+  border-radius: var(--radius);
+}
+
+/* Buttons: rounded, warm */
+.btn-base {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.3);
+}
+
+.btn-primary--amber:hover:not(:disabled) {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px var(--amber-glow);
+}
+
+.btn-primary--green:hover:not(:disabled) {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px var(--green-glow);
+}
+
+/* Ghost button hover */
+.btn-ghost:hover:not(:disabled) {
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+  background: var(--cyan-glow);
+}
+
+/* Header buttons: softer */
+.header-btn {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+#status-toggle {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+/* Status toggle glow — warm gold instead of cyan */
+@keyframes statusLevelupGlow {
+  0%, 100% {
+    color: var(--text-dim);
+    border-color: var(--border-dim);
+    box-shadow: none;
+  }
+  50% {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow-md);
+  }
+}
+
+/* Chapter card label */
+.chapter-card-label {
+  font-family: var(--font-body);
+}
+
+/* Choice buttons: warm hover */
+.choice-btn {
+  border-radius: var(--radius);
+}
+
+.choice-btn:hover {
+  border-color: var(--cyan-dim);
+  color: #fff;
+  transform: translateX(4px);
+}
+
+/* Status panel */
+.status-tab {
+  font-family: var(--font-body);
+}
+
+.status-tab:hover {
+  background: rgba(200, 165, 90, 0.06);
+}
+
+.status-tab--active {
+  background: rgba(200, 165, 90, 0.08);
+}
+
+/* Stat values: warm color */
+.stat-val {
+  color: var(--cyan);
+}
+
+/* Overlay buttons: display font */
+.overlay-btn {
+  border-radius: var(--radius);
+}
+
+.overlay-btn:hover {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
+}
+
+/* Overlay box: warm border, subtle shadow instead of glow */
+.overlay-box {
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Splash box: warm styling */
+.splash-box {
+  border-radius: var(--radius-md);
+}
+
+/* Splash eyebrow: serif instead of mono */
+.splash-eyebrow {
+  font-family: var(--font-body);
+  font-style: italic;
+  letter-spacing: 0.18em;
+}
+
+/* Splash action buttons */
+.splash-action-btn {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+/* Splash footer */
+.splash-footer-text {
+  font-family: var(--font-body);
+}
+
+/* Splash column labels */
+.splash-col-label {
+  font-family: var(--font-body);
+}
+
+.splash-saves-divider {
+  font-family: var(--font-body);
+}
+
+/* Slot cards: warm */
+.slot-card {
+  border-radius: var(--radius);
+}
+
+.slot-load-btn {
+  border-radius: var(--radius);
+}
+
+.slot-load-btn:hover:not(:disabled) {
+  background: #e8dcc0;
+}
+
+.slot-load-btn--save:hover:not(:disabled) {
+  background: #e0b050;
+}
+
+/* Save menu */
+.save-menu-hint {
+  font-family: var(--font-body);
+}
+
+/* Character creation */
+.char-box {
+  border-radius: var(--radius-md);
+}
+
+.char-input {
+  border-radius: var(--radius);
+}
+
+.pronoun-card {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+/* Skill system: softer */
+.skill-accordion {
+  border-radius: var(--radius);
+}
+
+.skill-accordion-btn:hover {
+  background: rgba(200, 165, 90, 0.06);
+}
+
+.skill-accordion-btn--open {
+  background: rgba(200, 165, 90, 0.08);
+}
+
+.skill-accordion-name {
+  font-family: var(--font-body);
+}
+
+/* Store */
+.store-tab {
+  font-family: var(--font-body);
+}
+
+.store-tab:hover {
+  background: rgba(200, 165, 90, 0.06);
+}
+
+.store-tab--active {
+  background: rgba(200, 165, 90, 0.08);
+}
+
+.store-card-name {
+  font-family: var(--font-body);
+}
+
+.store-purchase-btn {
+  border-radius: var(--radius);
+}
+
+.store-purchase-btn:hover:not(:disabled) {
+  background: #e8dcc0;
+  box-shadow: 0 2px 8px rgba(200, 165, 90, 0.2);
+}
+
+/* Input prompt */
+.input-prompt-block {
+  border-left: 3px double var(--cyan);
+  border-radius: var(--radius);
+}
+
+.input-prompt-field {
+  border-radius: var(--radius);
+}
+
+.input-prompt-submit {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+.input-prompt-submit:hover:not(:disabled) {
+  background: #e8dcc0;
+}
+
+/* Journal */
+.journal-entry {
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+}
+
+/* Toast */
+.toast {
+  font-family: var(--font-body);
+  border-radius: var(--radius-md);
+}
+
+/* Tooltip */
+.lore-tooltip {
+  border-radius: var(--radius-md);
+}
+
+.lore-term {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--cyan-dim);
+}
+
+/* Epic/legendary glows — warm-toned */
+.inline-accent-epic,
+.skill-rarity--epic {
+  text-shadow: 0 0 6px rgba(144, 104, 184, 0.35);
+}
+
+.inline-accent-legendary,
+.skill-rarity--legendary {
+  text-shadow: 0 0 6px rgba(212, 160, 48, 0.4),
+               0 0 14px rgba(212, 160, 48, 0.15);
+}
+
+/* Rarity container accents */
+.store-card--rarity-epic,
+.skill-accordion--rarity-epic {
+  border-left: 3px double rgba(144, 104, 184, 0.5);
+}
+
+.store-card--rarity-legendary,
+.skill-accordion--rarity-legendary {
+  border-left: 3px double rgba(212, 160, 48, 0.5);
+}
+
+/* Level-up animations — warm */
+@keyframes levelupPulse {
+  0%, 100% {
+    border-color: rgba(200, 165, 90, 0.35);
+    box-shadow: none;
+    color: var(--cyan);
+  }
+  50% {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow-md);
+    color: #fff;
+  }
+}
+
+.levelup-confirm-btn {
+  border-radius: var(--radius);
+}
+
+.levelup-confirm-btn:hover {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
+}
+
+.skill-purchase-btn {
+  border-radius: var(--radius);
+}
+
+/* Ending screens */
+.ending-inline-block {
+  border-left: 3px double var(--cyan);
+  border-radius: var(--radius);
+}
+
+.ending-inline-btn {
+  border-radius: var(--radius);
+}
+
+.ending-inline-btn:hover {
+  background: #e8dcc0;
+  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
+}
+
+/* Autosave accent — warm */
+.slot-card--autosave {
+  border-left: 3px double var(--cyan) !important;
+  background: rgba(200, 165, 90, 0.04) !important;
+}
+
+/* Stale save notice — warm */
+.splash-stale-notice {
+  border-radius: var(--radius);
+}
+
+/* Store modal */
+.store-modal-box {
+  border-radius: var(--radius-md);
+}
+
+.store-close-btn {
+  border-radius: var(--radius);
+}
+
+/* Level-up modal */
+.levelup-modal-box {
+  border-radius: var(--radius-md);
+}
+
+/* Scrollbar — warm tones */
+#narrative-content::-webkit-scrollbar-thumb {
+  background: var(--border-dim);
+}
+#narrative-content::-webkit-scrollbar-thumb:hover {
+  background: var(--border-glow);
+}
+
+
+/* ============================================================
+   FANTASY — Splash emblem (CSS-only, replaces digital sigil)
+   A decorative shield/compass rose built from CSS shapes.
+   ============================================================ */
+
+/* Center emblem container */
+.splash-box::after {
+  /* Repurpose the bottom accent line for a decorative border */
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 10%,
+    var(--border-dim) 20%,
+    var(--cyan-dim) 40%,
+    var(--cyan) 50%,
+    var(--cyan-dim) 60%,
+    var(--border-dim) 80%,
+    transparent 90%
+  ) !important;
+  opacity: 0.6;
+}
+
+/* Fancy top border */
+.splash-box::before {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 10%,
+    var(--border-dim) 20%,
+    var(--cyan-dim) 40%,
+    var(--cyan) 50%,
+    var(--cyan-dim) 60%,
+    var(--border-dim) 80%,
+    transparent 90%
+  ) !important;
+  opacity: 0.75;
+}
+
+
+/* ============================================================
+   LIGHT VARIANT — Fantasy Theme
+   Warm cream/ivory with darker brown text.
+   ============================================================ */
+
+[data-theme="light"] {
+  /* --- Backgrounds --- */
+  --bg-deep:       #f2ebe0;
+  --bg-panel:      #eae3d6;
+  --bg-card:       #faf6f0;
+  --bg-system:     #e6dfd2;
+
+  /* --- Borders --- */
+  --border-dim:    #c0b49c;
+  --border-glow:   #a09078;
+
+  /* --- Accent colors (darkened for light bg) --- */
+  --cyan:          #7a6028;
+  --cyan-dim:      #5e4a1e;
+  --cyan-glow:     rgba(122, 96, 40, 0.12);
+  --cyan-glow-md:  rgba(122, 96, 40, 0.22);
+
+  --amber:         #8a5520;
+  --amber-dim:     #6a4018;
+  --amber-glow:    rgba(138, 85, 32, 0.15);
+
+  --green:         #2e6830;
+  --green-glow:    rgba(46, 104, 48, 0.14);
+
+  --red:           #8a2828;
+  --red-glow:      rgba(138, 40, 40, 0.15);
+
+  /* --- Rarity colors --- */
+  --rarity-common:    #2a2418;
+  --rarity-uncommon:  #2e6830;
+  --rarity-rare:      #2a5a90;
+  --rarity-epic:      #5a3890;
+  --rarity-legendary: #8a6018;
+
+  /* --- Named inline colors --- */
+  --white:   #2a2418;
+  --blue:    #2a5a90;
+  --purple:  #5a3890;
+  --gold:    #8a6018;
+  --silver:  #5a5448;
+
+  /* --- Text --- */
+  --text-primary:  #2a2418;
+  --text-dim:      #4a4038;
+  --text-faint:    #7a7068;
+
+  /* --- Theme-specific light overrides --- */
+  --bg-body-image:
+    radial-gradient(ellipse at 30% 50%, rgba(120, 80, 30, 0.04) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+
+  --bg-header: rgba(242, 235, 224, 0.92);
+  --bg-chapter-bar: rgba(234, 227, 214, 0.6);
+  --bg-overlay-backdrop: rgba(0, 0, 0, 0.3);
+
+  --chapter-border-color: rgba(122, 96, 40, 0.25);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(122, 96, 40, 0.06) 50%, transparent 100%);
+
+  --bg-splash-box: linear-gradient(155deg, rgba(242,235,224,0.97) 0%, rgba(234,227,214,0.99) 100%);
+  --bg-splash-vignette: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(234,227,214,0.6) 100%);
+  --splash-theme-bg:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+
+  --bg-ending-inline: linear-gradient(135deg, rgba(122, 96, 40, 0.06) 0%, transparent 60%);
+  --shadow-glow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Light mode button fixes */
+[data-theme="light"] .btn-primary:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(122, 96, 40, 0.12);
+}
+
+[data-theme="light"] .overlay-btn:hover {
+  color: var(--text-primary);
+  background: rgba(122, 96, 40, 0.1);
+}
+
+[data-theme="light"] .overlay-btn {
+  color: #ffffff;
+}
+
+[data-theme="light"] .overlay-btn--secondary {
+  color: var(--text-dim);
+}
+
+[data-theme="light"] .overlay-btn--danger {
+  color: var(--red);
+}
+
+[data-theme="light"] .choice-btn:hover {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .slot-load-btn {
+  color: #ffffff;
+}
+
+[data-theme="light"] .slot-load-btn--load {
+  color: var(--cyan-dim);
+}
+
+[data-theme="light"] .slot-load-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(122, 96, 40, 0.1);
+}
+
+[data-theme="light"] .slot-load-btn--save {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .splash-action-btn--primary {
+  background: rgba(122, 96, 40, 0.1);
+  color: var(--cyan);
+  border-color: rgba(122, 96, 40, 0.4);
+}
+[data-theme="light"] .splash-action-btn--primary:hover {
+  background: rgba(122, 96, 40, 0.18);
+  border-color: var(--cyan);
+}
+[data-theme="light"] .splash-action-btn--primary:hover .splash-btn-icon {
+  background: var(--cyan);
+  color: #f2ebe0;
+}
+
+[data-theme="light"] .splash-action-btn--secondary:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .splash-title {
+  color: var(--text-primary) !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .splash-footer {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .inline-accent-epic,
+[data-theme="light"] .skill-rarity--epic {
+  text-shadow: none;
+}
+
+[data-theme="light"] .inline-accent-legendary,
+[data-theme="light"] .skill-rarity--legendary {
+  text-shadow: none;
+}
+
+[data-theme="light"] .store-header {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .ending-inline-btn:hover,
+[data-theme="light"] .levelup-confirm-btn:hover,
+[data-theme="light"] .skill-purchase-btn:hover:not(:disabled),
+[data-theme="light"] .input-prompt-submit:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(122, 96, 40, 0.12);
+}
+
+[data-theme="light"] .levelup-again-btn--yes:hover {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .char-portrait-frame {
+  background: var(--bg-system);
+}

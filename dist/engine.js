@@ -231,6 +231,20 @@ function initThemeToggle() {
     localStorage.setItem("sa_theme", next ? "light" : "dark");
   });
 }
+function setGameTheme(themeName) {
+  const links = document.querySelectorAll('link[rel="stylesheet"]');
+  for (const link of links) {
+    const href = link.getAttribute("href") || "";
+    if (href.includes("themes/") && !href.includes("_base.css")) {
+      const newHref = href.replace(/themes\/[\w-]+\.css/, `themes/${themeName}.css`);
+      if (newHref !== href) {
+        link.setAttribute("href", newHref);
+      }
+      break;
+    }
+  }
+  localStorage.setItem("sa_game_theme", themeName);
+}
 function setGameTitle(t) {
   const gt = document.getElementById("game-title");
   const st = document.querySelector(".splash-title");
@@ -1456,6 +1470,15 @@ registerCommand("*set_game_byline", (t) => {
   if (byline) {
     playerState.game_byline = byline;
     if (cb.setGameByline) cb.setGameByline(byline);
+  }
+  advanceIp();
+});
+registerCommand("*set_theme", (t) => {
+  const m = t.match(/^\*set_theme\s+"([^"]+)"$/);
+  const theme = m ? m[1] : t.replace(/^\*set_theme\s*/, "").trim();
+  if (theme) {
+    playerState.game_theme = theme;
+    if (cb.setGameTheme) cb.setGameTheme(theme);
   }
   advanceIp();
 });
@@ -3852,6 +3875,7 @@ async function boot() {
     setGameByline: (t) => {
       if (dom.splashTagline) dom.splashTagline.textContent = t;
     },
+    setGameTheme,
     runStatsScene,
     fetchTextFile,
     getNarrativeLog,
@@ -3869,6 +3893,8 @@ async function boot() {
     setGameTitle(String(playerState.game_title || ""));
     if (dom.splashTagline && playerState.game_byline)
       dom.splashTagline.textContent = String(playerState.game_byline);
+    if (playerState.game_theme)
+      setGameTheme(String(playerState.game_theme));
     showSplash();
   } catch (err) {
     showEngineError(`Boot failed: ${err.message}`);

@@ -8,7 +8,12 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>"/>
 <title></title>
 <script>
-  (function(){var t=localStorage.getItem('sa_theme');if(t==='light'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.setAttribute('data-theme','light');}})();
+  (function(){
+    var t=localStorage.getItem('sa_theme');
+    if(t==='light'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.setAttribute('data-theme','light');}
+    var g=localStorage.getItem('sa_game_theme');
+    if(g){var l=document.querySelector('link[href*="themes/"][href]:not([href*="_base"])');if(l){l.setAttribute('href',l.getAttribute('href').replace(/themes\/[\w-]+\.css/,'themes/'+g+'.css'));}}
+  })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>

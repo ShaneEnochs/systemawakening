@@ -129,6 +129,27 @@ export function initThemeToggle(): void {
   });
 }
 
+// ---------------------------------------------------------------------------
+// setGameTheme — swaps the theme CSS file and persists the choice.
+// Called by *set_theme directive and at boot from playerState.game_theme.
+// ---------------------------------------------------------------------------
+export function setGameTheme(themeName: string): void {
+  // Find the theme <link> element (the one after _base.css)
+  const links = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]');
+  for (const link of links) {
+    const href = link.getAttribute('href') || '';
+    // Match the theme CSS file (not _base.css)
+    if (href.includes('themes/') && !href.includes('_base.css')) {
+      const newHref = href.replace(/themes\/[\w-]+\.css/, `themes/${themeName}.css`);
+      if (newHref !== href) {
+        link.setAttribute('href', newHref);
+      }
+      break;
+    }
+  }
+  localStorage.setItem('sa_game_theme', themeName);
+}
+
 export function setGameTitle(t: string): void {
   const gt = document.getElementById('game-title');
   const st = document.querySelector('.splash-title') as HTMLElement | null;

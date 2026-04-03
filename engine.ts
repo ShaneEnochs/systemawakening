@@ -6,7 +6,7 @@
 //   src/systems/undo.ts         — Undo snapshot stack
 //   src/systems/save-manager.ts — Save/load UI wiring
 
-import { buildDom, setChapterTitle, setGameTitle, registerChapterCardLog, initThemeToggle } from './src/core/dom.js';
+import { buildDom, setChapterTitle, setGameTitle, setGameTheme, registerChapterCardLog, initThemeToggle } from './src/core/dom.js';
 import {
   playerState, startup,
   setCurrentLines, currentLines,
@@ -141,6 +141,7 @@ async function boot(): Promise<void> {
     setGameByline: (t: string) => {
       if (dom.splashTagline) dom.splashTagline.textContent = t;
     },
+    setGameTheme,
     runStatsScene, fetchTextFile, getNarrativeLog, addImage,
   });
   wireSaveUI(dom, { scheduleStatsRender, setChapterTitle });
@@ -156,6 +157,8 @@ async function boot(): Promise<void> {
     setGameTitle(String(playerState.game_title  || ''));
     if (dom.splashTagline && playerState.game_byline)
       dom.splashTagline.textContent = String(playerState.game_byline);
+    if (playerState.game_theme)
+      setGameTheme(String(playerState.game_theme));
     showSplash();
   } catch (err) {
     showEngineError(`Boot failed: ${(err as Error).message}`);

@@ -301,6 +301,15 @@ export async function parseStartup(
     if (inSceneList && !line.trimmed.startsWith('*') && line.indent > 0) {
       startup.sceneList.push(line.trimmed);
     }
+
+    // *set_theme during startup — update game_theme so the engine applies it at boot
+    if (line.trimmed.startsWith('*set_theme')) {
+      inSceneList = false;
+      const m = line.trimmed.match(/^\*set_theme\s+"([^"]+)"$/);
+      const theme = m ? m[1] : line.trimmed.replace(/^\*set_theme\s*/, '').trim();
+      if (theme) playerState.game_theme = theme;
+      continue;
+    }
   }
 
   if (statRegistry.length === 0 && !_statRegistryWarningFired) {

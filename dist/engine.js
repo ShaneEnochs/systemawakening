@@ -164,6 +164,13 @@ async function parseStartup(fetchTextFileFn, evalValueFn) {
     if (inSceneList && !line.trimmed.startsWith("*") && line.indent > 0) {
       startup.sceneList.push(line.trimmed);
     }
+    if (line.trimmed.startsWith("*set_theme")) {
+      inSceneList = false;
+      const m = line.trimmed.match(/^\*set_theme\s+"([^"]+)"$/);
+      const theme = m ? m[1] : line.trimmed.replace(/^\*set_theme\s*/, "").trim();
+      if (theme) playerState.game_theme = theme;
+      continue;
+    }
   }
   if (statRegistry.length === 0 && !_statRegistryWarningFired) {
     console.warn("[state] No *create_stat entries found in startup.txt.");

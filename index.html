@@ -12,7 +12,7 @@
     var t=localStorage.getItem('sa_theme');
     if(t==='light'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.setAttribute('data-theme','light');}
     var g=localStorage.getItem('sa_game_theme');
-    if(g){var l=document.querySelector('link[href*="themes/"][href]:not([href*="_base"])');if(l){l.setAttribute('href',l.getAttribute('href').replace(/themes\/[\w-]+\.css/,'themes/'+g+'.css'));}}
+    if(g){var l=document.querySelector('link[href*="themes/"][href]:not([href*="base.css"])');if(l){l.setAttribute('href',l.getAttribute('href').replace(/themes\/[\w-]+\.css/,'themes/'+g+'.css'));}}
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet"/>
 
 <!-- Theme system: _base.css + one theme file. Swap digital.css for fantasy.css etc. -->
-<link rel="stylesheet" href="themes/_base.css?v=13"/>
+<link rel="stylesheet" href="themes/base.css?v=13"/>
 <link rel="stylesheet" href="themes/digital.css?v=13"/>
 <style>
   .save-code-section { margin-top: 16px; border-top: 1px solid var(--border-dim); padding-top: 14px; }

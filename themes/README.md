@@ -8,11 +8,11 @@ shadows, decorative elements, and the splash screen appearance.
 Two CSS files are loaded in `index.html`:
 
 ```html
-<link rel="stylesheet" href="themes/_base.css"/>
+<link rel="stylesheet" href="themes/base.css"/>
 <link rel="stylesheet" href="themes/digital.css"/>   <!-- swap this line -->
 ```
 
-- **`_base.css`** — shared layout, structural rules, and component styles.
+- **`base.css`** — shared layout, structural rules, and component styles.
   References CSS custom properties for all visual values.
 - **Theme file** (`digital.css`, `fantasy.css`, etc.) — defines all CSS custom
   properties and any visual overrides specific to that theme.
@@ -63,7 +63,7 @@ Every theme must define these in its `:root` block:
 ### Theme-specific visual variables
 
 These control major visual elements. Set them in `:root` or leave them unset
-for sensible defaults from `_base.css`:
+for sensible defaults from `base.css`:
 
 | Variable | Controls | Default |
 |----------|----------|---------|

@@ -235,7 +235,7 @@ function setGameTheme(themeName) {
   const links = document.querySelectorAll('link[rel="stylesheet"]');
   for (const link of links) {
     const href = link.getAttribute("href") || "";
-    if (href.includes("themes/") && !href.includes("_base.css")) {
+    if (href.includes("themes/") && !href.includes("base.css")) {
       const newHref = href.replace(/themes\/[\w-]+\.css/, `themes/${themeName}.css`);
       if (newHref !== href) {
         link.setAttribute("href", newHref);

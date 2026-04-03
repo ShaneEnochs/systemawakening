@@ -247,7 +247,7 @@ export function populateSlotCard({ nameEl, metaEl, loadBtn, deleteBtn, cardEl, s
     const sceneDisplay = save.label
       ? save.label
       : save.scene.replace(/\.txt$/i, '').toUpperCase();
-    if (metaEl) metaEl.textContent  = `${sceneDisplay} · ${d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
+    if (metaEl) metaEl.innerHTML = `${escapeHtml(sceneDisplay)}<br>${d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
     if (nameEl) nameEl.textContent  = save.characterName || 'Unknown';
     if (lbtn)   lbtn.disabled       = false;
     cardEl.classList.remove('slot-card--empty');

@@ -4,6 +4,7 @@
 *create game_title "System Awakening"
 *create game_byline "First Steps"
 *create build_number "Alpha 0.3.2"
+*create game_theme "digital" 
 *set_theme fantasy
 
 *comment --- Core identity ---

@@ -907,7 +907,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 
 .status-section              { padding: 16px 0; border-bottom: 1px solid var(--border-dim); }
 .status-section:last-child   { border-bottom: none; }
-.status-section-header       { margin-bottom: 10px; }
+.status-section-header       { margin-bottom: 10px; font-weight: 700; }
 
 .status-label {
   font-family: var(--font-mono);

@@ -102,16 +102,19 @@ export function initThemeToggle(): void {
 
   const applyTheme = (light: boolean): void => {
     const metaTheme = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const portrait  = document.getElementById('char-portrait-img') as HTMLImageElement | null;
     if (light) {
       document.documentElement.setAttribute('data-theme', 'light');
       btn.textContent = '☽';
       btn.setAttribute('title', 'Switch to dark mode');
       if (metaTheme) metaTheme.content = '#f0ece4';
+      if (portrait) { portrait.src = 'media/portraitlight.png'; portrait.style.display = ''; }
     } else {
       document.documentElement.removeAttribute('data-theme');
       btn.textContent = '☀';
       btn.setAttribute('title', 'Switch to light mode');
       if (metaTheme) metaTheme.content = '#0d0f1a';
+      if (portrait) { portrait.src = 'media/portraitdark.png'; portrait.style.display = ''; }
     }
   };
 

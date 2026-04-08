@@ -164,13 +164,6 @@ async function parseStartup(fetchTextFileFn, evalValueFn) {
     if (inSceneList && !line.trimmed.startsWith("*") && line.indent > 0) {
       startup.sceneList.push(line.trimmed);
     }
-    if (line.trimmed.startsWith("*set_theme")) {
-      inSceneList = false;
-      const m = line.trimmed.match(/^\*set_theme\s+"([^"]+)"$/);
-      const theme = m ? m[1] : line.trimmed.replace(/^\*set_theme\s*/, "").trim();
-      if (theme) playerState.game_theme = theme;
-      continue;
-    }
   }
   if (statRegistry.length === 0 && !_statRegistryWarningFired) {
     console.warn("[state] No *create_stat entries found in startup.txt.");
@@ -209,57 +202,6 @@ function showChapterCard(title, label = "Chapter") {
   const ca = document.getElementById("choice-area");
   if (nc && ca) nc.insertBefore(card, ca);
   if (_pushChapterCardLog) _pushChapterCardLog({ type: "chapter-card", text: title, label });
-}
-function initThemeToggle() {
-  const btn = document.getElementById("theme-toggle-btn");
-  if (!btn) return;
-  const applyTheme = (light) => {
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const portrait = document.getElementById("char-portrait-img");
-    if (light) {
-      document.documentElement.setAttribute("data-theme", "light");
-      btn.textContent = "\u263D";
-      btn.setAttribute("title", "Switch to dark mode");
-      if (metaTheme) metaTheme.content = "#f0ece4";
-      if (portrait) {
-        portrait.src = "media/portraitlight.png";
-        portrait.style.display = "";
-      }
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      btn.textContent = "\u2600";
-      btn.setAttribute("title", "Switch to light mode");
-      if (metaTheme) metaTheme.content = "#0d0f1a";
-      if (portrait) {
-        portrait.src = "media/portraitdark.png";
-        portrait.style.display = "";
-      }
-    }
-  };
-  const saved = localStorage.getItem("sa_theme");
-  const isLight = saved === "light" || !saved && window.matchMedia("(prefers-color-scheme: light)").matches;
-  applyTheme(isLight);
-  if (!saved && isLight) localStorage.setItem("sa_theme", "light");
-  btn.addEventListener("click", () => {
-    const currentlyLight = document.documentElement.getAttribute("data-theme") === "light";
-    const next = !currentlyLight;
-    applyTheme(next);
-    localStorage.setItem("sa_theme", next ? "light" : "dark");
-  });
-}
-function setGameTheme(themeName) {
-  const links = document.querySelectorAll('link[rel="stylesheet"]');
-  for (const link of links) {
-    const href = link.getAttribute("href") || "";
-    if (href.includes("themes/") && !href.includes("base.css")) {
-      const newHref = href.replace(/themes\/[\w-]+\.css/, `themes/${themeName}.css`);
-      if (newHref !== href) {
-        link.setAttribute("href", newHref);
-      }
-      break;
-    }
-  }
-  localStorage.setItem("sa_game_theme", themeName);
 }
 function setGameTitle(t) {
   const gt = document.getElementById("game-title");
@@ -1486,15 +1428,6 @@ registerCommand("*set_game_byline", (t) => {
   if (byline) {
     playerState.game_byline = byline;
     if (cb.setGameByline) cb.setGameByline(byline);
-  }
-  advanceIp();
-});
-registerCommand("*set_theme", (t) => {
-  const m = t.match(/^\*set_theme\s+"([^"]+)"$/);
-  const theme = m ? m[1] : t.replace(/^\*set_theme\s*/, "").trim();
-  if (theme) {
-    playerState.game_theme = theme;
-    if (cb.setGameTheme) cb.setGameTheme(theme);
   }
   advanceIp();
 });
@@ -3810,7 +3743,6 @@ function scheduleStatsRender() {
   });
 }
 async function boot() {
-  initThemeToggle();
   const dom = buildDom();
   registerCaches(sceneCache, labelsCache);
   registerChapterCardLog(pushNarrativeLogEntry);
@@ -3891,7 +3823,6 @@ async function boot() {
     setGameByline: (t) => {
       if (dom.splashTagline) dom.splashTagline.textContent = t;
     },
-    setGameTheme,
     runStatsScene,
     fetchTextFile,
     getNarrativeLog,
@@ -3909,8 +3840,6 @@ async function boot() {
     setGameTitle(String(playerState.game_title || ""));
     if (dom.splashTagline && playerState.game_byline)
       dom.splashTagline.textContent = String(playerState.game_byline);
-    if (playerState.game_theme)
-      setGameTheme(String(playerState.game_theme));
     showSplash();
   } catch (err) {
     showEngineError(`Boot failed: ${err.message}`);

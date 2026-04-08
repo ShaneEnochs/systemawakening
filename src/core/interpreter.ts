@@ -36,7 +36,6 @@ export interface InterpreterCallbacks {
   setChapterTitle:    (t: string) => void;
   setGameTitle:       (t: string) => void;
   setGameByline?:     (t: string) => void;
-  setGameTheme?:      (t: string) => void;
   runStatsScene:      () => Promise<void>;
   fetchTextFile:      (name: string) => Promise<string>;
   getNarrativeLog:    () => any[];
@@ -327,17 +326,6 @@ registerCommand('*set_game_byline', (t) => {
   if (byline) {
     playerState.game_byline = byline;
     if (cb.setGameByline) cb.setGameByline(byline);
-  }
-  advanceIp();
-});
-
-// *set_theme "fantasy"
-registerCommand('*set_theme', (t) => {
-  const m = t.match(/^\*set_theme\s+"([^"]+)"$/);
-  const theme = m ? m[1] : t.replace(/^\*set_theme\s*/, '').trim();
-  if (theme) {
-    playerState.game_theme = theme;
-    if (cb.setGameTheme) cb.setGameTheme(theme);
   }
   advanceIp();
 });

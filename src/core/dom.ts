@@ -92,67 +92,6 @@ export function showChapterCard(title: string, label = 'Chapter'): void {
   if (_pushChapterCardLog) _pushChapterCardLog({ type: 'chapter-card', text: title, label });
 }
 
-// ---------------------------------------------------------------------------
-// initThemeToggle — wires the ☀/☽ button and applies the persisted preference.
-// Must be called early in boot(), before the splash screen paints.
-// ---------------------------------------------------------------------------
-export function initThemeToggle(): void {
-  const btn = document.getElementById('theme-toggle-btn');
-  if (!btn) return;
-
-  const applyTheme = (light: boolean): void => {
-    const metaTheme = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-    const portrait  = document.getElementById('char-portrait-img') as HTMLImageElement | null;
-    if (light) {
-      document.documentElement.setAttribute('data-theme', 'light');
-      btn.textContent = '☽';
-      btn.setAttribute('title', 'Switch to dark mode');
-      if (metaTheme) metaTheme.content = '#f0ece4';
-      if (portrait) { portrait.src = 'media/portraitlight.png'; portrait.style.display = ''; }
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      btn.textContent = '☀';
-      btn.setAttribute('title', 'Switch to light mode');
-      if (metaTheme) metaTheme.content = '#0d0f1a';
-      if (portrait) { portrait.src = 'media/portraitdark.png'; portrait.style.display = ''; }
-    }
-  };
-
-  const saved   = localStorage.getItem('sa_theme');
-  const isLight = saved === 'light' ||
-    (!saved && window.matchMedia('(prefers-color-scheme: light)').matches);
-  applyTheme(isLight);
-  if (!saved && isLight) localStorage.setItem('sa_theme', 'light');
-
-  btn.addEventListener('click', () => {
-    const currentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const next = !currentlyLight;
-    applyTheme(next);
-    localStorage.setItem('sa_theme', next ? 'light' : 'dark');
-  });
-}
-
-// ---------------------------------------------------------------------------
-// setGameTheme — swaps the theme CSS file and persists the choice.
-// Called by *set_theme directive and at boot from playerState.game_theme.
-// ---------------------------------------------------------------------------
-export function setGameTheme(themeName: string): void {
-  // Find the theme <link> element (not base.css)
-  const links = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]');
-  for (const link of links) {
-    const href = link.getAttribute('href') || '';
-    // Match the theme CSS file (not base.css)
-    if (href.includes('themes/') && !href.includes('base.css')) {
-      const newHref = href.replace(/themes\/[\w-]+\.css/, `themes/${themeName}.css`);
-      if (newHref !== href) {
-        link.setAttribute('href', newHref);
-      }
-      break;
-    }
-  }
-  localStorage.setItem('sa_game_theme', themeName);
-}
-
 export function setGameTitle(t: string): void {
   const gt = document.getElementById('game-title');
   const st = document.querySelector('.splash-title') as HTMLElement | null;

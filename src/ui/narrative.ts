@@ -237,9 +237,9 @@ export function addParagraph(text: string, cls = 'narrative-paragraph'): void {
 // ---------------------------------------------------------------------------
 export function addSystem(text: string, label?: string): void {
   const div       = document.createElement('div');
-  const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
+  const isXP      = /XP\s+gained|bonus\s+XP|\+\d+\s+XP/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
-  div.className = `system-block${isEssence ? ' essence-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
+  div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
 
   const labelHtml = label ? `<span class="system-block-label">[${escapeHtml(label)}]</span>` : '';
   const paras = formatText(text).replace(/\\n/g, '\n').split('\n');
@@ -454,9 +454,9 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
 
       case 'system': {
         const div       = document.createElement('div');
-        const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? '');
+        const isXP      = /XP\s+gained|bonus\s+XP|\+\d+\s+XP/i.test(entry.text ?? '');
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
-        div.className = `system-block${isEssence ? ' essence-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
+        div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
         const labelHtml = entry.systemLabel ? `<span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span>` : '';
         const paras = formatText(entry.text).replace(/\\n/g, '\n').split('\n');
         const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');

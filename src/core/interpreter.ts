@@ -463,19 +463,19 @@ registerCommand('*temp', (t) => {
   advanceIp();
 });
 
-// *award_essence N  /  *add_essence N
-function _handleAddEssence(n: number): void {
+// *award_xp N  /  *add_xp N
+function _handleAddXP(n: number): void {
   if (n > 0) {
-    playerState.essence = Number(playerState.essence || 0) + n;
+    playerState.xp = Number(playerState.xp || 0) + n;
     cb.scheduleStatsRender();
   }
   advanceIp();
 }
-registerCommand('*award_essence', (t) => {
-  _handleAddEssence(Number(t.replace(/^\*award_essence\s*/, '').trim()) || 0);
+registerCommand('*award_xp', (t) => {
+  _handleAddXP(Number(t.replace(/^\*award_xp\s*/, '').trim()) || 0);
 });
-registerCommand('*add_essence', (t) => {
-  _handleAddEssence(Number(t.replace(/^\*add_essence\s*/, '').trim()) || 0);
+registerCommand('*add_xp', (t) => {
+  _handleAddXP(Number(t.replace(/^\*add_xp\s*/, '').trim()) || 0);
 });
 
 /**

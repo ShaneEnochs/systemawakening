@@ -705,9 +705,9 @@ body {
 }
 .system-block-para:last-child { margin-bottom: 0; }
 
-/* Essence variant */
-.system-block.essence-block                    { border-left-color: var(--cyan); color: var(--cyan); }
-.system-block.essence-block .system-block-label { color: var(--cyan-dim); }
+/* XP variant */
+.system-block.xp-block                    { border-left-color: var(--cyan); color: var(--cyan); }
+.system-block.xp-block .system-block-label { color: var(--cyan-dim); }
 
 /* Level-up variant */
 .system-block.levelup-block                    { border-left-color: var(--cyan); color: var(--cyan); border-color: rgba(0, 212, 245, 0.3); }
@@ -2391,14 +2391,14 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   color: rgba(0, 212, 245, 0.7);
 }
 
-.store-essence-pool {
+.store-xp-pool {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-left: auto;
 }
 
-.store-essence-label {
+.store-xp-label {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: var(--ls-normal);
@@ -2406,7 +2406,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   text-transform: uppercase;
 }
 
-.store-essence-val {
+.store-xp-val {
   font-family: var(--font-mono);
   font-size: var(--text-base);
   color: var(--cyan);

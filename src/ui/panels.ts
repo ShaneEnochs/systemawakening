@@ -1,7 +1,7 @@
 // ui/panels.js — Stats panel, store, ending screen
 //
 // Renders the status sidebar with tabs (Stats, Skills, Inv, Log), the
-// Essence-based store overlay, and the ending screen.
+// XP-based store overlay, and the ending screen.
 //
 // All author-controlled strings rendered into innerHTML pass through
 // escapeHtml() for defensive XSS prevention.
@@ -509,14 +509,14 @@ function renderStore(): void {
   const box = _storeOverlay.querySelector('.store-modal-box');
   if (!box) return;
 
-  const essence = Number(playerState.essence || 0);
+  const xp = Number(playerState.xp || 0);
 
   box.innerHTML = `
     <div class="store-header">
       <span class="system-block-label">[ STORE ]</span>
-      <div class="store-essence-pool">
-        <span class="store-essence-label">Essence</span>
-        <span class="store-essence-val">${essence}</span>
+      <div class="store-xp-pool">
+        <span class="store-xp-label">XP</span>
+        <span class="store-xp-val">${xp}</span>
       </div>
       <button class="store-close-btn" id="store-close-btn">✕</button>
     </div>
@@ -538,9 +538,9 @@ function renderStore(): void {
   const content = box.querySelector('#store-content');
   if (!content) return;
   if (_storeActiveTab === 'skills') {
-    renderSkillsTab(content, essence);
+    renderSkillsTab(content, xp);
   } else {
-    renderItemsTab(content, essence);
+    renderItemsTab(content, xp);
   }
 
   requestAnimationFrame(() => {
@@ -548,7 +548,7 @@ function renderStore(): void {
   });
 }
 
-function renderSkillsTab(container: Element, essence: number): void {
+function renderSkillsTab(container: Element, xp: number): void {
   if (skillRegistry.length === 0) {
     container.innerHTML = `<div class="store-empty">No skills available.</div>`;
     return;
@@ -565,7 +565,7 @@ function renderSkillsTab(container: Element, essence: number): void {
 
   if (available.length > 0) {
     available.forEach(skill => {
-      const canAfford = essence >= skill.essenceCost;
+      const canAfford = xp >= skill.xpCost;
       const cardCls   = canAfford ? '' : 'store-card--unaffordable';
       const badgeCls  = canAfford ? 'store-cost-badge--can-afford' : '';
       const rarity    = skill.rarity || 'common';
@@ -579,7 +579,7 @@ function renderSkillsTab(container: Element, essence: number): void {
           <div class="store-card-collapse">
             <div class="store-card-desc">${escapeDesc(skill.description)}</div>
             <div class="store-card-actions">
-              <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
+              <span class="store-cost-badge ${badgeCls}">${skill.xpCost} XP</span>
               <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
             </div>
           </div>
@@ -616,7 +616,7 @@ function renderSkillsTab(container: Element, essence: number): void {
   });
 }
 
-function renderItemsTab(container: Element, essence: number): void {
+function renderItemsTab(container: Element, xp: number): void {
   if (itemRegistry.length === 0) {
     container.innerHTML = `<div class="store-empty">No items available.</div>`;
     return;
@@ -639,7 +639,7 @@ function renderItemsTab(container: Element, essence: number): void {
   available.forEach(item => {
     const stock     = getItemStock(item.key);
     const stockLabel = stock === Infinity ? '' : ` (${stock})`;
-    const canAfford = essence >= item.essenceCost;
+    const canAfford = xp >= item.xpCost;
     const cardCls   = canAfford ? '' : 'store-card--unaffordable';
     const badgeCls  = canAfford ? 'store-cost-badge--can-afford' : '';
     const rarity    = item.rarity || 'common';
@@ -651,7 +651,7 @@ function renderItemsTab(container: Element, essence: number): void {
           <div class="store-card-desc">${escapeDesc(item.description)}</div>
         </div>
         <div class="store-card-actions">
-          <span class="store-cost-badge ${badgeCls}">${item.essenceCost} Essence</span>
+          <span class="store-cost-badge ${badgeCls}">${item.xpCost} XP</span>
           <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
         </div>
       </div>`;

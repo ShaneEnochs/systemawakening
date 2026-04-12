@@ -1,5 +1,5 @@
-*term "Essence"
-  A universal energy currency extracted from defeated monsters. Used to purchase skills and items from the System Store.
+*term "XP"
+  Experience Points — a universal currency earned from defeating monsters and completing objectives. Used to purchase skills and items from the System Store.
 
 *term "System"
   The mysterious supernatural framework that appeared during the Awakening, granting humanity Classes, Skills, and stat points. Its origin and purpose remain unknown.

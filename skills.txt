@@ -4,7 +4,7 @@
 //
 // Format:
 //   *category core|active|passive  (applies to all skills below it)
-//   *skill key [rarity] "Label" essence_cost
+//   *skill key [rarity] "Label" xp_cost
 //     Description text. Each new indented line is a separate paragraph.
 //
 // Rarities:
@@ -14,11 +14,11 @@
 //
 // Rules:
 //   • key must be a single word (letters, numbers, underscores)
-//   • essence_cost is the amount of Essence required to purchase (0 = free)
+//   • xp_cost is the amount of XP required to purchase (0 = free)
 //   • description lines must be indented at least one space
 //   • a new *skill directive or end of file terminates the previous description
 //   • check ownership in scene files with: *check_skill "key" dest_var
-//   • grant without Essence cost via:      *grant_skill "key"
+//   • grant without XP cost via:           *grant_skill "key"
 //   • remove a skill via:                  *revoke_skill "key"
 
 // ─────────────────────────────────────────────────────────────

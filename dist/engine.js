@@ -1094,7 +1094,7 @@ async function parseSkills(fetchTextFileFn) {
         current = {
           key: normalizeKey(mA[1]),
           label: mA[3],
-          essenceCost: Number(mA[4]),
+          xpCost: Number(mA[4]),
           rarity: mA[2].toLowerCase(),
           description: "",
           condition: null,
@@ -1104,7 +1104,7 @@ async function parseSkills(fetchTextFileFn) {
         current = {
           key: normalizeKey(mB[1]),
           label: mB[2],
-          essenceCost: Number(mB[3]),
+          xpCost: Number(mB[3]),
           rarity: mB[4] ? mB[4].toLowerCase() : "common",
           description: "",
           condition: null,
@@ -1159,12 +1159,12 @@ function purchaseSkill(key) {
     console.warn(`[skills] purchaseSkill: "${k}" already owned.`);
     return false;
   }
-  const essence = Number(playerState.essence || 0);
-  if (essence < entry.essenceCost) {
-    console.warn(`[skills] purchaseSkill: not enough Essence (have ${essence}, need ${entry.essenceCost}).`);
+  const xp = Number(playerState.xp || 0);
+  if (xp < entry.xpCost) {
+    console.warn(`[skills] purchaseSkill: not enough XP (have ${xp}, need ${entry.xpCost}).`);
     return false;
   }
-  playerState.essence = essence - entry.essenceCost;
+  playerState.xp = xp - entry.xpCost;
   grantSkill(k);
   return true;
 }
@@ -1542,18 +1542,18 @@ registerCommand("*temp", (t) => {
   declareTemp(t, evalValue);
   advanceIp();
 });
-function _handleAddEssence(n) {
+function _handleAddXP(n) {
   if (n > 0) {
-    playerState.essence = Number(playerState.essence || 0) + n;
+    playerState.xp = Number(playerState.xp || 0) + n;
     cb.scheduleStatsRender();
   }
   advanceIp();
 }
-registerCommand("*award_essence", (t) => {
-  _handleAddEssence(Number(t.replace(/^\*award_essence\s*/, "").trim()) || 0);
+registerCommand("*award_xp", (t) => {
+  _handleAddXP(Number(t.replace(/^\*award_xp\s*/, "").trim()) || 0);
 });
-registerCommand("*add_essence", (t) => {
-  _handleAddEssence(Number(t.replace(/^\*add_essence\s*/, "").trim()) || 0);
+registerCommand("*add_xp", (t) => {
+  _handleAddXP(Number(t.replace(/^\*add_xp\s*/, "").trim()) || 0);
 });
 function stripItemName(raw) {
   const s = raw.trim();
@@ -1890,7 +1890,7 @@ async function parseItems(fetchTextFileFn) {
       current = {
         key: normalizeKey(m[1]),
         label: m[2],
-        essenceCost: Number(m[3]),
+        xpCost: Number(m[3]),
         rarity: m[4] ? m[4].toLowerCase() : "common",
         description: "",
         condition: null,
@@ -1932,12 +1932,12 @@ function purchaseItem(key) {
     console.warn(`[items] purchaseItem: "${k}" is out of stock.`);
     return false;
   }
-  const essence = Number(playerState.essence || 0);
-  if (essence < entry.essenceCost) {
-    console.warn(`[items] purchaseItem: not enough Essence (have ${essence}, need ${entry.essenceCost}).`);
+  const xp = Number(playerState.xp || 0);
+  if (xp < entry.xpCost) {
+    console.warn(`[items] purchaseItem: not enough XP (have ${xp}, need ${entry.xpCost}).`);
     return false;
   }
-  playerState.essence = essence - entry.essenceCost;
+  playerState.xp = xp - entry.xpCost;
   if (entry.stock !== -1) {
     playerState[`__stock_${k}`] = remaining - 1;
   }
@@ -2086,9 +2086,9 @@ function addParagraph(text, cls = "narrative-paragraph") {
 }
 function addSystem(text, label) {
   const div = document.createElement("div");
-  const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(text);
+  const isXP = /XP\s+gained|bonus\s+XP|\+\d+\s+XP/i.test(text);
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
-  div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
+  div.className = `system-block${isXP ? " xp-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
   const labelHtml = label ? `<span class="system-block-label">[${escapeHtml(label)}]</span>` : "";
   const paras = formatText(text).replace(/\\n/g, "\n").split("\n");
   const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
@@ -2237,9 +2237,9 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
       }
       case "system": {
         const div = document.createElement("div");
-        const isEssence = /Essence\s+gained|bonus\s+Essence|\+\d+\s+Essence/i.test(entry.text ?? "");
+        const isXP = /XP\s+gained|bonus\s+XP|\+\d+\s+XP/i.test(entry.text ?? "");
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
-        div.className = `system-block${isEssence ? " essence-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
+        div.className = `system-block${isXP ? " xp-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
         const labelHtml = entry.systemLabel ? `<span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span>` : "";
         const paras = formatText(entry.text).replace(/\\n/g, "\n").split("\n");
         const formatted = paras.map((p) => `<p class="system-block-para">${p}</p>`).join("");
@@ -2706,13 +2706,13 @@ function renderStore() {
   if (!_storeOverlay) return;
   const box = _storeOverlay.querySelector(".store-modal-box");
   if (!box) return;
-  const essence = Number(playerState.essence || 0);
+  const xp = Number(playerState.xp || 0);
   box.innerHTML = `
     <div class="store-header">
       <span class="system-block-label">[ STORE ]</span>
-      <div class="store-essence-pool">
-        <span class="store-essence-label">Essence</span>
-        <span class="store-essence-val">${essence}</span>
+      <div class="store-xp-pool">
+        <span class="store-xp-label">XP</span>
+        <span class="store-xp-val">${xp}</span>
       </div>
       <button class="store-close-btn" id="store-close-btn">\u2715</button>
     </div>
@@ -2731,15 +2731,15 @@ function renderStore() {
   const content = box.querySelector("#store-content");
   if (!content) return;
   if (_storeActiveTab === "skills") {
-    renderSkillsTab(content, essence);
+    renderSkillsTab(content, xp);
   } else {
-    renderItemsTab(content, essence);
+    renderItemsTab(content, xp);
   }
   requestAnimationFrame(() => {
     box.querySelector("#store-close-btn")?.focus({ preventScroll: true });
   });
 }
-function renderSkillsTab(container, essence) {
+function renderSkillsTab(container, xp) {
   if (skillRegistry.length === 0) {
     container.innerHTML = `<div class="store-empty">No skills available.</div>`;
     return;
@@ -2756,7 +2756,7 @@ function renderSkillsTab(container, essence) {
   let html = "";
   if (available.length > 0) {
     available.forEach((skill) => {
-      const canAfford = essence >= skill.essenceCost;
+      const canAfford = xp >= skill.xpCost;
       const cardCls = canAfford ? "" : "store-card--unaffordable";
       const badgeCls = canAfford ? "store-cost-badge--can-afford" : "";
       const rarity = skill.rarity || "common";
@@ -2770,7 +2770,7 @@ function renderSkillsTab(container, essence) {
           <div class="store-card-collapse">
             <div class="store-card-desc">${escapeDesc(skill.description)}</div>
             <div class="store-card-actions">
-              <span class="store-cost-badge ${badgeCls}">${skill.essenceCost} Essence</span>
+              <span class="store-cost-badge ${badgeCls}">${skill.xpCost} XP</span>
               <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
             </div>
           </div>
@@ -2802,7 +2802,7 @@ function renderSkillsTab(container, essence) {
     });
   });
 }
-function renderItemsTab(container, essence) {
+function renderItemsTab(container, xp) {
   if (itemRegistry.length === 0) {
     container.innerHTML = `<div class="store-empty">No items available.</div>`;
     return;
@@ -2824,7 +2824,7 @@ function renderItemsTab(container, essence) {
   available.forEach((item) => {
     const stock = getItemStock(item.key);
     const stockLabel = stock === Infinity ? "" : ` (${stock})`;
-    const canAfford = essence >= item.essenceCost;
+    const canAfford = xp >= item.xpCost;
     const cardCls = canAfford ? "" : "store-card--unaffordable";
     const badgeCls = canAfford ? "store-cost-badge--can-afford" : "";
     const rarity = item.rarity || "common";
@@ -2836,7 +2836,7 @@ function renderItemsTab(container, essence) {
           <div class="store-card-desc">${escapeDesc(item.description)}</div>
         </div>
         <div class="store-card-actions">
-          <span class="store-cost-badge ${badgeCls}">${item.essenceCost} Essence</span>
+          <span class="store-cost-badge ${badgeCls}">${item.xpCost} XP</span>
           <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
         </div>
       </div>`;

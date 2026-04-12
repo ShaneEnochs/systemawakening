@@ -1,7 +1,7 @@
 // systems/skills.js — Skill registry and management
 //
 // Owns the skill data model: parsing skills.txt into a registry, checking
-// ownership, granting/revoking skills, and purchasing with Essence.
+// ownership, granting/revoking skills, and purchasing with XP.
 //
 // playerState.skills is an array of skill key strings.
 // skillRegistry is the ordered list of all defined skills parsed from skills.txt.
@@ -11,7 +11,7 @@ import { playerState, normalizeKey } from '../core/state.js';
 export interface SkillEntry {
   key:         string;
   label:       string;
-  essenceCost: number;
+  xpCost:      number;
   rarity:      string;
   description: string;
   condition:   string | null;
@@ -20,7 +20,7 @@ export interface SkillEntry {
 
 // ---------------------------------------------------------------------------
 // Skill registry — populated by parseSkills from skills.txt
-// [{ key, label, essenceCost, description, rarity, condition }]
+// [{ key, label, xpCost, description, rarity, condition }]
 // ---------------------------------------------------------------------------
 export let skillRegistry: SkillEntry[] = [];
 
@@ -66,23 +66,23 @@ export async function parseSkills(fetchTextFileFn: (name: string) => Promise<str
       if (current) parsed.push(current);
       if (mA) {
         current = {
-          key:          normalizeKey(mA[1]),
-          label:        mA[3],
-          essenceCost:  Number(mA[4]),
-          rarity:       mA[2].toLowerCase(),
-          description:  '',
-          condition:    null,
-          category:     currentCategory,
+          key:         normalizeKey(mA[1]),
+          label:       mA[3],
+          xpCost:      Number(mA[4]),
+          rarity:      mA[2].toLowerCase(),
+          description: '',
+          condition:   null,
+          category:    currentCategory,
         };
       } else {
         current = {
-          key:          normalizeKey(mB![1]),
-          label:        mB![2],
-          essenceCost:  Number(mB![3]),
-          rarity:       mB![4] ? mB![4].toLowerCase() : 'common',
-          description:  '',
-          condition:    null,
-          category:     currentCategory,
+          key:         normalizeKey(mB![1]),
+          label:       mB![2],
+          xpCost:      Number(mB![3]),
+          rarity:      mB![4] ? mB![4].toLowerCase() : 'common',
+          description: '',
+          condition:   null,
+          category:    currentCategory,
         };
       }
       continue;
@@ -116,7 +116,7 @@ export function playerHasSkill(key: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// grantSkill — adds a skill without spending Essence. No-op if already owned.
+// grantSkill — adds a skill without spending XP. No-op if already owned.
 // ---------------------------------------------------------------------------
 export function grantSkill(key: string): void {
   const k = normalizeKey(key);
@@ -141,7 +141,7 @@ export function revokeSkill(key: string): void {
 }
 
 // ---------------------------------------------------------------------------
-// purchaseSkill — deducts Essence, then grants the skill.
+// purchaseSkill — deducts XP, then grants the skill.
 // Returns true on success, false if already owned or can't afford.
 // ---------------------------------------------------------------------------
 export function purchaseSkill(key: string): boolean {
@@ -155,12 +155,12 @@ export function purchaseSkill(key: string): boolean {
     console.warn(`[skills] purchaseSkill: "${k}" already owned.`);
     return false;
   }
-  const essence = Number(playerState.essence || 0);
-  if (essence < entry.essenceCost) {
-    console.warn(`[skills] purchaseSkill: not enough Essence (have ${essence}, need ${entry.essenceCost}).`);
+  const xp = Number(playerState.xp || 0);
+  if (xp < entry.xpCost) {
+    console.warn(`[skills] purchaseSkill: not enough XP (have ${xp}, need ${entry.xpCost}).`);
     return false;
   }
-  playerState.essence = essence - entry.essenceCost;
+  playerState.xp = xp - entry.xpCost;
   grantSkill(k);
   return true;
 }

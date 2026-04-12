@@ -1,12 +1,12 @@
 // items.txt — Item Registry for System Awakening
 //
 // Format:
-//   *item key "Label" essence_cost [rarity] [stock]
+//   *item key "Label" xp_cost [rarity] [stock]
 //     Description text. Each new indented line is a separate paragraph.
 //
 // Fields:
 //   key          — single word (letters, numbers, underscores)
-//   essence_cost — Essence required to purchase (0 = free)
+//   xp_cost — XP required to purchase (0 = free)
 //   rarity       — optional: common | uncommon | rare | epic | legendary  (default: common)
 //   stock        — optional: how many are available before selling out
 //                  omit or leave blank for unlimited stock

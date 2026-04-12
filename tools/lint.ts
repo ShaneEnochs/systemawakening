@@ -93,7 +93,7 @@ function parseStartup(text: string): {
     'game_title', 'game_byline', 'first_name', 'last_name',
     'pronouns_subject', 'pronouns_object', 'pronouns_possessive',
     'pronouns_possessive_pronoun', 'pronouns_reflexive', 'pronouns_label',
-    'class_name', 'level', 'essence', 'skills', 'journal', 'inventory',
+    'class_name', 'level', 'xp', 'skills', 'journal', 'inventory',
     'health', 'mana', 'max_mana', 'loop_counter',
   ]) {
     globalVars.add(v);

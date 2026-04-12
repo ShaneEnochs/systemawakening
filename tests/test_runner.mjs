@@ -113,7 +113,7 @@ function resetState() {
     pronouns_subject: 'they', pronouns_object: 'them',
     pronouns_possessive: 'their', pronouns_possessive_pronoun: 'theirs',
     pronouns_reflexive: 'themself', pronouns_label: 'they/them',
-    class_name: 'Warrior', level: 1, essence: 0,
+    class_name: 'Warrior', level: 1, xp: 0,
     health: 'Healthy', mana: 100, max_mana: 100,
     body: 10, mind: 10, spirit: 10, social: 10,
     inventory: [], skills: [], journal: [],
@@ -440,21 +440,21 @@ assertDeepEq(playerState.skills, [], 'skills array empty after revoke');
 // Purchase requires skillRegistry setup — mock it
 const { skillRegistry: sr } = await import('../src/systems/skills.ts');
 // Manually push a test skill into the registry
-sr.push({ key: 'test_skill', label: 'Test Skill', essenceCost: 3, description: 'A test.' });
+sr.push({ key: 'test_skill', label: 'Test Skill', xpCost: 3, description: 'A test.' });
 
-playerState.essence = 5;
+playerState.xp = 5;
 const bought = purchaseSkill('test_skill');
 assert(bought, 'purchaseSkill returns true');
 assert(playerHasSkill('test_skill'), 'has test_skill after purchase');
-assertEq(playerState.essence, 2, 'Essence deducted (5 - 3 = 2)');
+assertEq(playerState.xp, 2, 'XP deducted (5 - 3 = 2)');
 
 const buyAgain = purchaseSkill('test_skill');
 assert(!buyAgain, 'cannot buy already-owned skill');
 
-playerState.essence = 0;
-sr.push({ key: 'expensive', label: 'Expensive', essenceCost: 10, description: 'Costly.' });
+playerState.xp = 0;
+sr.push({ key: 'expensive', label: 'Expensive', xpCost: 10, description: 'Costly.' });
 const cantAfford = purchaseSkill('expensive');
-assert(!cantAfford, 'cannot afford skill with 0 Essence');
+assert(!cantAfford, 'cannot afford skill with 0 XP');
 
 // ---------------------------------------------------------------------------
 group('Journal — entries and achievements');
@@ -531,7 +531,7 @@ const origWarn = console.warn;
 console.warn = (...args) => { warnMessages.push(args.join(' ')); origWarn(...args); };
 
 const fullStartupText = `*create level 1
-*create essence 0
+*create xp 0
 *create_stat body "Body" 10
 *scene_list
   prologue
@@ -539,8 +539,8 @@ const fullStartupText = `*create level 1
 
 await parseStartup(async () => fullStartupText, evalValue);
 
-assertEq(playerState.level,   1,  'parseStartup populates level');
-assertEq(playerState.essence, 0,  'parseStartup populates essence');
+assertEq(playerState.level, 1,  'parseStartup populates level');
+assertEq(playerState.xp,    0,  'parseStartup populates xp');
 assertEq(playerState.body,    10, 'parseStartup populates *create_stat key');
 
 // sceneList parsed correctly
@@ -647,7 +647,7 @@ group('ENH-10 — Save export/import (importSaveFromJSON)');
 // Test importSaveFromJSON (pure logic) thoroughly.
 
 resetState();
-playerState.essence = 500;
+playerState.xp = 500;
 playerState.level = 2;
 // Set currentScene so the save has a valid scene name
 setCurrentScene('test_scene');
@@ -670,7 +670,7 @@ const importResult = importSaveFromJSON(validPayload, 2);
 assertEq(importResult.ok, true, 'valid import returns ok:true');
 const loaded = loadSaveFromSlot(2);
 assert(loaded !== null, 'imported save loadable from target slot');
-assertEq(loaded.playerState.essence, 500, 'imported playerState.essence preserved');
+assertEq(loaded.playerState.xp, 500, 'imported playerState.xp preserved');
 
 // Wrong version
 const wrongVersion = { ...validPayload, version: SAVE_VERSION - 1 };
@@ -798,17 +798,17 @@ assert(getProcedure('greet') === null,      'registry empty after failed parse')
 // Re-register for interpreter tests below
 await parseProcedures(async (name) => {
   if (name === 'procedures') return procText + `
-*procedure add_essence
-  *set essence +10
+*procedure add_xp
+  *set xp +10
   *return
 
 *procedure nested_caller
-  *call add_essence
-  *call add_essence
+  *call add_xp
+  *call add_xp
   *return
 
 *procedure no_explicit_return
-  *set essence +5
+  *set xp +5
 `;
   throw new Error('not found');
 });
@@ -865,34 +865,34 @@ async function runScene(sceneText) {
 
 // Test 1: *call executes procedure body and modifies playerState
 resetState();
-playerState.essence = 5;
+playerState.xp = 5;
 sCS('test_scene');
-sCL(PL('*call add_essence'));
+sCL(PL('*call add_xp'));
 sIP(0);
 interpOutput.length = 0;
 await runInterp({ suppressAutoSave: true });
-assertEq(playerState.essence, 15, '*call add_essence: essence 5 → 15');
-assert(!interpOutput.some(o => o.k === 'err'), '*call add_essence: no engine errors');
+assertEq(playerState.xp, 15, '*call add_xp: xp 5 → 15');
+assert(!interpOutput.some(o => o.k === 'err'), '*call add_xp: no engine errors');
 
 // Test 2: *call restores execution after the *call line
 resetState();
-playerState.essence = 0;
-const out2 = await runScene('*call add_essence\nhello after call');
-assertEq(playerState.essence, 10, '*call: state updated');
+playerState.xp = 0;
+const out2 = await runScene('*call add_xp\nhello after call');
+assertEq(playerState.xp, 10, '*call: state updated');
 assert(out2.some(o => o.k === 'p' && o.t === 'hello after call'), '*call: execution continues after return');
 
 // Test 3: nested *call (procedure calling another procedure)
 resetState();
-playerState.essence = 0;
+playerState.xp = 0;
 const out3 = await runScene('*call nested_caller');
-assertEq(playerState.essence, 20, 'nested *call: add_essence called twice (0 → 20)');
+assertEq(playerState.xp, 20, 'nested *call: add_xp called twice (0 → 20)');
 assert(!out3.some(o => o.k === 'err'), 'nested *call: no engine errors');
 
 // Test 4: procedure without explicit *return auto-returns
 resetState();
-playerState.essence = 0;
+playerState.xp = 0;
 const out4 = await runScene('*call no_explicit_return\nafter');
-assertEq(playerState.essence, 5, 'no_explicit_return: state updated');
+assertEq(playerState.xp, 5, 'no_explicit_return: state updated');
 assert(out4.some(o => o.k === 'p' && o.t === 'after'), 'no_explicit_return: execution continues after auto-return');
 
 // Test 5: *call unknown procedure — engine error, execution continues
@@ -903,9 +903,9 @@ assert(out5.some(o => o.k === 'p' && o.t === 'still running'), '*call unknown: e
 
 // Test 6: multiple *call in sequence
 resetState();
-playerState.essence = 0;
-const out6 = await runScene('*call add_essence\n*call add_essence\n*call add_essence');
-assertEq(playerState.essence, 30, 'three sequential *call: 0 → 30');
+playerState.xp = 0;
+const out6 = await runScene('*call add_xp\n*call add_xp\n*call add_xp');
+assertEq(playerState.xp, 30, 'three sequential *call: 0 → 30');
 assert(!out6.some(o => o.k === 'err'), 'sequential *calls: no engine errors');
 
 // ===========================================================================

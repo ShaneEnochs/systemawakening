@@ -19,7 +19,7 @@
 
 *comment --- Progress ---
 *create level 0
-*create essence 1
+*create xp 1
 *create next_lvl 1
 
 *comment --- Skills and journal ---

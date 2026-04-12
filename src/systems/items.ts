@@ -1,7 +1,7 @@
 // systems/items.js — Item registry and purchase management
 //
 // Owns the item data model: parsing items.txt into a registry, and purchasing
-// items with Essence. Purchased items are added to playerState.inventory via
+// items with XP. Purchased items are added to playerState.inventory via
 // the inventory.js addInventoryItem function.
 //
 // itemRegistry is the ordered list of all defined items parsed from items.txt.
@@ -12,7 +12,7 @@ import { addInventoryItem } from './inventory.js';
 export interface ItemEntry {
   key:         string;
   label:       string;
-  essenceCost: number;
+  xpCost:      number;
   rarity:      string;
   description: string;
   condition:   string | null;
@@ -21,7 +21,7 @@ export interface ItemEntry {
 
 // ---------------------------------------------------------------------------
 // Item registry — populated by parseItems from items.txt
-// [{ key, label, essenceCost, description, rarity, condition }]
+// [{ key, label, xpCost, description, rarity, condition }]
 // ---------------------------------------------------------------------------
 export let itemRegistry: ItemEntry[] = [];
 
@@ -55,13 +55,13 @@ export async function parseItems(fetchTextFileFn: (name: string) => Promise<stri
     if (m) {
       if (current) parsed.push(current);
       current = {
-        key:          normalizeKey(m[1]),
-        label:        m[2],
-        essenceCost:  Number(m[3]),
-        rarity:       m[4] ? m[4].toLowerCase() : 'common',
-        description:  '',
-        condition:    null,
-        stock:        m[5] !== undefined ? Number(m[5]) : -1,
+        key:         normalizeKey(m[1]),
+        label:       m[2],
+        xpCost:      Number(m[3]),
+        rarity:      m[4] ? m[4].toLowerCase() : 'common',
+        description: '',
+        condition:   null,
+        stock:       m[5] !== undefined ? Number(m[5]) : -1,
       };
       continue;
     }
@@ -103,7 +103,7 @@ export function getItemStock(key: string): number {
 }
 
 // ---------------------------------------------------------------------------
-// purchaseItem — deducts Essence, then adds the item to inventory.
+// purchaseItem — deducts XP, then adds the item to inventory.
 // Decrements limited stock in playerState. Returns false if out of stock.
 // ---------------------------------------------------------------------------
 export function purchaseItem(key: string): boolean {
@@ -118,12 +118,12 @@ export function purchaseItem(key: string): boolean {
     console.warn(`[items] purchaseItem: "${k}" is out of stock.`);
     return false;
   }
-  const essence = Number(playerState.essence || 0);
-  if (essence < entry.essenceCost) {
-    console.warn(`[items] purchaseItem: not enough Essence (have ${essence}, need ${entry.essenceCost}).`);
+  const xp = Number(playerState.xp || 0);
+  if (xp < entry.xpCost) {
+    console.warn(`[items] purchaseItem: not enough XP (have ${xp}, need ${entry.xpCost}).`);
     return false;
   }
-  playerState.essence = essence - entry.essenceCost;
+  playerState.xp = xp - entry.xpCost;
   if (entry.stock !== -1) {
     playerState[`__stock_${k}`] = (remaining as number) - 1;
   }

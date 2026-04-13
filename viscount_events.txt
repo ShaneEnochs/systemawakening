@@ -1,0 +1,6 @@
+*title Events
+
+// VISCOUNT Events — Stub file.
+
+*label stub
+// No events defined yet for this tier.

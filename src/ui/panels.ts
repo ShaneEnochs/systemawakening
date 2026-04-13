@@ -421,13 +421,23 @@ export async function runStatsScene(): Promise<void> {
   // Mark all tabs dirty — they need fresh HTML for the new game state.
   Object.keys(_dirtyTabs).forEach(k => { _dirtyTabs[k] = true; });
 
-  // Build the tab bar (always stable) and render only the active tab.
-  const tabs = [
-    { key: 'stats',        label: 'Stats' },
-    { key: 'skills',       label: 'Skills' },
-    { key: 'inventory',    label: 'Inv' },
-    { key: 'achievements', label: 'Log' },
+  // Build the tab bar dynamically based on what stats.txt declares.
+  const tabs: { key: string; label: string }[] = [
+    { key: 'stats', label: 'Stats' },  // Always present
   ];
+  if (entries.some(e => e.type === 'skills')) {
+    tabs.push({ key: 'skills', label: 'Skills' });
+  }
+  if (entries.some(e => e.type === 'inventory')) {
+    tabs.push({ key: 'inventory', label: 'Inv' });
+  }
+  if (entries.some(e => e.type === 'journal' || e.type === 'achievements')) {
+    tabs.push({ key: 'achievements', label: 'Log' });
+  }
+
+  if (!tabs.some(t => t.key === _activeStatusTab)) {
+    _activeStatusTab = 'stats';
+  }
 
   const tabBarHtml = `<div class="status-tabs" role="tablist" id="status-tab-bar">
     ${tabs.map(t => `<button role="tab" aria-selected="${_activeStatusTab === t.key}" aria-controls="status-tab-pane" id="tab-${t.key}" class="status-tab ${_activeStatusTab === t.key ? 'status-tab--active' : ''}" data-tab="${t.key}">${t.label}</button>`).join('')}

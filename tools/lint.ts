@@ -109,7 +109,7 @@ function parseStartup(text: string): {
 function parseProcedureNames(text: string): Set<string> {
   const names = new Set<string>();
   for (const raw of text.split(/\r?\n/)) {
-    const m = raw.trim().match(/^\*proc\s+([a-zA-Z_][\w]*)/);
+    const m = raw.trim().match(/^\*proc(?:edure)?\s+([a-zA-Z_][\w]*)/);
     if (m) names.add(m[1].toLowerCase());
   }
   return names;

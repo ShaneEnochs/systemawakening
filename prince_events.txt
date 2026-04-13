@@ -1,0 +1,6 @@
+*title Events
+
+// PRINCE Events — Stub file.
+
+*label stub
+// No events defined yet for this tier.

@@ -761,7 +761,7 @@ function getAchievements() {
 }
 
 // src/systems/saves.ts
-var SAVE_VERSION = 9;
+var SAVE_VERSION = 10;
 var SAVE_KEY_AUTO = "sa_save_auto";
 var SAVE_KEY_SLOTS = { 1: "sa_save_slot_1", 2: "sa_save_slot_2", 3: "sa_save_slot_3" };
 function saveKeyForSlot(slot) {
@@ -851,7 +851,7 @@ function decodeSaveCode(code) {
       awaitingChoice: json.ac || null,
       statRegistry: json.sr || JSON.parse(JSON.stringify(statRegistry)),
       label: json.lb || null,
-      characterName: `${fullPlayerState.first_name || ""} ${fullPlayerState.last_name || ""}`.trim() || "Unknown",
+      characterName: fullPlayerState.name ? `${fullPlayerState.name} ${fullPlayerState.family || ""}`.trim() : `${fullPlayerState.first_name || ""} ${fullPlayerState.last_name || ""}`.trim() || "Unknown",
       timestamp: json.ts || Date.now()
     }
   };
@@ -993,6 +993,10 @@ function getCheckpoints() {
     }
     const decoded = decodeSaveCode(raw);
     if (!decoded.ok) {
+      try {
+        localStorage.removeItem(`${CHECKPOINT_PREFIX}${i}`);
+      } catch (_) {
+      }
       results.push(null);
       continue;
     }
@@ -3339,7 +3343,7 @@ function wireCharCreation() {
     if (validateName(_inputFirstName.value, "First name") || validateName(_inputLastName.value, "Last name")) return;
     const selected = _charOverlay.querySelector(".pronoun-card.selected");
     if (!selected) return;
-    const startScene = "prologue";
+    const startScene = "character_creation";
     _charOverlay.classList.add("hidden");
     const overlay = _charOverlay;
     if (typeof overlay._trapRelease === "function") {
@@ -3359,46 +3363,6 @@ function wireCharCreation() {
         startScene
       });
     }
-  });
-}
-function showCharacterCreation() {
-  const DEFAULT_FIRST = "Charlie";
-  const DEFAULT_LAST = "McKinley";
-  _inputFirstName.value = "";
-  _inputLastName.value = "";
-  _counterFirst.textContent = String(NAME_MAX);
-  _counterLast.textContent = String(NAME_MAX);
-  _errorFirstName.classList.add("hidden");
-  _errorLastName.classList.add("hidden");
-  _inputFirstName.classList.remove("char-input--error", "char-input--default");
-  _inputLastName.classList.remove("char-input--error", "char-input--default");
-  _charBeginBtn.disabled = true;
-  _charOverlay.querySelectorAll(".pronoun-card").forEach((c) => {
-    const def = c.dataset.pronouns === "they/them";
-    c.classList.toggle("selected", def);
-    c.setAttribute("aria-checked", def ? "true" : "false");
-    c.setAttribute("tabindex", def ? "0" : "-1");
-  });
-  _charOverlay.classList.remove("hidden");
-  _charOverlay.style.opacity = "1";
-  requestAnimationFrame(() => {
-    const release = trapFocus(_charOverlay, null, false);
-    _charOverlay._trapRelease = release;
-    _inputFirstName.value = DEFAULT_FIRST;
-    _inputLastName.value = DEFAULT_LAST;
-    _counterFirst.textContent = String(NAME_MAX - DEFAULT_FIRST.length);
-    _counterLast.textContent = String(NAME_MAX - DEFAULT_LAST.length);
-    _inputFirstName.classList.add("char-input--default");
-    _inputLastName.classList.add("char-input--default");
-    _charBeginBtn.disabled = false;
-    const selected = _charOverlay.querySelector(".pronoun-card.selected");
-    try {
-      selected?.focus();
-    } catch (_) {
-    }
-  });
-  return new Promise((resolve) => {
-    _charOverlay._resolve = resolve;
   });
 }
 
@@ -3485,22 +3449,11 @@ function wireSaveUI(dom, opts) {
   }
   dom.splashNewBtn?.addEventListener("click", async () => {
     hideSplash();
-    const charData = await showCharacterCreation();
-    patchPlayerState({
-      first_name: charData.firstName,
-      last_name: charData.lastName,
-      pronouns_subject: charData.pronouns_subject,
-      pronouns_object: charData.pronouns_object,
-      pronouns_possessive: charData.pronouns_possessive,
-      pronouns_possessive_pronoun: charData.pronouns_possessive_pronoun,
-      pronouns_reflexive: charData.pronouns_reflexive,
-      pronouns_label: charData.pronouns_label
-    });
     dom.saveBtn?.classList.remove("hidden");
     document.getElementById("undo-btn")?.classList.remove("hidden");
     clearUndoStack();
     await runStatsScene();
-    await gotoScene(charData.startScene);
+    await gotoScene("character_creation");
   });
   dom.splashLoadBtn?.addEventListener("click", () => {
     document.getElementById("splash-main")?.classList.add("hidden");

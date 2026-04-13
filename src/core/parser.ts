@@ -70,7 +70,7 @@ export function indexLabels(
 // ---------------------------------------------------------------------------
 export function parseChoice(startIndex: number, indent: number, ctx: ParseChoiceContext): ParseChoiceResult {
   const { currentLines, evalValue, showEngineError } = ctx;
-  const choices = [];
+  const choices: ChoiceOption[] = [];
   let i = startIndex + 1;
 
   while (i < currentLines.length) {
@@ -113,6 +113,10 @@ export function parseChoice(startIndex: number, indent: number, ctx: ParseChoice
     }
     i += 1;
   }
+
+  // Stamp each option with the overall block end so the click handler
+  // can skip past all options even if awaitingChoice is unavailable.
+  for (const c of choices) c.blockEnd = i;
 
   return { choices, end: i };
 }

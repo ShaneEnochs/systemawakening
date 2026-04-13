@@ -324,7 +324,7 @@ export function renderChoices(choices: ChoiceOption[]): void {
         _onBeforeChoice();
         clearNarrative();
 
-        const choiceBlockEnd = awaitingChoice?.end ?? choice.end;
+        const choiceBlockEnd = choice.blockEnd ?? awaitingChoice?.end ?? choice.end;
         const savedIp = awaitingChoice?._savedIp ?? choiceBlockEnd;
         setAwaitingChoice(null);
 

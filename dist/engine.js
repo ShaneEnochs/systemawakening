@@ -642,6 +642,7 @@ Expected: *selectable_if (condition) #Option text`;
     }
     i += 1;
   }
+  for (const c of choices) c.blockEnd = i;
   return { choices, end: i };
 }
 function parseSystemBlock(startIndex, ctx, openingLineRest = "") {
@@ -2150,7 +2151,7 @@ function renderChoices(choices) {
         choiceMade = true;
         _onBeforeChoice();
         clearNarrative();
-        const choiceBlockEnd = awaitingChoice?.end ?? choice.end;
+        const choiceBlockEnd = choice.blockEnd ?? awaitingChoice?.end ?? choice.end;
         const savedIp = awaitingChoice?._savedIp ?? choiceBlockEnd;
         setAwaitingChoice(null);
         _executeBlock(choice.start, choice.end, savedIp).then(() => _runInterpreter()).catch((err) => {

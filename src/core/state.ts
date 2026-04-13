@@ -37,6 +37,7 @@ export interface ChoiceOption {
   start:      number;       // first line index of the option's body
   end:        number;       // line index past the option's body
   statTag:    StatTag|null; // inline stat requirement badge, if any
+  blockEnd?:  number;       // line index past the entire *choice block
 }
 
 /** persisted state while waiting for the player to pick a choice */

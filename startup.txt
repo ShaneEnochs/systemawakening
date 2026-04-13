@@ -15,7 +15,7 @@
 *create pronouns_possessive_pronoun "theirs"
 *create pronouns_reflexive "themself"
 *create pronouns_label "they/them"
-*create title "Baron/ess"
+*create title "Baron"
 *create tier "baron"
 
 *comment ─── The Four Meters (visible in Stats panel) ───

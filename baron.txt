@@ -1,0 +1,1370 @@
+*title ${title} of ${family}
+
+// ═══════════════════════════════════════════════════════════════
+//  BARON TIER — Entry Point
+// ═══════════════════════════════════════════════════════════════
+
+*label tier_start
+
+The carriage ride has been long, the roads turning from well-paved cobblestone to rutted dirt as you approach your new domain. You are the newly minted ${title} of ${family}, and the estate stretching out before you is your introduction to power.
+
+The estate is modest: a single village, sweeping farmlands, and a manor house that has seen better days but possesses "good bones," as your predecessor's solicitor so diplomatically put it. The tenants are cautious, the local clergy watchful, and the treasury thin. But the air is yours to breathe, and the land is yours to rule. Every decision from this day forward is local, personal, and entirely upon your shoulders.
+
+*page_break
+*goto baron_thriving_1
+
+
+// ═══════════════════════════════════════════════════════════════
+//  ROUTING HUB
+// ═══════════════════════════════════════════════════════════════
+
+*label route
+*set clusters_this_tier +1
+*checkpoint "Baron Tier"
+*call checkpoint
+
+// Death check
+*if branch_state = "dead"
+  *goto death_handler
+
+// Random event roll (not on first cluster, not during advancement)
+*if (clusters_this_tier > 1) and (branch_state != "advancing")
+  *random_choice
+    30 #Event fires
+      *gosub random_event_dispatch
+    70 #No event
+      // fall through to routing
+
+// Branch state routing
+*if branch_state = "advancing"
+  *goto baron_advancing
+*if branch_state = "failing"
+  *goto failing_router
+*if branch_state = "struggling"
+  *goto struggling_router
+*if branch_state = "stagnating"
+  *goto baron_stagnating
+*if branch_state = "thriving"
+  *goto thriving_router
+// Fallback
+*goto thriving_router
+
+
+// ═══════════════════════════════════════════════════════════════
+//  THRIVING ROUTER
+// ═══════════════════════════════════════════════════════════════
+
+*label thriving_router
+*if (not done_baron_thriving_1) and (last_cluster != "baron_thriving_1")
+  *set last_cluster "baron_thriving_1"
+  *goto baron_thriving_1
+*if (not done_baron_thriving_2) and (last_cluster != "baron_thriving_2")
+  *set last_cluster "baron_thriving_2"
+  *goto baron_thriving_2
+*if (not done_baron_thriving_3) and (last_cluster != "baron_thriving_3")
+  *set last_cluster "baron_thriving_3"
+  *goto baron_thriving_3
+// All thriving clusters exhausted — fall through to stagnating
+*goto baron_stagnating
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STRUGGLING ROUTER
+// ═══════════════════════════════════════════════════════════════
+
+*label struggling_router
+*if people < 25
+  *set last_cluster "baron_struggling_people"
+  *goto baron_struggling_people
+*if people > 85
+  *set last_cluster "baron_struggling_people"
+  *goto baron_struggling_people
+*if treasury < 25
+  *set last_cluster "baron_struggling_treasury"
+  *goto baron_struggling_treasury
+*if treasury > 85
+  *set last_cluster "baron_struggling_treasury"
+  *goto baron_struggling_treasury
+*if church < 25
+  *set last_cluster "baron_struggling_church"
+  *goto baron_struggling_church
+*if church > 85
+  *set last_cluster "baron_struggling_church"
+  *goto baron_struggling_church
+*if nobility < 25
+  *set last_cluster "baron_struggling_nobility"
+  *goto baron_struggling_nobility
+*if nobility > 85
+  *set last_cluster "baron_struggling_nobility"
+  *goto baron_struggling_nobility
+// Fallback
+*goto thriving_router
+
+
+// ═══════════════════════════════════════════════════════════════
+//  FAILING ROUTER
+// ═══════════════════════════════════════════════════════════════
+
+*label failing_router
+*if (not done_baron_failing_1) and (last_cluster != "baron_failing_1")
+  *set last_cluster "baron_failing_1"
+  *goto baron_failing_1
+*if (not done_baron_failing_2) and (last_cluster != "baron_failing_2")
+  *set last_cluster "baron_failing_2"
+  *goto baron_failing_2
+// Both exhausted — reset failing_1
+*set done_baron_failing_1 false
+*set last_cluster "baron_failing_2"
+*goto baron_failing_1
+
+
+// ═══════════════════════════════════════════════════════════════
+//  RANDOM EVENT DISPATCH
+// ═══════════════════════════════════════════════════════════════
+
+*label random_event_dispatch
+// Priority 1: Supernatural continuation
+*if (supernatural_awareness >= 1) and (not done_baron_monster_2)
+  *goto_scene baron_events baron_monster_2
+// Priority 2: Romance continuation
+*if (romance_a_stage = 1) and (romance_a_active) and (not done_baron_romance_a2)
+  *goto_scene baron_events baron_romance_a2
+// Priority 3: Stat-filtered world events
+*if (church < 35) and (not done_baron_world_religious)
+  *goto_scene baron_events baron_world_religious
+*if (treasury > 70) and (not done_baron_world_wealth)
+  *goto_scene baron_events baron_world_wealth
+// Priority 4: Supernatural introduction (weighted chance)
+*if not done_baron_monster_1
+  *random_choice
+    40 #Supernatural intro
+      *goto_scene baron_events baron_monster_1
+    60 #World event
+      *if not done_baron_world_1
+        *goto_scene baron_events baron_world_1
+      *if not done_baron_world_2
+        *goto_scene baron_events baron_world_2
+// Priority 5: Remaining general events
+*if not done_baron_world_1
+  *goto_scene baron_events baron_world_1
+*if not done_baron_world_2
+  *goto_scene baron_events baron_world_2
+*if not done_baron_romance_a1
+  *goto_scene baron_events baron_romance_a1
+// All events exhausted — skip
+*return
+
+
+// ═══════════════════════════════════════════════════════════════
+//  EVENT RETURN POINT
+// ═══════════════════════════════════════════════════════════════
+
+*label event_return
+*call checkpoint
+*if branch_state = "dead"
+  *goto death_handler
+*if branch_state = "advancing"
+  *goto baron_advancing
+*if branch_state = "failing"
+  *goto failing_router
+*if branch_state = "struggling"
+  *goto struggling_router
+*if branch_state = "stagnating"
+  *goto baron_stagnating
+*goto thriving_router
+
+
+// ═══════════════════════════════════════════════════════════════
+//  THRIVING CLUSTER 1 — The Promising Heir
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_thriving_1
+// Beat 1: The Steward's Assessment
+
+You arrive at the estate to find it in better condition than expected. The polished floors of your new study gleam in the afternoon light. Standing before your heavy oak desk is your steward—a severe, sharp-eyed man whose impeccable posture suggests he is used to running things in the absence of a proper ${title}.
+
+He presents the estate ledgers with a slight bow. "Welcome, ${title} ${name}. The harvest is adequate, and the accounts are balanced. I remain at your complete disposal to manage the daily minutiae, should you wish to focus on broader matters."
+
+He is testing you.
+
+*choice
+  #Delegation is the mark of a true leader. I will let him manage the details while I observe.
+    You nod graciously. "I trust your expertise. See to the daily operations, and apprise me only of what requires my seal."
+    The steward relaxes, a flicker of genuine respect warming his eyes. You have secured his loyalty, though perhaps at the cost of immediate oversight.
+    *set steward_status "loyal"
+    *set prestige +1
+    *set_stat nobility +2 min:0 max:100
+
+  #I will review every line of these ledgers myself. Trust must be earned.
+    You take the heavy books from his hands, opening them immediately. "I prefer to know exactly where every penny lies."
+    The steward stiffens. He bows again, rigidly this time. He will obey you, but he will watch you just as closely.
+    *set steward_status "wary"
+    *set prestige +3
+    *set_stat treasury +3 min:0 max:100
+
+*page_break
+// Beat 2: The Neighbor's Invitation
+
+Before you have even unpacked your riding boots, a letter of welcome arrives on thick, cream-colored paper. It is from Lord Harrington, a neighboring landowner whose family has held the adjacent valley for three generations.
+
+He invites you to an intimate dinner at his estate. It is your first foray into local society, and the village is already gossiping about what you will wear and how you will travel.
+
+You step into Harrington's grand dining room that evening, the crystal chandeliers blazing. Harrington approaches, his smile wide but calculating. "Ah, the new ${title} of ${family}. We are so curious to see what you will make of the old place."
+
+*choice
+  #Present myself with humble charm. It is best to seem harmless until I am established.
+    You offer a self-deprecating remark about the dampness of your manor and ask for his advice on local soil. Harrington preens, delighted to play the senior statesman. The local gentry find you charmingly modest.
+    *set prestige +2
+    *set_stat nobility +4 min:0 max:100
+    *set_stat people +2 min:0 max:100
+
+  #Present myself with bold confidence. I am a peer of the realm, not a supplicant.
+    You hold his gaze, speaking of your ambitious plans for the estate with absolute certainty. Harrington's smile falters slightly, replaced by a look of careful assessment. You have demanded their respect, though the common folk whisper that you are haughty.
+    *set prestige +4
+    *set_stat nobility +5 min:0 max:100
+    *set_stat people -2 min:0 max:100
+
+  #Remain guarded and polite. Give them nothing to use against me.
+    You offer perfectly polite, entirely empty answers to his probing questions. You leave the dinner an enigma. They cannot find fault with your manners, but they find you incredibly cold.
+    *set prestige +3
+    *set_stat nobility -3 min:0 max:100
+    *set_stat people +2 min:0 max:100
+
+*page_break
+// Beat 3: A Dispute in the Mud
+
+The following morning, the abstract nature of governance becomes unpleasantly tangible. Your steward brings two men into your courtyard. One is Elias, a wealthy sheep farmer who pays a substantial rent; the other is Thomas, a poor tenant farmer with dirt beneath his fingernails.
+
+"It is a matter of boundaries, ${title}," the steward murmurs. Thomas claims Elias's sheep have grazed upon and ruined his small crop of winter wheat. Elias claims the land was poorly marked and offers a token compensation that would barely buy a loaf of bread.
+
+They both look to you. Your word is absolute law here.
+
+*choice
+  #Rule entirely in favor of Thomas. The wealthy must not trample the poor.
+    You order Elias to pay the full value of the ruined crops. Thomas falls to his knees in gratitude, and word of your justice spreads through the village like wildfire. Elias pays, but his resentment is a palpable, ugly thing.
+    *set prestige +2
+    *set_stat people +5 min:0 max:100
+    *set_stat treasury -3 min:0 max:100
+
+  #Rule in favor of Elias. I cannot afford to alienate my highest-paying tenants.
+    You declare the boundaries insufficient and dismiss Thomas's claim. Elias gives you a knowing, conspiratorial nod. Later that week, Elias's rent is paid early, accompanied by a gift of fine mutton. In the village, however, the people learn a hard lesson about where your sympathies lie.
+    *set prestige +4
+    *set_stat people -4 min:0 max:100
+    *set_stat treasury +3 min:0 max:100
+
+*page_break
+// Beat 4: A Heavenly Toll
+
+The village vicar, a quiet man with a threadbare cassock and a habit of staring slightly past you, requests an audience.
+
+"The church roof, ${title}," he says softly, refusing tea. "The slate is crumbling. It rains upon the altar. We look to the estate for a... contribution toward the repairs."
+
+He does not frame it as a demand, but the implication hangs heavily in the air. The Church's approval is quiet, but it carries immense weight in a village where every soul attends Sunday service.
+
+*choice
+  #Fund the repairs entirely. God and the village must see my devotion.
+    You open your ledgers and write a draft that makes your steward wince. The vicar bows deeply. On Sunday, his sermon includes a pointed, glowing reference to your generosity.
+    *set prestige +3
+    *set_stat church +5 min:0 max:100
+    *set_stat treasury -5 min:0 max:100
+
+  #Provide a token amount. The estate's coffers are not infinite.
+    You offer a handful of silver—enough for a patch, not a roof. The vicar accepts it with a tight, bloodless smile. "Every copper is a blessing," he murmurs, though his tone suggests otherwise.
+    *set prestige +1
+    *set_stat church +3 min:0 max:100
+    *set_stat treasury -2 min:0 max:100
+
+*page_break
+// Beat 5: The Shadow of a Rival
+
+You are resting by the fire when a courier arrives with an unsealed missive. It bears no official crest, but the parchment is expensive.
+
+*Welcome to the game,* the letter reads. *I understand you have inherited a rather complicated board. I look forward to seeing how you play your pieces.*
+
+There is no signature.
+"It is from the neighboring estate of Blackwood," your steward informs you quietly. "They have... interests in our valley. How shall I instruct the courier to reply?"
+
+*choice
+  #Send a warm, diplomatic reply. I will not make enemies on my first week.
+    You pen a gracious note, thanking them for the welcome and expressing a desire for neighborly harmony. It is a safe maneuver, establishing you as reasonable, if perhaps slightly malleable.
+    *set prestige +2
+    *set rival_status "friendly"
+    *set_stat nobility +2 min:0 max:100
+
+  #Send a sharp, independent reply. Let them know I am not a pawn.
+    You draft a single, elegant sentence: *I intend to play my own pieces, entirely on my own board.* The steward seals it with a faint smile. You have drawn a line in the sand. It is dangerous, but undeniably bold.
+    *set prestige +4
+    *set rival_status "hostile"
+    *set_stat nobility -2 min:0 max:100
+
+*set done_baron_thriving_1 true
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  THRIVING CLUSTER 2 — A Season of Plenty
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_thriving_2
+// Beat 1: The Merchant's Proposition
+
+The harvest has been generous this season, and the tenants' faces are noticeably less drawn. Your name is beginning to carry weight, spoken with a mixture of respect and caution in the village square. But prosperity attracts opportunists.
+
+A traveling merchant, his reinforced wagon heavy with imported silks and spices, seeks an audience in your study. He pitches a lucrative arrangement: a permanent, monthly market hosted on your estate grounds.
+
+"A steady stream of coin for the village, and a handsome percentage for your treasury, ${title}," he says, his smile perfectly calculated.
+
+Your steward leans in closely. "A sound financial proposal, ${title}. However, his preferred market days coincide with local holy days. The vicar will view this as commerce distracting the faithful."
+
+*choice
+  #Permit the market. A full treasury does more for this estate than a full church.
+    You sign the merchant's writ. The market brings an immediate influx of silver, and the courtyard bustles with life. On Sunday, however, the pews are half-empty, and the vicar delivers a sermon focused entirely on the sin of greed.
+    *set prestige +3
+    *set_stat treasury +5 min:0 max:100
+    *set_stat church -4 min:0 max:100
+
+  #Deny the market. I will not offend the Church for a handful of silver.
+    You dismiss the merchant. He leaves with a tight smile, taking his wares to a neighboring county. Your coffers remain as they were, but the vicar sends a quiet note of appreciation for your piety.
+    *set prestige +2
+    *set_stat church +2 min:0 max:100
+
+*page_break
+// Beat 2: The Magistrate's Request
+
+Days later, a letter bearing the county seal arrives at the manor. It is from the local magistrate—a man of minor noble rank but significant bureaucratic power. He formally requests your presence to sit on a judicial panel adjudicating disputes among the lesser gentry.
+
+It is tedious work, involving property lines, unpaid dowries, and perceived slights. Sitting on the panel would elevate your standing among the local nobility, but it will require you to spend days away from your own estate's pressing matters.
+
+*choice
+  #Accept the seat. It is time the county felt my influence.
+    You ride out to the magistrate's hall. The disputes are agonizingly petty, but you navigate them with cold pragmatism. The local lords take notice; you are no longer just a newcomer, but an active participant in their hierarchy.
+    *set prestige +4
+    *set_stat nobility +4 min:0 max:100
+
+  #Decline politely. My estate requires my full attention right now.
+    You send your regrets, citing the pressing demands of your own harvest. The magistrate accepts the excuse, but the opportunity for advancement slips through your fingers. It is a safe choice, though a stagnant one.
+    *set prestige +1
+
+*page_break
+// Beat 3: Strings Attached
+
+Returning from a ride across the estate boundaries, you find Elias—the wealthy sheep farmer from your earlier dispute—waiting in your courtyard. He holds the reins of a magnificent black gelding.
+
+"A gift, ${title}," Elias says, bowing deeply. "In gratitude for the peace your governance has brought to the valley."
+
+It is an incredibly valuable animal, easily worth a substantial portion of your yearly tax revenue. But as Elias pats the horse's neck, he casually mentions a stretch of common grazing land near the river that he would love to fence off for his exclusive use.
+
+*choice
+  #Accept the horse and grant him the land. Pragmatism demands I reward my most profitable tenants.
+    You take the reins. Elias fences off the river access the very next day. Your stables are enriched and your treasury benefits from Elias's continued "gratitude," but the poorer tenants who relied on that grazing land whisper bitterly of your corruption.
+    *set prestige +3
+    *set_stat treasury +6 min:0 max:100
+    *set_stat people -3 min:0 max:100
+
+  #Refuse the gift. My favor is not for sale.
+    You admire the animal but firmly decline, stating that your duty requires no such lavish thanks. Elias's smile turns brittle, and he departs. You have preserved your independence, and the common folk note that their ${title} cannot be bought.
+    *set prestige +4
+    *set_stat people +2 min:0 max:100
+
+*page_break
+// Beat 4: The Border Crossing
+
+Your steward interrupts your morning tea, his usual calm demeanor slightly frayed. "The neighboring estate of Oakhaven is struggling, ${title}. Their lord is drowning in debt and bleeding his people dry to pay it."
+
+He gestures out the window. "Several of his tenant families have crossed our borders in the night. They are setting up camp in the lower woods, begging for work and shelter."
+
+Taking them in would provide eager labor and earn the devotion of the people, but the neighboring gentry will absolutely view this as poaching their rightful subjects. Turning them away will please your peers, but it is a cruel order to give.
+
+*choice
+  #Welcome the newcomers. Let the county know that the house of ${family} protects the vulnerable.
+    You order your steward to find them shelter and work. The displaced families weep with gratitude, and your own tenants look upon you with newfound pride. However, an icy letter arrives from Oakhaven's lord by nightfall, condemning your thievery.
+    *set prestige +4
+    *set_stat people +4 min:0 max:100
+    *set_stat nobility -4 min:0 max:100
+
+  #Turn them away. I will not incite the ire of my peers over a few desperate peasants.
+    You dispatch your men to clear the lower woods. The families are marched back across the border, their faces hollow with despair. The local nobility quietly applaud your respect for property rights, but a heavy silence falls over your own village.
+    *set prestige +3
+    *set_stat nobility +4 min:0 max:100
+    *set_stat people -4 min:0 max:100
+
+*page_break
+// Beat 5: The Autumn Assembly
+
+A thick, gilded envelope rests on your desk. It is an invitation to the autumn county assembly. This will be your first true entry into regional politics beyond the borders of your village.
+
+The assembly is a battlefield of silk, snuff, and whispered alliances. The local nobility will be watching closely to see what sort of ${title} you intend to be. Your steward stands by, holding two very different choices of attire for the evening.
+
+*choice
+  #Make a grand, bold entrance. Let them see the rising power of ${family}.
+    You wear garments cut from the finest imported cloth, commanding the room the moment you step through the doors. It costs a small fortune to look this effortless, but the investment pays off. Heads turn, whispers follow you, and the senior peers treat you as an equal.
+    *set prestige +5
+    *set_stat nobility +4 min:0 max:100
+    *set_stat treasury -3 min:0 max:100
+
+  #Attend modestly, observing the social currents before making a splash.
+    You dress conservatively, blending in with the minor lords and ladies. You spend the evening listening rather than speaking, learning who holds the true power in the county. You earn little glory, but you return home with valuable information and no new enemies.
+    *set prestige +2
+    *set_stat nobility +2 min:0 max:100
+
+*set done_baron_thriving_2 true
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  THRIVING CLUSTER 3 — The Steward's Counsel
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_thriving_3
+// Beat 1: The Inquiries
+
+The steward pulls you aside with a warning: others are watching. The neighboring gentry have noticed your success, and not all of them are pleased. It is time to think about alliances and enemies.
+
+"I have intercepted letters," your steward reveals softly. "The rival landowner from Blackwood has been making detailed inquiries about your finances."
+
+*choice
+  #Respond with caution. Tell the steward to secure the ledgers but do nothing else.
+    You order the estate's financial records locked away. "Let them wonder," you reply. The rival learns nothing, and your standing among the nobility remains undisturbed.
+    *set prestige +2
+    *set_stat nobility +3 min:0 max:100
+
+  #Confront the rival directly. Send a copy of our accounts with a mocking note.
+    You instruct the steward to copy the month's ledgers and send them to Blackwood with a letter offering to lend them money if they are so concerned. It is an incredibly bold move. The local lords are shocked by your audacity.
+    *set prestige +5
+    *set_stat nobility -3 min:0 max:100
+    *set rival_status "hostile"
+
+*page_break
+// Beat 2: The County Petition
+
+A minor noble arrives unannounced, requesting your support in a county petition. The document demands the removal of certain tithes, severely undercutting the local clergy's revenue.
+
+Supporting the petition aligns you firmly with a secular political faction. The noble taps the parchment. "Your signature carries weight now, ${title}. Will you stand with your peers?"
+
+*choice
+  #Sign the petition. The nobility must stand together.
+    You apply your seal to the document. The minor noble departs highly satisfied. You have secured allies among the secular gentry, but the vicar will undoubtedly hear of this betrayal.
+    *set prestige +4
+    *set_stat nobility +5 min:0 max:100
+    *set_stat church -3 min:0 max:100
+
+  #Stay neutral. I will not put my name to another man's grievance.
+    You decline to sign. The noble sneers slightly and rolls up the parchment. It is a safer path, but it earns you no friends in the county.
+    *set prestige +1
+
+*page_break
+// Beat 3: The Rumored Vice
+
+The vicar requests a private word in the gardens. He brings a moral complaint from a tenant. "Someone in the village is rumored to be engaging in a deeply unsavory vice," the vicar says, his lips drawn tight.
+
+He demands you root out the offender. This situation pits the moral authority of the Church against the privacy of your people.
+
+*choice
+  #Dismiss the rumor entirely. I govern lands, not bedrooms.
+    You tell the vicar his time is better spent in prayer than listening to gossip. He turns rigid with offense. The village, however, quietly praises your refusal to act as an inquisitor.
+    *set prestige +2
+    *set_stat church -4 min:0 max:100
+    *set_stat people +4 min:0 max:100
+
+  #Refer the matter to the Church. Let the vicar handle his own flock.
+    You grant the vicar full authority to investigate the matter himself. He nods, satisfied with your deference. Over the next week, his aggressive interrogations terrify the villagers and breed deep resentment.
+    *set prestige +3
+    *set_stat church +5 min:0 max:100
+    *set_stat people -4 min:0 max:100
+
+*page_break
+// Beat 4: The Crumbling Stone
+
+An unexpected expense strikes the estate: the main stone bridge connecting your lands to the county road is failing. The central arch has cracked.
+
+"We must repair it immediately, or trade will halt," the steward warns.
+
+*choice
+  #Pay for the repairs from the estate's coffers.
+    You authorize the withdrawal. Masons are hired, and the work begins swiftly. Your treasury takes a heavy blow, but the people respect a ${title} who maintains the infrastructure without complaint.
+    *set prestige +2
+    *set_stat treasury -7 min:0 max:100
+
+  #Levy a special tax on the tenants to cover the cost.
+    You announce an emergency toll. The treasury remains untouched, but the tenants are furious. They curse your name every time they cross the newly repaired stones.
+    *set prestige +3
+    *set_stat people -4 min:0 max:100
+
+  #Seek funds from the Church's charitable reserves.
+    You appeal to the vicar, citing the bridge's necessity for Sunday travel. He agrees to release the funds, but he makes sure everyone in the valley knows the Church, not the estate, provided the salvation.
+    *set prestige +4
+    *set_stat church +4 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+*page_break
+// Beat 5: The Assessment
+
+A carriage bearing the Blackwood crest rolls into your courtyard. The rival makes their first direct appearance.
+
+They step down from the carriage with a practiced, predatory grace. This is a social call, but it is clearly also an assessment. They sit in your drawing room, sipping tea and making pointed observations about the modesty of your furnishings.
+
+*choice
+  #Engage them with friendly, calculated charm.
+    You ignore the subtle insults and steer the conversation toward mutual county interests. The rival is surprised by your diplomacy. You part on surprisingly cordial terms, setting the stage for a potential, if wary, alliance.
+    *set prestige +3
+    *set rival_status "friendly"
+    *set_stat nobility +4 min:0 max:100
+
+  #Meet their hostility with ice. Establish dominance in my own home.
+    You set your teacup down sharply and inform them that your time is valuable. The rival's eyes flash with genuine anger. You have cemented a bitter feud, but you showed no weakness.
+    *set prestige +6
+    *set rival_status "hostile"
+    *set_stat nobility +3 min:0 max:100
+
+*set done_baron_thriving_3 true
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STRUGGLING: PEOPLE — The Discontented Village
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_struggling_people
+*temp people_score 0
+// Beat 1: The Delegation
+
+The tenants are restless. Complaints have turned to whispers, and the whispers to open grumbling. You cannot afford to lose their trust; without them, the estate produces nothing.
+
+A delegation of four village elders stands in your courtyard. They do not remove their hats. They present a list of grievances: the mill fees are too high, the winter wood allowance is too low, and the estate hounds have been frightening the sheep. You cannot afford to fix everything at once.
+
+*choice
+  #Address the mill fees. Economic relief will soothe their anger.
+    You promise to lower the grinding toll for the season. It costs you revenue, but the tension in their shoulders visibly drops.
+    *set prestige +3
+    *set people_score +1
+    *set_stat people +4 min:0 max:100
+    *set_stat treasury -2 min:0 max:100
+
+  #Address the hounds. It is a matter of respect and safety.
+    You give immediate orders to kennel the hounds and compensate the shepherds. The elders nod; it is a visible concession of your privilege.
+    *set prestige +2
+    *set people_score +1
+    *set_stat people +3 min:0 max:100
+
+  #Refuse to negotiate with a mob. Send them back to work.
+    You inform them that your rules stand and their rent is still due. They leave in stony silence. You have maintained authority, but the rot deepens.
+    *set prestige +4
+    *set_stat people -3 min:0 max:100
+
+*page_break
+// Beat 2: The Agitator
+
+A leader has emerged among the discontented. His name is Miller, a broad-shouldered man who speaks well and refuses to blink when you look at him. He is currently standing on a cart in the village square, outlining exactly how much surplus the estate holds.
+
+*choice
+  #Invite him to the manor. Co-opt him with a minor estate position.
+    You offer him the post of Assistant Bailiff. He knows exactly what you are doing, but the coin is too good to refuse. The nobility will despise this concession, but the village loses its loudest voice.
+    *set prestige +3
+    *set people_score +1
+    *set_stat people +4 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+  #Have the steward threaten his lease. Crush the dissent early.
+    Miller is quietly informed that his family will be evicted before the first frost if he continues. He steps down from the cart. Fear works, though it breeds a terrible, quiet hatred.
+    *set prestige +4
+    *set_stat people -4 min:0 max:100
+    *set_stat nobility +2 min:0 max:100
+
+*page_break
+// Beat 3: The Public Gesture
+
+"We need a release of pressure, ${title}," the steward advises, watching the village from the manor windows. "A public gesture. Something they can feel."
+
+*choice
+  #Host a sudden harvest feast on the estate lawns.
+    Meat and ale flow freely. It is an expensive distraction, but it works. Men cannot curse you with their mouths full of your mutton.
+    *set prestige +2
+    *set people_score +1
+    *set_stat people +5 min:0 max:100
+    *set_stat treasury -4 min:0 max:100
+
+  #Pardon three minor offenses held by the estate court.
+    You dismiss the fines of three prominent families. It costs you a fraction of political capital with the local magistrate, but the families are violently grateful.
+    *set prestige +3
+    *set people_score +1
+    *set_stat people +3 min:0 max:100
+    *set_stat nobility -2 min:0 max:100
+
+*page_break
+// Beat 4: The Spark
+
+A scuffle breaks out at the village well between one of your estate groundskeepers and a local cooper. It is a petty argument over a broken bucket, but in this climate, it becomes instantly symbolic. A crowd forms, shouting for the groundskeeper's blood.
+
+*choice
+  #Ride down personally and disperse the crowd.
+    You put your horse between the men. The crowd bristles, but habit and fear win out. They scatter. It is a terrifying few minutes, earning you immense respect.
+    *set prestige +5
+    *set people_score +1
+    *set_stat people +3 min:0 max:100
+
+  #Let the village handle it. Do not interfere.
+    The groundskeeper returns an hour later, bruised and bloody. The village feels they have won a victory over you, emboldening them further.
+    *set prestige +1
+    *set_stat people -3 min:0 max:100
+
+*page_break
+// Beat 5: The Verdict
+
+The immediate crisis reaches its breaking point.
+
+*if people_score >= 2
+  The fever breaks. Your concessions and presence have reminded them that you are their ${title}, not their enemy. The grumbling fades back into the routine exhaustion of country life. The village stabilizes.
+  *set prestige +4
+  *set_stat people +6 min:0 max:100
+  *goto route
+
+*if people_score < 2
+  The bitterness remains. The tenants perform their duties with agonizing slowness. Tools go missing. Gates are left open. The estate continues to bleed trust, and you are no closer to safety.
+  *set prestige +2
+  *goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STRUGGLING: TREASURY — Empty Coffers
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_struggling_treasury
+// Beat 1: The Ledger
+
+The accounts do not balance. You stare at the ledger, tracing the columns with a dry pen. The estate is bleeding money. Without intervention, you will be unable to pay your obligations—and a ${title} who cannot pay is a ${title} in name only.
+
+The steward presents three desperate sources of income.
+
+*choice
+  #Raise the rents immediately. The tenants must bear the cost.
+    You order an immediate increase. The coin flows in by the end of the week, but the village looks at you as though you have struck them.
+    *set prestige +2
+    *set_stat treasury +5 min:0 max:100
+    *set_stat people -4 min:0 max:100
+
+  #Sell the ancient timber from the east woods.
+    You clear-cut a forest that has stood for three generations. The wood merchants pay handsomely. The treasury breathes, but the landscape is scarred.
+    *set prestige +2
+    *set_stat treasury +4 min:0 max:100
+
+  #Petition Lord Harrington for a quiet loan.
+    You swallow your pride and sign a promissory note. Harrington provides the gold with a sympathetic smile that feels entirely like a threat.
+    *set prestige +3
+    *set_stat treasury +5 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+*page_break
+// Beat 2: The Creditor
+
+A creditor arrives from the city. He is dangerously polite. The debt is real, inherited from your predecessor, and the timeline is agonizingly short.
+
+*choice
+  #Drain what little we have to pay him now.
+    You empty the estate's reserves. The man bows and departs, leaving you entirely destitute but momentarily free of the noose.
+    *set prestige +2
+    *set_stat treasury -6 min:0 max:100
+
+  #Stall him with threats and legal technicalities.
+    You challenge the validity of his paperwork and threaten to have him removed by the magistrate. He retreats to consult his partners. It buys you time, but the eventual reckoning will be worse.
+    *set prestige +5
+
+*page_break
+// Beat 3: The Mill
+
+An opportunity arises to invest what remains of your credit in a local textile venture. It is highly risky, promising incredible returns if the looms run, but ruin if the market collapses. The Church despises the venture, claiming factory work breeds sin.
+
+*choice
+  #Invest heavily. I need gold, not prayers.
+    You sign the charter. Weeks later, the first dividends arrive—a staggering sum. The vicar condemns you from the pulpit, but your ledgers finally look healthy.
+    *set prestige +4
+    *set_stat treasury +7 min:0 max:100
+    *set_stat church -3 min:0 max:100
+
+  #Pass on the venture. I cannot gamble the estate.
+    You decline. The mill is built by a rival, and you are forced to watch their carts roll by loaded with profit. You remain pious, but poor.
+    *set prestige +2
+    *set_stat church +2 min:0 max:100
+
+*page_break
+// Beat 4: The Embezzler
+
+The steward discovers an anomaly. A previous estate manager, now comfortably retired in a neighboring county, systematically embezzled from the family for years.
+
+"We could pursue him legally, ${title}," the steward says. "But it will require calling in favors from the gentry."
+
+*choice
+  #Pursue him. Rip the stolen gold from his hands.
+    You spend weeks badgering the local magistrate and spending political capital. The man is caught and forced to pay restitution. The gold returns to your vault, though the local lords find your aggressive litigation distasteful.
+    *set prestige +3
+    *set_stat treasury +5 min:0 max:100
+    *set_stat nobility -2 min:0 max:100
+
+  #Let it go. We cannot afford the scandal.
+    You burn the damning ledgers. The gold is gone forever, but you spare the estate the humiliation of a public trial.
+    *set prestige +1
+
+*page_break
+// Beat 5: Survival
+
+You review the final accounts. The immediate bleeding has stopped, but you face a critical choice about the coming winter. Do you strip the manor of its finery to ensure absolute stability, or maintain the illusion of wealth to preserve your standing?
+
+*choice
+  #Sell the estate's silver and art. Strip it to the bone to survive.
+    You liquidate everything non-essential. The halls echo. The local gentry whisper about your poverty, but the ledgers are finally, undeniably black.
+    *set prestige +1
+    *set_stat treasury +6 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+  #Host a lavish dinner on credit. We must project power.
+    You borrow again to throw a spectacular evening. The creditors back off, fooled by the display of wealth. It is a terrifying high-wire act, but you have bought yourself another season of breathing room.
+    *set prestige +6
+    *set_stat treasury +2 min:0 max:100
+    *set_stat nobility +4 min:0 max:100
+
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STRUGGLING: CHURCH — The Vicar's Displeasure
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_struggling_church
+*temp church_score 0
+// Beat 1: The Private Meeting
+
+The vicar has stopped smiling. His sermons have taken on a pointed quality, full of heavy-handed references to ungodly governance and lords who forget their duty to God. The Church's disapproval is quiet, but it carries immense weight in a village where everyone attends Sunday service.
+
+He requests a private meeting in your study. He does not sit. "The moral character of this estate is wandering, ${title}," he states coldly. "You neglect the interests of the parish. I fear for your soul, but more urgently, I fear for your tenants."
+
+*choice
+  #Receive his criticism with humility. Promise to do better.
+    You lower your head and ask for his spiritual guidance. It is a bitter pill to swallow in your own home, but the vicar softens visibly.
+    *set prestige +2
+    *set church_score +1
+    *set_stat church +4 min:0 max:100
+
+  #Remind him that his church sits on my land.
+    You pour yourself a glass of wine and suggest he focus on his choir rather than your ledgers. He turns entirely rigid, his face draining of color. You have drawn a clear battle line.
+    *set prestige +4
+    *set church_score -1
+    *set_stat church -3 min:0 max:100
+
+*page_break
+// Beat 2: The Charity
+
+A week later, the vicar announces a Church-sponsored charity event to feed the indigent of the wider county. A ledger is left conspicuously on the altar for donations. The entire village is watching to see how the estate responds.
+
+*choice
+  #Make a generous public contribution.
+    You instruct the steward to provide a heavy purse of silver. The vicar reads your name first from the pulpit. It costs you dearly, but the immediate friction eases.
+    *set prestige +2
+    *set church_score +1
+    *set_stat church +5 min:0 max:100
+    *set_stat treasury -4 min:0 max:100
+
+  #Decline to participate.
+    You ignore the ledger. The silence on Sunday morning is deafening.
+    *set prestige +1
+    *set church_score -1
+    *set_stat church -3 min:0 max:100
+
+  #Establish a secular charity under the estate's name instead.
+    You distribute grain directly from the manor steps, bypassing the Church entirely. The people are fed, and they know precisely who fed them. The vicar is utterly furious at being circumvented.
+    *set prestige +4
+    *set church_score -2
+    *set_stat church -5 min:0 max:100
+    *set_stat people +4 min:0 max:100
+
+*page_break
+// Beat 3: The Challenge
+
+The cold war escalates. A tenant dispute over a stolen plow—a matter entirely under your legal jurisdiction—is brought to the vicar instead of your steward. This is a direct challenge to your worldly authority.
+
+*choice
+  #Send the bailiff to drag the dispute back to my court.
+    You assert your legal right violently. The vicar is forced to yield, but he looks at you as though you are a tyrant. The local nobility quietly approve of your firm hand.
+    *set prestige +4
+    *set church_score -1
+    *set_stat church -4 min:0 max:100
+    *set_stat nobility +3 min:0 max:100
+
+  #Let the vicar handle it. Fighting him now is not worth the damage.
+    You allow the Church to rule on the matter. The village notes your weakness. You keep the peace, but you diminish your own standing among your peers.
+    *set prestige +2
+    *set church_score +1
+    *set_stat nobility -3 min:0 max:100
+    *set_stat church +2 min:0 max:100
+
+*page_break
+// Beat 4: The Status Shifts
+
+You pass the vicar on the road to the village. The air between you crackles with the weight of your recent decisions.
+
+*if church_score > 0
+  He stops and offers a genuine, if tired, smile. "We walk a difficult path, ${title}, but I see your efforts." He bows his head. You have secured his grudging support.
+  *set church_figure_status "supportive"
+  *set prestige +2
+  *goto church_beat_5
+
+*if church_score <= 0
+  He does not stop. He merely meets your eyes with a look of cold, righteous suspicion. You are no longer just a wayward flock member; you are an active threat to his moral authority.
+  *set church_figure_status "suspicious"
+  *set prestige +3
+  *goto church_beat_5
+
+*label church_beat_5
+*page_break
+// Beat 5: The Public Act
+
+The tension requires a definitive resolution. You must make a public gesture to either heal the breach or cement your independence.
+
+*choice
+  #Commission a beautiful new stained-glass window for the nave.
+    It is an exorbitant expense, but art lasts longer than arguments. The vicar weeps at the unveiling. The Church is pacified, though your accounts weep as well.
+    *set prestige +3
+    *set_stat church +7 min:0 max:100
+    *set_stat treasury -6 min:0 max:100
+
+  #Attend Sunday service and publicly read the scripture.
+    You stand before the congregation and deliver the reading with solemn piety. It costs no coin, and the people are moved by your visible devotion.
+    *set prestige +4
+    *set_stat church +4 min:0 max:100
+    *set_stat people +2 min:0 max:100
+
+  #Invite the regional Bishop to dinner. Outrank the vicar.
+    You bypass the local clergy entirely and court the Bishop. It is a masterful political stroke. The Bishop leaves charmed, effectively neutering the vicar's local authority over you, though the Church at large remains wary.
+    *set prestige +5
+    *set_stat church -2 min:0 max:100
+    *set_stat nobility +4 min:0 max:100
+
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STRUGGLING: NOBILITY — The Cold Shoulder
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_struggling_nobility
+// Beat 1: The Snub
+
+The invitations have stopped coming. When you attend county functions, conversations grow pointedly quiet as you approach. The local gentry have decided that the new ${title} is not one of them.
+
+At a gathering in the magistrate's hall, Lord Harrington catches your eye from across the room, turns his back, and loudly invites a lesser gentleman to join his hunting party.
+
+*choice
+  #Ignore it with perfect grace.
+    You sip your wine and converse pleasantly with a nearby widow. You give Harrington no satisfaction. It is a safe reaction, showing you possess breeding, if not fire.
+    *set prestige +2
+    *set_stat nobility +2 min:0 max:100
+
+  #Offer a cutting, witty remark loud enough for the room to hear.
+    You comment on the declining quality of Harrington's hounds. A few minor lords chuckle into their drinks. You have risked giving offense, but you proved you are no one's victim.
+    *set prestige +4
+    *set_stat nobility +3 min:0 max:100
+
+  #Confront him directly. Demand an explanation for the insult.
+    You cross the room and force him to face you. The music stops. Harrington stammers an excuse and retreats. It is an aggressive gamble that shocks the room, alienating some while terrifying others into respect.
+    *set prestige +5
+    *set_stat nobility -3 min:0 max:100
+
+*page_break
+// Beat 2: The Rival's Assessment
+
+You step out onto the terrace for air. A familiar figure leans against the stone balustrade—your rival from Blackwood.
+
+*if rival_status = "friendly"
+  They offer you a glass of sherry. "You are drowning in there," they say smoothly. "They do not hate you; they just do not understand you yet. Stop trying to act like their fathers." The advice is grudging, but surprisingly useful.
+  *set prestige +3
+  *set_stat nobility +3 min:0 max:100
+
+*if rival_status = "hostile"
+  They smile, a cold expression devoid of humor. "It seems the county has finally taken my measure of you." They are actively fanning the flames of your isolation. You exchange sharp words and return to the hall, feeling entirely alone.
+  *set prestige +2
+  *set_stat nobility -2 min:0 max:100
+
+*if rival_status = "neutral"
+  They acknowledge you with a slight nod, offering neither help nor hindrance. They are merely watching to see if you survive the season.
+  *set prestige +2
+
+*page_break
+// Beat 3: The Cost of Alliance
+
+A minor noble corners you near the carriages. He offers to formally introduce you into a powerful county faction, granting you immediate social protection.
+
+The catch is blunt: his faction strongly opposes the latest agricultural reforms. He demands you sign a pact that will severely restrict your tenants' rights.
+
+*choice
+  #Sign the pact. I need allies to survive.
+    You put your name to the document. Within days, the invitations resume. You are part of the club. Back at the estate, however, your tenants learn of the new restrictions, and the mood turns black.
+    *set prestige +3
+    *set_stat nobility +5 min:0 max:100
+    *set_stat people -4 min:0 max:100
+
+  #Refuse the pact. I will not trade my people's livelihood for dinner parties.
+    You decline. The noble steps back, his face hardening. "Suit yourself, ${title}." You leave the gathering entirely isolated, but your hands are clean.
+    *set prestige +3
+    *set_stat nobility -2 min:0 max:100
+
+*page_break
+// Beat 4: Playing Host
+
+You cannot wait for invitations; you must issue them. The steward advises hosting an event at your own estate to force the gentry onto your territory.
+
+*choice
+  #Host a lavish, multi-day hunt.
+    You empty the treasury to hire beaters, purchase imported wines, and stable dozens of horses. The sheer expense forces the county to attend. It is a spectacular success, though it leaves your accounts dangerously thin.
+    *set prestige +5
+    *set_stat nobility +6 min:0 max:100
+    *set_stat treasury -5 min:0 max:100
+
+  #Host an intimate, modest card evening for a select few.
+    You invite only those who have shown you marginal kindness. It is a quiet affair, costing little. It slowly builds a small, loyal base of acquaintances, but does nothing to change the wider county's opinion.
+    *set prestige +2
+    *set_stat nobility +3 min:0 max:100
+    *set_stat treasury -2 min:0 max:100
+
+*page_break
+// Beat 5: The Defining Moment
+
+The season is ending. You face a defining social choice. Do you make one final, dangerous push for acceptance, or turn your back on the county entirely?
+
+*choice
+  #Make a bold display at the season's final assembly.
+    You arrive late, dressed impeccably, and immediately challenge Harrington to a high-stakes wager at the card tables. You play with cold blood and win. The room is silent. You have bought their grudging respect with pure audacity.
+    *set prestige +6
+    *set_stat nobility +7 min:0 max:100
+
+  #Retreat to the estate. Let them have their drawing rooms.
+    You skip the final assembly entirely. You spend the evening reviewing ledgers and enjoying a quiet fire. It is peaceful, but you remain an outsider in your own county.
+    *set prestige +2
+
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  FAILING CLUSTER 1 — The Breaking Point
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_failing_1
+// Beat 1: The Breaking Point
+
+Something has broken. The estate is in crisis, a collapse you may have seen coming but failed to prevent.
+
+Your steward stands by the fireplace. His usual rigid posture has slackened into genuine exhaustion. He does not bring ledgers today. He brings ultimatums.
+
+*if people <= 25
+  "The village is entirely lost to us, ${title}," he states flatly. "They are armed with scythes and torches, standing at the estate gates. They are no longer asking for bread. They are asking for blood."
+*if treasury <= 25
+  "The creditors have bypassed the courts, ${title}," he states flatly. "They have hired men to seize our carts on the road. The estate is functionally bankrupt, and we cannot pay the household staff through the end of the week."
+*if church <= 25
+  "The Bishop has sent an envoy, ${title}," he states flatly. "The vicar has petitioned for your formal excommunication. If the decree is read on Sunday, your tenants will be legally absolved of their oaths to you."
+*if nobility <= 25
+  "Lord Harrington has openly petitioned the Crown to dissolve your land rights, ${title}," he states flatly. "The county has entirely abandoned you. We have no allies, and the wolves are at the door."
+
+"This is not a problem we manage," the steward continues, his voice devoid of emotion. "This is a problem we survive. What are you willing to burn?"
+
+*page_break
+// Beat 2: The Impossible Choice
+
+You have hours to act. You must throw something to the wolves to save the rest.
+
+*choice
+  #Sacrifice our wealth to pacify the mob. Drain the vaults entirely.
+    You authorize the release of everything—grain, gold, the silver from the dining room. The immediate danger is bought off, but you have functionally impoverished yourself to stay alive.
+    *set prestige +4
+    *set_stat people +7 min:0 max:100
+    *set_stat treasury -5 min:0 max:100
+
+  #Sacrifice our standing. Beg the local gentry for military or financial intervention.
+    You send a desperate, humiliating letter to your neighbors, offering brutal concessions in exchange for immediate salvation. They intervene, but you are now a laughingstock among your peers.
+    *set prestige +3
+    *set_stat treasury +6 min:0 max:100
+    *set_stat nobility -5 min:0 max:100
+
+  #Sacrifice our independence. Surrender jurisdiction to the Church.
+    You grant the vicar unprecedented legal authority over your lands in exchange for his protection. The crisis is quelled from the pulpit, but you are no longer the absolute master of your own domain.
+    *set prestige +5
+    *set_stat church +8 min:0 max:100
+    *set_stat nobility -4 min:0 max:100
+
+*page_break
+// Beat 3: The Interloper
+
+The immediate bleeding stops, but the wound is open. A carriage arrives late in the evening. It is your rival from Blackwood.
+
+They step into your study without waiting to be announced. "You look terrible," they observe, taking a seat. "I can fix this. I have the coin, the influence, and the men. I will stabilize your borders by morning."
+
+They offer a heavy leather pouch of gold and a sheaf of signed affidavits. "But in return, you will back my candidate for the upcoming county elections. Publicly. Unquestioningly."
+
+*choice
+  #Accept the help and the chains. I have no other options.
+    You take the gold. True to their word, your rival's influence crushes the remaining dissent and pays the immediate debts. The estate holds. But you are now firmly in their pocket.
+    *set prestige +3
+    *set_stat treasury +5 min:0 max:100
+    *set dependency_rival true
+
+  #Refuse. I will die before I become a vassal to Blackwood.
+    You order them out of your house. They leave with a cruel laugh. You must face the coming dawn entirely alone. It is a terrifying, magnificent display of pride.
+    *set prestige +4
+
+*page_break
+// Beat 4: The Dark Solution
+
+The dawn breaks gray and cold. You are still dangerously exposed. The steward pours you a measure of brandy and speaks softly.
+
+"There is one final lever to pull, ${title}. It is... distasteful. We can forge documents implicating a prominent local merchant in treasonous correspondence. We seize his assets in the name of the Crown and keep a portion for the estate. It solves everything."
+
+*choice
+  #Do it. Morality is a luxury for those who are not drowning.
+    The forge is lit. The documents are planted. By noon, the merchant is in chains and his wealth is seized. The estate is saved by an act of spectacular villainy.
+    *set prestige +6
+    *set_stat treasury +8 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+  #Absolutely not. We fall with our honor intact, or we do not fall at all.
+    You throw the brandy into the fire. The steward bows, accepting your ruling. You preserve your soul, but the estate remains perilously close to the edge.
+    *set prestige +4
+    *set_stat church +5 min:0 max:100
+
+*page_break
+// Beat 5: Aftermath
+
+The crisis finally recedes. You walk the grounds of your estate. The walls still stand. The village is quiet. You have survived.
+
+But survival is not victory. The air feels heavier. The servants do not meet your eyes. You have learned exactly what it costs to hold onto power when the world tries to take it from you.
+
+*choice
+  #Focus on repairing the physical damage. Rebuild what was broken.
+    You set the carpenters and masons to work. The visible scars fade quickly.
+    *set prestige +2
+    *set_stat treasury +3 min:0 max:100
+
+  #Focus on repairing the political damage. Draft letters to the county.
+    You spend the week mending fences with the gentry, assuring them the weakness was temporary.
+    *set prestige +3
+    *set_stat nobility +4 min:0 max:100
+
+*set done_baron_failing_1 true
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  FAILING CLUSTER 2 — The Last Resort
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_failing_2
+// Beat 1: The Edge of the Cliff
+
+You have been here before.
+
+The estate teeters again, but this time the cracks run deeper. The walls of your study feel closer. The silence in the manor is suffocating.
+
+Your steward stands by the window, looking out at the lands of ${family}. When he turns to you, his face is gray.
+
+"We are out of time, ${title}," he says softly. He steps forward, placing his hands flat on your desk. He has never breached protocol like this before. "I must speak plainly. If the estate breaks again, there is no coming back. One more crisis of this magnitude, and the Crown will strip you of your title. You will lose everything."
+
+The warning is absolute. This is your last resort.
+
+*page_break
+// Beat 2: The Pound of Flesh
+
+The crisis demands an immediate, horrific sacrifice. The debts are insurmountable, or the mob is at the gates, or the Church is ready to strike you from the registry. You must carve off a piece of the estate to save the whole.
+
+*choice
+  #Sell a quarter of our ancestral lands to Harrington.
+    You sign away a massive swath of fertile farmland for a fraction of its worth. The influx of capital stops the bleeding instantly, but you have permanently diminished the ${family} legacy.
+    *set prestige +4
+    *set_stat treasury +8 min:0 max:100
+    *set_stat nobility -4 min:0 max:100
+
+  #Turn the village guard against the tenants. Institute martial law.
+    You issue batons and authorize violence. The village is beaten into absolute, terrified submission. The peace is absolute, and utterly horrific.
+    *set prestige +5
+    *set_stat people -6 min:0 max:100
+    *set_stat nobility +6 min:0 max:100
+
+*page_break
+// Beat 3: The Devil's Bargain
+
+A message arrives from the capital. An unnamed political faction offers to step in and absorb your liabilities, shielding you from the immediate fallout.
+
+In return, they demand the right to station their own agents in your village and to control your vote in the House of Lords when you eventually ascend.
+
+*choice
+  #Sign the pact. Better a puppet than a pauper.
+    The agents arrive the next day. They are polite, efficient, and they report to someone else. You are secure, but you have sold your autonomy to strangers in London.
+    *set prestige +3
+    *set_stat treasury +4 min:0 max:100
+    *set_stat nobility +3 min:0 max:100
+    *set dependency_crown true
+
+  #Burn the letter. I rule this valley, or no one does.
+    You watch the wax seal melt in the fire. You maintain your absolute sovereignty, facing the storm with nothing but your own wits.
+    *set prestige +5
+    *set_stat nobility +2 min:0 max:100
+
+*page_break
+// Beat 4: The Final Betrayal
+
+To fully clear the danger, the steward identifies a scapegoat. A loyal, well-liked bailiff who has served your family for twenty years.
+
+"We blame him," the steward says, his voice hollow. "We claim he acted without your knowledge. He goes to prison, and you are absolved in the eyes of the law and the Church."
+
+*choice
+  #Give the order. Have the bailiff arrested.
+    The guards drag him from his home. He does not fight them; he only looks at you with profound, devastating sorrow. You have survived, but the guilt will haunt these halls forever.
+    *set prestige +6
+    *set_stat church +6 min:0 max:100
+    *set_stat people -4 min:0 max:100
+
+  #Refuse. I will not feed my loyal men to the fire.
+    You reject the plan. You will carry the weight of your own failures. It is a rare moment of pure nobility, though it leaves you heavily damaged.
+    *set prestige +4
+    *set_stat people +4 min:0 max:100
+    *set_stat nobility -3 min:0 max:100
+
+*page_break
+// Beat 5: Breathing Room
+
+The smoke clears. You stand at the window, looking out over a domain that is poorer, sadder, and harder than when you inherited it.
+
+But you are still the ${title} of ${family}. You are still breathing. You have clawed your way back from the edge of the abyss.
+
+*choice
+  #Swear an oath to never let it come to this again.
+    You grip the windowsill. The pain of this survival hardens you. You are ready to rule.
+    *set prestige +3
+    *set_stat nobility +3 min:0 max:100
+
+  #Pour a glass of wine and try to forget what it cost.
+    You numb the memory of the past week. It works, for now.
+    *set prestige +2
+    *set_stat people +2 min:0 max:100
+
+*set done_baron_failing_2 true
+*goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  STAGNATING — The Quiet Days
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_stagnating
+*temp stagnation_boldness false
+// Beat 1: The Ordinary Day
+
+Nothing is wrong. That is the problem.
+
+The estate runs smoothly. The tenants work the fields, the vicar preaches on Sundays, and your neighbors nod when your carriage passes. But nothing is actually happening. You are a ${title} in a backwater, and the world has entirely forgotten you exist.
+
+The steward reports that the morning is clear and the schedule is empty.
+
+*choice
+  #Review the routine correspondence from minor merchants.
+    You spend two hours reading incredibly dull letters about the price of salt. It is safe, quiet work.
+    *set prestige +1
+
+  #Take a slow, uneventful walk through the village.
+    You walk the main street. The villagers bow respectfully, but no one approaches you with a problem or a petition. You are completely irrelevant to their day.
+    *set prestige +1
+
+  #Inspect the minor repairs to the estate's secondary fences.
+    You watch a carpenter hit a nail for twenty minutes. The fence is secure.
+    *set prestige +1
+
+*page_break
+// Beat 2: The Comparison
+
+A letter arrives from a distant cousin in London. They write at length about their recent invitation to a royal gala and their expanding influence at court. They ask, almost as an afterthought, if the sheep in your valley are well. The comparison stings bitterly.
+
+*choice
+  #Write back detailing my grand ambitions for the estate.
+    You draft a fiery reply, exaggerating your local influence and outlining plans for expansion. It makes you feel slightly better, but the ink is barely dry before reality sets back in.
+    *set prestige +2
+
+  #Write back expressing polite contentment with my quiet life.
+    You send a perfectly bland response wishing them well. The game of power moves on without you, and you accept your place on the sidelines.
+    *set prestige +1
+
+*page_break
+// Beat 3: The Steward's Push
+
+Your steward brings you a late afternoon tea. He lingers by the door.
+
+"Forgive me, ${title}, but we are drifting," he says gently. "The estate is secure, but a secure estate does not build a dynasty. You need to do something noticeable. I have taken the liberty of drafting three proposals."
+
+He sets three heavily sealed envelopes on your desk. This is the moment. Take a risk, or rot in safety.
+
+*choice
+  #Propose a radical, deeply unpopular land reform to the county magistrate.
+    It is a brilliant, terrifying legal maneuver that will absolutely infuriate your peers but vastly improve agricultural yields. You sign the document. The quiet days are officially over.
+    *set stagnation_boldness true
+    *set prestige +4
+    *set_stat nobility -5 min:0 max:100
+    *set_stat treasury +4 min:0 max:100
+
+  #Commission a lavish, unnecessary monument in the village square.
+    You drain a portion of the treasury to build a towering stone obelisk bearing the ${family} crest. It is pure ego, but it forces everyone to look at your name.
+    *set stagnation_boldness true
+    *set prestige +3
+    *set_stat treasury -4 min:0 max:100
+    *set_stat people +3 min:0 max:100
+
+  #Dismiss his concerns. The quiet is a blessing, not a curse.
+    You sweep the envelopes into the fire. The steward bows, his face perfectly blank, and leaves you to your tea.
+    *set stagnation_boldness false
+    *set prestige +1
+
+*page_break
+// Beat 4: The Ripple
+
+*if stagnation_boldness
+  The consequences of your decision hit the estate like a thunderclap. Carriages arrive bearing furious minor lords, or the village square fills with gawking crowds. Your name is on everyone's lips. It is chaotic, dangerous, and incredibly vital. You are playing the game again.
+  *set prestige +5
+  *goto stagnation_beat_5
+
+*if not stagnation_boldness
+  Another flat, identical day passes. The sun rises and sets. The ledgers do not change. The silence in the manor grows heavier, pressing down on you until you can barely breathe.
+  *set prestige +1
+  *goto stagnation_beat_5
+
+*label stagnation_beat_5
+*page_break
+// Beat 5: Reflection
+
+You stand at the edge of your grounds, looking out over the valley as evening falls.
+
+*if stagnation_boldness
+  The estate is alive. There are fires to fight and enemies to manage, but the blood is pumping through the veins of ${family} once more. You turn back toward the manor, ready for the storm.
+  *set prestige +3
+  *goto route
+
+*if not stagnation_boldness
+  The estate is perfectly still. You have kept it safe. You have kept it whole. But as you look at the darkening hills, you wonder if you are ruling a domain, or merely curating a tomb.
+  *set prestige +1
+  *goto route
+
+
+// ═══════════════════════════════════════════════════════════════
+//  ADVANCING — Promotion to Viscount/ess
+// ═══════════════════════════════════════════════════════════════
+
+*label baron_advancing
+// Beat 1: The Formal Letter
+
+Your name has finally reached beyond the borders of the village.
+
+The morning post brings a heavy letter sealed with the wax of the Crown. The steward breaks the seal, his hands trembling slightly. He reads the text once, then reads it again.
+
+When he looks up, his eyes are bright. "A writ from the capital, ${title}. You have been formally recommended and approved for elevation. The Viscountcy awaits."
+
+The news hits the village by noon. The tenants gather in the courtyard, cheering. The easy days—if they were ever easy—are over.
+
+*page_break
+// Beat 2: Preparations for the Ceremony
+
+A formal ceremony must be held to recognize the new title. The county will attend. How you present yourself today sets the baseline for your reign as Viscount.
+
+*choice
+  #Spare no expense. Let the county see the absolute wealth of ${family}.
+    You order silk banners, imported wine, and a feast that will be talked about for a decade. It is a terrifying sum of money, but the local gentry are instantly intimidated by your display of power.
+    *set prestige +4
+    *set_stat treasury -6 min:0 max:100
+    *set_stat nobility +5 min:0 max:100
+
+  #Keep it modest and focus on the tenants. We celebrate as a village.
+    You open the estate stores and roast oxen in the square. You wear simple, elegant clothes. The nobility find it quaint, but your people will bleed for you after today.
+    *set prestige +3
+    *set_stat people +5 min:0 max:100
+
+  #Make it a deeply solemn, religious affair to secure the Church's blessing.
+    You center the ceremony around a massive choral service and a hefty donation to the diocese. The regional Bishop attends, cementing your moral authority.
+    *set prestige +3
+    *set_stat church +5 min:0 max:100
+    *set_stat treasury -3 min:0 max:100
+
+*page_break
+// Beat 3: A Private Moment
+
+Before the carriage arrives to take you to the ceremony, you find your steward standing alone in your study, tracing the edge of your old desk.
+
+*if steward_status = "loyal"
+  He looks up and smiles. It is a rare, genuinely warm expression. "You have done remarkably well, my lord. It has been the honor of my life to serve you here. I am ready for the larger board."
+  *set prestige +2
+  *goto advancing_beat_4
+
+*if steward_status = "wary"
+  He bows stiffly as you enter. "Everything is prepared. You have survived the trials of this estate. I only hope we are both ready for the viciousness of the county." His respect is real, but the strain between you remains.
+  *set prestige +2
+  *goto advancing_beat_4
+
+*label advancing_beat_4
+*page_break
+// Beat 4: The Ceremony
+
+The ceremony is a blur of faces and oaths. You kneel as a Baron, and you rise as something more.
+
+You scan the crowd. Your rival from Blackwood is watching from the gallery.
+
+*if rival_status = "friendly"
+  They raise a glass of wine to you in a silent, respectful salute. A dangerous friend to have in the coming days.
+
+*if rival_status = "hostile"
+  Their expression is dark and calculating. The war between your houses is only just beginning.
+
+*if rival_status = "neutral"
+  They watch without expression, still waiting to see how you will play your hand.
+
+*if church >= 50
+  The vicar steps forward and offers a ringing, public blessing of your new title.
+
+*if church < 50
+  The vicar watches in cold silence, offering no blessing. The Church remains an obstacle.
+
+*page_break
+// Beat 5: Transition
+
+You step out onto the balcony. The lands stretching out before you are no longer just a village and a few farms. You are looking at a broader horizon, filled with new allies, new enemies, and much higher stakes.
+
+You are now the Viscount of ${family}.
+
+*call promote
+*notify "Title elevated!" 2000
+*goto_scene viscount
+
+
+// ═══════════════════════════════════════════════════════════════
+//  DEATH HANDLER
+// ═══════════════════════════════════════════════════════════════
+
+*label death_handler
+
+*if pending_event = "fail_people_low"
+  *ending "The People Have Spoken" "${name} lost the faith of {their} subjects. The village turned its back — not in anger, but in cold certainty that the ${title} of ${family} had forgotten them."
+
+*if pending_event = "fail_people_high"
+  *ending "Beloved Into Ruin" "They loved ${name} too much and too loudly. The mob that adored {them} consumed the estate in their adoration."
+
+*if pending_event = "fail_treasury_low"
+  *ending "Bankruptcy" "The creditors came with paperwork, not pitchforks. The estate, the lands, the title — all seized in orderly fashion. ${name} was left with nothing."
+
+*if pending_event = "fail_treasury_high"
+  *ending "The Price of Plenty" "The wealth of ${name} became obscene. A coalition moved against {them} — not from jealousy, but from fear."
+
+*if pending_event = "fail_church_low"
+  *ending "Anathema" "The Church declared ${name} beyond redemption. In a village where everyone attends Sunday service, this was not merely spiritual death — it was social annihilation."
+
+*if pending_event = "fail_church_high"
+  *ending "God's Domain" "The vicar speaks, and ${name} obeys. {Their} domain has become a theocracy in all but name."
+
+*if pending_event = "fail_nobility_low"
+  *ending "Alone at the Top" "No one answers {their} letters. No one attends {their} functions. A ${title} without peers is a ${title} without power."
+
+*if pending_event = "fail_nobility_high"
+  *ending "The Puppet" "The aristocracy closed ranks — around ${name}, yes, but also above {them}. {They} became a figurehead, politely and thoroughly controlled."
+
+*if pending_event = "fail_chronic"
+  *ending "A Slow Decline" "Three crises too many. The estate of ${family} did not fall to a single catastrophe but to a slow, grinding decline that ${name} could not reverse."
+
+// Fallback
+*ending "The End" "The reign of ${name}, ${title} of ${family}, has ended."

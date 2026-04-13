@@ -2149,6 +2149,7 @@ function renderChoices(choices) {
       btn.addEventListener("click", () => {
         if (choiceMade) return;
         choiceMade = true;
+        _choiceArea.innerHTML = "";
         _onBeforeChoice();
         clearNarrative();
         const choiceBlockEnd = choice.blockEnd ?? awaitingChoice?.end ?? choice.end;

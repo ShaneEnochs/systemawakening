@@ -321,6 +321,13 @@ export function renderChoices(choices: ChoiceOption[]): void {
         if (choiceMade) return;
         choiceMade = true;
 
+        // Remove all choice buttons immediately so the player sees instant
+        // feedback that their selection was registered.  This runs before
+        // _onBeforeChoice so the DOM is already clean when the undo snapshot
+        // is captured, and before clearNarrative so there is never a frame
+        // where the buttons are still visible while the body executes.
+        _choiceArea.innerHTML = '';
+
         _onBeforeChoice();
         clearNarrative();
 

@@ -3634,6 +3634,17 @@ function initTooltip(narrativeContent) {
     if (!term) return;
     hideTooltip();
   }, true);
+  narrativeContent.addEventListener("touchend", (e) => {
+    const term = e.target.closest(".lore-term");
+    if (!term) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (_activeTerm === term && _tooltip?.classList.contains("lore-tooltip--visible")) {
+      hideTooltip();
+    } else {
+      showTooltip(term);
+    }
+  }, { passive: false });
   narrativeContent.addEventListener("click", (e) => {
     const term = e.target.closest(".lore-term");
     if (!term) return;

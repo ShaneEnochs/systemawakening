@@ -122,7 +122,22 @@ export function initTooltip(narrativeContent: HTMLElement): void {
     hideTooltip();
   }, true);
 
-  // ── Mobile / keyboard: tap or click ────────────────────────────────────
+  // ── Mobile: touchend shows tooltip on first tap, no long-press needed ──
+  // preventDefault suppresses the synthetic click so the document-level
+  // dismiss handler does not immediately close the tooltip we just opened.
+  narrativeContent.addEventListener('touchend', (e) => {
+    const term = (e.target as HTMLElement).closest<HTMLElement>('.lore-term');
+    if (!term) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (_activeTerm === term && _tooltip?.classList.contains('lore-tooltip--visible')) {
+      hideTooltip();
+    } else {
+      showTooltip(term);
+    }
+  }, { passive: false });
+
+  // ── Desktop / keyboard: click ────────────────────────────────────────────
   // Use capture so we can stop propagation before the document dismiss handler.
   narrativeContent.addEventListener('click', (e) => {
     const term = (e.target as HTMLElement).closest<HTMLElement>('.lore-term');

@@ -513,7 +513,7 @@ export function wireCharCreation(): void {
         validateName(_inputLastName.value,  'Last name'))  return;
     const selected = _charOverlay.querySelector<HTMLElement>('.pronoun-card.selected');
     if (!selected) return;
-    const startScene = 'prologue';
+    const startScene = 'character_creation';
     _charOverlay.classList.add('hidden');
     const overlay = _charOverlay as any;
     if (typeof overlay._trapRelease === 'function') {

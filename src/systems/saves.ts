@@ -25,7 +25,7 @@ import { getCurrentChapter, setCurrentChapter } from './journal.js';
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-export const SAVE_VERSION  = 9;
+export const SAVE_VERSION  = 10;
 
 export const SAVE_KEY_AUTO  = 'sa_save_auto';
 export const SAVE_KEY_SLOTS = { 1: 'sa_save_slot_1', 2: 'sa_save_slot_2', 3: 'sa_save_slot_3' };
@@ -146,7 +146,9 @@ export function decodeSaveCode(code: string): { ok: true; save: any } | { ok: fa
       awaitingChoice: json.ac || null,
       statRegistry:   json.sr || JSON.parse(JSON.stringify(statRegistry)),
       label:          json.lb || null,
-      characterName:  `${fullPlayerState.first_name || ''} ${fullPlayerState.last_name || ''}`.trim() || 'Unknown',
+      characterName:  fullPlayerState.name
+                        ? `${fullPlayerState.name} ${fullPlayerState.family || ''}`.trim()
+                        : `${fullPlayerState.first_name || ''} ${fullPlayerState.last_name || ''}`.trim() || 'Unknown',
       timestamp:      json.ts || Date.now(),
     },
   };
@@ -323,7 +325,11 @@ export function getCheckpoints(): Array<CheckpointInfo | null> {
     const raw = localStorage.getItem(`${CHECKPOINT_PREFIX}${i}`);
     if (!raw) { results.push(null); continue; }
     const decoded = decodeSaveCode(raw);
-    if (!decoded.ok) { results.push(null); continue; }
+    if (!decoded.ok) {
+      try { localStorage.removeItem(`${CHECKPOINT_PREFIX}${i}`); } catch (_) {}
+      results.push(null);
+      continue;
+    }
     const save = (decoded as { ok: true; save: any }).save;
     results.push({
       slot:      i,

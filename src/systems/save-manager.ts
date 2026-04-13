@@ -14,16 +14,14 @@ import {
 
 import {
   hideSaveMenu, showSaveMenu, refreshAllSlotCards, loadAndResume,
-  hideSplash, showCharacterCreation, wireCharCreation,
+  hideSplash, wireCharCreation,
 } from '../ui/overlays.js';
 
 import { showToast } from '../ui/overlays.js';
 import { getNarrativeLog } from '../ui/narrative.js';
 import { runStatsScene } from '../ui/panels.js';
 
-import {
-  patchPlayerState,
-} from '../core/state.js';
+// (patchPlayerState removed — character creation is now handled by character_creation.txt)
 
 import { gotoScene } from '../core/interpreter.js';
 import { popUndo, clearUndoStack, updateUndoBtn } from './undo.js';
@@ -135,25 +133,14 @@ export function wireSaveUI(dom: Dom, opts: {
     });
   }
 
-  // New game
+  // New game — character creation is handled entirely by character_creation.txt
   dom.splashNewBtn?.addEventListener('click', async () => {
     hideSplash();
-    const charData = await showCharacterCreation();
-    patchPlayerState({
-      first_name:                  charData.firstName,
-      last_name:                   charData.lastName,
-      pronouns_subject:            charData.pronouns_subject,
-      pronouns_object:             charData.pronouns_object,
-      pronouns_possessive:         charData.pronouns_possessive,
-      pronouns_possessive_pronoun: charData.pronouns_possessive_pronoun,
-      pronouns_reflexive:          charData.pronouns_reflexive,
-      pronouns_label:              charData.pronouns_label,
-    });
     dom.saveBtn?.classList.remove('hidden');
     document.getElementById('undo-btn')?.classList.remove('hidden');
     clearUndoStack();
     await runStatsScene();
-    await gotoScene(charData.startScene);
+    await gotoScene('character_creation');
   });
 
   // Continue (splash load) — hide #splash-main, show save slots

@@ -81,6 +81,8 @@
 
 *comment ─── Baron Tier: Miscellaneous Flags ───
 *create tax_evasion_caught false
+*create dependency_rival false
+*create dependency_crown false
 
 *comment ─── Viscount Tier: Completion Flags (stubs — expanded later) ───
 *create done_viscount_placeholder false

@@ -41,7 +41,7 @@ The documents are prepared. The solicitor pauses, pen hovering over the final li
     *set pronouns_possessive_pronoun "theirs"
     *set pronouns_reflexive "themself"
     *set pronouns_label "they/them"
-    *set title "Baron/ess"
+    *set title "Baron"
 
 The solicitor nods, signs the final page, and hands you the deed.
 

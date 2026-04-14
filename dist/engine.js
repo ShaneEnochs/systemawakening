@@ -3367,6 +3367,46 @@ function wireCharCreation() {
     }
   });
 }
+function showCharacterCreation() {
+  const DEFAULT_FIRST = "Charlie";
+  const DEFAULT_LAST = "McKinley";
+  _inputFirstName.value = "";
+  _inputLastName.value = "";
+  _counterFirst.textContent = String(NAME_MAX);
+  _counterLast.textContent = String(NAME_MAX);
+  _errorFirstName.classList.add("hidden");
+  _errorLastName.classList.add("hidden");
+  _inputFirstName.classList.remove("char-input--error", "char-input--default");
+  _inputLastName.classList.remove("char-input--error", "char-input--default");
+  _charBeginBtn.disabled = true;
+  _charOverlay.querySelectorAll(".pronoun-card").forEach((c) => {
+    const def = c.dataset.pronouns === "they/them";
+    c.classList.toggle("selected", def);
+    c.setAttribute("aria-checked", def ? "true" : "false");
+    c.setAttribute("tabindex", def ? "0" : "-1");
+  });
+  _charOverlay.classList.remove("hidden");
+  _charOverlay.style.opacity = "1";
+  requestAnimationFrame(() => {
+    const release = trapFocus(_charOverlay, null, false);
+    _charOverlay._trapRelease = release;
+    _inputFirstName.value = DEFAULT_FIRST;
+    _inputLastName.value = DEFAULT_LAST;
+    _counterFirst.textContent = String(NAME_MAX - DEFAULT_FIRST.length);
+    _counterLast.textContent = String(NAME_MAX - DEFAULT_LAST.length);
+    _inputFirstName.classList.add("char-input--default");
+    _inputLastName.classList.add("char-input--default");
+    _charBeginBtn.disabled = false;
+    const selected = _charOverlay.querySelector(".pronoun-card.selected");
+    try {
+      selected?.focus();
+    } catch (_) {
+    }
+  });
+  return new Promise((resolve) => {
+    _charOverlay._resolve = resolve;
+  });
+}
 
 // src/systems/save-manager.ts
 function wireSaveUI(dom, opts) {
@@ -3455,6 +3495,18 @@ function wireSaveUI(dom, opts) {
     document.getElementById("undo-btn")?.classList.remove("hidden");
     clearUndoStack();
     await runStatsScene();
+    const char = await showCharacterCreation();
+    patchPlayerState({
+      name: char.firstName,
+      family: char.lastName,
+      pronouns_subject: char.pronouns_subject,
+      pronouns_object: char.pronouns_object,
+      pronouns_possessive: char.pronouns_possessive,
+      pronouns_possessive_pronoun: char.pronouns_possessive_pronoun,
+      pronouns_reflexive: char.pronouns_reflexive,
+      pronouns_label: char.pronouns_label,
+      title: char.pronouns_label === "she/her" ? "Baroness" : "Baron"
+    });
     await gotoScene("character_creation");
   });
   dom.splashLoadBtn?.addEventListener("click", () => {

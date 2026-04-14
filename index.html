@@ -26,20 +26,8 @@
   /* ── Character creation: mobile-first overlay positioning ── */
   #char-creation-overlay {
     align-items: center;
-    justify-content: flex-start;
-    padding-top: env(safe-area-inset-top, 12px);
-    overflow-y: auto;
-  }
-  @media (min-height: 640px) {
-    #char-creation-overlay {
-      justify-content: center;
-      padding-top: 0;
-    }
-  }
-  .char-box {
-    max-height: 95dvh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    justify-content: center;
+    padding: env(safe-area-inset-top, 12px) 0 env(safe-area-inset-bottom, 0);
   }
   .char-eyebrow {
     display: block;
@@ -56,7 +44,7 @@
     font-size: var(--text-sm);
     color: var(--text-faint);
     text-align: center;
-    margin: 0 0 20px;
+    margin: 0 0 12px;
     line-height: 1.5;
   }
   .char-name-row {

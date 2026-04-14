@@ -124,6 +124,7 @@ function resolvePronoun(lower: string, isCapital: boolean): string {
     their:    playerState.pronouns_possessive         || 'their',
     theirs:   playerState.pronouns_possessive_pronoun || 'theirs',
     themself: playerState.pronouns_reflexive          || 'themself',
+    lord:     playerState.pronouns_honorific          || 'lord',
   };
   const resolved = escapeHtml(map[lower] || lower);
   return isCapital
@@ -165,7 +166,7 @@ export function formatText(text: unknown): string {
 
   // 2. Pronoun tokens: {they}, {Them}, {their}, etc.
   result = result.replace(
-    /\{(They|Them|Their|Theirs|Themself|they|them|their|theirs|themself)\}/g,
+    /\{(They|Them|Their|Theirs|Themself|Lord|they|them|their|theirs|themself|lord)\}/g,
     (_, token) => {
       const lower     = token.toLowerCase();
       const isCapital = token.charCodeAt(0) >= 65 && token.charCodeAt(0) <= 90;

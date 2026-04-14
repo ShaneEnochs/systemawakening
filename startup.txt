@@ -15,6 +15,7 @@
 *create pronouns_possessive_pronoun "theirs"
 *create pronouns_reflexive "themself"
 *create pronouns_label "they/them"
+*create pronouns_honorific "lord"
 *create title "Baron"
 *create tier "baron"
 

@@ -2008,7 +2008,8 @@ function resolvePronoun(lower, isCapital) {
     them: playerState.pronouns_object || "them",
     their: playerState.pronouns_possessive || "their",
     theirs: playerState.pronouns_possessive_pronoun || "theirs",
-    themself: playerState.pronouns_reflexive || "themself"
+    themself: playerState.pronouns_reflexive || "themself",
+    lord: playerState.pronouns_honorific || "lord"
   };
   const resolved = escapeHtml(map[lower] || lower);
   return isCapital ? resolved.charAt(0).toUpperCase() + resolved.slice(1) : resolved;
@@ -2033,7 +2034,7 @@ function formatText(text) {
     return escapeHtml(store ? store[k] : "").replace(/\*/g, "&#42;");
   });
   result = result.replace(
-    /\{(They|Them|Their|Theirs|Themself|they|them|their|theirs|themself)\}/g,
+    /\{(They|Them|Their|Theirs|Themself|Lord|they|them|their|theirs|themself|lord)\}/g,
     (_, token) => {
       const lower = token.toLowerCase();
       const isCapital = token.charCodeAt(0) >= 65 && token.charCodeAt(0) <= 90;
@@ -3362,6 +3363,7 @@ function wireCharCreation() {
         pronouns_possessive_pronoun: selected.dataset.possessivePronoun ?? "",
         pronouns_reflexive: selected.dataset.reflexive ?? "",
         pronouns_label: selected.dataset.pronouns ?? "",
+        pronouns_honorific: selected.dataset.honorific ?? "",
         startScene
       });
     }
@@ -3505,6 +3507,7 @@ function wireSaveUI(dom, opts) {
       pronouns_possessive_pronoun: char.pronouns_possessive_pronoun,
       pronouns_reflexive: char.pronouns_reflexive,
       pronouns_label: char.pronouns_label,
+      pronouns_honorific: char.pronouns_honorific,
       title: char.pronouns_label === "she/her" ? "Baroness" : "Baron"
     });
     await gotoScene("character_creation");

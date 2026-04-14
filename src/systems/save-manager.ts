@@ -150,6 +150,7 @@ export function wireSaveUI(dom: Dom, opts: {
       pronouns_possessive_pronoun: char.pronouns_possessive_pronoun,
       pronouns_reflexive:         char.pronouns_reflexive,
       pronouns_label:             char.pronouns_label,
+      pronouns_honorific:         char.pronouns_honorific,
       title:                      char.pronouns_label === 'she/her' ? 'Baroness' : 'Baron',
     });
 

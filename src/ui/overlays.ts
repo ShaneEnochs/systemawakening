@@ -25,6 +25,7 @@ export interface CharacterData {
   pronouns_possessive_pronoun: string;
   pronouns_reflexive:         string;
   pronouns_label:             string;
+  pronouns_honorific:         string;
   startScene:                 string;
 }
 
@@ -530,6 +531,7 @@ export function wireCharCreation(): void {
         pronouns_possessive_pronoun: selected.dataset.possessivePronoun  ?? '',
         pronouns_reflexive:          selected.dataset.reflexive          ?? '',
         pronouns_label:              selected.dataset.pronouns           ?? '',
+        pronouns_honorific:          selected.dataset.honorific          ?? '',
         startScene,
       });
     }

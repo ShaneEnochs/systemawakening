@@ -1608,7 +1608,6 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 .char-portrait-frame {
   position: relative;
   width: 260px;
-  height: 150px;
   margin: 0 auto 8px;
   overflow: hidden;
   border: 1px solid var(--border-dim);
@@ -1624,8 +1623,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 .char-portrait-img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 
 .char-header      { margin-bottom: 16px; text-align: center; }

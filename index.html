@@ -33,7 +33,7 @@
     display: block;
     font-family: var(--font-body);
     font-style: italic;
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     letter-spacing: 0.14em;
     color: var(--amber);
     margin-bottom: 4px;
@@ -41,7 +41,7 @@
   }
   .char-subhead {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-faint);
     text-align: center;
     margin: 0 0 12px;
@@ -49,15 +49,13 @@
   }
   .char-name-row {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    gap: 0;
     margin-bottom: 0;
   }
   .char-field-group--half {
     flex: 1;
     min-width: 0;
-  }
-  @media (max-width: 340px) {
-    .char-name-row { flex-direction: column; gap: 0; }
   }
   .char-field-group--half .char-input::placeholder {
     font-size: var(--text-sm);

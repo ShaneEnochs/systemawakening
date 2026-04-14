@@ -1607,8 +1607,8 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 /* 9A — character portrait / HUD silhouette frame */
 .char-portrait-frame {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 260px;
+  height: 150px;
   margin: 0 auto 8px;
   overflow: hidden;
   border: 1px solid var(--border-dim);

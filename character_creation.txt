@@ -1,18 +1,28 @@
+
 *title Character Creation
 
-*set_game_title "From Baron to Emperor"
-*set_game_byline "A Regency of Shadows"
+*set_game_title "Path to Empire"
+*set_game_byline "Heavy is the Crown"
 
-The year is 1815. A letter has arrived — heavy paper, black wax seal, a solicitor's cramped hand. You have inherited an estate, a title, and all the trouble that comes with both.
+A thick envelope rests in the center of your mahogany desk. A heavy dollop of black wax seals the flap shut, and the raven crest of your father's house is stamped deep into the hardened surface. You break it. The snap echoes in the quiet study. Inside, you find a folded document written in the solicitor's tight, slanting hand. You scan the sharp cursive, but you already know what it says. You have inherited your father's estate, a title, and all the trouble that comes with them.
 
-*page_break
+Mr. Pendleton sits across the desk, watching you over his wire-rimmed spectacles. The old man clears his throat and straightens.
 
-*label creation_complete
-The solicitor nods, signs the final page, and hands you the deed.
+"Congratulations, ${Title}, the barony of Pinehaven is yours," Pendleton says, his voice dry as winter leaves. "But I must be frank: the estate is bleeding."
 
-"Congratulations, ${title} ${family}. The estate is yours."
+"Oh?" you ask, as if you aren't already aware.
 
-${pronouns_subject} fold the letter carefully, tuck it into ${pronouns_possessive} coat, and step outside into the pale English morning. Somewhere to the north, a village waits for its new lord. Somewhere beyond that, the future — whatever ${name} chooses to make of it.
+He adjusts his starched collar and nods. "You inherit a cold, crumbling stone hall on the eastern ridge and a valley of thin, exhausted soil. The winter wheat is struggling. Elias and the other shepherds on the western ridge are already grumbling about their rents. Unfortunately, your father left you a hollow name and a staggering amount of debt."
+
+The solicitor dips his quill into the silver inkwell and lets the excess drip away. "The creditors will demand their due by month's end," he adds. "You could push the village to clear-cut more of the Blackwood to sell the timber, but you know how they feel about going in there."
+
+He brings the nib to the parchment, signs the final page, and hands you the deed.
+
+You fold the parchment carefully and tap it against your leg, idly wondering how long you have until the debt collectors reach the hall's gates.
+
+Not today, at least.
+
+You shake the solicitor's hand and step outside into the pale morning. Somewhere to the north, a village waits for its new lord.
 
 *page_break
 

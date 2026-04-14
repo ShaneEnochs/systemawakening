@@ -290,6 +290,13 @@ export function renderChoices(choices: ChoiceOption[]): void {
   // Single-fire guard prevents double-click / rapid-tap race.
   let choiceMade = false;
 
+  // The last option's `end` equals the line past the entire *choice block,
+  // because findBlockEnd for the final option lands on the same line as the
+  // overall parseChoice end.  Capture it once here so every click handler
+  // can skip past all options — even if awaitingChoice or choice.blockEnd
+  // are somehow unavailable at click time.
+  const _allChoicesEnd = choices.length > 0 ? choices[choices.length - 1].end : 0;
+
   choices.forEach((choice, index) => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
@@ -331,7 +338,7 @@ export function renderChoices(choices: ChoiceOption[]): void {
         _onBeforeChoice();
         clearNarrative();
 
-        const choiceBlockEnd = choice.blockEnd ?? awaitingChoice?.end ?? choice.end;
+        const choiceBlockEnd = _allChoicesEnd || choice.blockEnd || awaitingChoice?.end || choice.end;
         const savedIp = awaitingChoice?._savedIp ?? choiceBlockEnd;
         setAwaitingChoice(null);
 

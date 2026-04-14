@@ -2123,6 +2123,7 @@ function renderChoices(choices) {
   _choiceArea.setAttribute("role", "group");
   _choiceArea.setAttribute("aria-label", "Story choices");
   let choiceMade = false;
+  const _allChoicesEnd = choices.length > 0 ? choices[choices.length - 1].end : 0;
   choices.forEach((choice, index) => {
     const btn = document.createElement("button");
     btn.className = "choice-btn";
@@ -2152,7 +2153,7 @@ function renderChoices(choices) {
         _choiceArea.innerHTML = "";
         _onBeforeChoice();
         clearNarrative();
-        const choiceBlockEnd = choice.blockEnd ?? awaitingChoice?.end ?? choice.end;
+        const choiceBlockEnd = _allChoicesEnd || choice.blockEnd || awaitingChoice?.end || choice.end;
         const savedIp = awaitingChoice?._savedIp ?? choiceBlockEnd;
         setAwaitingChoice(null);
         _executeBlock(choice.start, choice.end, savedIp).then(() => _runInterpreter()).catch((err) => {

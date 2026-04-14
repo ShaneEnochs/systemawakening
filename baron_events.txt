@@ -24,10 +24,12 @@ They are striking, direct, and entirely unimpressed by your title. The attractio
     You offer a quick, sharp retort that makes them laugh. The tension drops, replaced by a crackling, easy chemistry. You spend the next hour standing by the cider barrels, talking about nothing of consequence.
     *set prestige +2
     *set_stat people +2 min:0 max:100
+    *goto romance_a1_beat2
 
   #Respond with polite, cautious distance.
     You brush the dirt from your sleeve and offer a mild, noncommittal reply. They raise an eyebrow, amused by your stiffness, but respect the boundary. The spark is there, but safely contained.
     *set prestige +1
+    *goto romance_a1_beat2
 
   #Ignore the insolence and walk away.
     You offer a cold stare and return to the manor. The interaction ends before it begins.
@@ -35,6 +37,7 @@ They are striking, direct, and entirely unimpressed by your title. The attractio
     *set done_baron_romance_a1 true
     *goto_scene baron event_return
 
+*label romance_a1_beat2
 *page_break
 // Beat 2: The Quiet Path
 
@@ -48,11 +51,14 @@ You find yourself walking the same path. When they hear your footsteps, they sto
   #Close the distance. Tell them I prefer the company to the crowd.
     You step closer. Rowan's smile fades into something serious, and they do not step back. They tell you about the river, about growing up in the shadow of the manor, and for a moment, you are not the ${title} of ${family}. You are just a person in the dark.
     *set prestige +2
+    *goto romance_a1_beat3
 
   #Redirect the conversation. Keep it strictly platonic.
     You maintain a respectful distance, asking about the mill's grain stores. The heavy tension dissipates. They answer politely, but the moment passes, slipping smoothly back into the safe dynamic of lord and tenant.
     *set prestige +1
+    *goto romance_a1_beat3
 
+*label romance_a1_beat3
 *page_break
 // Beat 3: The Crossroads
 
@@ -67,13 +73,16 @@ If you pursue this, it will complicate your life. The nobility will sneer, and t
     *set romance_a_active true
     *set prestige +2
     *set_stat nobility -2 min:0 max:100
+    *goto romance_a1_end
 
   #Let it pass. I cannot afford the scandal.
     You bid them a good night and turn toward the manor. It is a lonely walk back, but your reputation remains spotless.
     *set romance_a_stage 0
     *set romance_a_active false
     *set prestige +1
+    *goto romance_a1_end
 
+*label romance_a1_end
 *set done_baron_romance_a1 true
 *goto_scene baron event_return
 
@@ -95,13 +104,16 @@ Rowan stands in your study, having used the servants' entrance to avoid the grou
     *set prestige +4
     *set_stat nobility -4 min:0 max:100
     *set_stat people +2 min:0 max:100
+    *goto romance_a2_beat2
 
   #Keep it discreet. Ask them to be patient while I secure my position.
     You explain the harsh realities of county politics. Rowan listens, their expression tightening. They accept the necessity of shadows, but the joy drains out of the room.
     *set prestige +2
     *set_stat nobility +2 min:0 max:100
     *set_stat people -2 min:0 max:100
+    *goto romance_a2_beat2
 
+*label romance_a2_beat2
 *page_break
 // Beat 2: The Interrogation
 
@@ -116,12 +128,15 @@ He leaves the door open, a silent demand for Rowan to use it.
     You order the steward to close the door and make Harrington wait in the drawing room. The steward turns pale but obeys. You have drawn a definitive line, asserting your authority over the estate's stuffy conventions.
     *set prestige +3
     *set_stat church -3 min:0 max:100
+    *goto romance_a2_beat3
 
   #Ask Rowan to leave through the back. I must handle Harrington.
     You give Rowan an apologetic look. They do not argue. They slip out the servants' door without a word, leaving you feeling entirely hollow.
     *set prestige +1
     *set_stat church +2 min:0 max:100
+    *goto romance_a2_beat3
 
+*label romance_a2_beat3
 *page_break
 // Beat 3: The Fracture or the Bind
 
@@ -132,12 +147,15 @@ Later that evening, you find Rowan by the river path. The events of the day hang
     You promise that there will be no more back doors. The relationship solidifies, forged under pressure. You have secured a fiercely loyal partner, though the political cost will be a slow, steady bleed.
     *set romance_a_stage 2
     *set prestige +3
+    *goto romance_a2_end
 
   #Break it off. The cost is too high for both of us.
     You end it. It is brutally pragmatic. Rowan nods, their face perfectly blank, and walks back toward the mill. Your heart is heavy, but your ledgers and your standing are safe.
     *set romance_a_active false
     *set prestige +2
+    *goto romance_a2_end
 
+*label romance_a2_end
 *set done_baron_romance_a2 true
 *goto_scene baron event_return
 
@@ -160,24 +178,29 @@ The steward scoffs, murmuring about poachers and superstition. But the tenant's 
     *set monster_1_approach "investigate"
     *set prestige +3
     *set_stat people +2 min:0 max:100
+    *goto monster_1_beat2
 
   #Send the steward with armed men.
     You order a patrol. You remain secure in the manor, delegating the physical risk.
     *set monster_1_approach "guard"
     *set prestige +2
+    *goto monster_1_beat2
 
   #Ask the vicar to bless the area to calm the tenants.
     You defer to the Church, treating it as a matter of spiritual unrest rather than physical danger.
     *set monster_1_approach "church"
     *set prestige +2
     *set_stat church +3 min:0 max:100
+    *goto monster_1_beat2
 
   #Dismiss it entirely as superstition.
     You tell the tenant to stop wasting your time with ghost stories and to guard his flock better.
     *set monster_1_approach "dismiss"
     *set prestige +1
     *set_stat people -3 min:0 max:100
+    *goto monster_1_beat2
 
+*label monster_1_beat2
 *page_break
 // Beat 2: The Findings
 
@@ -212,6 +235,7 @@ Whatever is happening, it is not natural. You must decide how to manage the pani
     *set supernatural_awareness 1
     *set prestige +2
     *set_stat treasury -3 min:0 max:100
+    *goto monster_1_end
 
   #Call for official Church intervention. Request an inquisitor.
     You write to the diocese. The local vicar gains immense authority, conducting cleansings that disrupt the harvest but make the people feel safe.
@@ -219,13 +243,16 @@ Whatever is happening, it is not natural. You must decide how to manage the pani
     *set prestige +3
     *set_stat church +5 min:0 max:100
     *set_stat people +2 min:0 max:100
+    *goto monster_1_end
 
   #Investigate further in secret. I need to know what is on my land.
     You begin reading older, stranger books in the estate library, searching for local folklore. You learn nothing useful yet, but you realize the history of this valley is much darker than you were told.
     *set supernatural_investigated +1
     *set supernatural_awareness 1
     *set prestige +4
+    *goto monster_1_end
 
+*label monster_1_end
 *set done_baron_monster_1 true
 *goto_scene baron event_return
 
@@ -244,16 +271,20 @@ It is not a burglar. The servants are terrified, reporting that a tall silhouett
     You post men with lanterns and clubs. They spend a freezing, miserable night outside. They catch nothing, but their presence proves to the household that you take their fears seriously.
     *set prestige +3
     *set_stat people +2 min:0 max:100
+    *goto monster_2_beat2
 
   #Investigate quietly. Keep watch from the window myself.
     You send the servants to bed and sit in the dark, watching the southern lawns.
     *set prestige +2
+    *goto monster_2_beat2
 
   #Order everyone to ignore it. Shut the curtains.
     You demand the household stop acting like frightened children. The servants obey, but morale plummets. They fear the dark, and now they fear you.
     *set prestige +1
     *set_stat people -4 min:0 max:100
+    *goto monster_2_beat2
 
+*label monster_2_beat2
 *page_break
 // Beat 2: The Evidence
 
@@ -268,11 +299,14 @@ As you stare at it, a profound chill settles at the base of your neck. You turn 
     You kneel in the mud. The soil is dead here. You touch the earth; it is warm, almost feverish. You have encountered something far beyond the natural laws of the county.
     *set mysterious_figure_seen true
     *set prestige +3
+    *goto monster_2_beat3
 
   #Back away and order the groundskeeper to salt the earth.
     You refuse to look closer. You have the area sanitized, wiping away the evidence of the impossible.
     *set prestige +1
+    *goto monster_2_beat3
 
+*label monster_2_beat3
 *page_break
 // Beat 3: The Notice
 
@@ -305,18 +339,22 @@ The frost came early and stayed late. The ground is hard as iron, and the harves
     *set prestige +3
     *set_stat people +5 min:0 max:100
     *set_stat treasury -4 min:0 max:100
+    *goto world_1_beat2
 
   #Prioritize the estate household. The village must manage.
     You lock the granaries. The manor remains warm and well-fed. Down in the valley, the fires burn low and the resentment burns hot.
     *set prestige +2
     *set_stat people -4 min:0 max:100
+    *goto world_1_beat2
 
   #Ask the Church to organize and distribute relief.
     You hand a portion of your stores to the vicar. The Church handles the logistics perfectly, though they take the spiritual credit for your grain.
     *set prestige +2
     *set_stat church +3 min:0 max:100
     *set_stat treasury -2 min:0 max:100
+    *goto world_1_beat2
 
+*label world_1_beat2
 *page_break
 // Beat 2: The Widower
 
@@ -328,16 +366,20 @@ The cold reveals individual tragedies. A tenant farmer named Miller—a widower 
     *set prestige +3
     *set_stat people +2 min:0 max:100
     *set_stat nobility -2 min:0 max:100
+    *goto world_1_beat3
 
   #Use him as a public example. Remind the village to ration better.
     You publicly lecture the village on preparedness, using Miller's plight as the focal point. It is a harsh, cold approach. They learn the lesson, but they hate the teacher.
     *set prestige +1
     *set_stat people -3 min:0 max:100
+    *goto world_1_beat3
 
   #Quietly send them a sack of flour and coal without fanfare.
     You instruct a trusted servant to make a delivery in the dead of night. Miller survives. He knows who sent it, and your quiet charity speaks volumes.
     *set prestige +2
+    *goto world_1_beat3
 
+*label world_1_beat3
 *page_break
 // Beat 3: The Thaw
 
@@ -363,17 +405,21 @@ By the time you reach the square, two cottages are entirely engulfed. Three fami
     You strip off your coat and join the bucket line, shouting orders over the roar of the flames. Your sleeves catch singe marks. The people rally around you, fighting the fire with desperate energy until it is contained.
     *set prestige +4
     *set_stat people +4 min:0 max:100
+    *goto world_2_beat2
 
   #Organize the effort from a safe distance.
     You sit your horse and direct the village guard to establish firebreaks. It is a clinical, effective approach. The fire is stopped, though you remain entirely clean.
     *set prestige +2
     *set_stat people +1 min:0 max:100
+    *goto world_2_beat2
 
   #Leave it to the village to sort out. It is their property.
     You watch for a moment to ensure the flames will not reach the manor, then turn back. The village eventually puts it out, but they lose a third cottage in the process.
     *set prestige +1
     *set_stat people -4 min:0 max:100
+    *goto world_2_beat2
 
+*label world_2_beat2
 *page_break
 // Beat 2: The Investigation
 
@@ -386,11 +432,14 @@ The ashes are still smoking when the accusations begin. A local baker claims he 
     You order a thorough search. The evidence points to an accident, not arson. The baker lied to cover his own negligence. You fine him heavily.
     *set prestige +2
     *set_stat treasury +2 min:0 max:100
+    *goto world_2_beat3
 
   #Ignore the rumors. Focus on clearing the debris.
     You refuse to entertain conspiracy theories. The village clears the ash, though the rumors of Oakhaven's sabotage persist for months.
     *set prestige +1
+    *goto world_2_beat3
 
+*label world_2_beat3
 *page_break
 // Beat 3: Rebuilding
 
@@ -402,18 +451,22 @@ The families are displaced. The burnt frames of the cottages are an ugly scar on
     *set prestige +3
     *set_stat treasury -5 min:0 max:100
     *set_stat people +4 min:0 max:100
+    *goto world_2_end
 
   #Provide minimal timber. Let them rebuild themselves.
     You allow them to cut a few trees from the lower woods. The resulting shacks are drafty and poor, but your gold remains untouched.
     *set prestige +1
     *set_stat people -2 min:0 max:100
+    *goto world_2_end
 
   #Use the cleared land to restructure the village layout.
     You refuse to let them rebuild there. Instead, you widen the main road for merchant carts, forcing the families to move to the edge of town. It is brilliant for trade, and utterly heartless.
     *set prestige +4
     *set_stat treasury +3 min:0 max:100
     *set_stat people -4 min:0 max:100
+    *goto world_2_end
 
+*label world_2_end
 *set done_baron_world_2 true
 *goto_scene baron event_return
 
@@ -433,17 +486,21 @@ He speaks of sin, judgment, and the moral failings of those who hold earthly pow
   #Attend a sermon. See what I am dealing with.
     You ride down and sit on your horse at the edge of the crowd. The preacher locks eyes with you but does not falter. He is a fanatic, and a very good speaker. You show no fear, but you give him an audience.
     *set prestige +2
+    *goto world_religious_beat2
 
   #Summon the preacher to the manor. Assert authority immediately.
     You have the guards bring him to your study. He tracks mud on your carpets and quotes scripture at your threats. He leaves unbroken, his martyrdom complex fully intact.
     *set prestige +2
     *set_stat church -2 min:0 max:100
+    *goto world_religious_beat2
 
   #Ignore him entirely. He will move on eventually.
     You refuse to engage. But he does not move on. His crowds grow larger, and his rhetoric against the local nobility grows much sharper.
     *set prestige +1
     *set_stat church -4 min:0 max:100
+    *goto world_religious_beat2
 
+*label world_religious_beat2
 *page_break
 // Beat 2: The Confrontation
 
@@ -457,12 +514,15 @@ It goes poorly. The preacher mocks the vicar's fine clothes and accuses him of b
     *set prestige +3
     *set_stat church +6 min:0 max:100
     *set_stat people -4 min:0 max:100
+    *goto world_religious_beat3
 
   #Let the vicar handle his own theological battles.
     You stay out of it. The vicar is humiliated and forced to retreat. The preacher claims a massive spiritual victory, severely weakening the organized Church in your valley.
     *set prestige +1
     *set_stat church -5 min:0 max:100
+    *goto world_religious_beat3
 
+*label world_religious_beat3
 *page_break
 // Beat 3: Resolution
 
@@ -489,15 +549,19 @@ A carriage bearing the royal crest arrives at your gates. A county tax collector
   #Welcome him warmly. Attempt to charm him over a fine dinner.
     You open your best wine and seat him by the fire. You speak of the burdens of the region and the difficulties of the harvest. He drinks your wine, smiles, and remains entirely unswayed.
     *set prestige +2
+    *goto wealth_beat2
 
   #Provide the accounts with complete transparency.
     You hand over the ledgers without a word. He spends hours reviewing them, his finger tracing every profit. He finds nothing illegal, but he finds everything taxable.
     *set prestige +3
+    *goto wealth_beat2
 
   #Stall him. Give the steward time to hide the secondary ledgers.
     You keep him waiting in the drawing room while your staff frantically moves gold out of the main vault and buries the most profitable trade contracts. It is an incredibly dangerous game.
     *set prestige +4
+    *goto wealth_beat2
 
+*label wealth_beat2
 *page_break
 // Beat 2: The Assessment
 

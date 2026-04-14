@@ -1,4 +1,4 @@
-*title ${title} of ${family}
+ *title ${Name} ${Family}, ${Title} of Pinehaven
 
 // ═══════════════════════════════════════════════════════════════
 //  BARON TIER — Entry Point
@@ -6,9 +6,15 @@
 
 *label tier_start
 
-The carriage ride has been long, the roads turning from well-paved cobblestone to rutted dirt as you approach your new domain. You are the newly minted ${title} of ${family}, and the estate stretching out before you is your introduction to power.
+The carriage ride has been long, the roads turning from well-paved cobblestone to rutted dirt as you approach your new domain. You are the newly minted ${title} of Pinehaven. The estate stretching out before you is your introduction to power.
 
-The estate is modest: a single village, sweeping farmlands, and a manor house that has seen better days but possesses "good bones," as your predecessor's solicitor so diplomatically put it. The tenants are cautious, the local clergy watchful, and the treasury thin. But the air is yours to breathe, and the land is yours to rule. Every decision from this day forward is local, personal, and entirely upon your shoulders.
+Just as you remember from your childhood, the estate is modest. The river Pine cuts through the valley floor, a cold ribbon winding south. Down there sits your single village. Roughly three hundred souls cluster around the grinding mill and a stone church with a crumbling slate roof. Beyond them lie sweeping farmlands planted with the struggling winter wheat Pendleton warned you about.
+
+The horses strain as the carriage begins the steep climb up the eastern ridge. Pinehaven Hall waits on the high limestone shelf. It has seen better days. The dark, local stone refuses to hold the heat. Your father always claimed the keep had "good bones." That was his diplomatic way of saying the roof leaked, but the walls probably wouldn't collapse in a storm.
+
+Probably.
+
+This is what you know: the treasury is painfully thin, and the tenants down in the valley are cautious folks. You are riding into a village that doesn't know you, to rule a people who don't yet trust you. But the cold air is yours to breathe, and the land is yours to rule. Every decision from this day forward is local, personal, and entirely upon your shoulders.
 
 *page_break
 *goto baron_thriving_1
@@ -181,60 +187,142 @@ The estate is modest: a single village, sweeping farmlands, and a manor house th
 *label baron_thriving_1
 // Beat 1: The Steward's Assessment
 
-You arrive at the estate to find it in better condition than expected. The polished floors of your new study gleam in the afternoon light. Standing before your heavy oak desk is your steward—a severe, sharp-eyed man whose impeccable posture suggests he is used to running things in the absence of a proper ${title}.
+The carriage leaves you at the heavy doors of Pinehaven Hall. Inside, the dark, local stone is bitter cold, refusing to hold whatever meager heat the hearth provides. The formal study is immaculately swept in a desperate attempt to maintain appearances. Yet, the threadbare rugs and the draft rattling the glass panes betray the truth of your father's... well, now your ruined estate.
 
-He presents the estate ledgers with a slight bow. "Welcome, ${title} ${name}. The harvest is adequate, and the accounts are balanced. I remain at your complete disposal to manage the daily minutiae, should you wish to focus on broader matters."
+Standing beside the scarred oak desk is your steward, Mr. Thorne. You remember him from your childhood as a looming, humorless phantom who chased you from the kitchens and scolded you for tracking mud onto the rugs. He was a villain of your childhood, but looking at him now, the malice you once imagined is gone.
 
-He is testing you.
+He is a severe, sharp-eyed man with a rigid spine. Your late father was a man of... shall we say, [i]leisure[/i], far more interested in the bottom of a sherry glass and weeks-long hunting excursions on the moors than the actual business of governance. With the baron constantly absent or inebriated, you now know it fell entirely to Mr. Thorne to keep the ${Family} household from collapsing.
+
+He wears a tailored black wool coat that might have been fashionable three decades ago, meticulously brushed to hide the fraying threads at the cuffs. As he grips several heavy leather-bound books, the ledgers, you assume, you catch a glimpse of the dark ink stains set deep into his knuckles. Through the eyes of an adult inheriting a ruined estate, you think you finally understand him. All those years ago, he wasn't being cruel; he was simply exhausted, and those stained hands were the ones that have been physically holding this bleeding barony together the entire time.
+
+*page_break
+
+Mr. Thorne presents the estate ledgers with a slight, rigid bow. "Welcome home, ${Title}," he says, setting the heavy volumes on the desk.
+
+"Mr. Thorne, please, call me ${Name}," you say. "You've known me since I was born."
+
+Thorne somehow stiffens even further, his sharp eyes narrowing. "That would be entirely inappropriate, my {lord}. You must adopt the mindset of your station. You are no longer a child running underfoot. You are above the help, chosen by God to rule this land."
+
+You chuckle at that. "I was chosen because my grandfather's grandfather married the daughter of a viscount, Mr. Thorne. Let us not pretend God had a hand in it as much as political machinations."
+
+The elderly man merely shakes his head, sighs, and taps the leather-bound books. "I have tallied the accounts."
+
+You stare at the thick covers. "And I assume you are not bringing me good news."
+
+"The winter crops are struggling," he replies, almost sounding embarrassed. "The soil in the valley is exhausted, so the yield will likely be quite poor."
+
+You let out a slow breath, the cold air of the study biting at your lungs. "Alright. And my father's debts?"
+
+Thorne clasp his hands rigidly behind his back. "Yes. Well, my {lord}, the creditors' preliminary inquiries have already begun to arrive, and they are aware how heavily encumbered the estate truly is."
+
+He lets the meaning of his words sink in for you. If the creditors know that the truth, that the coffers are nearly empty and crops are failing, they won't wait for the meager winter harvest to fail. They'll descend on this place like starving dogs, demanding immediate repayment, threatening to seize your lands, auxtion the grinding mill, and drag what's left of the ${Family} name through the mud of the public courts.
+
+"However," he adds, his voice dropping to a smooth, accommodating murmur. "I remain at your complete disposal to manage these daily minutiae, should you wish to focus on broader matters."
 
 *choice
   #Delegation is the mark of a true leader. I will let him manage the details while I observe.
-    You nod graciously. "I trust your expertise. See to the daily operations, and apprise me only of what requires my seal."
-    The steward relaxes, a flicker of genuine respect warming his eyes. You have secured his loyalty, though perhaps at the cost of immediate oversight.
+    You nod graciously, offering the man a faint smile. "I trust your expertise, Mr. Thorne. See to the daily operations. Hold the creditors at bay for now, and apprise me only of what requires my seal."
+   
+    The steward relaxes, and you see genuine respect warming his eyes.
+   
+    He bows again, deeper this time. "As you command, my {lord}."
+
+    Thorne gathers the heavy ledgers from the desk, pulling them back against his chest almost protectively. You seem to have secured his loyalty. Yet, as he turns to leave the freezing study, you reflect that you have surrendered immediate oversight of your rule. The books will be opaque to you, unless you go back on your word of trust. You must simply trust that Thorne's experienced hands can keep the wolves from your gates.
     *set steward_status "loyal"
     *set prestige +1
     *set_stat nobility +2 min:0 max:100
     *goto thriving1_beat2
 
-  #I will review every line of these ledgers myself. Trust must be earned.
-    You take the heavy books from his hands, opening them immediately. "I prefer to know exactly where every penny lies."
-    The steward stiffens. He bows again, rigidly this time. He will obey you, but he will watch you just as closely.
+  #I would like to review these ledgers myself. I need to understand the full measure of our ruin.
+    You step forward and rest your hands on the heavy, leather-bound ledgers sitting on the desk. The leather is cold and cracking at the spine. You pull them toward you.
+
+    "I appreciate your service, Mr. Thorne," you say, touching the embossed family crest on the cover. "But I am walking into this estate nearly blind and completely ignorant, so I must review these myself. I need to understand the full measure of my father's debts before I can begin to mend them."
+
+    Thorne stiffens almost imperceptively; you wouldn't have noticed had you not been watching for it. For years, he has been the sole keeper of these grim secrets, and surrendering them now causes a visible, physical strain. He bows again, rigidly, his jaw tight. He steps back from the desk, yielding the authority of the house to you.
+
+    He will obey your command, but the faint respect you might have won vanishes behind a mask of professionalism.
     *set steward_status "wary"
     *set prestige +3
     *set_stat treasury +3 min:0 max:100
     *goto thriving1_beat2
 
 *label thriving1_beat2
+
 *page_break
 // Beat 2: The Neighbor's Invitation
 
-Before you have even unpacked your riding boots, a letter of welcome arrives on thick, cream-colored paper. It is from Lord Harrington, a neighboring landowner whose family has held the adjacent valley for three generations.
+A letter of welcome arrives on thick, cream-colored paper via messenger. It is from Lord Harrington, a neighboring landowner whose family has held the adjacent, far more fertile valley for nine generations.
 
-He invites you to an intimate dinner at his estate. It is your first foray into local society, and the village is already gossiping about what you will wear and how you will travel.
+He invites you to an intimate dinner at his estate. It is your first foray into local society, and down in the valley, the villagers are already gossiping about how the new ${title} will present themselves, knowing full well your carriage is battered and the wardrobe you inherited from your father is hopelessly out of season.
 
-You step into Harrington's grand dining room that evening, the crystal chandeliers blazing. Harrington approaches, his smile wide but calculating. "Ah, the new ${title} of ${family}. We are so curious to see what you will make of the old place."
+You step into Harrington's grand dining room that evening, and the contrast to your own manor couldn't be more stark. The vaulted hall is almost aggressively opulent, and the air is thick with the heat from three roaring hearths. Up in a recessed gallery, a quartet of musicians plays a lively, sweeping waltz, though the bright music is nearly drowned out by the chatter of the local gentry. Dozens of nobles mill about in small, glittering clusters: men in vibrant silk waistcoats and women draped in imported lace. You catch several casting subtle, appraising glances your way while pretending not to look.
+
+Crystal chandeliers shimmer above a massive, polished oak banquet table laden with roasted meats and vegetables. You take a seat near the far end of the table, away from your host's ornate chair at the head, as you are not entirely sure what to expect here.
+
+The music begins to wind down with a final flourish of strings, and the rest of the local gentry move to take their seats.
+
+Then, Lord Harrington enters.
+
+He sweeps into the room flanked by his three wives, each draped in heavy, matching velvet, finer than you've ever seen, and wearing gold and gems around their necks worth than your entire treasury at the moment. He guides them to their seats, kissing each on the forehead in turn, then approaches your end of the table with a silver goblet in hand. His smile is wide and surprisingly disarming, but his eyes are completely flat, dark, and devoid of warmth. As he looks down the table at you, you are chilled by the sudden recollection of how you've heard sailors down at the docks describe the eyes of sharks.
+
+"Ah, {Lord} ${name} of Pinehaven," his rich voice booms, drawing the attention of the entire room just as the servants begin to pour the wine. "I'm so glad you could make it. I must admit, we are all so terribly curious to see what you will make of the old place. It has been rather... quiet, lately."
+
+He takes a slow sip from his goblet, his dark eyes locked with yours over the rim. He's fishing. You know there's no true mystery here; Harrington has to be well aware of Pinehaven's situation given his estate's proximity.
+
+But why? What's the point of baiting you? Is it just to see how you react under his public scrutiny before the rest of the local society?
+
+What's the right play here?
 
 *choice
-  #Present myself with humble charm. It is best to seem harmless until I am established.
-    You offer a self-deprecating remark about the dampness of your manor and ask for his advice on local soil. Harrington preens, delighted to play the senior statesman. The local gentry find you charmingly modest.
+  #Present yourself with humble charm. It is best to seem harmless until you're better established.
+    "It is certainly quiet," you reply, offering a self-deprecating smile. "And remarkably cold. I fear Pinehaven’s dark stone was quarried specifically to hoard the winter chill. Your hearths are a welcome reprieve."
+
+    Harrington chuckles, a deep, satisfied sound that is picked up by the listening guests as well.
+
+    "In truth, Lord Harrington, I was hoping to seek your counsel," you continue, keeping your tone carefully deferential. "The winter wheat at my estate is struggling terribly. I understand your family has had unmatched success with the valley soil. How do you manage the exhaustion?"
+
+    Harrington preens, expanding in his tailored waistcoat like a proud bird. He is delighted to play the wealthy senior statesman to a ruined neighbor. "Ah! Well, it takes a firm hand, my young friend. A firm hand and proper rotation," he says, approaching and clapping you on your shoulder.
+
+    By playing the harmless, overwhelmed heir, you easily soothe the room's egos. The local gentry find you charmingly modest, and perhaps more than a little naive and over your head. But that is by your design, as word will soon reach your tenants that you are willing to swallow your noble pride for the sake of their crops. However, as Harrington pats your shoulder with the patronizing familiarity of a wise uncle, you realize the cost of this safety. He will likely never view you as a true equal.
     *set prestige +2
-    *set_stat nobility +4 min:0 max:100
+    *set_stat nobility +1 min:0 max:100
     *set_stat people +2 min:0 max:100
     *goto thriving1_beat3
 
-  #Present myself with bold confidence. I am a peer of the realm, not a supplicant.
-    You hold his gaze, speaking of your ambitious plans for the estate with absolute certainty. Harrington's smile falters slightly, replaced by a look of careful assessment. You have demanded their respect, though the common folk whisper that you are haughty.
+  #Present yourself with bold confidence. You will not let them smell fear.
+    "It's been quiet, Lord Harrington, because I am taking the true measure of my lands before I reshape them," you reply, holding his gaze without hesitation. "My father was content to let Pinehaven crumble, but rest assured, I am not."
+
+    Harrington pauses, his goblet halting halfway to his mouth.
+
+    "I'm currently reviewing schematics to expand the eastern ridge," you lie smoothly, projecting an air of absolute, unquestionable certainty. "And I intend to completely modernize our grinding mill before the next harvest. Pinehaven is about to become very loud indeed."
+
+    Harrington’s wide, predatory smile falters, but only for a moment before beaming even brighter. He raises his goblet in a toast. "Ambitious," he says, giving you a wink, but right now you bet he's wondering if your father left you some hidden fortune.
+
+    By refusing to show weakness, you demand the room's respect by sheer force of will. You're well aware that gentry are always impressed and entertained by audacity, and this lot is no exception. However, as Harrington's servants fill the plates, you notice their tightened jaws. Tomorrow, your tenants will hear of your boastful, fictional wealth while they struggle to grow food to last the winter in the soil of your lands. To them, you'll be just another arrogant, disconnected noble.
+   
+    Exactly like your father.
     *set prestige +4
     *set_stat nobility +5 min:0 max:100
     *set_stat people -2 min:0 max:100
     *goto thriving1_beat3
 
-  #Remain guarded and polite. Give them nothing to use against me.
-    You offer perfectly polite, entirely empty answers to his probing questions. You leave the dinner an enigma. They cannot find fault with your manners, but they find you incredibly cold.
+  #Remain guarded and polite. Give them nothing to use against you.
+    "It is the nature of mourning to be quiet, Lord Harrington," you reply evenly, lifting your goblet but not yet drinking. "My father's passing has naturally required a period of solemn reflection at Pinehaven."
+
+    Harrington’s smile tightens slightly. He clearly didn't expect you to effectively use grief as a shield.
+   
+    "Of course, of course," he says in a low voice, nodding. "But reflection does not plow the fields or settle the ledgers. If you should find the transition... taxing—"
+
+    "You are too kind to concern yourself with my estate," you interrupt smoothly, your voice a wall of impenetrable politeness. "But my steward is exceptionally thorough. We are managing exactly as we must. Now, I must compliment you on this excellent vintage."
+
+    You make a show of looking around the room, entirely closing the subject.
+
+    Harrington's jaw works silently for a moment, visibly frustrated by your refusal to take the bait. He offers a small nod and moves down the table. By giving them absolutely nothing, you leave the dinner an enigma. Though the local gentry can't find a single flaw in your etiquette, this society trades on gossip and vulnerability and you just refused to bleed for their entertainment. They may find you cold and untrusting after this, but you can't be sure. Down in your valley, however, the tenants respect a ruler who keeps their own counsel and refuses to perform for the opulent neighbors.
     *set prestige +3
     *set_stat nobility -3 min:0 max:100
     *set_stat people +2 min:0 max:100
     *goto thriving1_beat3
+
 
 *label thriving1_beat3
 *page_break

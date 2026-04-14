@@ -22,6 +22,66 @@
   .save-code-textarea { width: 100%; box-sizing: border-box; background: var(--bg-system); color: var(--text-primary); border: 1px solid var(--border-dim); border-radius: 6px; padding: 8px; font-family: var(--font-mono, 'Inconsolata', monospace); font-size: 0.75rem; resize: vertical; min-height: 52px; line-height: 1.4; }
   .save-code-textarea::placeholder { color: var(--text-faint); }
   .save-code-textarea:focus { outline: 1px solid var(--cyan); border-color: var(--cyan); }
+
+  /* ── Character creation: mobile-first overlay positioning ── */
+  #char-creation-overlay {
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: env(safe-area-inset-top, 12px);
+    overflow-y: auto;
+  }
+  @media (min-height: 640px) {
+    #char-creation-overlay {
+      justify-content: center;
+      padding-top: 0;
+    }
+  }
+  .char-box {
+    max-height: 95dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .char-eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--text-sm);
+    letter-spacing: 0.14em;
+    color: var(--amber);
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .char-subhead {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-faint);
+    text-align: center;
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+  .char-name-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  .char-field-group--half {
+    flex: 1;
+    min-width: 0;
+  }
+  @media (max-width: 340px) {
+    .char-name-row { flex-direction: column; gap: 0; }
+  }
+  .char-field-group--half .char-input::placeholder {
+    font-size: var(--text-sm);
+    opacity: 0.5;
+  }
+  .char-field-group--half .char-counter { font-size: 9px; }
+  .char-begin-btn {
+    width: 100%;
+    margin-top: 8px;
+    letter-spacing: 0.18em;
+    font-size: var(--text-sm);
+  }
 </style>
 <script type="module" src="dist/engine.js"></script>
 </head>
@@ -295,48 +355,82 @@
 <!-- ═══════════════════════════════════════════════════
      CHARACTER CREATION
      ═══════════════════════════════════════════════════ -->
-<div id="char-creation-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="New Survivor">
+<div id="char-creation-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Character Creation">
   <div class="overlay-box char-box">
-    <!-- Character portrait — light: portraitlight.png / dark: portraitdark.png -->
+
+    <!-- Portrait -->
     <div class="char-portrait-frame" aria-hidden="true">
       <img src="media/portraitdark.png" alt="" class="char-portrait-img" id="char-portrait-img"
            onerror="this.style.display='none'"/>
     </div>
 
-    <div class="char-field-group">
-      <label class="char-label" for="input-first-name">First Name</label>
-      <div class="char-input-wrap">
-        <input type="text" id="input-first-name" class="char-input" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Enter first name"/>
-        <span class="char-counter" id="counter-first">14</span>
-      </div>
-      <span class="char-error hidden" id="error-first-name"></span>
+    <!-- Eyebrow heading -->
+    <div class="char-header">
+      <span class="char-eyebrow">The Solicitor's Record</span>
+      <p class="char-subhead">Fill in the details below, then begin your reign.</p>
     </div>
 
-    <div class="char-field-group">
-      <label class="char-label" for="input-last-name">Last Name</label>
-      <div class="char-input-wrap">
-        <input type="text" id="input-last-name" class="char-input" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Enter last name"/>
-        <span class="char-counter" id="counter-last">14</span>
+    <!-- Name fields: side by side on one row -->
+    <div class="char-name-row">
+      <div class="char-field-group char-field-group--half">
+        <label class="char-label" for="input-first-name">Given Name</label>
+        <div class="char-input-wrap">
+          <input type="text" id="input-first-name" class="char-input" maxlength="14"
+                 autocomplete="off" spellcheck="false" placeholder="Given name"
+                 inputmode="text" enterkeyhint="next"/>
+          <span class="char-counter" id="counter-first">14</span>
+        </div>
+        <span class="char-error hidden" id="error-first-name"></span>
       </div>
-      <span class="char-error hidden" id="error-last-name"></span>
+
+      <div class="char-field-group char-field-group--half">
+        <label class="char-label" for="input-last-name">Family Name</label>
+        <div class="char-input-wrap">
+          <input type="text" id="input-last-name" class="char-input" maxlength="14"
+                 autocomplete="off" spellcheck="false" placeholder="Family name"
+                 inputmode="text" enterkeyhint="done"/>
+          <span class="char-counter" id="counter-last">14</span>
+        </div>
+        <span class="char-error hidden" id="error-last-name"></span>
+      </div>
     </div>
 
+    <!-- Pronoun selection -->
     <div class="char-field-group">
       <label class="char-label">Pronouns</label>
       <div class="pronoun-cards" role="radiogroup" aria-label="Select pronouns">
-        <button class="pronoun-card" data-pronouns="he/him" data-subject="he" data-object="him" data-possessive="his" data-possessive-pronoun="his" data-reflexive="himself" role="radio" aria-checked="false" tabindex="-1">
+        <button class="pronoun-card"
+                data-pronouns="he/him"
+                data-subject="he" data-object="him"
+                data-possessive="his" data-possessive-pronoun="his"
+                data-reflexive="himself"
+                role="radio" aria-checked="false" tabindex="-1">
           he / him
         </button>
-        <button class="pronoun-card" data-pronouns="she/her" data-subject="she" data-object="her" data-possessive="her" data-possessive-pronoun="hers" data-reflexive="herself" role="radio" aria-checked="false" tabindex="-1">
+        <button class="pronoun-card"
+                data-pronouns="she/her"
+                data-subject="she" data-object="her"
+                data-possessive="her" data-possessive-pronoun="hers"
+                data-reflexive="herself"
+                role="radio" aria-checked="false" tabindex="-1">
           she / her
         </button>
-        <button class="pronoun-card" data-pronouns="they/them" data-subject="they" data-object="them" data-possessive="their" data-possessive-pronoun="theirs" data-reflexive="themself" role="radio" aria-checked="true" tabindex="-1">
+        <button class="pronoun-card"
+                data-pronouns="they/them"
+                data-subject="they" data-object="them"
+                data-possessive="their" data-possessive-pronoun="theirs"
+                data-reflexive="themself"
+                role="radio" aria-checked="true" tabindex="0">
           they / them
         </button>
       </div>
     </div>
 
-    <button id="char-begin-btn" class="overlay-btn char-begin-btn" disabled>Begin</button>
+    <!-- Begin button -->
+    <button id="char-begin-btn" class="overlay-btn char-begin-btn" disabled>
+      Begin Your Reign
+    </button>
+
   </div>
 </div>
 
@@ -370,325 +464,6 @@
      Inline script so it runs immediately when splash is shown,
      independent of the game engine module.
      ═══════════════════════════════════════════════════ -->
-<script>
-(function() {
-  // ── Summoning Circle ──────────────────────────────────────────────────────
-  function initSplashSigil() {
-    const wrap = document.getElementById('splashSigilWrap');
-    const SVG  = document.getElementById('splashSigilSvg');
-    if (!wrap || !SVG) return;
-    // Skip if theme hides the sigil
-    if (getComputedStyle(wrap).display === 'none') return;
-
-    const NS = 'http://www.w3.org/2000/svg';
-    const CX = 110, CY = 110;
-
-    function el(tag, attrs) {
-      const e = document.createElementNS(NS, tag);
-      for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-      return e;
-    }
-
-    function pt(cx, cy, r, angleDeg) {
-      const a = (angleDeg - 90) * Math.PI / 180;
-      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-    }
-
-    function regularPolyPath(cx, cy, r, n, offsetDeg) {
-      offsetDeg = offsetDeg || 0;
-      const pts = Array.from({length: n}, function(_, i) { return pt(cx, cy, r, (360/n)*i + offsetDeg); });
-      return pts.map(function(p, i) { return (i===0?'M':'L') + p[0].toFixed(3) + ',' + p[1].toFixed(3); }).join(' ') + 'Z';
-    }
-
-    function starPath(cx, cy, r1, r2, points, offsetDeg) {
-      offsetDeg = offsetDeg || 0;
-      var d = '';
-      for (var i = 0; i < points * 2; i++) {
-        var r = i % 2 === 0 ? r1 : r2;
-        var p = pt(cx, cy, r, (360 / (points*2)) * i + offsetDeg);
-        d += (i===0?'M':'L') + p[0].toFixed(3) + ',' + p[1].toFixed(3);
-      }
-      return d + 'Z';
-    }
-
-    var GLYPHS = [
-      [[0,-5],[0,5]],
-      [[-3,-5],[0,5],[3,-5]],
-      [[-3,-5],[-3,5],[3,5],[3,-5]],
-      [[-3,-5],[3,0],[-3,5]],
-      [[0,-5],[-4,2],[4,2]],
-      [[-3,-4],[3,-4],[0,5]],
-      [[-3,-5],[3,-5],[3,5],[-3,5],[-3,-5],[3,5]],
-      [[-3,0],[3,0],[0,-5],[0,5]],
-      [[-3,-5],[3,5],[-3,5],[3,-5]],
-      [[0,-5],[3,0],[0,5],[-3,0],[0,-5]],
-      [[-3,-5],[3,-5],[0,5],[-3,-5]],
-      [[-3,0],[0,-5],[3,0],[0,5]],
-    ];
-
-    var gOuter    = el('g', {id:'sgo'});
-    var gRing2    = el('g', {id:'sgr2'});
-    var gStar     = el('g', {id:'sgs'});
-    var gInner    = el('g', {id:'sgi'});
-    var gInnerRing = el('g', {id:'sgir'});
-    SVG.append(gOuter, gRing2, gStar, gInner, gInnerRing);
-
-    // ── Build SVG layers in batches so we don't block the main thread ──
-    // Each layer function builds its elements into a DocumentFragment,
-    // then appends once — yielding between layers via requestAnimationFrame.
-
-    function buildLayer1() {
-      var R_OUTER = 104;
-      var frag = document.createDocumentFragment();
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R_OUTER+3,fill:'none',stroke:'rgba(0,212,245,0.75)','stroke-width':'2'}));
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R_OUTER-3,fill:'none',stroke:'rgba(0,212,245,0.25)','stroke-width':'0.5'}));
-      var GLYPH_COUNT = 24;
-      for (var i = 0; i < GLYPH_COUNT; i++) {
-        var angleDeg = (360 / GLYPH_COUNT) * i;
-        var gp = pt(CX, CY, R_OUTER - 1, angleDeg);
-        var glyph = GLYPHS[i % GLYPHS.length];
-        var polyPts = glyph.map(function(p) { return p.join(','); }).join(' ');
-        frag.appendChild(el('polyline', {
-          points: polyPts, fill: 'none',
-          stroke: 'rgba(0,212,245,0.7)', 'stroke-width': '0.8',
-          'stroke-linecap': 'round', 'stroke-linejoin': 'round',
-          transform: 'translate(' + gp[0].toFixed(2) + ',' + gp[1].toFixed(2) + ') rotate(' + angleDeg + ') scale(0.65)'
-        }));
-      }
-      for (var i = 0; i < GLYPH_COUNT * 2; i++) {
-        var a2 = (360 / (GLYPH_COUNT * 2)) * i;
-        var t1 = pt(CX, CY, R_OUTER + 1, a2), t2 = pt(CX, CY, R_OUTER - 1, a2);
-        frag.appendChild(el('line', {x1:t1[0],y1:t1[1],x2:t2[0],y2:t2[1],stroke:'rgba(0,212,245,0.4)','stroke-width':'0.6'}));
-      }
-      gOuter.appendChild(frag);
-    }
-
-    function buildLayer2() {
-      var R2 = 86;
-      var frag = document.createDocumentFragment();
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R2,fill:'none',stroke:'rgba(0,212,245,0.35)','stroke-width':'0.7','stroke-dasharray':'4 3'}));
-      for (var i = 0; i < 12; i++) {
-        var a3 = (360/12)*i;
-        var np = pt(CX, CY, R2, a3);
-        var sz = i % 3 === 0 ? 4.2 : 2.4;
-        frag.appendChild(el('rect', {
-          x:(np[0]-sz/2).toFixed(2), y:(np[1]-sz/2).toFixed(2),
-          width:sz, height:sz,
-          fill: i%3===0 ? 'rgba(0,212,245,0.7)' : 'none',
-          stroke:'rgba(0,212,245,0.6)', 'stroke-width':'0.7',
-          transform:'rotate(45,' + np[0].toFixed(2) + ',' + np[1].toFixed(2) + ')'
-        }));
-      }
-      gRing2.appendChild(frag);
-    }
-
-    function buildLayer3() {
-      var R3 = 74;
-      gStar.appendChild(el('path', {d:starPath(CX,CY,R3,R3*0.45,9,0), fill:'none', stroke:'rgba(0,212,245,0.45)', 'stroke-width':'0.8', 'stroke-linejoin':'round'}));
-      gStar.appendChild(el('path', {d:starPath(CX,CY,R3*0.65,R3*0.32,7,20), fill:'none', stroke:'rgba(0,212,245,0.35)', 'stroke-width':'0.7', 'stroke-linejoin':'round'}));
-      gStar.appendChild(el('circle', {cx:CX,cy:CY,r:R3+2,fill:'none',stroke:'rgba(0,212,245,0.22)','stroke-width':'0.5'}));
-    }
-
-    function buildLayer4() {
-      var R4 = 54;
-      var frag = document.createDocumentFragment();
-      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4,3,0), fill:'none', stroke:'rgba(0,212,245,0.5)', 'stroke-width':'0.9', 'stroke-linejoin':'round'}));
-      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4,3,180), fill:'none', stroke:'rgba(0,212,245,0.4)', 'stroke-width':'0.8', 'stroke-linejoin':'round'}));
-      frag.appendChild(el('path', {d:regularPolyPath(CX,CY,R4*0.82,4,45), fill:'none', stroke:'rgba(0,212,245,0.3)', 'stroke-width':'0.7'}));
-      for (var i = 0; i < 6; i++) {
-        var sp = pt(CX, CY, R4, 60*i);
-        frag.appendChild(el('line', {x1:CX,y1:CY,x2:sp[0].toFixed(2),y2:sp[1].toFixed(2),stroke:'rgba(0,212,245,0.18)','stroke-width':'0.5'}));
-      }
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R4+5,fill:'none',stroke:'rgba(0,212,245,0.28)','stroke-width':'0.6'}));
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R4-1,fill:'none',stroke:'rgba(0,212,245,0.15)','stroke-width':'0.5','stroke-dasharray':'2 4'}));
-      gInner.appendChild(frag);
-    }
-
-    function buildLayer5() {
-      var R5 = 33;
-      var frag = document.createDocumentFragment();
-      frag.appendChild(el('circle', {cx:CX,cy:CY,r:R5,fill:'none',stroke:'rgba(0,212,245,0.4)','stroke-width':'0.7'}));
-      for (var i = 0; i < 16; i++) {
-        var a4 = (360/16)*i;
-        var isMain = i % 4 === 0;
-        var r5a = pt(CX, CY, R5 - (isMain?5:2), a4), r5b = pt(CX, CY, R5 + (isMain?5:2), a4);
-        frag.appendChild(el('line', {
-          x1:r5a[0],y1:r5a[1],x2:r5b[0],y2:r5b[1],
-          stroke: isMain ? 'rgba(0,212,245,0.7)' : 'rgba(0,212,245,0.35)',
-          'stroke-width': isMain ? '0.9' : '0.5'
-        }));
-      }
-      gInnerRing.appendChild(frag);
-    }
-
-    // Build layers across multiple frames so CSS entry animations stay smooth
-    var layers = [buildLayer1, buildLayer2, buildLayer3, buildLayer4, buildLayer5];
-    var layerIdx = 0;
-    function buildNextLayer() {
-      if (layerIdx < layers.length) {
-        layers[layerIdx]();
-        layerIdx++;
-        requestAnimationFrame(buildNextLayer);
-      }
-    }
-    requestAnimationFrame(buildNextLayer);
-
-    // ── Deferred rotation start ──
-    // Animation — use CSS transform on wrapper divs for GPU compositing
-    // This avoids SVG attribute reflow which causes jank on desktop
-    var groups = [
-      {el:gOuter,     dps: 6,  dir:  1},
-      {el:gRing2,     dps: 9,  dir: -1},
-      {el:gStar,      dps: 14, dir:  1},
-      {el:gInner,     dps: 4,  dir: -1},
-      {el:gInnerRing, dps: 10, dir:  1},
-    ];
-    var angles = [0,0,0,0,0];
-    var lastT  = null;
-
-    // Pre-apply will-change so the browser promotes each layer upfront
-    groups.forEach(function(g) {
-      g.el.style.transformOrigin = CX + 'px ' + CY + 'px';
-      g.el.style.willChange = 'transform';
-    });
-
-    // Landscape query — when the sigil is a faded bg, slow rotation to avoid shimmer
-    var landscapeMq = window.matchMedia('(orientation: landscape) and (min-width: 860px)');
-
-    function tickSigil(ts) {
-      if (!lastT) lastT = ts;
-      // Clamp dt to max 50ms (handles tab backgrounding / first frame spikes)
-      var dt = Math.min((ts - lastT) / 1000, 0.05);
-      lastT = ts;
-      // In landscape bg mode, use much slower rotation to avoid aliasing shimmer
-      var speedScale = landscapeMq.matches ? 0.25 : 1;
-      groups.forEach(function(g, i) {
-        angles[i] += g.dir * g.dps * dt * speedScale;
-        // Use CSS transform instead of SVG attribute — lets GPU composite the layer
-        g.el.style.transform = 'rotate(' + angles[i].toFixed(2) + 'deg)';
-      });
-      requestAnimationFrame(tickSigil);
-    }
-
-    // Defer rotation start until after CSS entry animations settle (~1.7s)
-    setTimeout(function() { requestAnimationFrame(tickSigil); }, 1700);
-  }
-
-  // ── Background canvas: circuit nodes + binary rain ────────────────────────
-  function initSplashBackground() {
-    var canvas = document.getElementById('splash-bg-canvas');
-    if (!canvas) return;
-    // Skip if theme hides the canvas
-    if (getComputedStyle(canvas).display === 'none') return;
-    var ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width  = canvas.offsetWidth  || window.innerWidth;
-      canvas.height = canvas.offsetHeight || window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    var GRID = 54, nodes = [];
-
-    function buildGrid() {
-      nodes = [];
-      var cols = Math.ceil(canvas.width  / GRID) + 2;
-      var rows = Math.ceil(canvas.height / GRID) + 2;
-      for (var r = -1; r < rows; r++) {
-        for (var c = -1; c < cols; c++) {
-          if (Math.random() < 0.52) {
-            nodes.push({
-              x: c*GRID + (Math.random()-0.5)*16,
-              y: r*GRID + (Math.random()-0.5)*16,
-              r: Math.random()*1.3+0.35,
-              alpha: Math.random()*0.13+0.03,
-              phase: Math.random()*Math.PI*2,
-              conn: []
-            });
-          }
-        }
-      }
-      var maxD = GRID * 1.8;
-      for (var i = 0; i < nodes.length; i++) {
-        for (var j = i+1; j < nodes.length; j++) {
-          var dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y;
-          if (Math.sqrt(dx*dx+dy*dy) < maxD && Math.random() < 0.25)
-            nodes[i].conn.push(j);
-        }
-      }
-    }
-    buildGrid();
-    window.addEventListener('resize', buildGrid);
-
-    var bCols = [];
-    function buildBin() {
-      var count = Math.floor(canvas.width / 18);
-      bCols = [];
-      for (var i = 0; i < count; i++) {
-        bCols.push({x: i*18+9, y: Math.random()*canvas.height,
-          speed: 20+Math.random()*36, alpha: Math.random()*0.05+0.01,
-          len: 4+Math.floor(Math.random()*7)});
-      }
-    }
-    buildBin();
-    window.addEventListener('resize', buildBin);
-
-    var bgLastT = null;
-    function drawBg(ts) {
-      if (!bgLastT) bgLastT = ts;
-      var bgDt = Math.min((ts - bgLastT) / 1000, 0.05);
-      bgLastT = ts;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var t = ts * 0.001;
-
-      ctx.lineWidth = 0.35;
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        for (var k = 0; k < n.conn.length; k++) {
-          var a = 0.02*(0.5+0.5*Math.sin(t*0.4+n.phase));
-          ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(nodes[n.conn[k]].x,nodes[n.conn[k]].y);
-          ctx.strokeStyle = 'rgba(0,212,245,'+a+')'; ctx.stroke();
-        }
-      }
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        var a = n.alpha*(0.5+0.5*Math.sin(t*0.8+n.phase));
-        ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-        ctx.fillStyle = 'rgba(0,212,245,'+a+')'; ctx.fill();
-      }
-
-      ctx.font = '10px Inconsolata, monospace';
-      for (var i = 0; i < bCols.length; i++) {
-        var col = bCols[i];
-        col.y += col.speed * bgDt;
-        if (col.y > canvas.height + col.len*13) { col.y = -col.len*13; col.alpha = Math.random()*0.05+0.01; }
-        for (var j = 0; j < col.len; j++) {
-          ctx.fillStyle = 'rgba(0,212,245,'+(col.alpha*(1-j/col.len))+')';
-          ctx.fillText(Math.random()<0.5?'0':'1', col.x, col.y-j*13);
-        }
-      }
-      requestAnimationFrame(drawBg);
-    }
-    requestAnimationFrame(drawBg);
-  }
-
-  // Run once DOM is ready — stagger heavy work so CSS animations stay smooth
-  function bootSplash() {
-    // Build sigil SVG in batched layers (yields between frames)
-    initSplashSigil();
-    // Defer canvas background until after CSS entry animations settle (~1.8s)
-    setTimeout(initSplashBackground, 1800);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootSplash);
-  } else {
-    bootSplash();
-  }
-})();
-</script>
 
 </body>
 </html>

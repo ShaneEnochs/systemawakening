@@ -14,14 +14,13 @@ import {
 
 import {
   hideSaveMenu, showSaveMenu, refreshAllSlotCards, loadAndResume,
-  hideSplash, wireCharCreation,
+  hideSplash, wireCharCreation, showCharacterCreation,
 } from '../ui/overlays.js';
 
 import { showToast } from '../ui/overlays.js';
 import { getNarrativeLog } from '../ui/narrative.js';
 import { runStatsScene } from '../ui/panels.js';
-
-// (patchPlayerState removed — character creation is now handled by character_creation.txt)
+import { patchPlayerState } from '../core/state.js';
 
 import { gotoScene } from '../core/interpreter.js';
 import { popUndo, clearUndoStack, updateUndoBtn } from './undo.js';
@@ -133,13 +132,27 @@ export function wireSaveUI(dom: Dom, opts: {
     });
   }
 
-  // New game — character creation is handled entirely by character_creation.txt
+  // New game — show character creation overlay, then run scene
   dom.splashNewBtn?.addEventListener('click', async () => {
     hideSplash();
     dom.saveBtn?.classList.remove('hidden');
     document.getElementById('undo-btn')?.classList.remove('hidden');
     clearUndoStack();
     await runStatsScene();
+
+    const char = await showCharacterCreation();
+    patchPlayerState({
+      name:                       char.firstName,
+      family:                     char.lastName,
+      pronouns_subject:           char.pronouns_subject,
+      pronouns_object:            char.pronouns_object,
+      pronouns_possessive:        char.pronouns_possessive,
+      pronouns_possessive_pronoun: char.pronouns_possessive_pronoun,
+      pronouns_reflexive:         char.pronouns_reflexive,
+      pronouns_label:             char.pronouns_label,
+      title:                      char.pronouns_label === 'she/her' ? 'Baroness' : 'Baron',
+    });
+
     await gotoScene('character_creation');
   });
 

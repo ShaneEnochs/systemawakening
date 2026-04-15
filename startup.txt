@@ -3,8 +3,8 @@
 *comment ═══════════════════════════════════════════════════════════════
 
 *comment --- Game metadata ---
-*create game_title "From Baron to Emperor"
-*create game_byline "A Regency of Shadows"
+*create game_title "Path to Empire"
+*create game_byline "Heavy is the Crown"
 
 *comment ─── Player Identity ───
 *create name ""

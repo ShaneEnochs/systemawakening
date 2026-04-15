@@ -1,5 +1,5 @@
 
-*title Character Creation
+*title [Prologue] Character Creation
 
 *set_game_title "Path to Empire"
 *set_game_byline "Heavy is the Crown"

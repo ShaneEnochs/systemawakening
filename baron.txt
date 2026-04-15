@@ -1,4 +1,4 @@
- *title ${Name} ${Family}, ${Title} of Pinehaven
+ *title [Chapter 1] Lord ${Family}, ${Title} of Pinehaven
 
 // ═══════════════════════════════════════════════════════════════
 //  BARON TIER — Entry Point

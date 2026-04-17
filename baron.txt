@@ -253,6 +253,10 @@ He lets the meaning of his words sink in for you. If the creditors know that the
 
 A letter of welcome arrives on thick, cream-colored paper via messenger. It is from Lord Harrington, a neighboring landowner whose family has held the adjacent, far more fertile valley for nine generations.
 
+*system [INVITATION]
+You are hereby invited to Lord Harrington's estate. 
+*end_system
+
 He invites you to an intimate dinner at his estate. It is your first foray into local society, and down in the valley, the villagers are already gossiping about how the new ${title} will present themselves, knowing full well your carriage is battered and the wardrobe you inherited from your father is hopelessly out of season.
 
 You step into Harrington's grand dining room that evening, and the contrast to your own manor couldn't be more stark. The vaulted hall is almost aggressively opulent, and the air is thick with the heat from three roaring hearths. Up in a recessed gallery, a quartet of musicians plays a lively, sweeping waltz, though the bright music is nearly drowned out by the chatter of the local gentry. Dozens of nobles mill about in small, glittering clusters: men in vibrant silk waistcoats and women draped in imported lace. You catch several casting subtle, appraising glances your way while pretending not to look.

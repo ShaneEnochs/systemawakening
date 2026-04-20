@@ -242,7 +242,7 @@ export function addSystem(text: string, label?: string): void {
   const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(text);
   div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
 
-  const labelHtml = label ? `<span class="system-block-label">[${escapeHtml(label)}]</span>` : '';
+  const labelHtml = label ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(label)}]</span><div class="system-block-rule"></div></div>` : '';
   const paras = formatText(text).replace(/\\n/g, '\n').split('\n');
   const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
   div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
@@ -465,7 +465,7 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
         const isXP      = /XP\s+gained|bonus\s+XP|\+\d+\s+XP/i.test(entry.text ?? '');
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
         div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
-        const labelHtml = entry.systemLabel ? `<span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span>` : '';
+        const labelHtml = entry.systemLabel ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span><div class="system-block-rule"></div></div>` : '';
         const paras = formatText(entry.text).replace(/\\n/g, '\n').split('\n');
         const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
         div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;

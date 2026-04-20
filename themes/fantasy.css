@@ -139,15 +139,35 @@
 
 /* System blocks: parchment card style instead of left-accent border */
 .system-box {
-  border: 1px solid var(--border-dim);
-  border-left: 3px double var(--cyan);
+  border: 3px double var(--cyan);
   border-radius: var(--radius);
 }
 
 .system-block {
-  border: 1px solid var(--border-dim);
-  border-left: 3px double var(--cyan);
+  border: 3px double var(--cyan);
   border-radius: var(--radius);
+}
+
+.system-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 11px;
+}
+
+.system-block-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(200, 165, 90, 0.4);
+}
+
+.system-block-label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 
 /* Buttons: rounded, warm */

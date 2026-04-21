@@ -1,7 +1,0 @@
-*title ${title} of ${family}
-
-// COUNT — Stub file. Content will be added when the branch map is complete.
-
-This chapter has not yet been written. The story of ${name}, ${title} of ${family}, continues...
-
-*ending "To Be Continued" "The ${tier} tier is not yet available. Thank you for playing the Baron tier!"

@@ -1,112 +1,52 @@
 *comment ═══════════════════════════════════════════════════════════════
-*comment  FROM BARON TO EMPEROR — Global Variable Registry
+*comment  THE IMPOSTER BARON — Global Variable Registry
 *comment ═══════════════════════════════════════════════════════════════
 
-*comment --- Game metadata ---
-*create game_title "Path to Empire"
-*create game_byline "Heavy is the Crown"
+*comment ─── Game Metadata ───
+*create game_title "The Imposter Baron"
+*create game_byline "You are the wrong person. Try anyway."
 
 *comment ─── Player Identity ───
-*create name ""
-*create family ""
-*create pronouns_subject "they"
-*create pronouns_object "them"
-*create pronouns_possessive "their"
-*create pronouns_possessive_pronoun "theirs"
-*create pronouns_reflexive "themself"
-*create pronouns_label "they/them"
-*create pronouns_honorific "lord"
-*create title "Baron"
-*create tier "baron"
+*comment  first_name and last_name are set by the character creation overlay.
+*comment  rank replaces the reserved word 'title' for Silas's baronial rank.
+*create rank "Baron"
 
-*comment ─── The Four Meters (visible in Stats panel) ───
-*create_stat people "People" 50
+*comment ─── Personal Stats (visible in Stats panel) ───
+*create_stat might "Might" 3
+*create_stat finesse "Finesse" 3
+*create_stat magic "Magic" 3
+*create_stat perception "Perception" 3
+*create_stat presence "Presence" 3
+
+*comment ─── Territory Stats (visible in Stats panel) ───
+*create_stat public_order "Public Order" 50
 *create_stat treasury "Treasury" 50
-*create_stat church "Church" 50
-*create_stat nobility "Nobility" 50
 
-*comment ─── Prestige (hidden — not *create_stat) ───
-*create prestige 0
+*comment ─── Relationship Stats (hidden — use *set_stat with min:0 max:100) ───
+*create rel_hudson 50
+*create rel_stella 50
+*create rel_harper 50
 
-*comment ─── Branch State Tracking ───
-*create branch_state "thriving"
-*create fail_count 0
-*create clusters_this_tier 0
-*create last_cluster ""
-*create pending_event ""
+*comment ─── The Secret ───
+*create confessed false
+*create told_first ""
 
-*comment ─── Random Event Tracking ───
-*create random_event_fired false
+*comment ─── Knowledge Flags (for throne room argument gates) ───
+*create knows_substrate false
+*create has_archive false
+*create has_transition_plan false
 
-*comment ─── Romance Arc Flags ───
-*create romance_a_stage 0
-*create romance_b_stage 0
-*create romance_c_stage 0
-*create romance_a_active true
-*create romance_b_active true
-*create romance_c_active true
+*comment ─── Story State Flags ───
+*create ghost_seen_count 0
+*create stella_warned false
+*create framework_investigations 0
+*create peasant_crisis_choice ""
+*create harper_banquet_passed false
+*create border_skirmish_choice ""
+*create thorne_handled_by ""
+*create inquisitor_note_filed false
 
-*comment ─── Supernatural Thread Flags ───
-*create supernatural_awareness 0
-*create supernatural_suppressed 0
-*create supernatural_investigated 0
-
-*comment ─── Recurring Character Flags ───
-*create steward_status "loyal"
-*create rival_status "neutral"
-*create church_figure_status "neutral"
-*create foreign_rep_status "unknown"
-*create mysterious_figure_seen false
-
-*comment ─── Rival Pronouns (set when rival is introduced) ───
-*create rival_pronoun_subject "they"
-*create rival_pronoun_object "them"
-*create rival_pronoun_possessive "their"
-
-*comment ─── Baron Tier: Regular Cluster Completion Flags ───
-*create done_baron_thriving_1 false
-*create done_baron_thriving_2 false
-*create done_baron_thriving_3 false
-*create done_baron_failing_1 false
-*create done_baron_failing_2 false
-
-*comment ─── Baron Tier: Random Event Completion Flags ───
-*create done_baron_romance_a1 false
-*create done_baron_romance_a2 false
-*create done_baron_monster_1 false
-*create done_baron_monster_2 false
-*create done_baron_world_1 false
-*create done_baron_world_2 false
-*create done_baron_world_religious false
-*create done_baron_world_wealth false
-
-*comment ─── Baron Tier: Miscellaneous Flags ───
-*create tax_evasion_caught false
-*create dependency_rival false
-*create dependency_crown false
-
-*comment ─── Viscount Tier: Completion Flags (stubs — expanded later) ───
-*create done_viscount_placeholder false
-
-*comment ─── Count Tier: Completion Flags (stubs) ───
-*create done_count_placeholder false
-
-*comment ─── Duke Tier: Completion Flags (stubs) ───
-*create done_duke_placeholder false
-
-*comment ─── Archduke Tier: Completion Flags (stubs) ───
-*create done_archduke_placeholder false
-
-*comment ─── Prince Tier: Completion Flags (stubs) ───
-*create done_prince_placeholder false
-
-*comment ─── King Tier: Completion Flags (stubs) ───
-*create done_king_placeholder false
-
-*comment ─── Emperor Tier: Completion Flags (stubs) ───
-*create done_emperor_placeholder false
-
-*comment ─── Systems (keep these for engine compatibility) ───
+*comment ─── Engine Systems ───
 *create skills []
 *create journal []
 *create inventory []
@@ -115,19 +55,7 @@
 *comment ─── Scene List ───
 *scene_list
   character_creation
-  baron
-  baron_events
-  viscount
-  viscount_events
-  count
-  count_events
-  duke
-  duke_events
-  archduke
-  archduke_events
-  prince
-  prince_events
-  king
-  king_events
-  emperor
-  emperor_events
+  week_one
+  act_two
+  act_three
+  ending

@@ -1,29 +1,89 @@
+*title The Imposter Baron
+*set_game_title "The Imposter Baron"
+*set_game_byline "You are the wrong person. Try anyway."
 
-*title [Prologue] Character Creation
+*temp spoken false
 
-*set_game_title "Path to Empire"
-*set_game_byline "Heavy is the Crown"
+You feel... foggy.
 
-A thick envelope rests in the center of your mahogany desk. A heavy dollop of black wax seals the flap shut, and the raven crest of your father's house is stamped deep into the hardened surface. You break it. The snap echoes in the quiet study. Inside, you find a folded document written in the solicitor's tight, slanting hand. You scan the sharp cursive, but you already know what it says. You have inherited your father's estate, a title, and all the trouble that comes with them.
+The last thing you remember is reclining in your chair, half-watching a rerun of a late-night comedy show. You must have dozed off, so that means this has to be a dream.
 
-Mr. Pendleton sits across the desk, watching you over his wire-rimmed spectacles. The old man clears his throat and straightens.
+But this is the strangest, most vivid dream you've ever had.
 
-"Congratulations, ${Title}, the barony of Pinehaven is yours," Pendleton says, his voice dry as winter leaves. "But I must be frank: the estate is bleeding."
+You sit cross-legged on a bitterly cold stone floor encircled by dozens of flickering candles, the chill seeping straight through to your bones. Beyond the dim perimeter of shifting light, you can just make out the dark shapes of... something. People, maybe, though it's impossible to tell. Your pulse thumps in your ears as your confusion compounds with each passing second.
 
-"Oh?" you ask, as if you aren't already aware.
+"Did it work?" a woman's voice asks from somewhere to your right.
 
-He adjusts his starched collar and nods. "You inherit a cold, crumbling stone hall on the eastern ridge and a valley of thin, exhausted soil. The winter wheat is struggling. Elias and the other shepherds on the western ridge are already grumbling about their rents. Unfortunately, your father left you a hollow name and a staggering amount of debt."
+You automatically turn toward the sound. Darkness and shadow stretch and twist past the candle flames, refusing to reveal whoever is out there, but low murmurs rippling around you lets you know you are surrounded.
 
-The solicitor dips his quill into the silver inkwell and lets the excess drip away. "The creditors will demand their due by month's end," he adds. "You could push the village to clear-cut more of the Blackwood to sell the timber, but you know how they feel about going in there."
+"Who are you?" a masculine voice booms from directly in front of you, though he too remains hidden in the gloom. "What is your name?"
 
-He brings the nib to the parchment, signs the final page, and hands you the deed.
+*choice
+  #"I'm ${first_name}. What's going on here? Where am I?"
+    *set spoken true
+    "I'm ${first_name}," you say, your voice sounding very strange in your own ears. "What's going on here? Where am I?"
 
-You fold the parchment carefully and tap it against your leg, idly wondering how long you have until the debt collectors reach the hall's gates.
+    Another round of murmurs passes through the unseen crowd.
 
-Not today, at least.
+    "Gods," a third voice says. Another woman. "It actually worked."
 
-You shake the solicitor's hand and step outside into the pale morning. Somewhere to the north, a village waits for its new lord.
+    "Of course it worked," the man replies, his tone suddenly much lighter. "Just as I said it would."
+
+    "No one likes a braggart," chides the first woman. "But I can't believe we actually pulled a summoning off. An actual [i]outlander[/i], right here in front of us." She is quiet for a moment, then says, "We have to make this count. We have to ensure the ${rank}'s sacrifice wasn't in vain."
+
+    A chorus of agreement echoes around the room. You still have no idea what is happening. Summoning? ${rank}? Outlander? Where are you, and who are these people?
+
+    Oh God... have you been isekai'd?
+
+    *page_break
+
+  #Remain quiet.
+    You have no idea what is going on or who these people are. Staying silent seems like your best bet while you get your bearings.
+
+    "Perhaps {they} can't understand us," a third voice offers. Another woman. "Or maybe we botched the summoning."
+
+    "If we did, then what?" the first woman asks, panic creating an edge to her voice. "The ${rank} is [i]gone[/i]. This was our only shot at this."
+
+    "Quiet," the man snaps. He's clearly the one in charge. "The summoning worked. Look at {their} eyes."
+
+    For a long time, no one says anything and you can feel the multitude of unseen eyes staring at you from the dark. It makes your skin crawl.
+
+    When the man speaks again, his tone softens considerably.
+
+    "I'm sure this is incredibly confusing," he says. "Please, don't be afraid. You are safe and among friends here. If you tell us your name, I swear we will explain everything. How does that sound?"
+
+    You try to weigh your options, but thanks to the thick mental fog, you come up empty. You're in a strange place with zero memory of how you arrived. You're sitting on the floor, surrounded by an unknown number of people who claim they brought you here but don't seem to know who you actually are.
+
+    No, that's not what they said. Not brought. [i]Summoned[/i].
+
+    Oh God. Have you been isekai'd?
+
+    "I'm ${first_name}," you finally mutter, your voice sounding strange to your ears.
+
+    *page_break
+
+*comment ─── Both branches converge here after *page_break ───
+
+The candles flare all at once, blazing bright enough to make you flinch, and then the darkness pulls back.
+
+You are in a stone chamber deep beneath a keep. The walls are carved bedrock. The floor — where it isn't scoured ash — is covered in intricate arrays drawn in a substance that is either dried blood or something worse. Around the edge of the room, perhaps two dozen people stand in silence, most of them wearing the expressions of people who have just witnessed something they cannot quite believe.
+
+Three people are closer than the rest.
+
+The man who spoke is tall and broad-shouldered, with the kind of face that has been broken at least once and healed crooked. He is watching you with an intensity that is not quite hope and not quite grief — something held tightly in between.
+
+To your right, the woman who first spoke. She is slight and dark-eyed and she is already watching you with the focused assessment of someone running calculations. She does not look relieved. She looks like she is waiting to see if something is going to go wrong.
+
+Behind them both, standing near the chamber door, a younger woman holds a lantern and says nothing. She has the look of someone who knew the cost of tonight before it was paid.
+
+And on the floor, between you and the three of them, there is a fine grey ash arranged in a rough circle.
+
+Something about that ash makes the back of your throat tighten.
+
+"My name is Hudson," the tall man says. "Commander of the Baron's forces." A pause. "Of Oakhaven's forces, now."
+
+"I'm Stella," says the dark-eyed woman. "And there is a great deal I need to explain to you. But first —" she produces a small lantern of her own and crouches to your level, studying your face, "— I need to know if you are well enough to stand."
 
 *page_break
 
-*goto_scene baron
+*goto_scene week_one

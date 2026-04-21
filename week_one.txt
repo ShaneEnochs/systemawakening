@@ -1,0 +1,538 @@
+*title [Week One] The Wrong Body
+*checkpoint "Week One — The Ritual's Aftermath"
+*save_point
+
+*comment ═══════════════════════════════════════════════════════
+*comment  WEEK ONE — DAYS 1 THROUGH 7
+*comment
+*comment  Structure:
+*comment    day_one         — Waking in Silas's chambers, first briefings
+*comment    day_two         — Hudson's report, ghost glitch #1
+*comment    day_three       — Stella's framework briefing
+*comment    day_four        — Harper's letter arrives
+*comment    day_five        — Ghost glitch #2 (MAGIC-gated observation)
+*comment    day_six         — The Peasant Crisis
+*comment    day_seven       — Aftermath, end of week
+*comment ═══════════════════════════════════════════════════════
+
+*comment ─── Temp vars for this scene ───
+*temp ghost_pattern_noticed false
+*temp peasant_choice_made false
+
+*goto day_one
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY ONE
+*comment ═══════════════════════════════════════════════════════
+
+*label day_one
+
+You are carried upstairs.
+
+This is not a metaphor. Your legs don't work properly yet — something about the ritual's transfer, Stella explains in a low voice as two soldiers take your arms, is that the body needs time to accept the soul that has entered it. The original tenant burned away cleanly. The new one — you — is still settling.
+
+The Baron's chambers are on the third floor of the keep. The bed is wide and cold and smells faintly of cedar and old stone. Someone has laid a fire. The flames do almost nothing for the chill.
+
+Stella draws a chair to your bedside and produces a small notebook. She has the brisk manner of a physician who has already decided the patient will survive and is now focused on getting them functional.
+
+"You're going to have questions," she says. "I'll answer what I can. But first I need to assess what came through intact."
+
+She holds up three fingers.
+
+"How many?"
+
+"Three," you say. Your voice is wrong. Too deep, rougher than you remember. [i]His[/i] voice.
+
+Stella makes a note. "Good. Language is intact." She pauses. "Do you know where you are?"
+
+*choice
+  #"A keep. Stone walls, a fire. Medieval, by the look of it."
+    "Correct." Something in her expression shifts — a fraction less tension, perhaps. "You're in Oakhaven Keep, in the Barony of Oakhaven. You are currently occupying the body of Baron Silas Vael, who —" she pauses, the briefest hesitation, "— who is no longer present."
+
+    "The ash," you say.
+
+    "Yes."
+
+    *set_stat rel_stella +3 min:0 max:100
+
+  #"What did you do to me?"
+    The question comes out sharper than you intend. Stella absorbs it without flinching.
+
+    "We performed a summoning ritual," she says. "An old one. Pre-Framework. It required — a significant price. You are in the body of Baron Silas Vael of Oakhaven. He is —" another pause, "— he is gone. You are what came in his place."
+
+    "The ash on the floor."
+
+    "Yes."
+
+  #Say nothing. Just listen.
+    Stella seems to take your silence as an invitation to continue. She flips open the notebook.
+
+    "You're in Oakhaven Keep, in the Barony of Oakhaven. The body you're occupying belonged to Baron Silas Vael. He is gone. You are what arrived in his place." She meets your eyes briefly. "I know that's a great deal to absorb. We can go slowly."
+
+    *set_stat rel_stella +2 min:0 max:100
+
+*page_break
+
+She spends the next two hours briefing you. Some of it you absorb. Some of it slides off your mind like water on glass, too strange to stick.
+
+The world has a [i]Framework[/i] — a vast, invisible architecture that governs ability, growth, and power. Everyone in this world has a stat sheet, a class, a measurable set of numbers that define what they can and cannot do. The King controls the Framework at an administrative level, which means he can read anyone's stats, alter the rules, and — in extreme cases — delete what he doesn't like.
+
+Silas had a Framework interface like everyone else. His has been repurposed for you, with significant modifications Stella calls the Jailbreak. It hides your true abilities from external scrying. It is, she says, imperfect.
+
+"How imperfect?" you ask.
+
+"It glitches occasionally." She says it without inflection. "You may see data that doesn't belong to you. Ignore it. It will stabilize."
+
+The lantern-girl from the ritual chamber brings a tray of food at some point. She says nothing. You eat mechanically, tasting nothing.
+
+*page_break
+
+Before Stella leaves, Hudson comes to the door. He stands in the frame as if entering would be a concession of some kind. His expression is the one you noticed in the ritual chamber — that held-in-between thing.
+
+"How is —" he starts, then stops. "How are you?"
+
+"Confused," you say.
+
+He nods, once, as if this is an acceptable answer. "There will be a briefing tomorrow on the military situation. Get some rest."
+
+He leaves before you can respond. The door closes. The fire pops.
+
+You lie in Silas's bed, in Silas's body, and stare at Silas's ceiling, and try to remember what your ceiling looked like.
+
+You fall asleep before you manage it.
+
+*page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY TWO
+*comment ═══════════════════════════════════════════════════════
+
+*label day_two
+
+Hudson's briefing is held in the war room, a square chamber one floor below the Baron's quarters whose walls are covered in maps and annotated dispatch letters. He speaks for thirty minutes without notes.
+
+The situation is this: a man named Lord Vane holds territory to the east. He is a King's loyalist. He has been systematically restricting grain shipments to Oakhaven's border villages for the past eight months. The Barony's granaries are currently locked — Silas's order, designed to ensure the army has rations for the campaign season. The peasantry is running low. The army is not.
+
+Hudson speaks with the flat precision of someone who has given this briefing many times and has stopped feeling the weight of it. Or learned not to show it.
+
+You listen. You look at the maps. You try to look like you know what you're looking at.
+
+*choice
+  *selectable_if (perception >= 5) #Study the tactical map carefully. [Perception 5]
+    The map is annotated in two hands — one tight and controlled, one looser. Silas's, and someone else's. The border markings around Vane's territory have been updated recently; the ink is darker. Three villages are circled in red. You note that the road between them and Oakhaven's granary runs through a forest defile.
+
+    "The circled villages," you say. "How long since they've had a supply run?"
+
+    Hudson pauses. He looks at the map. He looks at you. Something shifts in his expression — not quite surprise, but adjacent to it.
+
+    "Six weeks," he says.
+
+    *set_stat rel_hudson +4 min:0 max:100
+    *set_stat perception +1 min:1 max:20
+
+  #Nod along and ask general questions.
+    You ask the kind of questions that reveal you are paying attention without revealing how little context you have. Hudson answers them with his usual economy. It is not a brilliant performance, but it is adequate.
+
+  #"Is there a glossary for this? Some kind of summary document?"
+    Hudson stares at you for exactly three seconds.
+
+    "A glossary," he says.
+
+    "I've had a difficult few days."
+
+    The stare continues for another beat, then he turns back to the map. "I'll have the steward compile one."
+
+    *set_stat rel_hudson -3 min:0 max:100
+
+*page_break
+
+Hudson dismisses the other officers after the briefing and stays behind, rolling the largest map carefully along its wooden rod.
+
+"You're not what I expected," he says. He does not turn around.
+
+You wait.
+
+"Silas said the summoning would bring someone who could win this." He sets the map aside. "I'm trying to determine if he was right."
+
+He leaves without giving you a chance to respond. The war room is quiet. The maps hang still.
+
+In the corner of your vision, something flickers.
+
+*comment ─── Ghost glitch #1 ───
+
+*system [FRAMEWORK — CALIBRATION ERROR]
+  STAT PROFILE // EXTERNAL READ
+  ──────────────────────────────
+  ENTITY: [CORRUPTED]
+  MIGHT:      ██ (16)
+  FINESSE:    ██ (14)
+  MAGIC:      ██ (18)
+  PERCEPTION: ██ (15)
+  PRESENCE:   ██ (13)
+  ──────────────────────────────
+  WARNING: Profile mismatch detected.
+  Expected signature: [REDACTED]
+  Received signature: [REDACTED]
+  Reconciliation: FAILED
+*end_system
+
+It is gone before you can focus on it. Just an afterimage, a ghost of numbers that are not yours. Numbers significantly larger than yours.
+
+You blink. The war room is empty. The maps hang still.
+
+*set ghost_seen_count +1
+*journal Saw something in the Framework today. A stat sheet that wasn't mine. Stella said the Jailbreak glitches. She said to ignore it.
+
+*page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY THREE
+*comment ═══════════════════════════════════════════════════════
+
+*label day_three
+
+Stella comes in the morning with two cups of something hot and her notebook, and spends three hours teaching you the Framework's basics.
+
+Everyone has a stat sheet. Everyone has a class, assigned at adolescence based on aptitude and circumstances. Stats grow through use and through XP, which is awarded by the Framework itself for meaningful action — combat, leadership, significant choices. The King's Admin access lets him read anyone's sheet, grant or revoke classes, and in theory alter the underlying rules.
+
+The Jailbreak Stella built into Silas's body — into [i]your[/i] body now — spoofs your sheet when it's scanned externally. Anyone who tries to read your stats sees a fabricated baseline. Unremarkable numbers for an unremarkable baron.
+
+"What do my actual stats look like?" you ask.
+
+She shows you. They are low. Noticeably low for someone who is supposed to be in command of an army.
+
+"Silas's were higher," she says, without apology. "You'll grow into it. The Framework rewards action."
+
+*choice
+  #"What was Silas's class?"
+    "Warlord-Administrator," she says. "A rare combination. High Might and Presence both, with administrative skills that made him effective at governing as well as fighting." She turns a page in her notebook. "You don't have his class. You have something the Framework assigned based on your profile when you arrived. I've suppressed the visible display."
+
+    "What did it assign me?"
+
+    A pause. "Outlander. It's not a standard class. The Framework apparently has a category for this."
+
+    *set_stat rel_stella +2 min:0 max:100
+
+  #"How does the Jailbreak hide my stats from a scan?"
+    She explains: when a Framework scan is initiated, it broadcasts a request, and the target's interface sends a response. The Jailbreak intercepts that response and substitutes a fabricated profile before it transmits. The substitution is fast enough that under normal circumstances, the scan can't distinguish it from a genuine read.
+
+    "Under normal circumstances," you repeat.
+
+    "There are edge cases," she says, which is not reassuring.
+
+    *set_stat magic +1 min:1 max:20
+    *set_stat rel_stella +3 min:0 max:100
+
+  #"Tell me about the King."
+    Her expression doesn't change exactly, but something behind it does.
+
+    "His name is Julian Voss. He arrived in this world approximately forty years ago, through the same kind of void-tear that brought you here. Unlike you, he understood what the Framework was when he found it. He spent decades learning its architecture before seizing administrative access." She pauses. "He has been king for thirty-one years. No one who has directly threatened him has survived the attempt."
+
+    *set_stat rel_stella +2 min:0 max:100
+    *set knows_substrate false
+    *comment knows_substrate remains false — Stella is not sharing that yet.
+
+*page_break
+
+Stella closes her notebook as she prepares to leave.
+
+"I should tell you," she says, as if it's an afterthought, "that the soldiers believe Silas's summoning worked exactly as intended. They believe you are what he meant to bring. Hudson believes this. The entire keep believes this."
+
+She lets that land.
+
+"I need you to maintain that. For now."
+
+"For now," you repeat.
+
+She meets your eyes. "I'll explain more when you're stronger."
+
+She leaves. You sit with [i]for now[/i] and what it might mean.
+
+*journal Stella is hiding something about why the summoning was done. She says she'll explain when I'm stronger. I don't know if that means physically or in terms of stats or in terms of something else entirely.
+
+*page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY FOUR
+*comment ═══════════════════════════════════════════════════════
+
+*label day_four
+
+A letter arrives mid-morning, delivered by a rider who has clearly pushed hard to get here. The seal is crimson wax — a different house sigil than Oakhaven's.
+
+The lantern-girl — her name is Mira, you have learned; she is Stella's assistant and Silas's former page — brings it up without comment and stands by the door while you read it.
+
+The handwriting is sharp and precise. [i]Brother,[/i] it begins, and you feel the word settle oddly on the page, addressed to a dead man.
+
+[i]I have been hearing troubling things from the capital. Lord Vane has been lobbying the Crown openly about Oakhaven's "instability." I do not know what Vane knows or suspects, but I know what it means when a loyalist makes noise about a border barony. I am returning home in three days. Please have the dining room aired. I refuse to eat in a room that smells of mildew.[/i]
+
+[i]Your sister,[/i]
+[i]Harper[/i]
+
+*comment ─── Harper's letter lands ───
+
+There is no mention of the summoning. No mention of the ritual, the missing soldiers who stood guard that night, the days you spent bedridden. Either she doesn't know, or she's being careful.
+
+You ask Mira about her.
+
+"Lady Harper Vael," Mira says. "She was managing the Barony's relationships at court while the Baron —" a small hesitation, "— while you were preparing for the campaign season. She's been away two months. She's very sharp," Mira adds, without making it clear whether this is a compliment or a warning.
+
+*choice
+  #Ask what Harper knows about the summoning.
+    "Does she know what happened? What Silas did?"
+
+    Mira is quiet for a moment. "No one outside this keep knows. The soldiers who were present were sworn to silence. Lady Harper believes you fell ill — a severe brain fever caused by a magical experiment gone wrong." She pauses. "That is the story Stella constructed. It has held so far."
+
+    *set_stat rel_harper +2 min:0 max:100
+
+  #Ask what Silas and Harper were like together.
+    Mira's expression softens slightly. "Close, when they were younger. He became more — reserved, as he took on the Barony's problems. She compensated by becoming more capable. They argued sometimes. She was usually right. He usually admitted it eventually." A pause. "She loved him very much."
+
+    The word [i]loved[/i] lands in past tense. Mira seems to realize it and looks away.
+
+    *set_stat rel_harper +3 min:0 max:100
+    *set_stat perception +1 min:1 max:20
+
+  #Set the letter aside and don't ask questions.
+    You fold the letter carefully and set it on the desk. Three days to prepare for a test you don't know the questions to.
+
+*journal Harper returns in three days. She thinks Silas had a fever. She doesn't know he's dead. I need to be someone she recognizes as her brother, and I have no idea who he was.
+
+*page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY FIVE
+*comment ═══════════════════════════════════════════════════════
+
+*label day_five
+
+You spend day five on your feet for the first time. Stella declares you ambulatory and hands you a walking tour of the keep's upper levels, guided by Mira, who explains everything in the measured tones of someone who has been asked to not overwhelm you.
+
+The great hall has a portrait of Silas. You stop in front of it longer than is probably natural.
+
+He was taller than you feel, or maybe it's the painter's perspective. Dark eyes, the kind of mouth that defaults to a firm line. The portrait was done three years ago, Mira says, and he looked exactly like this until — until recently.
+
+You look at his hands in the portrait. They're relaxed, resting on a sword hilt. Silas's hands, which are now your hands. You raise your right hand slightly and flex it, watching the familiar-unfamiliar motion.
+
+*comment ─── Ghost glitch #2 — MAGIC-gated observation ───
+
+*if magic >= 5
+  In the corner of your vision, the ghost flickers.
+
+  *system [FRAMEWORK — CALIBRATION ERROR]
+    STAT PROFILE // EXTERNAL READ
+    ──────────────────────────────
+    ENTITY: [C̷O̷R̷R̷U̷P̷T̷E̷D̷]
+    SIGNATURE: [REDACTED — SEE LOG 7741-B]
+    ──────────────────────────────
+    NOTE: This profile has been detected
+    3 times in the past 72 hours.
+    Frequency is inconsistent with
+    standard calibration drift.
+    Source: UNKNOWN
+  *end_system
+
+  You stare at it for a long moment before it fades. The pattern. Stella said calibration error. But calibration errors don't follow a pattern.
+
+  *set ghost_pattern_noticed true
+  *set ghost_seen_count +1
+
+*elseif ghost_seen_count >= 1
+  In the corner of your vision, something flickers briefly — too fast to read. The same wrongness from the war room. Gone before you can focus on it.
+
+  *set ghost_seen_count +1
+
+*else
+  Mira says something about the east wing being closed for repairs, and you turn away from the portrait.
+
+*page_break
+
+*if ghost_pattern_noticed = true
+  You find Stella in the lower library before dinner.
+
+  "The glitch," you say. "It's not random. It appears in the same context — when I'm alone, when I've recently used the Framework's interface. It shows a stat sheet. Higher numbers than mine. It's appeared twice now."
+
+  Stella looks up from her work. Her expression does not change. It is, you are beginning to understand, a deliberate skill.
+
+  "I told you to ignore it," she says.
+
+  "You told me it would stabilize. It hasn't."
+
+  A pause. "It may take longer than I anticipated."
+
+  She returns to her work. The conversation is over, by her assessment. You let it be — for now. But you note the precise quality of her [i]may take longer[/i]. A careful phrasing.
+
+  *set_stat rel_stella +3 min:0 max:100
+  *set_stat perception +1 min:1 max:20
+  *journal The ghost stat sheet is consistent. Not random noise. Stella says to ignore it but her answer was too careful. I think she knows exactly what it is and doesn't want to say.
+
+*page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY SIX — THE PEASANT CRISIS
+*comment ═══════════════════════════════════════════════════════
+
+*label day_six
+
+The shouting wakes you before dawn.
+
+By the time you reach the window, the courtyard below is full of people. Sixty, perhaps seventy — men and women in rough clothing, many of them visibly thin, several carrying children. They are not armed. They are loud. A man at the front is pointing at the granary doors on the far side of the courtyard and delivering a speech you cannot fully hear through the glass.
+
+Hudson is at your door within minutes. He enters without knocking, which tells you something about how the previous Baron operated.
+
+"Village delegations from Millford and Ashcroft," he says. "They've been trying formal requests through the steward for two weeks. The steward's been stalling on your behalf — on the assumption that you were still incapacitated." A pause. "You are no longer incapacitated."
+
+"What do they want?"
+
+"The granaries opened. Partial release — they're not asking for everything, just enough to carry the villages through to the spring planting. The winter was harsh." He crosses to the window. "They'll be gone by nightfall if we send the guard out now. They'll come back in larger numbers next week."
+
+*choice
+  #"What do you recommend?"
+    Hudson is quiet for a moment.
+
+    "Disperse them. Send word that the ${rank} is still recovering, that the grain situation will be reviewed in the new season. Give them something official-sounding to bring home." He turns from the window. "It will hold for now. It may not hold for long."
+
+    *comment This is Hudson's true advice — show the iron fist path below.
+
+  #"What are our actual options?"
+    "Three," Hudson says. "Disperse them by force or the credible threat of it. Open the granaries fully or partially, which solves the problem and empties the coffers. Or go down there yourself and make them a promise." He pauses. "The third option has the most variables."
+
+  #"How much grain do we actually have?"
+    Hudson names a figure. It is not a good figure relative to the army's needs, but it is not as catastrophic as you feared relative to what the villages are asking for. A partial release would hurt but not break the Treasury.
+
+    *set_stat perception +1 min:1 max:20
+
+*page_break
+
+*comment ─── The actual crisis choice ───
+
+You have the information. Now you have to decide.
+
+From the window, the crowd in the courtyard shifts restlessly. A soldier on the wall is watching you. Everyone is waiting.
+
+*choice
+  #Send the guard to disperse them. [The Iron Fist]
+    *set peasant_choice_made true
+    *set peasant_crisis_choice "iron_fist"
+
+    The guard deploys in formation. The crowd does not go quietly — there is shouting, some shoving, one thrown stone that misses badly — but they go. An hour later the courtyard is empty except for a few soldiers and some scattered debris.
+
+    Hudson finds you at midday.
+
+    "Done," he says. "They'll be back."
+
+    "I know."
+
+    He nods, once. Something in his posture is marginally less tense than it was this morning. "Good. This is how it has to be, for now. The army can't campaign on empty stomachs."
+
+    *set_stat public_order -12 min:0 max:100
+    *set_stat rel_hudson +6 min:0 max:100
+    *journal Dispersed the Millford and Ashcroft delegations by force. They'll be back. Hudson approves. I don't, entirely, but I understand the logic.
+
+    *page_break
+
+  #Open the granaries — give them what they need. [Feed the People]
+    *set peasant_choice_made true
+    *set peasant_crisis_choice "open_granaries"
+
+    You go to the window and open it. The cold morning air hits you like a wall.
+
+    "Send for Hudson," you say to Mira. "Tell him I want the granaries opened for a partial release to Millford and Ashcroft. Enough for the spring."
+
+    Mira stares at you for one beat, then goes.
+
+    The crowd in the courtyard doesn't react immediately. Then someone at the front points at the granary and there is a sound — not exactly cheering, more like a collective exhale of something that had been held in for a very long time.
+
+    Hudson comes to you afterward. His expression is difficult to read.
+
+    "That's going to hurt us," he says.
+
+    "I know."
+
+    "Silas would have —" he stops. Starts again. "It was a decisive call."
+
+    *set_stat public_order +15 min:0 max:100
+    *set_stat treasury -18 min:0 max:100
+    *set_stat rel_hudson -4 min:0 max:100
+    *journal Opened the granaries for Millford and Ashcroft. The Treasury took a significant hit. Hudson is unhappy with me. But the people in that courtyard looked like they'd been holding their breath for weeks.
+
+    *page_break
+
+  *selectable_if (presence >= 8) #Go down to the courtyard yourself. Make a promise. [Presence 8]
+    *set peasant_choice_made true
+    *set peasant_crisis_choice "compromise"
+
+    You put on Silas's coat. It fits, more or less. You go downstairs.
+
+    The courtyard goes quiet when you appear at the keep's main door. Sixty people staring at you, several of them angry, most of them afraid. The man at the front — a big weathered farmer with Millford dirt still on his boots — takes a step forward.
+
+    You speak before he can.
+
+    You tell them you know the winter has been brutal. You tell them you know the granary order was wrong, and that it stands corrected as of today — a partial release, enough for the spring, to be distributed fairly through the village stewards. You tell them that Oakhaven does not win the war ahead by starving its own people. And you tell them, very clearly, that the next time Millford or Ashcroft has a problem, the correct channel is a direct letter to this door, and you will personally ensure it is read within a day.
+
+    The farmer looks at you for a long time.
+
+    "The Baron never came out before," he says.
+
+    "I know," you say. "That was a mistake."
+
+    *set_stat public_order +8 min:0 max:100
+    *set_stat treasury -10 min:0 max:100
+    *set_stat presence +1 min:1 max:20
+    *set_stat rel_hudson +2 min:0 max:100
+    *journal Went down to the courtyard personally. Partial grain release and a direct communication channel. Hudson is cautiously impressed. The farmer from Millford said the Baron never came out before. I keep making choices Silas wouldn't have made.
+
+    *page_break
+
+*comment ═══════════════════════════════════════════════════════
+*comment  DAY SEVEN
+*comment ═══════════════════════════════════════════════════════
+
+*label day_seven
+
+The last day of your first week is quiet, relative to the one before it.
+
+Stella comes in the evening. She sits in the chair by the fire that has become her chair, and she opens her notebook, and she does not begin with a lesson.
+
+"You've been functional," she says. It is, from her, a compliment.
+
+"I've been lucky," you say.
+
+"Yes. Also functional." She considers the fire for a moment. "Harper arrives tomorrow. I want to prepare you."
+
+*choice
+  #"How much does she know about the summoning?"
+    "Nothing. She knows Silas had a severe brain fever. She knows he was incapacitated for weeks. She does not know he's dead." Stella pauses. "She will be watching you closely. She knew him better than anyone. You will not be able to fool her indefinitely — but you do not need to fool her indefinitely. You need to hold long enough to build something real with her."
+
+    *set_stat rel_stella +3 min:0 max:100
+
+  #"What was Silas like with her?"
+    Stella's expression shifts slightly. "Careful," she says finally. "He was always careful with her. She was the only person he fully trusted. That made him —" she pauses, "— more guarded with her than with anyone else. Afraid of disappointing her, I think. It made him seem more distant than he was." She turns a page in her notebook without looking at it. "You are already less guarded than he was. That will seem strange to her."
+
+    *set_stat perception +1 min:1 max:20
+    *set_stat rel_stella +2 min:0 max:100
+
+  #"What do I need to do to survive a conversation with her?"
+    "Listen more than you speak. When she references something specific — a place, a person, an event — and you don't recognize it, do not deny it and do not confirm it. Deflect. Ask her a question back." Stella meets your eyes. "And do not let her see you access the Framework interface. The blank-stare effect is obvious at close range."
+
+    *set_stat presence +1 min:1 max:20
+    *set_stat rel_stella +3 min:0 max:100
+
+*page_break
+
+After Stella leaves, you sit alone by the fire.
+
+The week you have just survived sits around you in fragments. Hudson's careful hope and his careful disappointment. Stella's information, always precisely measured, always with some chamber left unlocked. Mira's deliberate silences. The people in the courtyard. The letter from a woman who doesn't know she's writing to the wrong person.
+
+You look at your hands. Silas's hands.
+
+In the corner of your vision, the ghost flickers one more time — just for a moment, just the edge of numbers that don't belong to you — and then it's gone, and it's only your reflection in the dark window, in a body that is starting, in small ways, to feel like yours.
+
+Harper arrives tomorrow.
+
+*checkpoint "End of Week One"
+*save_point
+
+*journal Week one. I don't know who I'm supposed to be. I know I keep making choices the person I'm pretending to be wouldn't have made. I don't know yet if that's a problem or the point.
+
+*goto_scene act_two

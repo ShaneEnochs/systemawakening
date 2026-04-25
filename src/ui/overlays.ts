@@ -13,7 +13,7 @@ import {
   getCheckpoints, CHECKPOINT_PREFIX, decodeSaveCode,
 } from '../systems/saves.js';
 
-import { playerState } from '../core/state.js';
+import { playerState, startup } from '../core/state.js';
 import { escapeHtml } from './narrative.js';
 
 export interface CharacterData {
@@ -514,7 +514,7 @@ export function wireCharCreation(): void {
         validateName(_inputLastName.value,  'Last name'))  return;
     const selected = _charOverlay.querySelector<HTMLElement>('.pronoun-card.selected');
     if (!selected) return;
-    const startScene = 'character_creation';
+    const startScene = startup.sceneList[0] ?? 'year1_season1';
     _charOverlay.classList.add('hidden');
     const overlay = _charOverlay as any;
     if (typeof overlay._trapRelease === 'function') {

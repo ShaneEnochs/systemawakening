@@ -5,7 +5,7 @@
 // playerState and a CRC-16 checksum for corruption detection.
 //
 // Format:  SA1|<base64_payload>|<4_char_hex_crc>
-// Current save version: 9
+// Current save version: 10
 
 import {
   playerState, tempState, currentScene, ip,

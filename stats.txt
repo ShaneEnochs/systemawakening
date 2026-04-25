@@ -1,17 +1,14 @@
-*comment From Baron to Emperor — Stats Panel Layout
+*comment ─── Path to Empire — Stats Panel Layout ───
 
 *stat_group "Identity"
-*stat name "Name"
-*stat family "House"
-*stat title "Title"
+*stat first_name "First Name"
+*stat last_name "Last Name"
+*stat rank "Rank"
 
-*stat_group "Realm"
-*stat_color people accent-cyan
-*stat_color treasury accent-amber
-*stat_color church accent-green
-*stat_color nobility accent-red
+*stat_group "Attributes"
 *stat_registered
 
-*comment ─── Log tab only ───
+*skills_registered
+*inventory
 *journal_section
 *achievements

@@ -1,15 +1,1 @@
-*term "People"
-  The happiness and loyalty of your subjects. Too low and they revolt;
-  too high and mob rule takes hold.
-
-*term "Treasury"
-  Your wealth and financial standing. Too low means bankruptcy;
-  too high attracts resentment and conspiracy.
-
-*term "Church"
-  Your relationship with religious authority. Too low risks
-  excommunication; too high leads to theocratic overreach.
-
-*term "Nobility"
-  Your standing among the aristocracy and gentry. Too low means
-  isolation; too high invites conspiracy from above and anger from below.
+*comment None yet

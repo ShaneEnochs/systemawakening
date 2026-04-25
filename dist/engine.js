@@ -852,7 +852,7 @@ function decodeSaveCode(code) {
       awaitingChoice: json.ac || null,
       statRegistry: json.sr || JSON.parse(JSON.stringify(statRegistry)),
       label: json.lb || null,
-      characterName: fullPlayerState.name ? `${fullPlayerState.name} ${fullPlayerState.family || ""}`.trim() : `${fullPlayerState.first_name || ""} ${fullPlayerState.last_name || ""}`.trim() || "Unknown",
+      characterName: `${fullPlayerState.first_name || fullPlayerState.name || ""} ${fullPlayerState.last_name || fullPlayerState.family || ""}`.trim() || "Unknown",
       timestamp: json.ts || Date.now()
     }
   };
@@ -3499,8 +3499,8 @@ function wireSaveUI(dom, opts) {
     await runStatsScene();
     const char = await showCharacterCreation();
     patchPlayerState({
-      name: char.firstName,
-      family: char.lastName,
+      first_name: char.firstName,
+      last_name: char.lastName,
       pronouns_subject: char.pronouns_subject,
       pronouns_object: char.pronouns_object,
       pronouns_possessive: char.pronouns_possessive,

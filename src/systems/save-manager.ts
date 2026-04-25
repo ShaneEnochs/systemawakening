@@ -142,8 +142,8 @@ export function wireSaveUI(dom: Dom, opts: {
 
     const char = await showCharacterCreation();
     patchPlayerState({
-      name:                       char.firstName,
-      family:                     char.lastName,
+      first_name:                 char.firstName,
+      last_name:                  char.lastName,
       pronouns_subject:           char.pronouns_subject,
       pronouns_object:            char.pronouns_object,
       pronouns_possessive:        char.pronouns_possessive,

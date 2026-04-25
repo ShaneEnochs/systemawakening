@@ -886,7 +886,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   position: fixed;
   inset: 0;
   background: var(--bg-overlay-backdrop, rgba(0, 0, 0, 0.75));
-  backdrop-filter: blur(6px);
+  backdrop-filter: var(--overlay-backdrop-filter, blur(6px));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -994,7 +994,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   padding: 36px 38px 28px;
   background: var(--bg-splash-box, var(--bg-panel));
   border: 1px solid var(--border-dim);
-  backdrop-filter: blur(14px);
+  backdrop-filter: var(--splash-backdrop-filter, blur(14px));
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1320,7 +1320,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   font-size: 0.7rem; letter-spacing: 0.14em;
   color: var(--text-faint); text-transform: uppercase; line-height: 1.8;
 }
-.splash-footer-text span { color: var(--text-dim); }
+.splash-footer-text span { color: var(--text-primary); }
 
 /* ── Shared splash animation ── */
 @keyframes splashFadeUp {

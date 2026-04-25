@@ -90,7 +90,8 @@
   --bg-header:       rgba(26, 21, 16, 0.92);
   --bg-header-accent: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.3), transparent);
   --bg-chapter-bar:  rgba(22, 18, 12, 0.5);
-  --bg-overlay-backdrop: rgba(10, 8, 5, 0.8);
+  --bg-overlay-backdrop: rgba(10, 8, 5, 0.85);
+  --overlay-backdrop-filter: none;
   --overlay-box-glow: none;
 
   /* Chapter cards */
@@ -103,10 +104,11 @@
   --choice-hover-sweep: rgba(200, 165, 90, 0.08);
 
   /* Splash screen — hide digital elements, show parchment */
-  --bg-splash-box: linear-gradient(155deg, rgba(30, 24, 16, 0.97) 0%, rgba(22, 18, 12, 0.98) 100%);
+  --bg-splash-box: var(--bg-panel);
+  --splash-backdrop-filter: none;
   --splash-accent-top: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.4), transparent);
   --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 90, 62, 0.4), transparent);
-  --bg-splash-vignette: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(10, 8, 5, 0.7) 100%);
+  --bg-splash-vignette: none;
   --splash-sigil-display: none;
   --splash-canvas-display: none;
   --splash-sigil-glow: none;

@@ -8,6 +8,14 @@
 
 *comment ─── Player Identity ───
 *comment  first_name and last_name are set by the character creation overlay.
+*create first_name ""
+*create last_name  ""
+*create pronouns_subject            "they"
+*create pronouns_object             "them"
+*create pronouns_possessive         "their"
+*create pronouns_possessive_pronoun "theirs"
+*create pronouns_reflexive          "themself"
+*create pronouns_label              "they/them"
 *create rank "Baron"
 
 *comment ─── Personal Stats (visible in Stats panel) ───

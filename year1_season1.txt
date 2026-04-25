@@ -109,7 +109,7 @@ He reaches behind him, and the hatch snaps shut.
 
 You're a lord and this is how he speaks to you?
 
-**choice
+*choice
   #Let it go. Maybe they do things differently here.
     *goto broken_tree
   #Knock on the hatch again. He needs to show you proper respect.

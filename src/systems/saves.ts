@@ -146,9 +146,7 @@ export function decodeSaveCode(code: string): { ok: true; save: any } | { ok: fa
       awaitingChoice: json.ac || null,
       statRegistry:   json.sr || JSON.parse(JSON.stringify(statRegistry)),
       label:          json.lb || null,
-      characterName:  fullPlayerState.name
-                        ? `${fullPlayerState.name} ${fullPlayerState.family || ''}`.trim()
-                        : `${fullPlayerState.first_name || ''} ${fullPlayerState.last_name || ''}`.trim() || 'Unknown',
+      characterName:  `${fullPlayerState.first_name || fullPlayerState.name || ''} ${fullPlayerState.last_name || fullPlayerState.family || ''}`.trim() || 'Unknown',
       timestamp:      json.ts || Date.now(),
     },
   };

@@ -1,50 +1,22 @@
 *comment ═══════════════════════════════════════════════════════════════
-*comment  THE IMPOSTER BARON — Global Variable Registry
+*comment  Path to Empire
 *comment ═══════════════════════════════════════════════════════════════
 
 *comment ─── Game Metadata ───
-*create game_title "The Imposter Baron"
-*create game_byline "You are the wrong person. Try anyway."
+*create game_title "Path to Empire"
+*create game_byline "Heavy is the Crown"
 
 *comment ─── Player Identity ───
 *comment  first_name and last_name are set by the character creation overlay.
-*comment  rank replaces the reserved word 'title' for Silas's baronial rank.
 *create rank "Baron"
 
 *comment ─── Personal Stats (visible in Stats panel) ───
-*create_stat might "Might" 3
-*create_stat finesse "Finesse" 3
-*create_stat magic "Magic" 3
-*create_stat perception "Perception" 3
-*create_stat presence "Presence" 3
+*create_stat might "Might" 1
+*create_stat finesse "Finesse" 1
+*create_stat magic "Magic" 1
+*create_stat perception "Perception" 1
+*create_stat presence "Presence" 1
 
-*comment ─── Territory Stats (visible in Stats panel) ───
-*create_stat public_order "Public Order" 50
-*create_stat treasury "Treasury" 50
-
-*comment ─── Relationship Stats (hidden — use *set_stat with min:0 max:100) ───
-*create rel_hudson 50
-*create rel_stella 50
-*create rel_harper 50
-
-*comment ─── The Secret ───
-*create confessed false
-*create told_first ""
-
-*comment ─── Knowledge Flags (for throne room argument gates) ───
-*create knows_substrate false
-*create has_archive false
-*create has_transition_plan false
-
-*comment ─── Story State Flags ───
-*create ghost_seen_count 0
-*create stella_warned false
-*create framework_investigations 0
-*create peasant_crisis_choice ""
-*create harper_banquet_passed false
-*create border_skirmish_choice ""
-*create thorne_handled_by ""
-*create inquisitor_note_filed false
 
 *comment ─── Engine Systems ───
 *create skills []
@@ -54,8 +26,4 @@
 
 *comment ─── Scene List ───
 *scene_list
-  character_creation
-  week_one
-  act_two
-  act_three
-  ending
+  year1_season1

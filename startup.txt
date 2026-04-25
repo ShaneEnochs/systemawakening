@@ -5,6 +5,7 @@
 *comment ─── Game Metadata ───
 *create game_title "Path to Empire"
 *create game_byline "Heavy is the Crown"
+*create build_number "Alpha 0.1.0"
 
 *comment ─── Player Identity ───
 *comment  first_name and last_name are set by the character creation overlay.

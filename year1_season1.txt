@@ -18,7 +18,7 @@ He holds out a pinky.
 
     "I don't get a pinky promise?" you hear Alex ask his own nurse.
 
-    She's older, with the no-nonsense bearing of someone who has seen every variety of nervous patient and stopped finding them charming years ago. You watch her fix him with a deadpan stare and shake her head.
+    She's older with a no-nonsense bearing to her. You watch her fix him with a deadpan stare as a response to his inquiry.
 
     "You'll be fine."
 
@@ -28,9 +28,9 @@ He holds out a pinky.
   #Smile and nod, but don't hook your pinky.
     You give the nurse a polite smile, but you don't hook your pinky with his. You're not a kid.
 
-    "I'll take some of that action," Alex says, peering around his own nurse. You glance at her. She's older, with the expression of someone who ran out of patience for other people's jokes a long time ago. She proves you right without a word.
+    "I'll take some of that action," Alex says, peering around his own nurse. You glance at her, and see that she's older and not someone who would likely be up for any kind of shenanigans.
 
-    "My man," your nurse says, stepping over and hooking his pinky with Alex's. They both grin, and despite yourself, you smile too.
+    "My man," your nurse says, stepping over and hooking his pinky with Alex's. They both grin, and unable to help yourself, you smile too.
 
     The two nurses leave, and a tall, thin man in plaid takes their place, a lanyard with an ID badge bouncing against his chest.
 
@@ -38,25 +38,33 @@ He holds out a pinky.
 
 *label induction
 
-"Good morning, folks," he says, addressing you and the four other testers in the room. "Thank you for being here. We appreciate your willingness to take part in the alpha. Now, you'll notice placeholder names for NPCs and locations throughout. Don't worry about those. The actual names come later. Your job is to test the gameplay itself.
+"Good morning, folks," he says, addressing you and the four other pod testers in the room. "Thanks for coming in. I know the NDA process was a headache, but we think we’ve built something incredible here and hopefully you'll agree once you're inside.
 
-"Normally alpha testers focus on a single level or aspect of a game, but [i]Path of Empire[/i] is too integrated and expansive for that approach, and we were lucky enough to fill our roster in one round. So you'll be testing the whole thing. When you're ready, place your hands in the nanite gel. That'll initiate the induction process."
+"A quick heads-up before we start," he continues. "You’re going to see a lot of placeholder text. 'Crimson City', 'Cinnabar Guard 4', stuff like that. Ignore it. The narrative team is still finalizing the lore and naming conventions, and it'll all be updated before beta testing. There are some quests available, but we don't care too much about the story right now. We want to test the physics, the economy, and the skill trees. We need you to push the boundaries and try to break the mechanics if you can.
+
+"Usually, we’d isolate you to a single level or a specific combat loop, but as you'll see soon, Path of Empire doesn't work like that. The systems are too tangled and everything bleeds into everything else. If we split it up, the simulation just falls apart so we’re dropping you into the complete build and you'll have full run of the map.
+
+"Whenever you're ready, go ahead and place your hands on the armrest basins. It's going to feel a little weird, but it's normal. Just keep your hands still, remember to breath, and we'll trigger the induction sequence."
+
+The man, who still hasn't introduced himself, gives a winning smile as he looks each of you in the eye in turn.
+
+"See you on the other side!"
 
 *page_break
 
-You place your hands on the two silver half-spheres at the ends of the armrests. They're cold at first, smooth and slightly yielding, like pressing your palms into chilled silicone. But as your body heat seeps into them, your hands begin to sink. Not through them, exactly. Into them. The material gives way without resistance, and you feel a faint crawling sensation spread up your wrists and forearms, like pins and needles, but moving with purpose.
+You place your hands on the two silver half-spheres at the ends of the armrests. They're cold at first, smooth and slightly yielding, like pressing your palms against chilled silicone. As your body heat seeps into them, your hands begin to sink into the material, and you feel a faint pins and needles sensation spread up your wrists and forearms.
 
-You've read about the breakthroughs in nanomachines and how they've transformed military and medical applications. Somehow, [i]All These Worlds[/i] has secured FDA approval to use them in their pods for fully integrated VR. A first of its kind, the articles all said. You hadn't really thought about what that meant until right now, with millions of microscopic machines working their way into your bloodstream.
+You've read about the breakthroughs in nanomachines and how they've transformed military and medical applications. Somehow, [i]All These Worlds[/i] has secured FDA approval to use them in their pods for fully integrated VR. A first of its kind, the articles said. You hadn't really thought about what that meant until right now, with millions of microscopic machines working their way into your bloodstream and heading toward your brain.
 
-The half-spheres slowly disappear as the nanites absorb your body heat for energy and migrate between your skin cells, spreading through your system. You feel a deep chill follow them inward, like swallowing cold water on a hot day, except from the outside in. The glass pod cover slides into place above you with a soft, pressurized hiss, sealing you inside. A woman's voice comes through the speakers on either side of your head. It's calm, unhurried, the voice of someone reading from a script they have read a hundred times.
+The half-spheres slowly disappear as the nanites absorb your body heat and glucose (thank goodness for the chocolate chip cookie they gave you before coming in here) for energy, migrating between your skin cells and spreading through your entire system. You feel a deep chill follow them inward, like swallowing ice-cold water. The glass pod cover slides into place above you with a soft, pressurized hiss, sealing you inside. A woman's calm voice comes through the speakers on either side of your head.
 
 "Induction process commencing. Please continue breathing normally. Induction in 3... 2... 1..."
 
 *page_break
 
-You expect some kind of transition. A fade, a loading screen, a moment of darkness. There isn't one. One moment you're looking up through the glass canopy at the white ceiling of the induction room. The next, you're staring at the wooden interior of a carriage, worn smooth in the spots where countless hands have gripped it. You can smell sawdust and horse and something faintly like rain. The wheels rattle over uneven ground and the whole frame sways with it. Outside the window, trees blur past.
+You expect some kind of transition. A fade, a loading screen, or maybe even a moment of darkness. There isn't one. 
 
-The abruptness is jarring. Not unpleasant, but jarring. The total immersion is almost overwhelming, even though you knew it would be like this. Reading about it and experiencing it are very different things.
+One moment you're looking up through the glass canopy at the white ceiling of the induction room, and the next you're staring at the wooden interior of a carriage and feeling it bump as it travels. Your nose is assaulted with a host of unpleasant smells. The entire wooden frame of the carriage groans and squeaks and sways continuously, the iron-banded wheels rattle over deep mud ruts. Outside a small, grime-streaked window, a dense line of trees blurs past.
 
 A box appears in your vision.
 
@@ -64,6 +72,8 @@ A box appears in your vision.
 You have a new private message from Baron Landry.
 Would you like to read it now?
 *end_system
+
+Baron Landry? Is that Alex?
 
 *choice
   #Yes.
@@ -74,7 +84,76 @@ Would you like to read it now?
 *label accept_message1
 
 *system [Baron Landry]
-${first_name}, this is insane, right? I thought we'd start in the same place, but apparently there's a solo tutorial phase first. We can still communicate through messages. It looks like we can only send one per day to the same person, so you might want to hold off on replying unless something comes up.
+${first_name}! This is insane, right? I thought we'd start in the same place, but apparently there's a solo tutorial phase first. We can still communicate through messages. It looks like we can only send one per day to the same person, so you might want to hold off on replying unless something comes up.
 
-I don't know if it's the same for you, but I'm in a carriage right now. I talked to the driver NPC and he says we're heading to the Barony of Apricot. I'm going to be the new baron! If you're in a similar situation, talk to your driver. He might be the game's guide. Anyway, good luck. Talk soon.
+I don't know if it's the same for you, but I'm in a carriage right now. I talked to the driver NPC and he says we're heading to the Barony of Apricot. I'm going to be the new baron! If you're in a similar situation, talk to your driver. He might be the game's guide. 
+
+Anyway, good luck, and talk soon!
 *end_system
+
+Well... that's certainly interesting. 
+
+You shift on the hard wooden bench, bracing yourself against the erratic swaying, and rap your knuckles against the small hatch at the front of the cabin. The wooden panel slides open.
+
+A man in a heavy, soaked wool coat glances back at you, rainwater dripping from the wide brim of his leather hat.
+
+"Uh, hey," you call out over the loud clatter of the iron wheels. "Are we heading to... Apricot City?"
+
+The driver squints, looking at you like you're an idiot. "Apricot ain't no city, [i]my lord,[/i]" he says in a slow, gravely voice. Yep, he definitely thinks you're an idiot. "Ain't hardly a village, neither. It's a fair piece north of here. We're making for the Wisteria barony. Same as we was when we set out."
+
+"Right... And what's my role here?"
+
+"You take a knock to the head?" he asks, turning back toward the horses. "You're the new baron. Whole place is yours, assumin' the bandits don't gut us 'fore we get there."
+
+He reaches behind him, and the hatch snaps shut.
+
+You're a lord and this is how he speaks to you?
+
+**choice
+  #Let it go. Maybe they do things differently here.
+    *goto broken_tree
+  #Knock on the hatch again. He needs to show you proper respect.
+    *goto knock_on_hatch
+
+
+*label knock_on_hatch
+
+The wood slides open with a clack. The driver looks back. "What now?"
+
+"Let's get one thing straight," you say. "I'm a baron, and you are a driver. Don't shut the door in my face. I wasn't done speaking."
+
+He stares at you for a long second. The carriage hits a deep rut, shaking you both, but his grip on the reins doesn't slip.
+
+"Beggin' your pardon, [i]my lord[/i]," he says, apparently taking extra effort to ensure you hear the disrespect. "I'll be sure to mind my manners while I try to keep the horses on the road and our throats uncut. How can I help you, Baron?"
+
+You stare at each other for a long time, and you realize you don't actually know what else to say.
+
+"Well, I'm done now," you say finally.
+
+The driver continues staring as the rain beats down on him for several moments more. "Very good," he says, and closes the hatch again.
+
+You sure showed him.
+
+*page_break
+
+*goto broken_tree
+
+*label decline_message1
+
+You mentally selected No, and the box disappeared. You can always look at it later.
+
+*page_break 
+
+*label broken_tree
+
+The carriage gives a violent lurch, throwing you forward against the opposite bench. The iron wheels screech in the mud. Outside, the horses whinny in protest as the whole rig grinds to a sudden halt.
+
+You catch your balance and wipe a circle of condensation off the grimy window. Through the rain and the gloom of the trees, you spot the problem. A massive, splintered pine log stretches dead across the road.
+
+It’s the oldest cliché in the book. You don't need a tutorial prompt to figure out what happens next.
+
+You bang on the wooden hatch. It slides open immediately. The driver's face is tense, rainwater dripping from his chin. He’s already reaching down into the footwell.
+
+"There's a log in the road," you say. "That's an ambush, right? Bandits?"
+
+"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, my lord. 'Less you feel like catchin' an arrow with your teeth."

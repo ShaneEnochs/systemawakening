@@ -3346,7 +3346,7 @@ function wireCharCreation() {
     if (validateName(_inputFirstName.value, "First name") || validateName(_inputLastName.value, "Last name")) return;
     const selected = _charOverlay.querySelector(".pronoun-card.selected");
     if (!selected) return;
-    const startScene = "character_creation";
+    const startScene = startup.sceneList[0] ?? "year1_season1";
     _charOverlay.classList.add("hidden");
     const overlay = _charOverlay;
     if (typeof overlay._trapRelease === "function") {
@@ -3510,7 +3510,7 @@ function wireSaveUI(dom, opts) {
       pronouns_honorific: char.pronouns_honorific,
       title: char.pronouns_label === "she/her" ? "Baroness" : "Baron"
     });
-    await gotoScene("character_creation");
+    await gotoScene(char.startScene);
   });
   dom.splashLoadBtn?.addEventListener("click", () => {
     document.getElementById("splash-main")?.classList.add("hidden");

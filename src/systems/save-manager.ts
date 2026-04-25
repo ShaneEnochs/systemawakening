@@ -154,7 +154,7 @@ export function wireSaveUI(dom: Dom, opts: {
       title:                      char.pronouns_label === 'she/her' ? 'Baroness' : 'Baron',
     });
 
-    await gotoScene('character_creation');
+    await gotoScene(char.startScene);
   });
 
   // Continue (splash load) — hide #splash-main, show save slots

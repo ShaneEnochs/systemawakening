@@ -1,0 +1,80 @@
+*title [Prologue] Induction
+
+The stack of papers you have to sign for the NDA is taller than your mortgage documents. You diligently read the first twenty pages or so, but skim the rest, eager to get started. The lawyer representing the VR game development company [i]All These Worlds[/i] frowns in clear disapproval as you sign and initial page after page without reading them, but NDAs usually boil down to "don't talk about it or we'll sue you." As you have no intention of doing that, you should be fine. Right?
+
+You recline in the pod and glance over at your friend and coworker, Alex Landry, climbing into the pod beside yours. One hundred spots in the entire alpha, and somehow he managed to not only get one, but two of them. Apparently he had been sitting at a bar a couple weeks back, deep in misery over the latest breakup which had astonishingly lasted almost three weeks this time. He got to talking with the guy on the next stool over who turned out to be a developer at [i]All These Worlds[/i] and he, too, was finding some comfort at the bottom of a glass. 
+
+They had spent the better part of three hours doing what people in that situation do: drink too much and tell a complete stranger things they probably shouldn't. But trauma bonding is a thing, and in this case, it worked out pretty well for the both of you because somewhere in the middle of all that, the developer had offered Alex a spot in the alpha. How (or why) your friend had then parlayed that offer into a second invite for you, you have no idea, but you will forever be thankful for it, and you'll probably owe him an infinite number of favors for the rest of both of your lives.
+
+Alex grins at you as the nurses begin attaching electrodes to your forehead, chest, wrists, and ankles. When they finish, you eye the tangle of wires with mild unease.
+
+"They're just so we can monitor your vitals while you're in there," says the nurse attending to you. He's a big guy, broad through the shoulders, with hands that look like they could palm a basketball without trying. You find yourself wondering if he played college ball, or maybe just never stopped lifting. "Nothing to worry about. This is completely safe."
+
+He holds out a pinky.
+
+*choice
+  #Hook your pinky in his.
+    You hook your pinky in his, completing the sacred promise. He smiles broadly, and you find yourself liking the guy immediately.
+
+    "I don't get a pinky promise?" you hear Alex ask his own nurse.
+
+    She's older, with the no-nonsense bearing of someone who has seen every variety of nervous patient and stopped finding them charming years ago. You watch her fix him with a deadpan stare and shake her head.
+
+    "You'll be fine."
+
+    The two nurses leave, and a tall, thin man in plaid takes their place, a lanyard with an ID badge bouncing against his chest.
+
+    *goto induction
+  #Smile and nod, but don't hook your pinky.
+    You give the nurse a polite smile, but you don't hook your pinky with his. You're not a kid.
+
+    "I'll take some of that action," Alex says, peering around his own nurse. You glance at her. She's older, with the expression of someone who ran out of patience for other people's jokes a long time ago. She proves you right without a word.
+
+    "My man," your nurse says, stepping over and hooking his pinky with Alex's. They both grin, and despite yourself, you smile too.
+
+    The two nurses leave, and a tall, thin man in plaid takes their place, a lanyard with an ID badge bouncing against his chest.
+
+    *goto induction
+
+*label induction
+
+"Good morning, folks," he says, addressing you and the four other testers in the room. "Thank you for being here. We appreciate your willingness to take part in the alpha. Now, you'll notice placeholder names for NPCs and locations throughout. Don't worry about those. The actual names come later. Your job is to test the gameplay itself.
+
+"Normally alpha testers focus on a single level or aspect of a game, but [i]Path of Empire[/i] is too integrated and expansive for that approach, and we were lucky enough to fill our roster in one round. So you'll be testing the whole thing. When you're ready, place your hands in the nanite gel. That'll initiate the induction process."
+
+*page_break
+
+You place your hands on the two silver half-spheres at the ends of the armrests. They're cold at first, smooth and slightly yielding, like pressing your palms into chilled silicone. But as your body heat seeps into them, your hands begin to sink. Not through them, exactly. Into them. The material gives way without resistance, and you feel a faint crawling sensation spread up your wrists and forearms, like pins and needles, but moving with purpose.
+
+You've read about the breakthroughs in nanomachines and how they've transformed military and medical applications. Somehow, [i]All These Worlds[/i] has secured FDA approval to use them in their pods for fully integrated VR. A first of its kind, the articles all said. You hadn't really thought about what that meant until right now, with millions of microscopic machines working their way into your bloodstream.
+
+The half-spheres slowly disappear as the nanites absorb your body heat for energy and migrate between your skin cells, spreading through your system. You feel a deep chill follow them inward, like swallowing cold water on a hot day, except from the outside in. The glass pod cover slides into place above you with a soft, pressurized hiss, sealing you inside. A woman's voice comes through the speakers on either side of your head. It's calm, unhurried, the voice of someone reading from a script they have read a hundred times.
+
+"Induction process commencing. Please continue breathing normally. Induction in 3... 2... 1..."
+
+*page_break
+
+You expect some kind of transition. A fade, a loading screen, a moment of darkness. There isn't one. One moment you're looking up through the glass canopy at the white ceiling of the induction room. The next, you're staring at the wooden interior of a carriage, worn smooth in the spots where countless hands have gripped it. You can smell sawdust and horse and something faintly like rain. The wheels rattle over uneven ground and the whole frame sways with it. Outside the window, trees blur past.
+
+The abruptness is jarring. Not unpleasant, but jarring. The total immersion is almost overwhelming, even though you knew it would be like this. Reading about it and experiencing it are very different things.
+
+A box appears in your vision.
+
+*system [Private Message]
+You have a new private message from Baron Landry.
+Would you like to read it now?
+*end_system
+
+*choice
+  #Yes.
+    *goto accept_message1
+  #No.
+    *goto decline_message1
+
+*label accept_message1
+
+*system [Baron Landry]
+${first_name}, this is insane, right? I thought we'd start in the same place, but apparently there's a solo tutorial phase first. We can still communicate through messages. It looks like we can only send one per day to the same person, so you might want to hold off on replying unless something comes up.
+
+I don't know if it's the same for you, but I'm in a carriage right now. I talked to the driver NPC and he says we're heading to the Barony of Apricot. I'm going to be the new baron! If you're in a similar situation, talk to your driver. He might be the game's guide. Anyway, good luck. Talk soon.
+*end_system

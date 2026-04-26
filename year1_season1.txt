@@ -73,11 +73,11 @@ A thought occurs to you. You have no idea how to interact with this world or see
 *system [Welcome to Path to Empire]
 Identity: ${title} ${first_name} ${last_name}
 
-Might: {might}
-Finesse: {finesse}
-Magic: {magic}
-Perception: {perception}
-Presence: {presence}
+Might: ${might}
+Finesse: ${finesse}
+Magic: ${magic}
+Perception: ${perception}
+Presence: ${presence}
 *end_system
 
 You study the glowing text, swiping your hand through it to see how the interface reacts to touch. The screen ripples slightly but stays locked in your field of vision until you dismiss it with a thought.

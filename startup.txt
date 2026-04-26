@@ -17,7 +17,8 @@
 *create pronouns_possessive_pronoun "theirs"
 *create pronouns_reflexive          "themself"
 *create pronouns_label              "they/them"
-*create title ""
+*create pronouns_honorific          "lord"
+*create title                       "Baron"
 
 *comment ─── Personal Stats (visible in Stats panel) ───
 *create_stat might "Might" 1
@@ -39,7 +40,6 @@
 *create clusters_this_tier 0
 *create branch_state ""
 *create pending_event ""
-*create title "Baron"
 
 *comment ─── Engine Systems ───
 *create skills []

@@ -66,6 +66,24 @@ You expect some kind of transition. A fade, a loading screen, or maybe even a mo
 
 One moment you're looking up through the glass canopy at the white ceiling of the induction room, and the next you're staring at the wooden interior of a carriage and feeling it bump as it travels. Your nose is assaulted with a host of unpleasant smells. The entire wooden frame of the carriage groans and squeaks and sways continuously, the iron-banded wheels rattle over deep mud ruts. Outside a small, grime-streaked window, a dense line of trees blurs past.
 
+You spend the first few minutes just taking it all in. The sensory detail is staggering. You examine your hands, noting the dirt under your fingernails and the coarse weave of the wool pants you're wearing. The chill of the air feels real. You even have a dull ache in your lower back from sitting on the hard wooden bench.
+
+A thought occurs to you. You have no idea how to interact with this world or see your stats. You attempt to mentally call up your system menu, and to your surprise, it actually works. A translucent screen pops into existence in front of your face.
+
+*system [Welcome to Path to Empire]
+Identity: ${title} ${first_name} ${last_name}
+
+Might: {might}
+Finesse: {finesse}
+Magic: {magic}
+Perception: {perception}
+Presence: {presence}
+*end_system
+
+You study the glowing text, swiping your hand through it to see how the interface reacts to touch. The screen ripples slightly but stays locked in your field of vision until you dismiss it with a thought.
+
+After a few minutes of listening to the rain and getting thrown against the wall by the terrible, or perhaps non-existent, suspension, a sudden chime sounds in your head.
+
 A box appears in your vision.
 
 *system [Private Message]
@@ -109,7 +127,7 @@ He reaches behind him, and the hatch snaps shut.
 
 You're a lord and this is how he speaks to you?
 
-*choice
+**choice
   #Let it go. Maybe they do things differently here.
     *goto broken_tree
   #Knock on the hatch again. He needs to show you proper respect.
@@ -150,10 +168,11 @@ The carriage gives a violent lurch, throwing you forward against the opposite be
 
 You catch your balance and wipe a circle of condensation off the grimy window. Through the rain and the gloom of the trees, you spot the problem. A massive, splintered pine log stretches dead across the road.
 
-It’s the oldest cliché in the book. You don't need a tutorial prompt to figure out what happens next.
+How incredibly cliché. Highway bandits? You hope the developers at least programmed them to do something interesting. You pat down your clothes, checking your belt and pockets for a weapon. Nothing.
 
-You bang on the wooden hatch. It slides open immediately. The driver's face is tense, rainwater dripping from his chin. He’s already reaching down into the footwell.
+You knock on the wooden hatch and it slides open. The driver's face is tight with tension.
 
-"There's a log in the road," you say. "That's an ambush, right? Bandits?"
+"That log in the road," you say. "That's an ambush, right? Bandits?"
 
-"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, my lord. 'Less you feel like catchin' an arrow with your teeth."
+"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, [i]my lord[/i]. 'Less you feel like catchin' an arrow with your teeth."
+

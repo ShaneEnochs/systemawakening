@@ -17,7 +17,6 @@
 *create pronouns_possessive_pronoun "theirs"
 *create pronouns_reflexive          "themself"
 *create pronouns_label              "they/them"
-*create title ""
 
 *comment ─── Personal Stats (visible in Stats panel) ───
 *create_stat might "Might" 1

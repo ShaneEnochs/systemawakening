@@ -2041,7 +2041,7 @@ function formatText(text) {
       return resolvePronoun(lower, isCapital).replace(/\*/g, "&#42;");
     }
   );
-  result = result.replace(/\[b\](.*?)\[\/b\]/g, "<strong>$1</strong>").replace(/\[i\](.*?)\[\/i\]/g, "<em>$1</em>").replace(/\[center\](.*?)\[\/center\]/g, '<span class="text-center">$1</span>');
+  result = result.replace(/\[b\](.*?)\[\/b\]/g, "<strong>$1</strong>").replace(/\[i\](.*?)\[\/i\]/g, "<em>$1</em>").replace(/\[center\](.*?)\[\/center\]/gs, '<span class="text-center">$1</span>');
   const COLOR_TAGS = [
     "cyan",
     "amber",

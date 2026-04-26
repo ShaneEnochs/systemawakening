@@ -178,7 +178,7 @@ export function formatText(text: unknown): string {
   result = result
     .replace(/\[b\](.*?)\[\/b\]/g, '<strong>$1</strong>')
     .replace(/\[i\](.*?)\[\/i\]/g, '<em>$1</em>')
-    .replace(/\[center\](.*?)\[\/center\]/g, '<span class="text-center">$1</span>');
+    .replace(/\[center\](.*?)\[\/center\]/gs, '<span class="text-center">$1</span>');
 
   // 4. Inline color spans: [cyan]...[/cyan], [amber]...[/amber], etc.
   const COLOR_TAGS = [

@@ -174,10 +174,11 @@ export function formatText(text: unknown): string {
     }
   );
 
-  // 3. Bold and italic: [b]...[/b] and [i]...[/i]
+  // 3. Bold, italic, and center: [b]...[/b], [i]...[/i], [center]...[/center]
   result = result
     .replace(/\[b\](.*?)\[\/b\]/g, '<strong>$1</strong>')
-    .replace(/\[i\](.*?)\[\/i\]/g, '<em>$1</em>');
+    .replace(/\[i\](.*?)\[\/i\]/g, '<em>$1</em>')
+    .replace(/\[center\](.*?)\[\/center\]/g, '<span class="text-center">$1</span>');
 
   // 4. Inline color spans: [cyan]...[/cyan], [amber]...[/amber], etc.
   const COLOR_TAGS = [

@@ -2792,6 +2792,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 
 .hidden        { display: none; }
 .sys-highlight { color: var(--cyan); font-weight: 600; }
+.text-center   { display: block; text-align: center; }
 
 
 /* ============================================================

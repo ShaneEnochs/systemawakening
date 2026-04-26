@@ -506,7 +506,6 @@ body {
   flex: 1;
   overflow: hidden;
   position: relative;
-  overflow-x: clip;
 }
 
 #narrative-panel {
@@ -2801,7 +2800,7 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 
 @media (max-width: 768px) {
   /* Status toggle already always visible */
-  #game-main { position: relative; overflow-x: clip; }
+  #game-main { position: relative; }
 
   /* Status panel sizing on mobile */
   #status-panel {

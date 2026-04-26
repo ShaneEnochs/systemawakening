@@ -235,6 +235,22 @@ export function addParagraph(text: string, cls = 'narrative-paragraph'): void {
 }
 
 // ---------------------------------------------------------------------------
+// buildSystemParas — splits raw system-block text into <p> elements,
+// applying text-center to lines inside [center]...[/center] blocks.
+// ---------------------------------------------------------------------------
+function buildSystemParas(raw: string): string {
+  const lines = raw.replace(/\\n/g, '\n').split('\n');
+  let centered = false;
+  return lines.map(line => {
+    if (line.includes('[center]'))  { centered = true;  line = line.replace(/\[center\]/g, ''); }
+    const isLineCentered = centered;
+    if (line.includes('[/center]')) { centered = false; line = line.replace(/\[\/center\]/g, ''); }
+    const cls = isLineCentered ? 'system-block-para text-center' : 'system-block-para';
+    return `<p class="${cls}">${formatText(line)}</p>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------------------
 // addSystem — renders a system block
 // ---------------------------------------------------------------------------
 export function addSystem(text: string, label?: string): void {
@@ -244,9 +260,7 @@ export function addSystem(text: string, label?: string): void {
   div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
 
   const labelHtml = label ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(label)}]</span><div class="system-block-rule"></div></div>` : '';
-  const paras = formatText(text).replace(/\\n/g, '\n').split('\n');
-  const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
-  div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
+  div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(text)}</div>`;
   _narrativeContent.insertBefore(div, _choiceArea);
 
   _narrativeLog.push({ type: 'system', text, ...(label ? { systemLabel: label } : {}) });
@@ -467,9 +481,7 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
         div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
         const labelHtml = entry.systemLabel ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span><div class="system-block-rule"></div></div>` : '';
-        const paras = formatText(entry.text).replace(/\\n/g, '\n').split('\n');
-        const formatted = paras.map(p => `<p class="system-block-para">${p}</p>`).join('');
-        div.innerHTML = `${labelHtml}<div class="system-block-text">${formatted}</div>`;
+        div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(entry.text)}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

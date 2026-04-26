@@ -99,15 +99,15 @@ A man in a heavy, soaked wool coat glances back at you, rainwater dripping from 
 
 "Uh, hey," you call out over the loud clatter of the iron wheels. "Are we heading to... Apricot City?"
 
-The driver squints, looking at you like you're an idiot. "Apricot ain't no city, [i]my lord,[/i]" he says in a slow, gravely voice. Yep, he definitely thinks you're an idiot. "Ain't hardly a village, neither. It's a fair piece north of here. We're making for the Wisteria barony. Same as we was when we set out."
+The driver squints, looking at you like you're an idiot. "Apricot ain't no city, [i]my {lord},[/i]" he says in a slow, gravely voice. Yep, he definitely thinks you're an idiot. "Ain't hardly a village, neither. It's a fair piece north of here. We're making for the Wisteria barony. Same as we was when we set out."
 
 "Right... And what's my role here?"
 
-"You take a knock to the head?" he asks, turning back toward the horses. "You're the new baron. Whole place is yours, assumin' the bandits don't gut us 'fore we get there."
+"You take a knock to the head?" he asks, turning back toward the horses. "You're the new ${title_lc}. Whole place is yours, assumin' the bandits don't gut us 'fore we get there."
 
 He reaches behind him, and the hatch snaps shut.
 
-You're a lord and this is how he speaks to you?
+You're a {lord} and this is how he speaks to you?
 
 *choice
   #Let it go. Maybe they do things differently here.
@@ -120,11 +120,11 @@ You're a lord and this is how he speaks to you?
 
 The wood slides open with a clack. The driver looks back. "What now?"
 
-"Let's get one thing straight," you say. "I'm a baron, and you are a driver. Don't shut the door in my face. I wasn't done speaking."
+"Let's get one thing straight," you say. "I'm a ${title_lc}, and you are a driver. Don't shut the door in my face. I wasn't done speaking."
 
 He stares at you for a long second. The carriage hits a deep rut, shaking you both, but his grip on the reins doesn't slip.
 
-"Beggin' your pardon, [i]my lord[/i]," he says, apparently taking extra effort to ensure you hear the disrespect. "I'll be sure to mind my manners while I try to keep the horses on the road and our throats uncut. How can I help you, Baron?"
+"Beggin' your pardon, [i]my {lord}[/i]," he says, apparently taking extra effort to ensure you hear the disrespect. "I'll be sure to mind my manners while I try to keep the horses on the road and our throats uncut. How can I help you, ${title}?"
 
 You stare at each other for a long time, and you realize you don't actually know what else to say.
 
@@ -156,4 +156,4 @@ You bang on the wooden hatch. It slides open immediately. The driver's face is t
 
 "There's a log in the road," you say. "That's an ambush, right? Bandits?"
 
-"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, my lord. 'Less you feel like catchin' an arrow with your teeth."
+"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, my {lord}. 'Less you feel like catchin' an arrow with your teeth."

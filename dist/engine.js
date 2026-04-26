@@ -3508,7 +3508,8 @@ function wireSaveUI(dom, opts) {
       pronouns_reflexive: char.pronouns_reflexive,
       pronouns_label: char.pronouns_label,
       pronouns_honorific: char.pronouns_honorific,
-      title: char.pronouns_label === "she/her" ? "Baroness" : "Baron"
+      title: char.pronouns_label === "she/her" ? "Baroness" : "Baron",
+      title_lc: char.pronouns_label === "she/her" ? "baroness" : "baron"
     });
     await gotoScene(char.startScene);
   });

@@ -40,6 +40,7 @@
 *create branch_state ""
 *create pending_event ""
 *create title "Baron"
+*create title_lc "baron"
 
 *comment ─── Engine Systems ───
 *create skills []

@@ -27,12 +27,6 @@
 *create_stat perception "Perception" 1
 *create_stat presence "Presence" 1
 
-*comment ─── Kingdom Meters (visible in Stats panel) ───
-*create_stat people "People" 50
-*create_stat treasury "Treasury" 50
-*create_stat church "Church" 50
-*create_stat nobility "Nobility" 50
-
 *comment ─── Progression State ───
 *create tier "baron"
 *create prestige 0

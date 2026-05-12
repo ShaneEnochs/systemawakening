@@ -372,7 +372,7 @@ function refreshCheckpoints(): void {
       <div class="checkpoint-card" data-slot="${cp.slot}">
         <span class="checkpoint-label">${escapeHtml(cp.label)}</span>
         <span class="checkpoint-time">${fmt.format(new Date(cp.timestamp))}</span>
-        <button class="slot-load-btn slot-load-btn--load checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
+        <button class="btn-base btn-ghost checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
       </div>`).join('');
   }
 

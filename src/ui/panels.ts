@@ -186,7 +186,7 @@ function buildStatsTabHtml(entries: StatsEntry[]): string {
 function buildSkillsTabHtml(): string {
   const hasSkillStore = skillRegistry.length > 0;
   let html = hasSkillStore
-    ? `<div class="status-store-row"><button class="status-store-btn" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>`
+    ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>`
     : '';
 
   const ownedSkills = Array.isArray(playerState.skills) ? playerState.skills : [];
@@ -242,7 +242,7 @@ function buildSkillsTabHtml(): string {
 function buildInventoryTabHtml(): string {
   const hasItemStore = itemRegistry.length > 0;
   let html = hasItemStore
-    ? `<div class="status-store-row"><button class="status-store-btn" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>`
+    ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>`
     : '';
 
   const invItems = Array.isArray(playerState.inventory) ? playerState.inventory : [];
@@ -590,7 +590,7 @@ function renderSkillsTab(container: Element, xp: number): void {
             <div class="store-card-desc">${escapeDesc(skill.description)}</div>
             <div class="store-card-actions">
               <span class="store-cost-badge ${badgeCls}">${skill.xpCost} XP</span>
-              <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+              <button class="btn-base btn-primary" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
             </div>
           </div>
         </div>`;
@@ -614,7 +614,7 @@ function renderSkillsTab(container: Element, xp: number): void {
     });
   });
 
-  container.querySelectorAll<HTMLElement>('.store-purchase-btn').forEach(btn => {
+  container.querySelectorAll<HTMLElement>('button[data-type="skill"]').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.key ?? '';
       if (purchaseSkill(key)) {
@@ -662,14 +662,14 @@ function renderItemsTab(container: Element, xp: number): void {
         </div>
         <div class="store-card-actions">
           <span class="store-cost-badge ${badgeCls}">${item.xpCost} XP</span>
-          <button class="store-purchase-btn" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
+          <button class="btn-base btn-primary" ${canAfford ? '' : 'disabled'} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
         </div>
       </div>`;
   });
 
   container.innerHTML = html;
 
-  container.querySelectorAll<HTMLElement>('.store-purchase-btn').forEach(btn => {
+  container.querySelectorAll<HTMLElement>('button[data-type="item"]').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.key ?? '';
       if (purchaseItem(key)) {

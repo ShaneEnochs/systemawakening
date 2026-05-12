@@ -1,5 +1,19 @@
 # Changelog
 
+## Phase 11 — Structural UI Cleanup Pass (3 changes)
+**Date:** 2026-05-12
+
+### Change 1 — Shared Spacing Scale
+Added identical `--space-1` through `--space-7` spacing tokens to the fantasy theme token block, then snapped eligible non-responsive `padding`, `margin`, and `gap` declarations in `themes/base.css` and the save-code / character-creation inline styles in `index.html` to that scale. Pixel-perfect `0`-`3px`, non-pixel values, keyframes, media-query overrides, and non-spacing offsets were left alone. Known bugs: none observed. Deferred: responsive media-query spacing remains raw for a later focused pass. Lesson learned: one-line CSS rules need property-level replacement so nearby non-spacing values such as radii and minimum heights are not accidentally tokenized.
+
+### Change 2 — Standard Button Consolidation
+Migrated the header, save/load/export, save-code, overlay, character-begin, checkpoint-load, status-store, and store purchase buttons onto the shared `btn-base` variants (`btn-primary`, `btn-primary--amber`, `btn-ghost`, and `btn-ghost--danger`). Removed the bespoke button style blocks and redundant fantasy-theme overrides, kept layout-only selectors where needed, and updated TypeScript-rendered buttons in `panels.ts` and `overlays.ts`; `dist/engine.js` was rebuilt from source. Known bugs: none observed. Deferred: splash action buttons, icon/delete buttons, accordion toggles, tab strips, and link-style controls intentionally keep their specialized styling. Lesson learned: data attributes and IDs make better behavior hooks than styling classes when consolidating components.
+
+### Change 3 — Sentence-Case Standard Buttons
+Changed `.btn-base` from uppercase to normal text transform so migrated buttons read in sentence case while structural labels, tabs, badges, headings, and rarity labels retain their uppercase treatments. Known bugs: none observed. Deferred: no token renames or fantasy color-name convention changes were made. Lesson learned: limiting the text-transform change to the shared button primitive modernizes the UI without disturbing label hierarchy.
+
+**Follow-up (2026-05-12):** Audited the requested level-up modal migration cleanup. The current TypeScript source no longer emits `levelup-confirm-btn`, `levelup-again-btn--yes`, or `levelup-again-btn--no` button class lists outside the optional e2e selectors, and the orphaned responsive overrides for those selectors have already been removed from the Phase 11 CSS. Rebuilt `dist/engine.js` and reran the verification suite to confirm the pushed cleanup remains internally consistent.
+
 ## Phase 10 — UX Polish (4 changes)
 **Date:** 2026-04-01
 

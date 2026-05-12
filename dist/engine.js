@@ -2438,7 +2438,7 @@ function buildStatsTabHtml(entries) {
 }
 function buildSkillsTabHtml() {
   const hasSkillStore = skillRegistry.length > 0;
-  let html = hasSkillStore ? `<div class="status-store-row"><button class="status-store-btn" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>` : "";
+  let html = hasSkillStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>` : "";
   const ownedSkills = Array.isArray(playerState.skills) ? playerState.skills : [];
   if (ownedSkills.length === 0) {
     html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No skills learned yet.</p></div>`;
@@ -2489,7 +2489,7 @@ function buildSkillsTabHtml() {
 }
 function buildInventoryTabHtml() {
   const hasItemStore = itemRegistry.length > 0;
-  let html = hasItemStore ? `<div class="status-store-row"><button class="status-store-btn" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>` : "";
+  let html = hasItemStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>` : "";
   const invItems = Array.isArray(playerState.inventory) ? playerState.inventory : [];
   if (invItems.length === 0) {
     html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Nothing here yet.</p></div>`;
@@ -2803,7 +2803,7 @@ function renderSkillsTab(container, xp) {
             <div class="store-card-desc">${escapeDesc(skill.description)}</div>
             <div class="store-card-actions">
               <span class="store-cost-badge ${badgeCls}">${skill.xpCost} XP</span>
-              <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
+              <button class="btn-base btn-primary" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(skill.key)}" data-type="skill">Unlock</button>
             </div>
           </div>
         </div>`;
@@ -2823,7 +2823,7 @@ function renderSkillsTab(container, xp) {
       if (chevron) chevron.textContent = expanded ? "\u25B8" : "\u25BE";
     });
   });
-  container.querySelectorAll(".store-purchase-btn").forEach((btn) => {
+  container.querySelectorAll('button[data-type="skill"]').forEach((btn) => {
     btn.addEventListener("click", () => {
       const key = btn.dataset.key ?? "";
       if (purchaseSkill(key)) {
@@ -2869,12 +2869,12 @@ function renderItemsTab(container, xp) {
         </div>
         <div class="store-card-actions">
           <span class="store-cost-badge ${badgeCls}">${item.xpCost} XP</span>
-          <button class="store-purchase-btn" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
+          <button class="btn-base btn-primary" ${canAfford ? "" : "disabled"} data-key="${escapeHtml(item.key)}" data-type="item">Buy</button>
         </div>
       </div>`;
   });
   container.innerHTML = html;
-  container.querySelectorAll(".store-purchase-btn").forEach((btn) => {
+  container.querySelectorAll('button[data-type="item"]').forEach((btn) => {
     btn.addEventListener("click", () => {
       const key = btn.dataset.key ?? "";
       if (purchaseItem(key)) {
@@ -3238,7 +3238,7 @@ function refreshCheckpoints() {
       <div class="checkpoint-card" data-slot="${cp.slot}">
         <span class="checkpoint-label">${escapeHtml(cp.label)}</span>
         <span class="checkpoint-time">${fmt.format(new Date(cp.timestamp))}</span>
-        <button class="slot-load-btn slot-load-btn--load checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
+        <button class="btn-base btn-ghost checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
       </div>`).join("");
   }
   list.classList.add("hidden");

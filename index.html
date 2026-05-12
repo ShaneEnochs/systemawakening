@@ -15,11 +15,11 @@
 <link rel="stylesheet" href="themes/base.css?v=14"/>
 <link rel="stylesheet" href="themes/fantasy.css?v=14"/>
 <style>
-  .save-code-section { margin-top: 16px; border-top: 1px solid var(--border-dim); padding-top: 14px; }
-  .save-code-label { font-family: var(--font-heading, 'Cinzel', serif); font-size: 0.85rem; color: var(--text-faint); margin-bottom: 8px; text-align: center; letter-spacing: 0.05em; }
-  .save-code-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .save-code-section { margin-top: var(--space-4); border-top: 1px solid var(--border-dim); padding-top: var(--space-3); }
+  .save-code-label { font-family: var(--font-heading, 'Cinzel', serif); font-size: 0.85rem; color: var(--text-faint); margin-bottom: var(--space-2); text-align: center; letter-spacing: 0.05em; }
+  .save-code-row { display: flex; gap: var(--space-2); margin-bottom: var(--space-2); }
   .save-code-btn { flex: 1; font-size: 0.8rem; }
-  .save-code-textarea { width: 100%; box-sizing: border-box; background: var(--bg-system); color: var(--text-primary); border: 1px solid var(--border-dim); border-radius: 6px; padding: 8px; font-family: var(--font-mono, 'Inconsolata', monospace); font-size: 0.75rem; resize: vertical; min-height: 52px; line-height: 1.4; }
+  .save-code-textarea { width: 100%; box-sizing: border-box; background: var(--bg-system); color: var(--text-primary); border: 1px solid var(--border-dim); border-radius: 6px; padding: var(--space-2); font-family: var(--font-mono, 'Inconsolata', monospace); font-size: 0.75rem; resize: vertical; min-height: 52px; line-height: 1.4; }
   .save-code-textarea::placeholder { color: var(--text-faint); }
   .save-code-textarea:focus { outline: 1px solid var(--cyan); border-color: var(--cyan); }
 
@@ -27,7 +27,7 @@
   #char-creation-overlay {
     align-items: center;
     justify-content: center;
-    padding: env(safe-area-inset-top, 12px) 0 env(safe-area-inset-bottom, 0);
+    padding: env(safe-area-inset-top, var(--space-3)) 0 env(safe-area-inset-bottom, 0);
   }
   .char-eyebrow {
     display: block;
@@ -36,7 +36,7 @@
     font-size: var(--text-base);
     letter-spacing: 0.14em;
     color: var(--amber);
-    margin-bottom: 4px;
+    margin-bottom: var(--space-1);
     text-align: center;
   }
   .char-subhead {
@@ -44,7 +44,7 @@
     font-size: var(--text-base);
     color: var(--text-faint);
     text-align: center;
-    margin: 0 0 12px;
+    margin: 0 0 var(--space-3);
     line-height: 1.5;
   }
   .char-name-row {
@@ -62,9 +62,9 @@
     opacity: 0.5;
   }
   .char-field-group--half .char-counter { font-size: 9px; }
-  .char-begin-btn {
+  #char-begin-btn {
     width: 100%;
-    margin-top: 8px;
+    margin-top: var(--space-2);
     letter-spacing: 0.18em;
     font-size: var(--text-sm);
   }
@@ -78,9 +78,9 @@
   <div id="header-top">
     <div id="game-title"></div>
     <div class="header-actions">
-      <button id="undo-btn" class="header-btn hidden" title="Undo last choice" disabled>↩ Undo</button>
-      <button id="save-btn" class="header-btn hidden" title="Save / Load game">Save·Load</button>
-      <button id="status-toggle" aria-label="Toggle status panel">Status</button>
+      <button id="undo-btn" class="btn-base btn-ghost hidden" title="Undo last choice" disabled>↩ Undo</button>
+      <button id="save-btn" class="btn-base btn-ghost hidden" title="Save / Load game">Save·Load</button>
+      <button id="status-toggle" class="btn-base btn-ghost" aria-label="Toggle status panel">Status</button>
     </div>
   </div>
   <div id="chapter-bar">
@@ -177,7 +177,7 @@
             <span class="slot-meta" id="slot-meta-auto"></span>
           </div>
           <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-auto" disabled>Load</button>
+            <button class="btn-base btn-primary" id="slot-load-auto" disabled>Load</button>
           </div>
         </div>
 
@@ -192,7 +192,7 @@
             <span class="slot-meta" id="slot-meta-1"></span>
           </div>
           <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-1" disabled>Load</button>
+            <button class="btn-base btn-primary" id="slot-load-1" disabled>Load</button>
             <button class="slot-delete-btn hidden" id="slot-delete-1" aria-label="Delete slot 1">✕</button>
           </div>
         </div>
@@ -204,7 +204,7 @@
             <span class="slot-meta" id="slot-meta-2"></span>
           </div>
           <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-2" disabled>Load</button>
+            <button class="btn-base btn-primary" id="slot-load-2" disabled>Load</button>
             <button class="slot-delete-btn hidden" id="slot-delete-2" aria-label="Delete slot 2">✕</button>
           </div>
         </div>
@@ -216,7 +216,7 @@
             <span class="slot-meta" id="slot-meta-3"></span>
           </div>
           <div class="slot-actions">
-            <button class="slot-load-btn" id="slot-load-3" disabled>Load</button>
+            <button class="btn-base btn-primary" id="slot-load-3" disabled>Load</button>
             <button class="slot-delete-btn hidden" id="slot-delete-3" aria-label="Delete slot 3">✕</button>
           </div>
         </div>
@@ -260,7 +260,7 @@
           <span class="slot-meta" id="save-slot-meta-auto"></span>
         </div>
         <div class="slot-actions">
-          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-auto" disabled>Load</button>
+          <button class="btn-base btn-ghost" id="ingame-load-auto" disabled>Load</button>
         </div>
       </div>
       <!-- Slot 1 -->
@@ -271,9 +271,9 @@
           <span class="slot-meta" id="save-slot-meta-1"></span>
         </div>
         <div class="slot-actions">
-          <button class="slot-load-btn slot-load-btn--save" id="save-to-1">Save</button>
-          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-1" disabled>Load</button>
-          <button class="slot-load-btn slot-load-btn--export" id="save-export-1">Export</button>
+          <button class="btn-base btn-primary--amber" id="save-to-1">Save</button>
+          <button class="btn-base btn-ghost" id="ingame-load-1" disabled>Load</button>
+          <button class="btn-base btn-ghost" id="save-export-1">Export</button>
           <button class="slot-delete-btn hidden" id="save-delete-1" aria-label="Delete slot 1">✕</button>
         </div>
       </div>
@@ -285,9 +285,9 @@
           <span class="slot-meta" id="save-slot-meta-2"></span>
         </div>
         <div class="slot-actions">
-          <button class="slot-load-btn slot-load-btn--save" id="save-to-2">Save</button>
-          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-2" disabled>Load</button>
-          <button class="slot-load-btn slot-load-btn--export" id="save-export-2">Export</button>
+          <button class="btn-base btn-primary--amber" id="save-to-2">Save</button>
+          <button class="btn-base btn-ghost" id="ingame-load-2" disabled>Load</button>
+          <button class="btn-base btn-ghost" id="save-export-2">Export</button>
           <button class="slot-delete-btn hidden" id="save-delete-2" aria-label="Delete slot 2">✕</button>
         </div>
       </div>
@@ -299,16 +299,16 @@
           <span class="slot-meta" id="save-slot-meta-3"></span>
         </div>
         <div class="slot-actions">
-          <button class="slot-load-btn slot-load-btn--save" id="save-to-3">Save</button>
-          <button class="slot-load-btn slot-load-btn--load" id="ingame-load-3" disabled>Load</button>
-          <button class="slot-load-btn slot-load-btn--export" id="save-export-3">Export</button>
+          <button class="btn-base btn-primary--amber" id="save-to-3">Save</button>
+          <button class="btn-base btn-ghost" id="ingame-load-3" disabled>Load</button>
+          <button class="btn-base btn-ghost" id="save-export-3">Export</button>
           <button class="slot-delete-btn hidden" id="save-delete-3" aria-label="Delete slot 3">✕</button>
         </div>
       </div>
     </div>
     <!-- Import row -->
     <div class="save-import-row">
-      <label for="save-import-file" class="overlay-btn overlay-btn--secondary save-import-label">
+      <label for="save-import-file" class="btn-base btn-ghost save-import-label">
         ↑ Import Save
       </label>
       <input type="file" id="save-import-file" accept=".json" class="hidden" />
@@ -322,8 +322,8 @@
     <div class="save-code-section">
       <div class="save-code-label">Save Code</div>
       <div class="save-code-row">
-        <button id="save-code-copy" class="overlay-btn overlay-btn--secondary save-code-btn">Copy Code</button>
-        <button id="save-code-load" class="overlay-btn overlay-btn--secondary save-code-btn">Load Code</button>
+        <button id="save-code-copy" class="btn-base btn-ghost save-code-btn">Copy Code</button>
+        <button id="save-code-load" class="btn-base btn-ghost save-code-btn">Load Code</button>
       </div>
       <textarea id="save-code-field" class="save-code-textarea" placeholder="Paste a save code here to load, or click Copy Code to generate one..." rows="3" spellcheck="false"></textarea>
     </div>
@@ -332,8 +332,8 @@
       <div class="checkpoint-list hidden" id="checkpoint-list"></div>
     </div>
     <div class="save-menu-footer">
-      <button id="ingame-restart-btn" class="overlay-btn overlay-btn--danger">↺ Restart</button>
-      <button id="save-menu-close" class="overlay-btn overlay-btn--secondary">Cancel</button>
+      <button id="ingame-restart-btn" class="btn-base btn-ghost--danger">↺ Restart</button>
+      <button id="save-menu-close" class="btn-base btn-ghost">Cancel</button>
     </div>
   </div>
 </div>
@@ -413,7 +413,7 @@
     </div>
 
     <!-- Begin button -->
-    <button id="char-begin-btn" class="overlay-btn char-begin-btn" disabled>
+    <button id="char-begin-btn" class="btn-base btn-primary" disabled>
       Begin Your Reign
     </button>
 
@@ -436,7 +436,7 @@
     <div id="ending-icon">◈</div>
     <div id="ending-content"></div>
     <div id="ending-stats"></div>
-    <button id="ending-action-btn" class="overlay-btn">Play Again</button>
+    <button id="ending-action-btn" class="btn-base btn-primary">Play Again</button>
   </div>
 </div>
 

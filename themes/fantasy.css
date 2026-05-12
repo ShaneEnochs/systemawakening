@@ -132,6 +132,15 @@
   --radius:        5px;
   --radius-md:     10px;
 
+  /* --- Spacing scale --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
   /* --- Transitions --- */
   --transition:    0.3s ease;
   --transition-fast: 0.15s ease;
@@ -255,16 +264,6 @@
   background: var(--cyan-glow);
 }
 
-/* Header buttons: softer */
-.header-btn {
-  font-family: var(--font-body);
-  border-radius: var(--radius);
-}
-
-#status-toggle {
-  font-family: var(--font-body);
-  border-radius: var(--radius);
-}
 
 /* Status toggle glow — warm gold instead of cyan */
 @keyframes statusLevelupGlow {
@@ -314,15 +313,6 @@
   color: var(--cyan);
 }
 
-/* Overlay buttons: display font */
-.overlay-btn {
-  border-radius: var(--radius);
-}
-
-.overlay-btn:hover {
-  background: #e8dcc0;
-  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
-}
 
 /* Overlay box: warm border, subtle shadow instead of glow */
 .overlay-box {
@@ -367,17 +357,6 @@
   border-radius: var(--radius);
 }
 
-.slot-load-btn {
-  border-radius: var(--radius);
-}
-
-.slot-load-btn:hover:not(:disabled) {
-  background: #e8dcc0;
-}
-
-.slot-load-btn--save:hover:not(:disabled) {
-  background: #e0b050;
-}
 
 /* Save menu */
 .save-menu-hint {
@@ -432,14 +411,6 @@
   font-family: var(--font-body);
 }
 
-.store-purchase-btn {
-  border-radius: var(--radius);
-}
-
-.store-purchase-btn:hover:not(:disabled) {
-  background: #e8dcc0;
-  box-shadow: 0 2px 8px rgba(200, 165, 90, 0.2);
-}
 
 /* Input prompt */
 .input-prompt-block {
@@ -519,18 +490,7 @@
   }
 }
 
-.levelup-confirm-btn {
-  border-radius: var(--radius);
-}
 
-.levelup-confirm-btn:hover {
-  background: #e8dcc0;
-  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
-}
-
-.skill-purchase-btn {
-  border-radius: var(--radius);
-}
 
 /* Ending screens */
 .ending-inline-block {

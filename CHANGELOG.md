@@ -12,6 +12,9 @@ Migrated the header, save/load/export, save-code, overlay, character-begin, chec
 ### Change 3 — Sentence-Case Standard Buttons
 Changed `.btn-base` from uppercase to normal text transform so migrated buttons read in sentence case while structural labels, tabs, badges, headings, and rarity labels retain their uppercase treatments. Known bugs: none observed. Deferred: no token renames or fantasy color-name convention changes were made. Lesson learned: limiting the text-transform change to the shared button primitive modernizes the UI without disturbing label hierarchy.
 
+### Follow-up (2026-05-12) — Level-Up Button Migration Audit
+Investigated `levelup-confirm-btn`, `levelup-again-btn--yes`, and `levelup-again-btn--no` as potential Phase 11 oversights. Findings: (1) these class names were never emitted by any TypeScript source file — the level-up modal rendering code had been removed from `src/systems/leveling.ts` prior to the repository's first commit, leaving only a stub; (2) Phase 11 had already deleted both the base CSS rules and the `@media (max-width: 768px)` responsive overrides for those selectors; (3) no other Phase 11-removed class selectors (`.header-btn`, `.slot-load-btn`, `.overlay-btn`, `.skill-purchase-btn`, `.store-purchase-btn`, `.status-store-btn`, `.status-levelup-btn`, `.char-begin-btn`) remained in the responsive media-query blocks. No TypeScript, CSS, or HTML changes were required. The e2e selectors referencing `.levelup-confirm-btn:not(.levelup-confirm-btn--locked)` use optional `isVisible` checks and continue to pass correctly when the level-up UI is absent. All checks confirmed clean: 222 tests passed, `npx tsc --noEmit` zero errors, lint no issues.
+
 ## Phase 10 — UX Polish (4 changes)
 **Date:** 2026-04-01
 

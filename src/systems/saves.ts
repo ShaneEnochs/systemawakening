@@ -41,6 +41,32 @@ export let _staleSaveFound = false;
 export function clearStaleSaveFound() { _staleSaveFound = false; }
 export function setStaleSaveFound()   { _staleSaveFound = true;  }
 
+function jsonClone<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function valuesEqual(a: unknown, b: unknown): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+function buildPlayerStateDelta(source: Record<string, any>): Record<string, any> {
+  const defaults = getStartupDefaults();
+  const delta: Record<string, any> = {};
+  for (const [key, value] of Object.entries(source)) {
+    if (!valuesEqual(value, defaults[key])) {
+      delta[key] = value;
+    }
+  }
+  return delta;
+}
+
+function encodePayload(payload: Record<string, any>): string {
+  const json = JSON.stringify(payload);
+  const compressed = btoa(unescape(encodeURIComponent(json)));
+  const checksum = crc16(compressed);
+  return `SA1|${compressed}|${checksum}`;
+}
+
 // ---------------------------------------------------------------------------
 // CRC-16 checksum — catches copy-paste corruption and bit-rot.
 // ---------------------------------------------------------------------------
@@ -60,28 +86,20 @@ function crc16(str: string): string {
 // Delta-compresses playerState against startup defaults.
 // ---------------------------------------------------------------------------
 function buildSaveCodePayload(label: string | null, narrativeLog: unknown[]): Record<string, any> {
-  const defaults = getStartupDefaults();
-  const ps: Record<string, any> = {};
-  for (const [k, v] of Object.entries(playerState)) {
-    if (JSON.stringify(v) !== JSON.stringify(defaults[k])) {
-      ps[k] = v;
-    }
-  }
-
   const payload: Record<string, any> = {
     v:  SAVE_VERSION,
     s:  currentScene,
     ip: pageBreakIp ?? ip,
     ct: chapterTitle,
     cc: getCurrentChapter(),
-    ps,
+    ps: buildPlayerStateDelta(playerState),
     nl: narrativeLog || [],
     ts: Date.now(),
   };
 
   if (label)            payload.lb = label;
-  if (awaitingChoice)   payload.ac = JSON.parse(JSON.stringify(awaitingChoice));
-  if (statRegistry.length > 0) payload.sr = JSON.parse(JSON.stringify(statRegistry));
+  if (awaitingChoice)   payload.ac = jsonClone(awaitingChoice);
+  if (statRegistry.length > 0) payload.sr = jsonClone(statRegistry);
 
   return payload;
 }
@@ -90,10 +108,7 @@ function buildSaveCodePayload(label: string | null, narrativeLog: unknown[]): Re
 // encodeSaveCode — encodes the current game state into an SA1 string.
 // ---------------------------------------------------------------------------
 export function encodeSaveCode(narrativeLog: unknown[], label: string | null = null): string {
-  const json = JSON.stringify(buildSaveCodePayload(label, narrativeLog));
-  const compressed = btoa(unescape(encodeURIComponent(json)));
-  const checksum = crc16(compressed);
-  return `SA1|${compressed}|${checksum}`;
+  return encodePayload(buildSaveCodePayload(label, narrativeLog));
 }
 
 // ---------------------------------------------------------------------------
@@ -144,7 +159,7 @@ export function decodeSaveCode(code: string): { ok: true; save: any } | { ok: fa
       playerState:    fullPlayerState,
       narrativeLog:   json.nl || [],
       awaitingChoice: json.ac || null,
-      statRegistry:   json.sr || JSON.parse(JSON.stringify(statRegistry)),
+      statRegistry:   json.sr || jsonClone(statRegistry),
       label:          json.lb || null,
       characterName:  `${fullPlayerState.first_name || fullPlayerState.name || ''} ${fullPlayerState.last_name || fullPlayerState.family || ''}`.trim() || 'Unknown',
       timestamp:      json.ts || Date.now(),
@@ -247,21 +262,13 @@ export function importSaveFromJSON(json: any, targetSlot: string | number): { ok
   const key = saveKeyForSlot(targetSlot);
   if (!key) return { ok: false, reason: `Invalid target slot: "${targetSlot}".` };
 
-  const defaults = getStartupDefaults();
-  const deltaPs: Record<string, any> = {};
-  for (const [k, v] of Object.entries(json.playerState)) {
-    if (JSON.stringify(v) !== JSON.stringify(defaults[k])) {
-      deltaPs[k] = v;
-    }
-  }
-
   const payload: Record<string, any> = {
     v:  SAVE_VERSION,
     s:  json.scene,
     ip: json.ip ?? 0,
     ct: json.chapterTitle || '',
     cc: json.currentChapter || null,
-    ps: deltaPs,
+    ps: buildPlayerStateDelta(json.playerState),
     nl: json.narrativeLog || [],
     ts: json.timestamp || Date.now(),
   };
@@ -271,11 +278,7 @@ export function importSaveFromJSON(json: any, targetSlot: string | number): { ok
   if (json.statRegistry)   payload.sr = json.statRegistry;
 
   try {
-    const jsonStr = JSON.stringify(payload);
-    const compressed = btoa(unescape(encodeURIComponent(jsonStr)));
-    const checksum = crc16(compressed);
-    const code = `SA1|${compressed}|${checksum}`;
-    localStorage.setItem(key, code);
+    localStorage.setItem(key, encodePayload(payload));
     return { ok: true };
   } catch (err) {
     return { ok: false, reason: `localStorage write failed: ${(err as Error).message}` };

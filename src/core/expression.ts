@@ -12,7 +12,7 @@
 // applying the result, so function calls inside or/and branches never leave
 // unconsumed tokens in the stream.
 
-import { playerState, tempState, normalizeKey, resolveStore } from './state.js';
+import { normalizeKey, resolveStore } from './state.js';
 
 interface Token {
   type:   string;

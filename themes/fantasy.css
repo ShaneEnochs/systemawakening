@@ -14,10 +14,12 @@
   --bg-panel:      #211c14;
   --bg-card:       #2a2318;
   --bg-system:     #16120c;
+  --bg-overlay:    var(--bg-panel);
 
   /* --- Borders --- */
   --border-dim:    #4a3e2e;
   --border-glow:   #6b5a3e;
+  --border-color:  var(--border-dim);
 
   /* --- Accent colors (gold/burgundy palette) --- */
   --cyan:          #c8a55a;
@@ -34,6 +36,59 @@
 
   --red:           #b84040;
   --red-glow:      rgba(184, 64, 64, 0.2);
+
+
+  /* --- Semantic theme tokens used by base.css --- */
+  --accent-primary: var(--cyan);
+  --accent-primary-dim: var(--cyan-dim);
+  --accent-primary-glow: var(--cyan-glow);
+  --accent-primary-glow-md: var(--cyan-glow-md);
+  --accent-primary-rgb: 200, 165, 90;
+
+
+  --border-subtle-30: rgba(74, 62, 46, 0.3);
+  --border-subtle-35: rgba(74, 62, 46, 0.35);
+  --border-subtle-40: rgba(74, 62, 46, 0.4);
+  --border-subtle-70: rgba(74, 62, 46, 0.7);
+  --surface-tint-20: rgba(74, 62, 46, 0.2);
+  --panel-shadow-50: rgba(0, 0, 0, 0.5);
+  --panel-shadow-60: rgba(0, 0, 0, 0.6);
+  --backdrop-tint-40: rgba(0, 0, 0, 0.4);
+  --green-glow-50: rgba(90, 158, 90, 0.5);
+  --save-hover-bg: #e0b050;
+
+  --surface-hover: #e8dcc0;
+  --surface-hover-contrast: #fff;
+  --danger-border: rgba(184, 64, 64, 0.4);
+  --danger-hover-text: #d96a5f;
+
+  --accent-surface-04: rgba(var(--accent-primary-rgb), 0.04);
+  --accent-surface-06: rgba(var(--accent-primary-rgb), 0.06);
+  --accent-surface-07: rgba(var(--accent-primary-rgb), 0.07);
+  --accent-surface-08: rgba(var(--accent-primary-rgb), 0.08);
+  --accent-surface-25: rgba(var(--accent-primary-rgb), 0.25);
+  --accent-border-30: rgba(var(--accent-primary-rgb), 0.3);
+  --accent-border-35: rgba(var(--accent-primary-rgb), 0.35);
+  --accent-border-40: rgba(var(--accent-primary-rgb), 0.4);
+  --accent-border-50: rgba(var(--accent-primary-rgb), 0.5);
+  --accent-glow-20: rgba(var(--accent-primary-rgb), 0.2);
+  --accent-glow-30: rgba(var(--accent-primary-rgb), 0.3);
+  --accent-glow-40: rgba(var(--accent-primary-rgb), 0.4);
+  --accent-glow-50: rgba(var(--accent-primary-rgb), 0.5);
+  --accent-glow-60: rgba(var(--accent-primary-rgb), 0.6);
+  --accent-glow-70: rgba(var(--accent-primary-rgb), 0.7);
+
+  --epic-surface-03: rgba(144, 104, 184, 0.03);
+  --epic-glow-15: rgba(144, 104, 184, 0.15);
+  --epic-glow-20: rgba(144, 104, 184, 0.2);
+  --epic-glow-40: rgba(144, 104, 184, 0.4);
+  --epic-glow-45: rgba(144, 104, 184, 0.45);
+  --legendary-surface-03: rgba(212, 160, 48, 0.03);
+  --legendary-glow-08: rgba(212, 160, 48, 0.08);
+  --legendary-glow-15: rgba(212, 160, 48, 0.15);
+  --legendary-glow-20: rgba(212, 160, 48, 0.2);
+  --legendary-glow-35: rgba(212, 160, 48, 0.35);
+  --legendary-glow-50: rgba(212, 160, 48, 0.5);
 
   /* --- Rarity colors (warm palette) --- */
   --rarity-common:    var(--text-primary);

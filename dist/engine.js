@@ -42,6 +42,19 @@ function advanceIp() {
 function setAwaitingChoice(c) {
   awaitingChoice = c;
 }
+var VARIABLE_COMMAND_RE = /^\*(set_stat|set|temp)\s+([a-zA-Z_][\w]*)(?:\s+(.+))?$/;
+var ARITHMETIC_SHORTHAND_RE = /^[+\-*/]\s*/;
+function normalizeZero(value) {
+  return value === 0 ? 0 : value;
+}
+function evaluateAssignmentRhs(rhs, currentValue, evalValueFn) {
+  if (ARITHMETIC_SHORTHAND_RE.test(rhs) && typeof currentValue === "number") {
+    const result = evalValueFn(`${currentValue} ${rhs}`);
+    const coerced = Number.isFinite(result) ? result : evalValueFn(rhs);
+    return normalizeZero(coerced);
+  }
+  return evalValueFn(rhs);
+}
 function clearTempState() {
   tempState = {};
 }
@@ -61,27 +74,21 @@ function getStartupDefaults() {
   return _startupDefaults;
 }
 function setVar(command, evalValueFn) {
-  const m = command.match(/^\*set\s+([a-zA-Z_][\w]*)\s+(.+)$/);
-  if (!m) return;
-  const [, rawKey, rhs] = m;
+  const m = command.match(VARIABLE_COMMAND_RE);
+  if (!m || m[1] !== "set" || m[3] === void 0) return;
+  const [, , rawKey, rhs] = m;
   const key = normalizeKey(rawKey);
   const store = resolveStore(key);
   if (!store) {
     console.warn(`[state] *set on undeclared variable "${key}" \u2014 did you mean *create or *temp?`);
     return;
   }
-  if (/^[+\-*/]\s*/.test(rhs) && typeof store[key] === "number") {
-    const result = evalValueFn(`${store[key]} ${rhs}`);
-    const coerced = Number.isFinite(result) ? result : evalValueFn(rhs);
-    store[key] = coerced === 0 ? 0 : coerced;
-  } else {
-    store[key] = evalValueFn(rhs);
-  }
+  store[key] = evaluateAssignmentRhs(rhs, store[key], evalValueFn);
 }
 function setStatClamped(command, evalValueFn) {
-  const m = command.match(/^\*set_stat\s+([a-zA-Z_][\w]*)\s+(.+)$/);
-  if (!m) return;
-  const [, rawKey, rest] = m;
+  const m = command.match(VARIABLE_COMMAND_RE);
+  if (!m || m[1] !== "set_stat" || m[3] === void 0) return;
+  const [, , rawKey, rest] = m;
   const key = normalizeKey(rawKey);
   const store = resolveStore(key);
   if (!store) {
@@ -93,23 +100,17 @@ function setStatClamped(command, evalValueFn) {
   const rhs = rest.replace(/\bmin:\s*-?[\d.]+/gi, "").replace(/\bmax:\s*-?[\d.]+/gi, "").trim();
   const minVal = minMatch ? Number(minMatch[1]) : -Infinity;
   const maxVal = maxMatch ? Number(maxMatch[1]) : Infinity;
-  let newVal;
-  if (/^[+\-*/]\s*/.test(rhs) && typeof store[key] === "number") {
-    const result = evalValueFn(`${store[key]} ${rhs}`);
-    newVal = Number.isFinite(result) ? result : evalValueFn(rhs);
-  } else {
-    newVal = evalValueFn(rhs);
-  }
+  let newVal = evaluateAssignmentRhs(rhs, store[key], evalValueFn);
   if (typeof newVal === "number") {
-    newVal = Math.min(maxVal, Math.max(minVal, newVal));
-    newVal = newVal === 0 ? 0 : newVal;
+    newVal = normalizeZero(Math.min(maxVal, Math.max(minVal, newVal)));
   }
   store[key] = newVal;
 }
 function declareTemp(command, evalValueFn) {
-  const m = command.match(/^\*temp\s+([a-zA-Z_][\w]*)(?:\s+(.+))?$/);
+  const m = command.match(VARIABLE_COMMAND_RE);
   if (!m) return;
-  const [, rawKey, rhs] = m;
+  if (m[1] !== "temp") return;
+  const [, , rawKey, rhs] = m;
   tempState[normalizeKey(rawKey)] = rhs !== void 0 ? evalValueFn(rhs) : 0;
 }
 var _statRegistryWarningFired = false;
@@ -775,6 +776,28 @@ function clearStaleSaveFound() {
 function setStaleSaveFound() {
   _staleSaveFound = true;
 }
+function jsonClone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+function valuesEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+function buildPlayerStateDelta(source) {
+  const defaults = getStartupDefaults();
+  const delta = {};
+  for (const [key, value] of Object.entries(source)) {
+    if (!valuesEqual(value, defaults[key])) {
+      delta[key] = value;
+    }
+  }
+  return delta;
+}
+function encodePayload(payload) {
+  const json = JSON.stringify(payload);
+  const compressed = btoa(unescape(encodeURIComponent(json)));
+  const checksum = crc16(compressed);
+  return `SA1|${compressed}|${checksum}`;
+}
 function crc16(str) {
   let crc = 65535;
   for (let i = 0; i < str.length; i++) {
@@ -786,33 +809,23 @@ function crc16(str) {
   return crc.toString(16).padStart(4, "0");
 }
 function buildSaveCodePayload(label, narrativeLog) {
-  const defaults = getStartupDefaults();
-  const ps = {};
-  for (const [k, v] of Object.entries(playerState)) {
-    if (JSON.stringify(v) !== JSON.stringify(defaults[k])) {
-      ps[k] = v;
-    }
-  }
   const payload = {
     v: SAVE_VERSION,
     s: currentScene,
     ip: pageBreakIp ?? ip,
     ct: chapterTitle,
     cc: getCurrentChapter(),
-    ps,
+    ps: buildPlayerStateDelta(playerState),
     nl: narrativeLog || [],
     ts: Date.now()
   };
   if (label) payload.lb = label;
-  if (awaitingChoice) payload.ac = JSON.parse(JSON.stringify(awaitingChoice));
-  if (statRegistry.length > 0) payload.sr = JSON.parse(JSON.stringify(statRegistry));
+  if (awaitingChoice) payload.ac = jsonClone(awaitingChoice);
+  if (statRegistry.length > 0) payload.sr = jsonClone(statRegistry);
   return payload;
 }
 function encodeSaveCode(narrativeLog, label = null) {
-  const json = JSON.stringify(buildSaveCodePayload(label, narrativeLog));
-  const compressed = btoa(unescape(encodeURIComponent(json)));
-  const checksum = crc16(compressed);
-  return `SA1|${compressed}|${checksum}`;
+  return encodePayload(buildSaveCodePayload(label, narrativeLog));
 }
 function decodeSaveCode(code) {
   const trimmed = code.trim();
@@ -850,7 +863,7 @@ function decodeSaveCode(code) {
       playerState: fullPlayerState,
       narrativeLog: json.nl || [],
       awaitingChoice: json.ac || null,
-      statRegistry: json.sr || JSON.parse(JSON.stringify(statRegistry)),
+      statRegistry: json.sr || jsonClone(statRegistry),
       label: json.lb || null,
       characterName: `${fullPlayerState.first_name || fullPlayerState.name || ""} ${fullPlayerState.last_name || fullPlayerState.family || ""}`.trim() || "Unknown",
       timestamp: json.ts || Date.now()
@@ -935,20 +948,13 @@ function importSaveFromJSON(json, targetSlot) {
     return { ok: false, reason: "Save file is missing scene name." };
   const key = saveKeyForSlot(targetSlot);
   if (!key) return { ok: false, reason: `Invalid target slot: "${targetSlot}".` };
-  const defaults = getStartupDefaults();
-  const deltaPs = {};
-  for (const [k, v] of Object.entries(json.playerState)) {
-    if (JSON.stringify(v) !== JSON.stringify(defaults[k])) {
-      deltaPs[k] = v;
-    }
-  }
   const payload = {
     v: SAVE_VERSION,
     s: json.scene,
     ip: json.ip ?? 0,
     ct: json.chapterTitle || "",
     cc: json.currentChapter || null,
-    ps: deltaPs,
+    ps: buildPlayerStateDelta(json.playerState),
     nl: json.narrativeLog || [],
     ts: json.timestamp || Date.now()
   };
@@ -956,11 +962,7 @@ function importSaveFromJSON(json, targetSlot) {
   if (json.awaitingChoice) payload.ac = json.awaitingChoice;
   if (json.statRegistry) payload.sr = json.statRegistry;
   try {
-    const jsonStr = JSON.stringify(payload);
-    const compressed = btoa(unescape(encodeURIComponent(jsonStr)));
-    const checksum = crc16(compressed);
-    const code = `SA1|${compressed}|${checksum}`;
-    localStorage.setItem(key, code);
+    localStorage.setItem(key, encodePayload(payload));
     return { ok: true };
   } catch (err) {
     return { ok: false, reason: `localStorage write failed: ${err.message}` };
@@ -2263,7 +2265,7 @@ function renderFromLog(log, { skipAnimations = true } = {}) {
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? "");
         div.className = `system-block${isXP ? " xp-block" : ""}${isLevelUp ? " levelup-block" : ""}`;
         const labelHtml = entry.systemLabel ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span><div class="system-block-rule"></div></div>` : "";
-        div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(entry.text)}</div>`;
+        div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(entry.text ?? "")}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

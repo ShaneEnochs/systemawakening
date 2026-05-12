@@ -117,6 +117,24 @@ export function setIp(n: number)                         { ip = n; }
 export function advanceIp()                              { ip += 1; }
 export function setAwaitingChoice(c: AwaitingChoiceState|null) { awaitingChoice = c; }
 
+type EvalValueFn = (expr: string) => any;
+
+const VARIABLE_COMMAND_RE = /^\*(set_stat|set|temp)\s+([a-zA-Z_][\w]*)(?:\s+(.+))?$/;
+const ARITHMETIC_SHORTHAND_RE = /^[+\-*/]\s*/;
+
+function normalizeZero<T>(value: T): T | number {
+  return value === 0 ? 0 : value;
+}
+
+function evaluateAssignmentRhs(rhs: string, currentValue: unknown, evalValueFn: EvalValueFn): any {
+  if (ARITHMETIC_SHORTHAND_RE.test(rhs) && typeof currentValue === 'number') {
+    const result = evalValueFn(`${currentValue} ${rhs}`);
+    const coerced = Number.isFinite(result) ? result : evalValueFn(rhs);
+    return normalizeZero(coerced);
+  }
+  return evalValueFn(rhs);
+}
+
 // ---------------------------------------------------------------------------
 // clearTempState — called by gotoScene on cross-scene navigation
 // ---------------------------------------------------------------------------
@@ -164,10 +182,10 @@ export function getStartupDefaults(): Record<string, any> {
 // Accepts evalValueFn as a parameter to avoid a circular import with
 // expression.js (which also needs to read state).
 // ---------------------------------------------------------------------------
-export function setVar(command: string, evalValueFn: (expr: string) => any): void {
-  const m = command.match(/^\*set\s+([a-zA-Z_][\w]*)\s+(.+)$/);
-  if (!m) return;
-  const [, rawKey, rhs] = m;
+export function setVar(command: string, evalValueFn: EvalValueFn): void {
+  const m = command.match(VARIABLE_COMMAND_RE);
+  if (!m || m[1] !== 'set' || m[3] === undefined) return;
+  const [, , rawKey, rhs] = m;
   const key = normalizeKey(rawKey);
   const store = resolveStore(key);
 
@@ -176,13 +194,7 @@ export function setVar(command: string, evalValueFn: (expr: string) => any): voi
     return;
   }
 
-  if (/^[+\-*/]\s*/.test(rhs) && typeof store[key] === 'number') {
-    const result = evalValueFn(`${store[key]} ${rhs}`);
-    const coerced = Number.isFinite(result) ? result : evalValueFn(rhs);
-    store[key] = coerced === 0 ? 0 : coerced;
-  } else {
-    store[key] = evalValueFn(rhs);
-  }
+  store[key] = evaluateAssignmentRhs(rhs, store[key], evalValueFn);
 }
 
 // ---------------------------------------------------------------------------
@@ -192,10 +204,10 @@ export function setVar(command: string, evalValueFn: (expr: string) => any): voi
 // Applies rhs using the same arithmetic-shorthand logic as setVar, then clamps
 // the result to [min, max]. Bounds are optional; omitting one means unbounded.
 // ---------------------------------------------------------------------------
-export function setStatClamped(command: string, evalValueFn: (expr: string) => any): void {
-  const m = command.match(/^\*set_stat\s+([a-zA-Z_][\w]*)\s+(.+)$/);
-  if (!m) return;
-  const [, rawKey, rest] = m;
+export function setStatClamped(command: string, evalValueFn: EvalValueFn): void {
+  const m = command.match(VARIABLE_COMMAND_RE);
+  if (!m || m[1] !== 'set_stat' || m[3] === undefined) return;
+  const [, , rawKey, rest] = m;
   const key = normalizeKey(rawKey);
   const store = resolveStore(key);
 
@@ -214,17 +226,10 @@ export function setStatClamped(command: string, evalValueFn: (expr: string) => a
   const minVal = minMatch ? Number(minMatch[1]) : -Infinity;
   const maxVal = maxMatch ? Number(maxMatch[1]) :  Infinity;
 
-  let newVal;
-  if (/^[+\-*/]\s*/.test(rhs) && typeof store[key] === 'number') {
-    const result = evalValueFn(`${store[key]} ${rhs}`);
-    newVal = Number.isFinite(result) ? result : evalValueFn(rhs);
-  } else {
-    newVal = evalValueFn(rhs);
-  }
+  let newVal = evaluateAssignmentRhs(rhs, store[key], evalValueFn);
 
   if (typeof newVal === 'number') {
-    newVal = Math.min(maxVal, Math.max(minVal, newVal));
-    newVal = newVal === 0 ? 0 : newVal;  // normalise -0
+    newVal = normalizeZero(Math.min(maxVal, Math.max(minVal, newVal)));
   }
   store[key] = newVal;
 }
@@ -232,10 +237,11 @@ export function setStatClamped(command: string, evalValueFn: (expr: string) => a
 // ---------------------------------------------------------------------------
 // declareTemp — handles the *temp directive
 // ---------------------------------------------------------------------------
-export function declareTemp(command: string, evalValueFn: (expr: string) => any): void {
-  const m = command.match(/^\*temp\s+([a-zA-Z_][\w]*)(?:\s+(.+))?$/);
+export function declareTemp(command: string, evalValueFn: EvalValueFn): void {
+  const m = command.match(VARIABLE_COMMAND_RE);
   if (!m) return;
-  const [, rawKey, rhs] = m;
+  if (m[1] !== 'temp') return;
+  const [, , rawKey, rhs] = m;
   tempState[normalizeKey(rawKey)] = rhs !== undefined ? evalValueFn(rhs) : 0;
 }
 

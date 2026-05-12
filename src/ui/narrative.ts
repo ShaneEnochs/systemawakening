@@ -481,7 +481,7 @@ export function renderFromLog(log: NarrativeLogEntry[], { skipAnimations = true 
         const isLevelUp = /level\s*up|LEVEL\s*UP/i.test(entry.text ?? '');
         div.className = `system-block${isXP ? ' xp-block' : ''}${isLevelUp ? ' levelup-block' : ''}`;
         const labelHtml = entry.systemLabel ? `<div class="system-block-header"><div class="system-block-rule"></div><span class="system-block-label">[${escapeHtml(entry.systemLabel)}]</span><div class="system-block-rule"></div></div>` : '';
-        div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(entry.text)}</div>`;
+        div.innerHTML = `${labelHtml}<div class="system-block-text">${buildSystemParas(entry.text ?? '')}</div>`;
         _narrativeContent.insertBefore(div, _choiceArea);
         break;
       }

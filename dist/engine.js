@@ -233,8 +233,11 @@ function buildDom() {
     chapterTitle: req("chapter-title"),
     narrativePanel: req("narrative-panel"),
     statusPanel: req("status-panel"),
-    statusToggle: req("status-toggle"),
-    saveBtn: req("save-btn"),
+    menuBtn: req("menu-btn"),
+    menuPopover: req("menu-popover"),
+    menuItemStatus: req("menu-item-status"),
+    menuItemSave: req("menu-item-save"),
+    menuItemRestart: req("menu-item-restart"),
     gameTitle: req("game-title"),
     splashTitle: document.querySelector(".splash-title"),
     splashTagline: req("splash-tagline"),
@@ -2953,7 +2956,7 @@ function clearUndoStack() {
 var _splashOverlay;
 var _splashSlots;
 var _saveOverlay;
-var _saveBtn;
+var _menuBtn;
 var _charOverlay;
 var _inputFirstName;
 var _inputLastName;
@@ -2981,7 +2984,7 @@ function init3({
   splashOverlay,
   splashSlots,
   saveOverlay,
-  saveBtn,
+  menuBtn,
   charOverlay,
   inputFirstName,
   inputLastName,
@@ -3009,7 +3012,7 @@ function init3({
   _splashOverlay = splashOverlay;
   _splashSlots = splashSlots;
   _saveOverlay = saveOverlay;
-  _saveBtn = saveBtn;
+  _menuBtn = menuBtn;
   _charOverlay = charOverlay;
   _inputFirstName = inputFirstName;
   _inputLastName = inputLastName;
@@ -3161,7 +3164,7 @@ function refreshAllSlotCards() {
   });
 }
 async function loadAndResume(save) {
-  _saveBtn.classList.remove("hidden");
+  _menuBtn.classList.remove("hidden");
   const undoBtn = document.getElementById("undo-btn");
   if (undoBtn) undoBtn.classList.remove("hidden");
   if (_clearUndoStack) _clearUndoStack();
@@ -3212,7 +3215,7 @@ function showSaveMenu() {
   refreshAllSlotCards();
   _saveOverlay.classList.remove("hidden");
   _saveOverlay.style.opacity = "1";
-  _saveTrapRelease = trapFocus(_saveOverlay, _saveBtn);
+  _saveTrapRelease = trapFocus(_saveOverlay, _menuBtn);
 }
 function hideSaveMenu() {
   _saveOverlay.classList.add("hidden");
@@ -3370,18 +3373,59 @@ function showCharacterCreation() {
 // src/systems/save-manager.ts
 function wireSaveUI(dom, opts) {
   const { scheduleStatsRender: scheduleStatsRender2 } = opts;
-  dom.statusToggle?.addEventListener("click", () => {
+  const menuBtn = dom.menuBtn;
+  const menuPopover = dom.menuPopover;
+  function openMenu() {
+    menuPopover?.classList.remove("hidden");
+    menuBtn?.setAttribute("aria-expanded", "true");
+  }
+  function closeMenu() {
+    menuPopover?.classList.add("hidden");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+  function toggleMenu() {
+    if (menuPopover?.classList.contains("hidden")) openMenu();
+    else closeMenu();
+  }
+  menuBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+  document.addEventListener("click", (e) => {
+    if (!menuPopover?.contains(e.target) && e.target !== menuBtn) {
+      closeMenu();
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menuPopover?.classList.contains("hidden")) {
+      closeMenu();
+      menuBtn?.focus();
+    }
+  });
+  dom.menuItemStatus?.addEventListener("click", () => {
+    closeMenu();
     const visible = dom.statusPanel?.classList.toggle("status-visible");
     dom.statusPanel?.classList.toggle("status-hidden", !visible);
     scheduleStatsRender2();
   });
   document.addEventListener("click", (e) => {
-    if (!dom.statusPanel?.contains(e.target) && e.target !== dom.statusToggle && !dom.storeOverlay?.contains(e.target)) {
+    if (!dom.statusPanel?.contains(e.target) && !menuPopover?.contains(e.target) && e.target !== menuBtn && !dom.storeOverlay?.contains(e.target)) {
       dom.statusPanel?.classList.remove("status-visible");
       dom.statusPanel?.classList.add("status-hidden");
     }
   });
-  dom.saveBtn?.addEventListener("click", showSaveMenu);
+  dom.menuItemSave?.addEventListener("click", () => {
+    closeMenu();
+    showSaveMenu();
+  });
+  dom.menuItemRestart?.addEventListener("click", () => {
+    closeMenu();
+    if (confirm("Return to the title screen? Manual saves will be kept.")) {
+      hideSaveMenu();
+      deleteSaveSlot("auto");
+      location.reload();
+    }
+  });
   dom.saveMenuClose?.addEventListener("click", hideSaveMenu);
   dom.saveOverlay?.addEventListener("click", (e) => {
     if (e.target === dom.saveOverlay) hideSaveMenu();
@@ -3438,19 +3482,9 @@ function wireSaveUI(dom, opts) {
       await loadAndResume(save);
     });
   });
-  const ingameRestartBtn = document.getElementById("ingame-restart-btn");
-  if (ingameRestartBtn) {
-    ingameRestartBtn.addEventListener("click", () => {
-      if (confirm("Return to the title screen? Manual saves will be kept.")) {
-        hideSaveMenu();
-        deleteSaveSlot("auto");
-        location.reload();
-      }
-    });
-  }
   dom.splashNewBtn?.addEventListener("click", async () => {
     hideSplash();
-    dom.saveBtn?.classList.remove("hidden");
+    dom.menuBtn?.classList.remove("hidden");
     document.getElementById("undo-btn")?.classList.remove("hidden");
     clearUndoStack();
     await runStatsScene();
@@ -3717,7 +3751,7 @@ async function boot() {
     splashOverlay: dom.splashOverlay,
     splashSlots: dom.splashSlots,
     saveOverlay: dom.saveOverlay,
-    saveBtn: dom.saveBtn,
+    menuBtn: dom.menuBtn,
     charOverlay: dom.charOverlay,
     inputFirstName: dom.inputFirstName,
     inputLastName: dom.inputLastName,

@@ -408,6 +408,74 @@ body {
   gap: var(--space-2);
 }
 
+/* --- Header menu popover --- */
+.menu-wrap {
+  position: relative;
+}
+.menu-popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-primary-dim);
+  box-shadow: 0 8px 24px var(--panel-shadow-50);
+  min-width: 180px;
+  z-index: 200;
+  padding: var(--space-1);
+}
+.menu-popover.hidden { display: none; }
+.menu-popover-arrow {
+  position: absolute;
+  top: -5px;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--accent-primary-dim);
+  border-left: 1px solid var(--accent-primary-dim);
+  transform: rotate(45deg);
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.menu-item:hover, .menu-item:focus-visible {
+  background: var(--cyan-glow);
+  color: var(--cyan);
+  outline: none;
+}
+.menu-glyph {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--cyan-dim);
+  width: 16px;
+  text-align: center;
+}
+.menu-item:hover .menu-glyph,
+.menu-item:focus-visible .menu-glyph { color: var(--cyan); }
+.menu-divider {
+  height: 1px;
+  background: var(--border-dim);
+  margin: var(--space-1) var(--space-2);
+}
+.menu-item--danger { color: var(--red); }
+.menu-item--danger:hover, .menu-item--danger:focus-visible {
+  background: var(--red-glow);
+  color: var(--red);
+}
+.menu-item--danger .menu-glyph { color: var(--red); }
+
 #chapter-bar {
   border-top: 1px solid var(--border-dim);
   padding: var(--space-1) var(--space-5);
@@ -445,50 +513,6 @@ body {
   color: var(--text-primary);
   text-align: center;
   transition: opacity var(--transition);
-}
-
-#status-toggle {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--ls-normal);
-  text-transform: uppercase;
-  color: var(--text-primary);
-  background: transparent;
-  border: 1px solid var(--border-dim);
-  padding: var(--space-1) var(--space-2);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  display: block;
-}
-
-#status-toggle:hover {
-  color: var(--cyan);
-  border-color: var(--cyan-dim);
-}
-
-/* Level-up ready glow on the Status button */
-@keyframes statusLevelupGlow {
-  0%, 100% {
-    color: var(--text-dim);
-    border-color: var(--border-dim);
-    box-shadow: none;
-  }
-  50% {
-    color: var(--cyan);
-    border-color: var(--cyan);
-    box-shadow: 0 0 10px var(--cyan-glow-md), 0 0 20px var(--cyan-glow);
-  }
-}
-
-#status-toggle.levelup-ready {
-  animation: statusLevelupGlow 2s ease-in-out infinite;
-}
-
-#status-toggle.levelup-ready:hover {
-  animation: none;
-  color: var(--cyan);
-  border-color: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan-glow-md);
 }
 
 

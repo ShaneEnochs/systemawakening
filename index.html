@@ -71,8 +71,24 @@
     <div id="game-title"></div>
     <div class="header-actions">
       <button id="undo-btn" class="btn-base btn-ghost hidden" title="Undo last choice" disabled>↩ Undo</button>
-      <button id="save-btn" class="btn-base btn-ghost hidden" title="Save / Load game">Save·Load</button>
-      <button id="status-toggle" class="btn-base btn-ghost" aria-label="Toggle status panel">Status</button>
+      <div class="menu-wrap">
+        <button id="menu-btn" class="btn-base btn-ghost hidden"
+                aria-haspopup="menu" aria-expanded="false"
+                aria-controls="menu-popover" title="Open menu">Menu</button>
+        <div id="menu-popover" class="menu-popover hidden" role="menu" aria-labelledby="menu-btn">
+          <div class="menu-popover-arrow" aria-hidden="true"></div>
+          <button class="menu-item" role="menuitem" id="menu-item-status">
+            <span class="menu-glyph" aria-hidden="true">◆</span> Status
+          </button>
+          <button class="menu-item" role="menuitem" id="menu-item-save">
+            <span class="menu-glyph" aria-hidden="true">▣</span> Save &amp; Load
+          </button>
+          <div class="menu-divider" role="separator"></div>
+          <button class="menu-item menu-item--danger" role="menuitem" id="menu-item-restart">
+            <span class="menu-glyph" aria-hidden="true">↺</span> Restart
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div id="chapter-bar">

@@ -71,8 +71,8 @@ test.describe('System Awakening — Prologue', () => {
     // Game should start — narrative content should appear
     await page.waitForSelector('#narrative-content .narrative-paragraph', { timeout: 10000 });
 
-    // Save and undo buttons should be visible
-    await expect(page.locator('#save-btn')).toBeVisible();
+    // Menu and undo buttons should be visible
+    await expect(page.locator('#menu-btn')).toBeVisible();
     await expect(page.locator('#undo-btn')).toBeVisible();
   });
 
@@ -186,8 +186,9 @@ test.describe('System Awakening — Prologue', () => {
       if (await confirmBtn.isVisible().catch(() => false)) await confirmBtn.click();
     }
 
-    // Open save menu
-    await page.click('#save-btn');
+    // Open save menu via Menu popover
+    await page.click('#menu-btn');
+    await page.click('#menu-item-save');
     await page.waitForSelector('#save-overlay:not(.hidden)');
 
     // Save to slot 1
@@ -201,7 +202,8 @@ test.describe('System Awakening — Prologue', () => {
     await page.locator('.choice-btn:not(:disabled)').first().click();
 
     // Now load the save
-    await page.click('#save-btn');
+    await page.click('#menu-btn');
+    await page.click('#menu-item-save');
     await page.waitForSelector('#save-overlay:not(.hidden)');
     await page.click('#ingame-load-1');
 

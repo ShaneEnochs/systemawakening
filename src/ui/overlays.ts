@@ -38,7 +38,7 @@ let _splashSlots!:   HTMLElement;
 
 // Save menu
 let _saveOverlay!: HTMLElement;
-let _saveBtn!:     HTMLElement;
+let _menuBtn!:     HTMLElement;
 
 // Char creation
 let _charOverlay!:    HTMLElement;
@@ -71,7 +71,7 @@ let _showEngineError:     ((msg: string) => void) | null = null;
 
 export function init({
   splashOverlay, splashSlots,
-  saveOverlay, saveBtn,
+  saveOverlay, menuBtn,
   charOverlay, inputFirstName, inputLastName,
   counterFirst, counterLast, errorFirstName, errorLastName, charBeginBtn,
   toast,
@@ -87,7 +87,7 @@ export function init({
   splashOverlay:       HTMLElement;
   splashSlots:         HTMLElement;
   saveOverlay:         HTMLElement;
-  saveBtn:             HTMLElement;
+  menuBtn:             HTMLElement;
   charOverlay:         HTMLElement;
   inputFirstName:      HTMLInputElement;
   inputLastName:       HTMLInputElement;
@@ -116,7 +116,7 @@ export function init({
   _splashSlots    = splashSlots;
 
   _saveOverlay    = saveOverlay;
-  _saveBtn        = saveBtn;
+  _menuBtn        = menuBtn;
 
   _charOverlay    = charOverlay;
   _inputFirstName = inputFirstName;
@@ -293,7 +293,7 @@ export function refreshAllSlotCards(): void {
 // loadAndResume — shared helper used by splash load and in-game load flows.
 // ---------------------------------------------------------------------------
 export async function loadAndResume(save: any): Promise<void> {
-  _saveBtn.classList.remove('hidden');
+  _menuBtn.classList.remove('hidden');
   const undoBtn = document.getElementById('undo-btn');
   if (undoBtn) undoBtn.classList.remove('hidden');
   if (_clearUndoStack) _clearUndoStack();
@@ -360,7 +360,7 @@ export function showSaveMenu(): void {
   refreshAllSlotCards();
   _saveOverlay.classList.remove('hidden');
   _saveOverlay.style.opacity = '1';
-  _saveTrapRelease = trapFocus(_saveOverlay, _saveBtn);
+  _saveTrapRelease = trapFocus(_saveOverlay, _menuBtn);
 }
 
 export function hideSaveMenu(): void {

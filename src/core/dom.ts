@@ -14,8 +14,11 @@ export interface Dom {
   chapterTitle:     HTMLElement;
   narrativePanel:   HTMLElement;
   statusPanel:      HTMLElement;
-  statusToggle:     HTMLElement;
-  saveBtn:          HTMLElement;
+  menuBtn:          HTMLElement;
+  menuPopover:      HTMLElement;
+  menuItemStatus:   HTMLElement;
+  menuItemSave:     HTMLElement;
+  menuItemRestart:  HTMLElement;
   gameTitle:        HTMLElement;
   splashTitle:      HTMLElement;
   splashTagline:    HTMLElement;
@@ -127,8 +130,11 @@ export function buildDom(): Dom {
     chapterTitle:     req('chapter-title'),
     narrativePanel:   req('narrative-panel'),
     statusPanel:      req('status-panel'),
-    statusToggle:     req('status-toggle'),
-    saveBtn:          req('save-btn'),
+    menuBtn:          req('menu-btn'),
+    menuPopover:      req('menu-popover'),
+    menuItemStatus:   req('menu-item-status'),
+    menuItemSave:     req('menu-item-save'),
+    menuItemRestart:  req('menu-item-restart'),
     gameTitle:        req('game-title'),
     splashTitle:      document.querySelector('.splash-title') as HTMLElement,
     splashTagline:    req('splash-tagline'),

@@ -2645,6 +2645,13 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 
 /* Status panel is always a drawer — no desktop override needed */
 
+@media (max-width: 600px) {
+  #status-panel.status-visible {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 
 /* ============================================================
    24. RESPONSIVE — small phone (max-width: 400px)

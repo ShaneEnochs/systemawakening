@@ -14,8 +14,11 @@ export interface Dom {
   chapterTitle:     HTMLElement;
   narrativePanel:   HTMLElement;
   statusPanel:      HTMLElement;
-  statusToggle:     HTMLElement;
-  saveBtn:          HTMLElement;
+  menuBtn:          HTMLElement;
+  menuPopover:      HTMLElement;
+  menuItemStatus:   HTMLElement;
+  menuItemSave:     HTMLElement;
+  menuItemRestart:  HTMLElement;
   gameTitle:        HTMLElement;
   splashTitle:      HTMLElement;
   splashTagline:    HTMLElement;
@@ -72,6 +75,17 @@ export function setChapterTitle(t: string): void {
   if (el) el.textContent = cleanTitle;
   setChapterTitleState(cleanTitle);
   if (cleanTitle && cleanTitle !== prev && cleanTitle !== '—') showChapterCard(cleanTitle, label);
+
+  const labelEl = document.getElementById('chapter-bar-label');
+  if (labelEl) {
+    if (m) {
+      labelEl.textContent = label;
+      labelEl.classList.remove('hidden');
+    } else {
+      labelEl.textContent = '';
+      labelEl.classList.add('hidden');
+    }
+  }
 }
 
 export function showChapterCard(title: string, label = 'Chapter'): void {
@@ -116,8 +130,11 @@ export function buildDom(): Dom {
     chapterTitle:     req('chapter-title'),
     narrativePanel:   req('narrative-panel'),
     statusPanel:      req('status-panel'),
-    statusToggle:     req('status-toggle'),
-    saveBtn:          req('save-btn'),
+    menuBtn:          req('menu-btn'),
+    menuPopover:      req('menu-popover'),
+    menuItemStatus:   req('menu-item-status'),
+    menuItemSave:     req('menu-item-save'),
+    menuItemRestart:  req('menu-item-restart'),
     gameTitle:        req('game-title'),
     splashTitle:      document.querySelector('.splash-title') as HTMLElement,
     splashTagline:    req('splash-tagline'),

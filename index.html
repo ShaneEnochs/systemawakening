@@ -15,14 +15,6 @@
 <link rel="stylesheet" href="themes/base.css?v=14"/>
 <link rel="stylesheet" href="themes/fantasy.css?v=14"/>
 <style>
-  .save-code-section { margin-top: var(--space-4); border-top: 1px solid var(--border-dim); padding-top: var(--space-3); }
-  .save-code-label { font-family: var(--font-heading, 'Cinzel', serif); font-size: 0.85rem; color: var(--text-faint); margin-bottom: var(--space-2); text-align: center; letter-spacing: 0.05em; }
-  .save-code-row { display: flex; gap: var(--space-2); margin-bottom: var(--space-2); }
-  .save-code-btn { flex: 1; font-size: 0.8rem; }
-  .save-code-textarea { width: 100%; box-sizing: border-box; background: var(--bg-system); color: var(--text-primary); border: 1px solid var(--border-dim); border-radius: 6px; padding: var(--space-2); font-family: var(--font-mono, 'Inconsolata', monospace); font-size: 0.75rem; resize: vertical; min-height: 52px; line-height: 1.4; }
-  .save-code-textarea::placeholder { color: var(--text-faint); }
-  .save-code-textarea:focus { outline: 1px solid var(--cyan); border-color: var(--cyan); }
-
   /* ── Character creation: mobile-first overlay positioning ── */
   #char-creation-overlay {
     align-items: center;
@@ -79,11 +71,28 @@
     <div id="game-title"></div>
     <div class="header-actions">
       <button id="undo-btn" class="btn-base btn-ghost hidden" title="Undo last choice" disabled>↩ Undo</button>
-      <button id="save-btn" class="btn-base btn-ghost hidden" title="Save / Load game">Save·Load</button>
-      <button id="status-toggle" class="btn-base btn-ghost" aria-label="Toggle status panel">Status</button>
+      <div class="menu-wrap">
+        <button id="menu-btn" class="btn-base btn-ghost hidden"
+                aria-haspopup="menu" aria-expanded="false"
+                aria-controls="menu-popover" title="Open menu">Menu</button>
+        <div id="menu-popover" class="menu-popover hidden" role="menu" aria-labelledby="menu-btn">
+          <div class="menu-popover-arrow" aria-hidden="true"></div>
+          <button class="menu-item" role="menuitem" id="menu-item-status">
+            <span class="menu-glyph" aria-hidden="true">◆</span> Status
+          </button>
+          <button class="menu-item" role="menuitem" id="menu-item-save">
+            <span class="menu-glyph" aria-hidden="true">▣</span> Save &amp; Load
+          </button>
+          <div class="menu-divider" role="separator"></div>
+          <button class="menu-item menu-item--danger" role="menuitem" id="menu-item-restart">
+            <span class="menu-glyph" aria-hidden="true">↺</span> Restart
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div id="chapter-bar">
+    <span id="chapter-bar-label" class="chapter-bar-label hidden"></span>
     <div id="chapter-title">—</div>
   </div>
 </header>
@@ -231,8 +240,8 @@
     <!-- Footer -->
     <div class="splash-footer">
       <div class="splash-footer-text">
-        Build <span id="splash-build-number">1.0.0</span><br>
-        Developed &amp; Authored by <span>Shane Enochs</span>
+        <span id="splash-build-number">1.0.0</span><br>
+        Written &amp; developed by <span>Shane Enochs</span>
       </div>
     </div>
 
@@ -318,21 +327,7 @@
         <option value="3">→ Slot 3</option>
       </select>
     </div>
-    <!-- Save Code System -->
-    <div class="save-code-section">
-      <div class="save-code-label">Save Code</div>
-      <div class="save-code-row">
-        <button id="save-code-copy" class="btn-base btn-ghost save-code-btn">Copy Code</button>
-        <button id="save-code-load" class="btn-base btn-ghost save-code-btn">Load Code</button>
-      </div>
-      <textarea id="save-code-field" class="save-code-textarea" placeholder="Paste a save code here to load, or click Copy Code to generate one..." rows="3" spellcheck="false"></textarea>
-    </div>
-    <div class="checkpoint-section" id="checkpoint-section">
-      <button class="checkpoint-toggle" id="checkpoint-toggle">▸ Checkpoints</button>
-      <div class="checkpoint-list hidden" id="checkpoint-list"></div>
-    </div>
     <div class="save-menu-footer">
-      <button id="ingame-restart-btn" class="btn-base btn-ghost--danger">↺ Restart</button>
       <button id="save-menu-close" class="btn-base btn-ghost">Cancel</button>
     </div>
   </div>

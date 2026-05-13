@@ -10,7 +10,6 @@
 import {
   loadSaveFromSlot, restoreFromSave,
   _staleSaveFound, clearStaleSaveFound,
-  getCheckpoints, CHECKPOINT_PREFIX, decodeSaveCode,
 } from '../systems/saves.js';
 
 import { playerState, startup } from '../core/state.js';
@@ -39,7 +38,7 @@ let _splashSlots!:   HTMLElement;
 
 // Save menu
 let _saveOverlay!: HTMLElement;
-let _saveBtn!:     HTMLElement;
+let _menuBtn!:     HTMLElement;
 
 // Char creation
 let _charOverlay!:    HTMLElement;
@@ -72,7 +71,7 @@ let _showEngineError:     ((msg: string) => void) | null = null;
 
 export function init({
   splashOverlay, splashSlots,
-  saveOverlay, saveBtn,
+  saveOverlay, menuBtn,
   charOverlay, inputFirstName, inputLastName,
   counterFirst, counterLast, errorFirstName, errorLastName, charBeginBtn,
   toast,
@@ -88,7 +87,7 @@ export function init({
   splashOverlay:       HTMLElement;
   splashSlots:         HTMLElement;
   saveOverlay:         HTMLElement;
-  saveBtn:             HTMLElement;
+  menuBtn:             HTMLElement;
   charOverlay:         HTMLElement;
   inputFirstName:      HTMLInputElement;
   inputLastName:       HTMLInputElement;
@@ -117,7 +116,7 @@ export function init({
   _splashSlots    = splashSlots;
 
   _saveOverlay    = saveOverlay;
-  _saveBtn        = saveBtn;
+  _menuBtn        = menuBtn;
 
   _charOverlay    = charOverlay;
   _inputFirstName = inputFirstName;
@@ -294,7 +293,7 @@ export function refreshAllSlotCards(): void {
 // loadAndResume — shared helper used by splash load and in-game load flows.
 // ---------------------------------------------------------------------------
 export async function loadAndResume(save: any): Promise<void> {
-  _saveBtn.classList.remove('hidden');
+  _menuBtn.classList.remove('hidden');
   const undoBtn = document.getElementById('undo-btn');
   if (undoBtn) undoBtn.classList.remove('hidden');
   if (_clearUndoStack) _clearUndoStack();
@@ -357,61 +356,11 @@ export function hideSplash(): void {
 // ---------------------------------------------------------------------------
 let _saveTrapRelease: (() => void) | null = null;
 
-function refreshCheckpoints(): void {
-  const list   = document.getElementById('checkpoint-list');
-  const toggle = document.getElementById('checkpoint-toggle');
-  if (!list || !toggle) return;
-
-  const checkpoints = getCheckpoints().filter((cp): cp is NonNullable<typeof cp> => cp !== null);
-
-  if (checkpoints.length === 0) {
-    list.innerHTML = '<div class="checkpoint-empty">No checkpoints yet.</div>';
-  } else {
-    const fmt = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-    list.innerHTML = checkpoints.map(cp => `
-      <div class="checkpoint-card" data-slot="${cp.slot}">
-        <span class="checkpoint-label">${escapeHtml(cp.label)}</span>
-        <span class="checkpoint-time">${fmt.format(new Date(cp.timestamp))}</span>
-        <button class="btn-base btn-ghost checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
-      </div>`).join('');
-  }
-
-  // Collapse by default each time the menu opens
-  list.classList.add('hidden');
-  toggle.textContent = '▸ Checkpoints';
-
-  // Toggle expand/collapse
-  const newToggle = toggle.cloneNode(true) as HTMLElement;
-  toggle.replaceWith(newToggle);
-  newToggle.addEventListener('click', () => {
-    const isHidden = list.classList.toggle('hidden');
-    newToggle.textContent = isHidden ? '▸ Checkpoints' : '▾ Checkpoints';
-  });
-
-  // Wire load buttons
-  list.querySelectorAll<HTMLElement>('.checkpoint-load-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const slot = Number(btn.dataset.checkpoint);
-      const raw  = localStorage.getItem(`${CHECKPOINT_PREFIX}${slot}`);
-      if (!raw) return;
-      const result = decodeSaveCode(raw);
-      if (!result.ok) {
-        showToast(`Checkpoint load failed: ${(result as { ok: false; reason: string }).reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume((result as { ok: true; save: unknown }).save);
-      showToast('Checkpoint loaded.');
-    });
-  });
-}
-
 export function showSaveMenu(): void {
   refreshAllSlotCards();
-  refreshCheckpoints();
   _saveOverlay.classList.remove('hidden');
   _saveOverlay.style.opacity = '1';
-  _saveTrapRelease = trapFocus(_saveOverlay, _saveBtn);
+  _saveTrapRelease = trapFocus(_saveOverlay, _menuBtn);
 }
 
 export function hideSaveMenu(): void {

@@ -186,6 +186,16 @@ function setChapterTitle(t) {
   if (el) el.textContent = cleanTitle;
   setChapterTitleState(cleanTitle);
   if (cleanTitle && cleanTitle !== prev && cleanTitle !== "\u2014") showChapterCard(cleanTitle, label);
+  const labelEl = document.getElementById("chapter-bar-label");
+  if (labelEl) {
+    if (m) {
+      labelEl.textContent = label;
+      labelEl.classList.remove("hidden");
+    } else {
+      labelEl.textContent = "";
+      labelEl.classList.add("hidden");
+    }
+  }
 }
 function showChapterCard(title, label = "Chapter") {
   document.querySelector(".chapter-card")?.remove();
@@ -223,8 +233,11 @@ function buildDom() {
     chapterTitle: req("chapter-title"),
     narrativePanel: req("narrative-panel"),
     statusPanel: req("status-panel"),
-    statusToggle: req("status-toggle"),
-    saveBtn: req("save-btn"),
+    menuBtn: req("menu-btn"),
+    menuPopover: req("menu-popover"),
+    menuItemStatus: req("menu-item-status"),
+    menuItemSave: req("menu-item-save"),
+    menuItemRestart: req("menu-item-restart"),
     gameTitle: req("game-title"),
     splashTitle: document.querySelector(".splash-title"),
     splashTagline: req("splash-tagline"),
@@ -985,33 +998,6 @@ function saveCheckpoint(label, narrativeLog) {
   } catch (err) {
     console.warn("[saves] saveCheckpoint failed:", err);
   }
-}
-function getCheckpoints() {
-  const results = [];
-  for (let i = 0; i < CHECKPOINT_MAX; i++) {
-    const raw = localStorage.getItem(`${CHECKPOINT_PREFIX}${i}`);
-    if (!raw) {
-      results.push(null);
-      continue;
-    }
-    const decoded = decodeSaveCode(raw);
-    if (!decoded.ok) {
-      try {
-        localStorage.removeItem(`${CHECKPOINT_PREFIX}${i}`);
-      } catch (_) {
-      }
-      results.push(null);
-      continue;
-    }
-    const save = decoded.save;
-    results.push({
-      slot: i,
-      label: save.label || save.chapterTitle || `Checkpoint ${i + 1}`,
-      timestamp: save.timestamp,
-      code: raw
-    });
-  }
-  return results;
 }
 async function restoreFromSave(save, {
   runStatsScene: runStatsScene2,
@@ -2441,7 +2427,7 @@ function buildSkillsTabHtml() {
   let html = hasSkillStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>` : "";
   const ownedSkills = Array.isArray(playerState.skills) ? playerState.skills : [];
   if (ownedSkills.length === 0) {
-    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No skills learned yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No abilities awakened.</p></div>`;
   } else {
     const CATEGORY_ORDER = ["core", "active", "passive"];
     const CATEGORY_LABELS = {
@@ -2492,7 +2478,7 @@ function buildInventoryTabHtml() {
   let html = hasItemStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>` : "";
   const invItems = Array.isArray(playerState.inventory) ? playerState.inventory : [];
   if (invItems.length === 0) {
-    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Nothing here yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Your pockets are empty.</p></div>`;
   } else {
     const invAccordions = invItems.map((invEntry) => {
       const baseName = itemBaseName(invEntry);
@@ -2518,7 +2504,7 @@ function buildLogTabHtml() {
   const achvs = getAchievements();
   const jentries = getJournalEntries().filter((j) => j.type !== "achievement");
   if (achvs.length === 0 && jentries.length === 0) {
-    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">Nothing recorded yet.</p></div>`;
+    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">No deeds recorded.</p></div>`;
   }
   if (achvs.length > 0) {
     const achvAccordionItems = achvs.map((a) => {
@@ -2970,7 +2956,7 @@ function clearUndoStack() {
 var _splashOverlay;
 var _splashSlots;
 var _saveOverlay;
-var _saveBtn;
+var _menuBtn;
 var _charOverlay;
 var _inputFirstName;
 var _inputLastName;
@@ -2998,7 +2984,7 @@ function init3({
   splashOverlay,
   splashSlots,
   saveOverlay,
-  saveBtn,
+  menuBtn,
   charOverlay,
   inputFirstName,
   inputLastName,
@@ -3026,7 +3012,7 @@ function init3({
   _splashOverlay = splashOverlay;
   _splashSlots = splashSlots;
   _saveOverlay = saveOverlay;
-  _saveBtn = saveBtn;
+  _menuBtn = menuBtn;
   _charOverlay = charOverlay;
   _inputFirstName = inputFirstName;
   _inputLastName = inputLastName;
@@ -3178,7 +3164,7 @@ function refreshAllSlotCards() {
   });
 }
 async function loadAndResume(save) {
-  _saveBtn.classList.remove("hidden");
+  _menuBtn.classList.remove("hidden");
   const undoBtn = document.getElementById("undo-btn");
   if (undoBtn) undoBtn.classList.remove("hidden");
   if (_clearUndoStack) _clearUndoStack();
@@ -3225,52 +3211,11 @@ function hideSplash() {
   _splashOverlay.classList.add("hidden");
 }
 var _saveTrapRelease = null;
-function refreshCheckpoints() {
-  const list = document.getElementById("checkpoint-list");
-  const toggle = document.getElementById("checkpoint-toggle");
-  if (!list || !toggle) return;
-  const checkpoints = getCheckpoints().filter((cp) => cp !== null);
-  if (checkpoints.length === 0) {
-    list.innerHTML = '<div class="checkpoint-empty">No checkpoints yet.</div>';
-  } else {
-    const fmt = new Intl.DateTimeFormat(void 0, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" });
-    list.innerHTML = checkpoints.map((cp) => `
-      <div class="checkpoint-card" data-slot="${cp.slot}">
-        <span class="checkpoint-label">${escapeHtml(cp.label)}</span>
-        <span class="checkpoint-time">${fmt.format(new Date(cp.timestamp))}</span>
-        <button class="btn-base btn-ghost checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
-      </div>`).join("");
-  }
-  list.classList.add("hidden");
-  toggle.textContent = "\u25B8 Checkpoints";
-  const newToggle = toggle.cloneNode(true);
-  toggle.replaceWith(newToggle);
-  newToggle.addEventListener("click", () => {
-    const isHidden = list.classList.toggle("hidden");
-    newToggle.textContent = isHidden ? "\u25B8 Checkpoints" : "\u25BE Checkpoints";
-  });
-  list.querySelectorAll(".checkpoint-load-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const slot = Number(btn.dataset.checkpoint);
-      const raw = localStorage.getItem(`${CHECKPOINT_PREFIX}${slot}`);
-      if (!raw) return;
-      const result = decodeSaveCode(raw);
-      if (!result.ok) {
-        showToast(`Checkpoint load failed: ${result.reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume(result.save);
-      showToast("Checkpoint loaded.");
-    });
-  });
-}
 function showSaveMenu() {
   refreshAllSlotCards();
-  refreshCheckpoints();
   _saveOverlay.classList.remove("hidden");
   _saveOverlay.style.opacity = "1";
-  _saveTrapRelease = trapFocus(_saveOverlay, _saveBtn);
+  _saveTrapRelease = trapFocus(_saveOverlay, _menuBtn);
 }
 function hideSaveMenu() {
   _saveOverlay.classList.add("hidden");
@@ -3428,18 +3373,59 @@ function showCharacterCreation() {
 // src/systems/save-manager.ts
 function wireSaveUI(dom, opts) {
   const { scheduleStatsRender: scheduleStatsRender2 } = opts;
-  dom.statusToggle?.addEventListener("click", () => {
+  const menuBtn = dom.menuBtn;
+  const menuPopover = dom.menuPopover;
+  function openMenu() {
+    menuPopover?.classList.remove("hidden");
+    menuBtn?.setAttribute("aria-expanded", "true");
+  }
+  function closeMenu() {
+    menuPopover?.classList.add("hidden");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+  function toggleMenu() {
+    if (menuPopover?.classList.contains("hidden")) openMenu();
+    else closeMenu();
+  }
+  menuBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+  document.addEventListener("click", (e) => {
+    if (!menuPopover?.contains(e.target) && e.target !== menuBtn) {
+      closeMenu();
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menuPopover?.classList.contains("hidden")) {
+      closeMenu();
+      menuBtn?.focus();
+    }
+  });
+  dom.menuItemStatus?.addEventListener("click", () => {
+    closeMenu();
     const visible = dom.statusPanel?.classList.toggle("status-visible");
     dom.statusPanel?.classList.toggle("status-hidden", !visible);
     scheduleStatsRender2();
   });
   document.addEventListener("click", (e) => {
-    if (!dom.statusPanel?.contains(e.target) && e.target !== dom.statusToggle && !dom.storeOverlay?.contains(e.target)) {
+    if (!dom.statusPanel?.contains(e.target) && !menuPopover?.contains(e.target) && e.target !== menuBtn && !dom.storeOverlay?.contains(e.target)) {
       dom.statusPanel?.classList.remove("status-visible");
       dom.statusPanel?.classList.add("status-hidden");
     }
   });
-  dom.saveBtn?.addEventListener("click", showSaveMenu);
+  dom.menuItemSave?.addEventListener("click", () => {
+    closeMenu();
+    showSaveMenu();
+  });
+  dom.menuItemRestart?.addEventListener("click", () => {
+    closeMenu();
+    if (confirm("Return to the title screen? Manual saves will be kept.")) {
+      hideSaveMenu();
+      deleteSaveSlot("auto");
+      location.reload();
+    }
+  });
   dom.saveMenuClose?.addEventListener("click", hideSaveMenu);
   dom.saveOverlay?.addEventListener("click", (e) => {
     if (e.target === dom.saveOverlay) hideSaveMenu();
@@ -3496,19 +3482,9 @@ function wireSaveUI(dom, opts) {
       await loadAndResume(save);
     });
   });
-  const ingameRestartBtn = document.getElementById("ingame-restart-btn");
-  if (ingameRestartBtn) {
-    ingameRestartBtn.addEventListener("click", () => {
-      if (confirm("Return to the title screen? Manual saves will be kept.")) {
-        hideSaveMenu();
-        deleteSaveSlot("auto");
-        location.reload();
-      }
-    });
-  }
   dom.splashNewBtn?.addEventListener("click", async () => {
     hideSplash();
-    dom.saveBtn?.classList.remove("hidden");
+    dom.menuBtn?.classList.remove("hidden");
     document.getElementById("undo-btn")?.classList.remove("hidden");
     clearUndoStack();
     await runStatsScene();
@@ -3590,50 +3566,6 @@ function wireSaveUI(dom, opts) {
         showToast("Import failed: file could not be parsed as JSON.");
       }
       importInput.value = "";
-    });
-  }
-  const codeCopyBtn = document.getElementById("save-code-copy");
-  if (codeCopyBtn) {
-    codeCopyBtn.addEventListener("click", () => {
-      const code = encodeSaveCode(getNarrativeLog());
-      const field = document.getElementById("save-code-field");
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(code).then(() => {
-          showToast("Save code copied to clipboard.");
-          if (field) field.value = code;
-        }).catch(() => {
-          if (field) {
-            field.value = code;
-            field.select();
-          }
-          showToast("Code generated \u2014 copy it from the text box.");
-        });
-      } else {
-        if (field) {
-          field.value = code;
-          field.select();
-        }
-        showToast("Code generated \u2014 copy it from the text box.");
-      }
-    });
-  }
-  const codeLoadBtn = document.getElementById("save-code-load");
-  if (codeLoadBtn) {
-    codeLoadBtn.addEventListener("click", async () => {
-      const field = document.getElementById("save-code-field");
-      const code = field?.value?.trim();
-      if (!code) {
-        showToast("Paste a save code first.");
-        return;
-      }
-      const result = decodeSaveCode(code);
-      if (!result.ok) {
-        showToast(`Invalid save code: ${result.reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume(result.save);
-      showToast("Save code loaded.");
     });
   }
 }
@@ -3819,7 +3751,7 @@ async function boot() {
     splashOverlay: dom.splashOverlay,
     splashSlots: dom.splashSlots,
     saveOverlay: dom.saveOverlay,
-    saveBtn: dom.saveBtn,
+    menuBtn: dom.menuBtn,
     charOverlay: dom.charOverlay,
     inputFirstName: dom.inputFirstName,
     inputLastName: dom.inputLastName,

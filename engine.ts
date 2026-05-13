@@ -110,7 +110,7 @@ async function boot(): Promise<void> {
   });
   initOverlays({
     splashOverlay: dom.splashOverlay, splashSlots: dom.splashSlots,
-    saveOverlay: dom.saveOverlay, saveBtn: dom.saveBtn,
+    saveOverlay: dom.saveOverlay, menuBtn: dom.menuBtn,
     charOverlay: dom.charOverlay,
     inputFirstName: dom.inputFirstName, inputLastName: dom.inputLastName,
     counterFirst: dom.counterFirst, counterLast: dom.counterLast,

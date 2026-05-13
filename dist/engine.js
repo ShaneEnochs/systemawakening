@@ -996,33 +996,6 @@ function saveCheckpoint(label, narrativeLog) {
     console.warn("[saves] saveCheckpoint failed:", err);
   }
 }
-function getCheckpoints() {
-  const results = [];
-  for (let i = 0; i < CHECKPOINT_MAX; i++) {
-    const raw = localStorage.getItem(`${CHECKPOINT_PREFIX}${i}`);
-    if (!raw) {
-      results.push(null);
-      continue;
-    }
-    const decoded = decodeSaveCode(raw);
-    if (!decoded.ok) {
-      try {
-        localStorage.removeItem(`${CHECKPOINT_PREFIX}${i}`);
-      } catch (_) {
-      }
-      results.push(null);
-      continue;
-    }
-    const save = decoded.save;
-    results.push({
-      slot: i,
-      label: save.label || save.chapterTitle || `Checkpoint ${i + 1}`,
-      timestamp: save.timestamp,
-      code: raw
-    });
-  }
-  return results;
-}
 async function restoreFromSave(save, {
   runStatsScene: runStatsScene2,
   renderFromLog: renderFromLog2,
@@ -3235,49 +3208,8 @@ function hideSplash() {
   _splashOverlay.classList.add("hidden");
 }
 var _saveTrapRelease = null;
-function refreshCheckpoints() {
-  const list = document.getElementById("checkpoint-list");
-  const toggle = document.getElementById("checkpoint-toggle");
-  if (!list || !toggle) return;
-  const checkpoints = getCheckpoints().filter((cp) => cp !== null);
-  if (checkpoints.length === 0) {
-    list.innerHTML = '<div class="checkpoint-empty">No checkpoints yet.</div>';
-  } else {
-    const fmt = new Intl.DateTimeFormat(void 0, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" });
-    list.innerHTML = checkpoints.map((cp) => `
-      <div class="checkpoint-card" data-slot="${cp.slot}">
-        <span class="checkpoint-label">${escapeHtml(cp.label)}</span>
-        <span class="checkpoint-time">${fmt.format(new Date(cp.timestamp))}</span>
-        <button class="btn-base btn-ghost checkpoint-load-btn" data-checkpoint="${cp.slot}">Load</button>
-      </div>`).join("");
-  }
-  list.classList.add("hidden");
-  toggle.textContent = "\u25B8 Checkpoints";
-  const newToggle = toggle.cloneNode(true);
-  toggle.replaceWith(newToggle);
-  newToggle.addEventListener("click", () => {
-    const isHidden = list.classList.toggle("hidden");
-    newToggle.textContent = isHidden ? "\u25B8 Checkpoints" : "\u25BE Checkpoints";
-  });
-  list.querySelectorAll(".checkpoint-load-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const slot = Number(btn.dataset.checkpoint);
-      const raw = localStorage.getItem(`${CHECKPOINT_PREFIX}${slot}`);
-      if (!raw) return;
-      const result = decodeSaveCode(raw);
-      if (!result.ok) {
-        showToast(`Checkpoint load failed: ${result.reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume(result.save);
-      showToast("Checkpoint loaded.");
-    });
-  });
-}
 function showSaveMenu() {
   refreshAllSlotCards();
-  refreshCheckpoints();
   _saveOverlay.classList.remove("hidden");
   _saveOverlay.style.opacity = "1";
   _saveTrapRelease = trapFocus(_saveOverlay, _saveBtn);
@@ -3600,50 +3532,6 @@ function wireSaveUI(dom, opts) {
         showToast("Import failed: file could not be parsed as JSON.");
       }
       importInput.value = "";
-    });
-  }
-  const codeCopyBtn = document.getElementById("save-code-copy");
-  if (codeCopyBtn) {
-    codeCopyBtn.addEventListener("click", () => {
-      const code = encodeSaveCode(getNarrativeLog());
-      const field = document.getElementById("save-code-field");
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(code).then(() => {
-          showToast("Save code copied to clipboard.");
-          if (field) field.value = code;
-        }).catch(() => {
-          if (field) {
-            field.value = code;
-            field.select();
-          }
-          showToast("Code generated \u2014 copy it from the text box.");
-        });
-      } else {
-        if (field) {
-          field.value = code;
-          field.select();
-        }
-        showToast("Code generated \u2014 copy it from the text box.");
-      }
-    });
-  }
-  const codeLoadBtn = document.getElementById("save-code-load");
-  if (codeLoadBtn) {
-    codeLoadBtn.addEventListener("click", async () => {
-      const field = document.getElementById("save-code-field");
-      const code = field?.value?.trim();
-      if (!code) {
-        showToast("Paste a save code first.");
-        return;
-      }
-      const result = decodeSaveCode(code);
-      if (!result.ok) {
-        showToast(`Invalid save code: ${result.reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume(result.save);
-      showToast("Save code loaded.");
     });
   }
 }

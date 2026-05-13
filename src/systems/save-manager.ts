@@ -9,7 +9,6 @@ import type { Dom } from '../core/dom.js';
 import {
   loadSaveFromSlot, saveGameToSlot,
   deleteSaveSlot, exportSaveSlot, importSaveFromJSON,
-  encodeSaveCode, decodeSaveCode,
 } from './saves.js';
 
 import {
@@ -237,44 +236,4 @@ export function wireSaveUI(dom: Dom, opts: {
     });
   }
 
-  // Save code — copy
-  const codeCopyBtn = document.getElementById('save-code-copy');
-  if (codeCopyBtn) {
-    codeCopyBtn.addEventListener('click', () => {
-      const code  = encodeSaveCode(getNarrativeLog());
-      const field = document.getElementById('save-code-field') as HTMLInputElement | null;
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(code)
-          .then(() => {
-            showToast('Save code copied to clipboard.');
-            if (field) field.value = code;
-          })
-          .catch(() => {
-            if (field) { field.value = code; field.select(); }
-            showToast('Code generated — copy it from the text box.');
-          });
-      } else {
-        if (field) { field.value = code; field.select(); }
-        showToast('Code generated — copy it from the text box.');
-      }
-    });
-  }
-
-  // Save code — load
-  const codeLoadBtn = document.getElementById('save-code-load');
-  if (codeLoadBtn) {
-    codeLoadBtn.addEventListener('click', async () => {
-      const field = document.getElementById('save-code-field') as HTMLInputElement | null;
-      const code  = field?.value?.trim();
-      if (!code) { showToast('Paste a save code first.'); return; }
-      const result = decodeSaveCode(code);
-      if (!result.ok) {
-        showToast(`Invalid save code: ${(result as { ok: false; reason: string }).reason}`);
-        return;
-      }
-      hideSaveMenu();
-      await loadAndResume((result as { ok: true; save: unknown }).save);
-      showToast('Save code loaded.');
-    });
-  }
 }

@@ -2700,63 +2700,6 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
   margin: 0 auto;
 }
 
-/* ---------------------------------------------------------------------------
-   Checkpoint section in save menu (Phase 7)
-   --------------------------------------------------------------------------- */
-
-.checkpoint-section {
-  margin-top: var(--space-3);
-  border-top: 1px solid var(--border-dim);
-  padding-top: var(--space-2);
-}
-
-.checkpoint-toggle {
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  cursor: pointer;
-  padding: var(--space-1) 0;
-  letter-spacing: var(--ls-tight);
-}
-.checkpoint-toggle:hover { color: var(--cyan); }
-
-.checkpoint-list {
-  margin-top: var(--space-1);
-}
-
-.checkpoint-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) 0;
-  border-bottom: 1px solid var(--border-dim);
-}
-
-.checkpoint-label {
-  flex: 1;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.checkpoint-time {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  color: var(--text-faint);
-  white-space: nowrap;
-}
-
-.checkpoint-empty {
-  font-style: italic;
-  color: var(--text-faint);
-  font-size: var(--text-sm);
-  padding: var(--space-2) 0;
-}
 
 /* ---------------------------------------------------------------------------
    Glossary / Lore-Term Tooltips (Phase 8)

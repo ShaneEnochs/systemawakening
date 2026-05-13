@@ -414,6 +414,19 @@ body {
   background: var(--bg-chapter-bar);
 }
 
+.chapter-bar-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+.chapter-bar-label.hidden {
+  display: none;
+}
+
 #game-title {
   font-family: var(--font-display);
   font-size: 0.95rem;
@@ -1259,11 +1272,18 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 }
 
 .splash-footer-text {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; letter-spacing: 0.14em;
-  color: var(--text-faint); text-transform: uppercase; line-height: 1.8;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  line-height: 1.7;
+  text-transform: none;
 }
-.splash-footer-text span { color: var(--text-primary); }
+.splash-footer-text span {
+  color: var(--text-primary);
+  font-style: normal;
+}
 
 /* ── Shared splash animation ── */
 @keyframes splashFadeUp {

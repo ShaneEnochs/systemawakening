@@ -186,6 +186,16 @@ function setChapterTitle(t) {
   if (el) el.textContent = cleanTitle;
   setChapterTitleState(cleanTitle);
   if (cleanTitle && cleanTitle !== prev && cleanTitle !== "\u2014") showChapterCard(cleanTitle, label);
+  const labelEl = document.getElementById("chapter-bar-label");
+  if (labelEl) {
+    if (m) {
+      labelEl.textContent = label;
+      labelEl.classList.remove("hidden");
+    } else {
+      labelEl.textContent = "";
+      labelEl.classList.add("hidden");
+    }
+  }
 }
 function showChapterCard(title, label = "Chapter") {
   document.querySelector(".chapter-card")?.remove();
@@ -2441,7 +2451,7 @@ function buildSkillsTabHtml() {
   let html = hasSkillStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-skills" data-store-tab="skills">Skill Store</button></div>` : "";
   const ownedSkills = Array.isArray(playerState.skills) ? playerState.skills : [];
   if (ownedSkills.length === 0) {
-    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No skills learned yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No abilities awakened.</p></div>`;
   } else {
     const CATEGORY_ORDER = ["core", "active", "passive"];
     const CATEGORY_LABELS = {
@@ -2492,7 +2502,7 @@ function buildInventoryTabHtml() {
   let html = hasItemStore ? `<div class="status-store-row"><button class="btn-base btn-ghost" id="status-store-btn-inv" data-store-tab="items">Item Store</button></div>` : "";
   const invItems = Array.isArray(playerState.inventory) ? playerState.inventory : [];
   if (invItems.length === 0) {
-    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Nothing here yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Your pockets are empty.</p></div>`;
   } else {
     const invAccordions = invItems.map((invEntry) => {
       const baseName = itemBaseName(invEntry);
@@ -2518,7 +2528,7 @@ function buildLogTabHtml() {
   const achvs = getAchievements();
   const jentries = getJournalEntries().filter((j) => j.type !== "achievement");
   if (achvs.length === 0 && jentries.length === 0) {
-    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">Nothing recorded yet.</p></div>`;
+    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">No deeds recorded.</p></div>`;
   }
   if (achvs.length > 0) {
     const achvAccordionItems = achvs.map((a) => {

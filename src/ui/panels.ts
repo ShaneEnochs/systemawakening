@@ -191,7 +191,7 @@ function buildSkillsTabHtml(): string {
 
   const ownedSkills = Array.isArray(playerState.skills) ? playerState.skills : [];
   if (ownedSkills.length === 0) {
-    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No skills learned yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_SKILLS_SVG}<p class="empty-state-text">No abilities awakened.</p></div>`;
   } else {
     const CATEGORY_ORDER  = ['core', 'active', 'passive'] as const;
     const CATEGORY_LABELS: Record<string, string> = {
@@ -247,7 +247,7 @@ function buildInventoryTabHtml(): string {
 
   const invItems = Array.isArray(playerState.inventory) ? playerState.inventory : [];
   if (invItems.length === 0) {
-    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Nothing here yet.</p></div>`;
+    html += `<div class="empty-state">${EMPTY_INV_SVG}<p class="empty-state-text">Your pockets are empty.</p></div>`;
   } else {
     const invAccordions = invItems.map((invEntry: string) => {
       const baseName = itemBaseName(invEntry);
@@ -275,7 +275,7 @@ function buildLogTabHtml(): string {
   const jentries = getJournalEntries().filter(j => j.type !== 'achievement');
 
   if (achvs.length === 0 && jentries.length === 0) {
-    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">Nothing recorded yet.</p></div>`;
+    return `<div class="empty-state">${EMPTY_LOG_SVG}<p class="empty-state-text">No deeds recorded.</p></div>`;
   }
   if (achvs.length > 0) {
     const achvAccordionItems = achvs.map(a => {

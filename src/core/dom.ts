@@ -72,6 +72,17 @@ export function setChapterTitle(t: string): void {
   if (el) el.textContent = cleanTitle;
   setChapterTitleState(cleanTitle);
   if (cleanTitle && cleanTitle !== prev && cleanTitle !== '—') showChapterCard(cleanTitle, label);
+
+  const labelEl = document.getElementById('chapter-bar-label');
+  if (labelEl) {
+    if (m) {
+      labelEl.textContent = label;
+      labelEl.classList.remove('hidden');
+    } else {
+      labelEl.textContent = '';
+      labelEl.classList.add('hidden');
+    }
+  }
 }
 
 export function showChapterCard(title: string, label = 'Chapter'): void {

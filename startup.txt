@@ -22,10 +22,11 @@
 
 *comment ─── Personal Stats (visible in Stats panel) ───
 *create_stat might "Might" 1
-*create_stat finesse "Finesse" 1
-*create_stat magic "Magic" 1
+*create_stat control "Control" 1
+*create_stat focus "Focus" 1
 *create_stat perception "Perception" 1
 *create_stat presence "Presence" 1
+*create_stat intrigue "Intrigue" 1
 
 *comment ─── Progression State ───
 *create tier "baron"

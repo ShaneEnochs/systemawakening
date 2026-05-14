@@ -78,13 +78,8 @@ export function setChapterTitle(t: string): void {
 
   const labelEl = document.getElementById('chapter-bar-label');
   if (labelEl) {
-    if (m) {
-      labelEl.textContent = label;
-      labelEl.classList.remove('hidden');
-    } else {
-      labelEl.textContent = '';
-      labelEl.classList.add('hidden');
-    }
+    labelEl.textContent = '';
+    labelEl.classList.add('hidden');
   }
 }
 

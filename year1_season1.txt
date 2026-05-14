@@ -1,178 +1,55 @@
 *title [Prologue] Induction
 
-The stack of papers you have to sign for the NDA is taller than your mortgage documents. You diligently read the first twenty pages or so, but skim the rest, eager to get started. The lawyer representing the VR game development company [i]All These Worlds[/i] frowns in clear disapproval as you sign and initial page after page without reading them, but NDAs usually boil down to "don't talk about it or we'll sue you." As you have no intention of doing that, you should be fine. Right?
+Some people are great at life. Standing in line at the Exxon with your Monster and Slim Jim, you realize you might be great at death. After all, when the robber screaming at you to get on the floor inevitably pulls the trigger, it will be your third time dying. You idly wonder if you'll wake up in a new world yet again, or if this death will be permanent.
 
-You recline in the pod and glance over at your friend and coworker, Alex Landry, climbing into the pod beside yours. One hundred spots in the entire alpha, and somehow he managed to not only get one, but two of them. Apparently he had been sitting at a bar a couple weeks back, deep in misery over the latest breakup which had astonishingly lasted almost three weeks this time. He got to talking with the guy on the next stool over who turned out to be a developer at [i]All These Worlds[/i] and he, too, was finding some comfort at the bottom of a glass. 
+You like a lot of things about this world better than the last two. Netflix is great, and you just started a new wildlife documentary narrated by David Attenborough. It's about baby dinosaurs, which neither of your previous worlds had. Cute little things. The parents looked terrifying though, so it’s probably for the best they’re extinct.
 
-They had spent the better part of three hours doing what people in that situation do: drink too much and tell a complete stranger things they probably shouldn't. But trauma bonding is a thing, and in this case, it worked out pretty well for the both of you because somewhere in the middle of all that, the developer had offered Alex a spot in the alpha. How (or why) your friend had then parlayed that offer into a second invite for you, you have no idea, but you will forever be thankful for it, and you'll probably owe him an infinite number of favors for the rest of both of your lives.
+Energy drinks are a huge plus. Your first world had alchemical equivalents, but they tasted like battery acid smells.
 
-Alex grins at you as the nurses begin attaching electrodes to your forehead, chest, wrists, and ankles. When they finish, you eye the tangle of wires with mild unease.
+The best part, though? No dungeons and no monsters. Also, almost no one carries a sword here unless they’re a weirdo, and even then, those are flimsy, dull replicas. Nothing like what you're used to.
 
-"They're just so we can monitor your vitals while you're in there," says the nurse attending to you. He's a big guy, broad through the shoulders, with hands that look like they could palm a basketball without trying. You find yourself wondering if he played college ball, or maybe just never stopped lifting. "Nothing to worry about. This is completely safe."
+Cars are fine, but your second world had magi-tech vehicles that ran clean for a decade on a single mana sphere. Fuel prices here are a joke, but at least you can walk the city.
 
-He holds out a pinky.
-
-*choice
-  #Hook your pinky in his.
-    You hook your pinky in his, completing the sacred promise. He smiles broadly, and you find yourself liking the guy immediately.
-
-    "I don't get a pinky promise?" you hear Alex ask his own nurse.
-
-    She's older with a no-nonsense bearing to her. You watch her fix him with a deadpan stare as a response to his inquiry.
-
-    "You'll be fine."
-
-    The two nurses leave, and a tall, thin man in plaid takes their place, a lanyard with an ID badge bouncing against his chest.
-
-    *goto induction
-  #Smile and nod, but don't hook your pinky.
-    You give the nurse a polite smile, but you don't hook your pinky with his. You're not a kid.
-
-    "I'll take some of that action," Alex says, peering around his own nurse. You glance at her, and see that she's older and not someone who would likely be up for any kind of shenanigans.
-
-    "My man," your nurse says, stepping over and hooking his pinky with Alex's. They both grin, and unable to help yourself, you smile too.
-
-    The two nurses leave, and a tall, thin man in plaid takes their place, a lanyard with an ID badge bouncing against his chest.
-
-    *goto induction
-
-*label induction
-
-"Good morning, folks," he says, addressing you and the four other pod testers in the room. "Thanks for coming in. I know the NDA process was a headache, but we think we’ve built something incredible here and hopefully you'll agree once you're inside.
-
-"A quick heads-up before we start," he continues. "You’re going to see a lot of placeholder text. 'Crimson City', 'Cinnabar Guard 4', stuff like that. Ignore it. The narrative team is still finalizing the lore and naming conventions, and it'll all be updated before beta testing. There are some quests available, but we don't care too much about the story right now. We want to test the physics, the economy, and the skill trees. We need you to push the boundaries and try to break the mechanics if you can.
-
-"Usually, we’d isolate you to a single level or a specific combat loop, but as you'll see soon, Path of Empire doesn't work like that. The systems are too tangled and everything bleeds into everything else. If we split it up, the simulation just falls apart so we’re dropping you into the complete build and you'll have full run of the map.
-
-"Whenever you're ready, go ahead and place your hands on the armrest basins. It's going to feel a little weird, but it's normal. Just keep your hands still, remember to breath, and we'll trigger the induction sequence."
-
-The man, who still hasn't introduced himself, gives a winning smile as he looks each of you in the eye in turn.
-
-"See you on the other side!"
+Sure, there are dangers. That first night waking up in Central Park, you almost got hit by a city bus. And then there are desperate people doing desperate, dangerous things. But you suspect they exist in every world.
 
 *page_break
 
-You place your hands on the two silver half-spheres at the ends of the armrests. They're cold at first, smooth and slightly yielding, like pressing your palms against chilled silicone. As your body heat seeps into them, your hands begin to sink into the material, and you feel a faint pins and needles sensation spread up your wrists and forearms.
+"I said get on the ground," yells the increasingly frantic masked man, pointing the gun at your nose as you tear open your Slim Jim and take a bite.
 
-You've read about the breakthroughs in nanomachines and how they've transformed military and medical applications. Somehow, [i]All These Worlds[/i] has secured FDA approval to use them in their pods for fully integrated VR. A first of its kind, the articles said. You hadn't really thought about what that meant until right now, with millions of microscopic machines working their way into your bloodstream and heading toward your brain.
+The food here is by far the best, though. As your teeth snap through the salty stick of processed meat, you've never been more sure of anything. Culinary perfection.
 
-The half-spheres slowly disappear as the nanites absorb your body heat and glucose (thank goodness for the chocolate chip cookie they gave you before coming in here) for energy, migrating between your skin cells and spreading through your entire system. You feel a deep chill follow them inward, like swallowing ice-cold water. The glass pod cover slides into place above you with a soft, pressurized hiss, sealing you inside. A woman's calm voice comes through the speakers on either side of your head.
+But you're tired. Across three lives, you’ve lived 142 years. This is the shortest run at only nine years, but it's been enough. There's no essence or mana in this world, so you feel weak and dull in comparison to your past lives. Either way, you really hope it's the last.
 
-"Induction process commencing. Please continue breathing normally. Induction in 3... 2... 1..."
-
-*page_break
-
-You expect some kind of transition. A fade, a loading screen, or maybe even a moment of darkness. There isn't one. 
-
-One moment you're looking up through the glass canopy at the white ceiling of the induction room, and the next you're staring at the wooden interior of a carriage and feeling it bump as it travels. Your nose is assaulted with a host of unpleasant smells. The entire wooden frame of the carriage groans and squeaks and sways continuously, the iron-banded wheels rattle over deep mud ruts. Outside a small, grime-streaked window, a dense line of trees blurs past.
-
-You spend the first few minutes just taking it all in. The sensory detail is staggering. You examine your hands, noting the dirt under your fingernails and the coarse weave of the wool pants you're wearing. The chill of the air feels real. You even have a dull ache in your lower back from sitting on the hard wooden bench.
-
-A thought occurs to you. You have no idea how to interact with this world or see your stats. You attempt to mentally call up your system menu, and to your surprise, it actually works. A translucent screen pops into existence in front of your face.
-
-*system [Welcome to Path to Empire]
-[center]Identity: ${title} ${first_name} ${last_name}
-
-Might: ${might}
-Finesse: ${finesse}
-Magic: ${magic}
-Perception: ${perception}
-Presence: ${presence}[/center]
-*end_system
-
-You study the glowing text, swiping your hand through it to see how the interface reacts to touch. The screen ripples slightly but stays locked in your field of vision until you dismiss it with a thought.
-
-After a few minutes of listening to the rain and getting thrown against the wall by the terrible, or perhaps non-existent, suspension, a sudden chime sounds in your head.
-
-A box appears in your vision.
-
-*system [Private Message]
-You have a new private message from Baron Landry.
-Would you like to read it now?
-*end_system
-
-Baron Landry? Is that Alex?
-
-*choice
-  #Yes.
-    *goto accept_message1
-  #No.
-    *goto decline_message1
-
-*label accept_message1
-
-*system [Baron Landry]
-${first_name}! This is insane, right? I thought we'd start in the same place, but apparently there's a solo tutorial phase first. We can still communicate through messages. It looks like we can only send one per day to the same person, so you might want to hold off on replying unless something comes up.
-
-I don't know if it's the same for you, but I'm in a carriage right now. I talked to the driver NPC and he says we're heading to the Barony of Apricot. I'm going to be the new ${title}! If you're in a similar situation, talk to your driver. He might be the game's guide. 
-
-Anyway, good luck, and talk soon!
-*end_system
-
-Well... that's certainly interesting. 
-
-You shift on the hard wooden bench, bracing yourself against the erratic swaying, and rap your knuckles against the small hatch at the front of the cabin. The wooden panel slides open.
-
-A man in a heavy, soaked wool coat glances back at you, rainwater dripping from the wide brim of his leather hat.
-
-"Uh, hey," you call out over the loud clatter of the iron wheels. "Are we heading to... Apricot City?"
-
-The driver squints, looking at you like you're an idiot. "Apricot ain't no city, [i]my {lord},[/i]" he says in a slow, gravely voice. Yep, he definitely thinks you're an idiot. "Ain't hardly a village, neither. It's a fair piece north of here. We're making for the Wisteria barony. Same as we was when we set out."
-
-"Right... And what's my role here?"
-
-"You take a knock to the head?" he asks, turning back toward the horses. "You're the new ${title}. Whole place is yours, assumin' the bandits don't gut us 'fore we get there."
-
-He reaches behind him, and the hatch snaps shut.
-
-You're a {lord} and this is how he speaks to you?
-
-*choice
-  #Let it go. Maybe they do things differently here.
-    *goto broken_tree
-  #Knock on the hatch again. He needs to show you proper respect.
-    *goto knock_on_hatch
-
-
-*label knock_on_hatch
-
-The wood slides open with a clack. The driver looks back. "What now?"
-
-"Let's get one thing straight," you say. "I'm a ${title}, and you are a driver. Don't shut the door in my face. I wasn't done speaking."
-
-He stares at you for a long second. The carriage hits a deep rut, shaking you both, but his grip on the reins doesn't slip.
-
-"Beggin' your pardon, [i]my {lord}[/i]," he says, apparently taking extra effort to ensure you hear the disrespect. "I'll be sure to mind my manners while I try to keep the horses on the road and our throats uncut. How can I help you, ${title}?"
-
-You stare at each other for a long time, and you realize you don't actually know what else to say.
-
-"Well, I'm done now," you say finally.
-
-The driver continues staring as the rain beats down on him for several moments more. "Very good," he says, and closes the hatch again.
-
-You sure showed him.
+[i]BANG![/i]
 
 *page_break
 
-*goto broken_tree
+The shot is deafening, but you don't actually feel anything. For a second, you wonder if this dweeb somehow missed from three feet away. But then the second passes and the pain hits your upper arm, feeling like a hot coal pressed against your flesh. You look at the blood soaking your sleeve.
 
-*label decline_message1
+"Seriously?" you ask, incredulously. Through the holes in his mask, you see his eyes are wide with shock. This is probably the first time he's ever hurt anyone. He's clearly terrified, unsure of what to do now. He stumbles backward into the counter candy display, sending a cascade of colorful wrappers across the floor. He slips on them.
 
-You mentally selected No, and the box disappeared. You can always look at it later.
+The gun jerks in his hand, and his two accidental shots are somehow far more deadly accurate than his intentional one.
 
-*page_break 
+The first bullet slams into your gut. It hurts infinitely worse than the arm, but luckily, the agony doesn't last long as you catch the next round in your neck.
 
-*label broken_tree
+*page_break
 
-The carriage gives a violent lurch, throwing you forward against the opposite bench. The iron wheels screech in the mud. Outside, the horses whinny in protest as the whole rig grinds to a sudden halt.
+*system [System Notification]
+[center]You have died.[/center]
+*end_system
 
-You catch your balance and wipe a circle of condensation off the grimy window. Through the rain and the gloom of the trees, you spot the problem. A massive, splintered pine log stretches dead across the road.
+Well, crap. You're still here. The floating box is new, though, even if it is pretty redundant.
 
-How incredibly cliché. Highway bandits? You hope the developers at least programmed them to do something interesting. You pat down your clothes, checking your belt and pockets for a weapon. Nothing.
+You were there. You know you died.
 
-You knock on the wooden hatch and it slides open. The driver's face is tight with tension.
+You wonder for likely the hundredth time if you keep getting reincarnated because some god or goddess has a sick sense of humor. Your first world had thousands of deities, so it's possible one of them is doing this to you. But can they reach across realities? You weren't exactly religious, but you had never heard of such a thing during that life.
 
-"That log in the road," you say. "That's an ambush, right? Bandits?"
+*page_break
 
-"Naw, the trees 'round here just like takin' naps in the mud," he mutters, his eyes darting toward the dense brush. He hauls a heavy-looking crossbow onto his lap. The gears click sharply as he cranks the string back. "Course it's bandits. Keep your head down, my {lord}. 'Less you feel like catchin' an arrow with your teeth."
+Your second life didn't appear to have gods at all. They had lots of demons, though. The infernal creatures constantly poured through portals trying to wipe the residents out.
 
+And then there was Earth. It seemed like a lot of people were monotheistic, though a few clung to oldder pantheons, and a massive chunk didn't believe in anything supernatural at all. That made perfect sense, considering the place lacked even a single drop of essence or mana.
+
+Taking in your surroundings, you're relieved to find yourself sitting in a quiet grassy field. You still haven't figured out the mechanics of this process, unsure whether you hijack a local's body or just pop into existence looking like the natives. No one has ever said they recognize you, so you suspect it's the second one.
+
+Holding up your hands, they look identical to the ones you just left on Earth: five fingers, soft skin, short fingernails. A quick pat-down confirms the rest: one torso, two legs, two feet. Looks like you're human here, too.

@@ -1,36 +1,50 @@
 *title [Prologue] Induction
 
-Some people are great at life. Standing in line at the Exxon with your Monster and Slim Jim, you realize you might be great at death. After all, when the robber screaming at you to get on the floor inevitably pulls the trigger, it will be your third time dying. You idly wonder if you'll wake up in a new world yet again, or if this death will be permanent.
+Some people excel at life. Standing in line at the Exxon with a Monster and a Slim Jim, you realize you might just be a prodigy at [i]dying.[/i]
 
-You like a lot of things about this world better than the last two. Netflix is great, and you just started a new wildlife documentary narrated by David Attenborough. It's about baby dinosaurs, which neither of your previous worlds had. Cute little things. The parents looked terrifying though, so it’s probably for the best they’re extinct.
+When the masked kid screaming at you to get on the ground inevitably pulls the trigger, it will be your third time cashing out. You idly wonder if you'll wake up in yet a new world, or if this time it'll actually stick.
 
-Energy drinks are a huge plus. Your first world had alchemical equivalents, but they tasted like battery acid smells.
+Earth has its perks. Netflix is incredible. You just started a David Attenborough documentary about baby dinosaurs. They were creatures neither of your previous worlds possessed. The babies were cute little things, but the adults looked pretty scary, so extinction was probably the right call.
 
-The best part, though? No dungeons and no monsters. Also, almost no one carries a sword here unless they’re a weirdo, and even then, those are flimsy, dull replicas. Nothing like what you're used to.
+Energy drinks are another massive win. Your first world had alchemical stimulants, but they went down like battery acid.
 
-Cars are fine, but your second world had magi-tech vehicles that ran clean for a decade on a single mana sphere. Fuel prices here are a joke, but at least you can walk the city.
+Cars are fine, though your second world had magi-tech transports that ran clean for a decade on a single mana sphere. Fuel prices here are a scam, but you can usually walk where you need to go.
 
-Sure, there are dangers. That first night waking up in Central Park, you almost got hit by a city bus. And then there are desperate people doing desperate, dangerous things. But you suspect they exist in every world.
+The best part is the lack of random encounters with nightmarish monsters. There are no dungeons here either, and almost no one carries a sword unless they’re cosplaying. Those are flimsy, dull replicas though, and nothing like the steel you used to carry.
+
+Earth's version of danger is almost adorable compared to the last two worlds. Here, people kill over the contents of a convenience store register. They do stupid, dangerous things for a handful of paper money or a quick chemical high.
+
+But desperate people exist everywhere, whether they hold a cursed bone dagger or a cheap revolver.
 
 *page_break
 
-"I said get on the ground," yells the increasingly frantic masked man, pointing the gun at your nose as you tear open your Slim Jim and take a bite.
+"Get on the ground or I'm going to shoot you in the face!" the frantic masked kid yells. His trembling hand points the gun at your nose.
 
-The food here is by far the best, though. As your teeth snap through the salty stick of processed meat, you've never been more sure of anything. Culinary perfection.
+You ignore him, tearing open the plastic wrapper with your teeth and taking a bite of the Slim Jim. The food here beats the other worlds by a mile. As your teeth snap through the salty, processed meat, you let out a little groan of ecstasy. The folks working at the Chicago based company behind these things were truly genius.
 
-But you're tired. Across three lives, you’ve lived 142 years. This is the shortest run at only nine years, but it's been enough. There's no essence or mana in this world, so you feel weak and dull in comparison to your past lives. Either way, you really hope it's the last.
+But as interesting as this world is, you're tired. Across three lives, you’ve racked up 142 years. This run on Earth was the shortest at only nine years, but it's been more than enough.
+
+Without a single drop of essence or mana in the atmosphere, the physical toll of simply existing is exhausting. You feel weak, heavy, and achingly dull compared to your past incarnations. Every physical movement feels painfully slow, like you're constantly wading through waist-deep water.
+
+The social blindness is even worse. In your previous lives, everyone had an aura where you could get a sense of a person's intent as it radiated off them. Here, humans are blank slates. You have to rely entirely on their facial expressions and past knowledge of them to guess what they're feeling, and the people of this world are terrifyingly good at lying. They smile warmly while they hate you and can hide absolute panic behind an empty stare.
+
+Living here a chore. Finding work is a nightmare when you materialize out of thin air without a birth certificate or a digital footprint. You spent nine years scraping by on the fringes, mostly by busking and doing odd jobs, all the while watching how isolated everyone is. People stay locked tight inside their own little bubbles, completely indifferent to anyone struggling just one street over.
+
+So yes, you've had your fill and hope this is the end of the line.
 
 [i]BANG![/i]
 
 *page_break
 
-The shot is deafening, but you don't actually feel anything. For a second, you wonder if this dweeb somehow missed from three feet away. But then the second passes and the pain hits your upper arm, feeling like a hot coal pressed against your flesh. You look at the blood soaking your sleeve.
+The shot is deafening, but you don't actually feel anything. For a second, you wonder if this dweeb somehow missed from three feet away. But then the second passes and the pain hits your upper arm, feeling like a hot coal is being pressed against your flesh. You look down at the blood soaking your sleeve.
 
-"Seriously?" you ask, incredulously. Through the holes in his mask, you see his eyes are wide with shock. This is probably the first time he's ever hurt anyone. He's clearly terrified, unsure of what to do now. He stumbles backward into the counter candy display, sending a cascade of colorful wrappers across the floor. He slips on them.
+"Seriously?" you ask.
 
-The gun jerks in his hand, and his two accidental shots are somehow far more deadly accurate than his intentional one.
+Through the crooked eyeholes of his ski mask, you see his eyes widen in shock. He's terrified. This is probably his first time harming another person. He stumbles backward into the candy display at the counter, sending a cascade of colorful treat bags across the floor. His boots slip on the slick plastic wrappers.
 
-The first bullet slams into your gut. It hurts infinitely worse than the arm, but luckily, the agony doesn't last long as you catch the next round in your neck.
+The gun jerks as he falls. His two accidental trigger pulls are somehow far more accurate than his intentional shot.
+
+The first bullet slams into your gut, and that one hurts infinitely worse than the arm. Luckily, the agony doesn't last long as a half second later you catch the next round right in the neck.
 
 *page_break
 
@@ -38,18 +52,20 @@ The first bullet slams into your gut. It hurts infinitely worse than the arm, bu
 [center]You have died.[/center]
 *end_system
 
-Well, crap. You're still here. The floating box is new, though, even if it is pretty redundant.
+Well, crap.
+
+You're alive again, though the floating text box is a new feature, even if it is completely redundant.
 
 You were there. You know you died.
 
-You wonder for likely the hundredth time if you keep getting reincarnated because some god or goddess has a sick sense of humor. Your first world had thousands of deities, so it's possible one of them is doing this to you. But can they reach across realities? You weren't exactly religious, but you had never heard of such a thing during that life.
+You wonder for the hundredth time if you keep respawning because some god has a sick sense of humor. Your first world had thousands of deities, so it's entirely possible one of them is using you for entertainment. But can they reach across realities? You were never religious, and cross-dimensional jurisdiction isn't something you're up to date on.
 
-*page_break
+Your second life didn't seem to have gods at all. Tons of demons, though. Countless infernal creatures poured through portal rifts every day, constantly trying to wipe that world's residents out.
 
-Your second life didn't appear to have gods at all. They had lots of demons, though. The infernal creatures constantly poured through portals trying to wipe the residents out.
+But then there's Earth, where over half of the population was monotheistic. A few clung to older pantheons, and billions didn't believe in anything supernatural at all, which honestly you can't blame them for considering the place lacked a single drop of magic.
 
-And then there was Earth. It seemed like a lot of people were monotheistic, though a few clung to oldder pantheons, and a massive chunk didn't believe in anything supernatural at all. That made perfect sense, considering the place lacked even a single drop of essence or mana.
+You take in your surroundings and see you're sitting in a quiet, grassy field. Nice.
 
-Taking in your surroundings, you're relieved to find yourself sitting in a quiet grassy field. You still haven't figured out the mechanics of this process, unsure whether you hijack a local's body or just pop into existence looking like the natives. No one has ever said they recognize you, so you suspect it's the second one.
+You still haven't figured out the mechanics of this whole reincarnation business. Do you hijack a random local's body, or just pop into existence looking like a native? No one has ever recognized you as someone else, so you lean toward the latter.
 
-Holding up your hands, they look identical to the ones you just left on Earth: five fingers, soft skin, short fingernails. A quick pat-down confirms the rest: one torso, two legs, two feet. Looks like you're human here, too.
+You hold up your hands and see five fingers, soft skin, and short nails. A quick pat-down confirms one torso, two legs, and two feet. You're human here, too. Or, at least, humanoid.

@@ -188,13 +188,8 @@ function setChapterTitle(t) {
   if (cleanTitle && cleanTitle !== prev && cleanTitle !== "\u2014") showChapterCard(cleanTitle, label);
   const labelEl = document.getElementById("chapter-bar-label");
   if (labelEl) {
-    if (m) {
-      labelEl.textContent = label;
-      labelEl.classList.remove("hidden");
-    } else {
-      labelEl.textContent = "";
-      labelEl.classList.add("hidden");
-    }
+    labelEl.textContent = "";
+    labelEl.classList.add("hidden");
   }
 }
 function showChapterCard(title, label = "Chapter") {

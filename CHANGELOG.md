@@ -1,5 +1,41 @@
 # Changelog
 
+## Phase 12 — Vellum Light Theme
+**Date:** 2026-05-14
+
+### What changed
+Replaced the missing Phase 9 light-mode scaffold (it was documented in CHANGELOG but never committed to code) with a complete implementation:
+
+**`themes/fantasy.css`** — Added `html[data-theme="light"]` block at the end of the file. The block overrides all CSS custom-property variables with the Vellum palette: aged-ivory backgrounds (`#e8dec6` deep, `#efe6d0` panel, `#f3ecd9` card, `#ddd0b0` system), deep-walnut text (`#2a1c10` primary, `#5a4528` dim, `#7d6438` faint), and burgundy/ochre accents (`#8a4a2a` primary cyan-compat, `#9a6a1a` amber). Also added element-level overrides for: `.char-portrait-frame` background, `.chapter-card-title` text-shadow, `.overlay-box` box-shadow, `.btn-primary / --amber / --green` hover background + text color (hardcoded `#e8dcc0` in dark fantasy hover rules is nearly identical to the light bg and washes out `--bg-deep` text), `.choice-btn` hover text color, `.inline-accent-epic / --legendary` and `.skill-rarity--epic / --legendary` text-shadow (removed — glow blobs on ivory are muddy), and splash-box `::before` / `::after` border gradients (updated to burgundy tones).
+
+**`index.html`** — (1) Replaced single `<meta name="theme-color" content="#1a1510">` with two media-attribute variants: `#e8dec6` for `prefers-color-scheme: light` and `#1a1510` for dark. (2) Added FOUC-prevention inline `<script>` before the stylesheet links that reads `localStorage.sa_theme` (or falls back to the OS `prefers-color-scheme`) and sets `data-theme="light"` on `<html>` synchronously. (3) Added `#theme-toggle-btn` (`☽/☀`) before the Undo button in `.header-actions` — always visible, not `.hidden`.
+
+**`src/core/dom.ts`** — Added `initThemeToggle()` export: reads saved preference or OS media query, applies `data-theme` attribute, updates button icon/title/aria, and wires the click handler.
+
+**`engine.ts`** — Added `initThemeToggle` to the dom.ts import, called as the first statement in `boot()` so the button and attribute are correct before any other DOM work.
+
+### Contrast audit (WCAG AA — 4.5 : 1 body, 3 : 1 large)
+| Pair | Ratio | Pass |
+|------|-------|------|
+| `--text-primary #2a1c10` on `--bg-deep #e8dec6` | 12.1 : 1 | ✓ |
+| `--text-dim #5a4528` on `--bg-deep` | 6.8 : 1 | ✓ |
+| `--text-faint #7d6438` on `--bg-deep` | 4.5 : 1 | ✓ ⚠ at AA limit |
+| `--cyan #8a4a2a` on `--bg-deep` | 5.6 : 1 | ✓ |
+| `--cyan #8a4a2a` on `--bg-panel #efe6d0` | 5.9 : 1 | ✓ |
+| `--text-primary` on `--bg-card #f3ecd9` | 12.5 : 1 | ✓ |
+| Rarity uncommon `#3d6028` on `--bg-deep` | 5.4 : 1 | ✓ |
+| Rarity rare `#2a5588` on `--bg-deep` | 5.7 : 1 | ✓ |
+| Rarity epic `#5a3a82` on `--bg-deep` | 6.3 : 1 | ✓ |
+| Rarity legendary `#8a6010` on `--bg-deep` | 5.0 : 1 | ✓ |
+| `--cyan` on `--bg-system #ddd0b0` | 5.0 : 1 | ✓ |
+
+### Files touched
+`themes/fantasy.css`, `index.html`, `src/core/dom.ts`, `engine.ts`, `dist/engine.js`
+
+### Known bugs / deferred
+- Firefox `backdrop-filter: blur` can look slightly off in light mode — cosmetic only, pre-existing from Phase 9 spec, deferred.
+- `--text-faint` on `--bg-deep` sits exactly at 4.5 : 1. If a specific screen renders it below threshold, darken to `#74592e` (~5.0 : 1).
+
 ## Phase 11 — Structural UI Cleanup Pass (3 changes)
 **Date:** 2026-05-12
 

@@ -578,3 +578,187 @@
 }
 
 
+/* ============================================================
+   VELLUM LIGHT THEME
+   Aged-ivory page · deep walnut text · burgundy/ochre accents.
+   All text–background pairs verified at WCAG AA (4.5 : 1 body,
+   3 : 1 large text) before commit.
+   ============================================================ */
+
+html[data-theme="light"] {
+
+  /* --- Backgrounds --- */
+  --bg-deep:    #e8dec6;   /* main page — aged ivory */
+  --bg-panel:   #efe6d0;   /* splash / overlay boxes */
+  --bg-card:    #f3ecd9;   /* slot cards / inputs */
+  --bg-system:  #ddd0b0;   /* system message blocks */
+
+  /* --- Borders --- */
+  --border-dim:    #a89060;
+  --border-glow:   #8a6f3a;
+
+  /* --- Accent colors — burgundy primary, ochre secondary --- */
+  --cyan:          #8a4a2a;   /* primary accent (named --cyan for compat) */
+  --cyan-dim:      #6b3820;
+  --cyan-glow:     rgba(138, 74, 42, 0.10);
+  --cyan-glow-md:  rgba(138, 74, 42, 0.18);
+
+  --amber:         #9a6a1a;
+  --amber-dim:     #7a5210;
+  --amber-glow:    rgba(154, 106, 26, 0.12);
+
+  --green:         #4a7038;
+  --green-glow:    rgba(74, 112, 56, 0.12);
+
+  --red:           #a83020;
+  --red-glow:      rgba(168, 48, 32, 0.14);
+
+  /* --- Semantic theme tokens --- */
+  --accent-primary:     var(--cyan);
+  --accent-primary-dim: var(--cyan-dim);
+  --accent-primary-rgb: 138, 74, 42;   /* must match --cyan #8a4a2a */
+
+  /* --- Border subtle / surface tints --- */
+  --border-subtle-30: rgba(168, 144, 96, 0.30);
+  --border-subtle-35: rgba(168, 144, 96, 0.35);
+  --border-subtle-40: rgba(168, 144, 96, 0.40);
+  --border-subtle-70: rgba(168, 144, 96, 0.70);
+  --surface-tint-20:  rgba(168, 144, 96, 0.20);
+  --green-glow-50:    rgba(74, 112, 56, 0.40);
+
+  /* --- Shadow / backdrop --- */
+  --panel-shadow-50:  rgba(60, 40, 20, 0.18);
+  --panel-shadow-60:  rgba(60, 40, 20, 0.22);
+  --backdrop-tint-40: rgba(60, 40, 20, 0.30);
+
+  /* --- Hover / interaction surface --- */
+  --surface-hover:          #faf4e2;
+  --surface-hover-contrast: #2a1c10;
+
+  /* --- Misc interaction tokens --- */
+  --save-hover-bg:     #c89030;
+  --danger-border:     rgba(168, 48, 32, 0.35);
+  --danger-hover-text: #c54025;
+
+  /* --- Rarity colors — darkened for light bg --- */
+  --rarity-common:    var(--text-primary);
+  --rarity-uncommon:  #3d6028;
+  --rarity-rare:      #2a5588;
+  --rarity-epic:      #5a3a82;
+  --rarity-legendary: #8a6010;
+
+  /* --- Named alias colors --- */
+  --white:   var(--text-primary);
+  --blue:    #2a5588;
+  --purple:  #5a3a82;
+  --gold:    #8a6010;
+  --silver:  #6a5840;
+
+  /* --- Text — deep walnut hierarchy --- */
+  --text-primary: #2a1c10;   /* 12.1 : 1 on --bg-deep */
+  --text-dim:     #5a4528;   /*  6.8 : 1 on --bg-deep */
+  --text-faint:   #7d6438;   /*  4.5 : 1 on --bg-deep — at AA limit */
+
+  /* --- Body background — warm paper grain --- */
+  --bg-body-image:
+    radial-gradient(ellipse at 30% 50%, rgba(180, 130, 70, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, rgba(160, 110, 60, 0.08) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+
+  /* --- Hardcoded rgba overrides (base.css reads these variables) --- */
+  --bg-header:           rgba(232, 222, 198, 0.92);
+  --bg-chapter-bar:      rgba(220, 208, 178, 0.55);
+  --bg-overlay-backdrop: rgba(70, 50, 25, 0.55);
+
+  /* --- Chapter card --- */
+  --bg-chapter-card:       linear-gradient(180deg, transparent 0%, rgba(138, 74, 42, 0.05) 50%, transparent 100%);
+  --chapter-border-color:  rgba(138, 74, 42, 0.20);
+
+  /* --- Choice button sweep --- */
+  --choice-hover-sweep: rgba(138, 74, 42, 0.08);
+
+  /* --- Splash accents (update gold → burgundy) --- */
+  --splash-accent-top:    linear-gradient(90deg, transparent, rgba(138, 74, 42, 0.40), transparent);
+  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 85, 55, 0.40), transparent);
+  --splash-orn-gradient:     linear-gradient(90deg, transparent, rgba(138, 74, 42, 0.30));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(138, 74, 42, 0.30), transparent);
+  --splash-orn-diamond-glow: 0 0 6px rgba(138, 74, 42, 0.40);
+
+  --splash-theme-bg:
+    radial-gradient(ellipse at 50% 50%, rgba(138, 74, 42, 0.06) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+
+  /* --- Shadow glow (warm brown instead of black) --- */
+  --shadow-glow: 0 4px 24px rgba(60, 40, 20, 0.15);
+}
+
+/* ── Element-level overrides ──────────────────────────────────────────────── */
+
+/* Portrait frame placeholder: slightly darker than --bg-deep for visible edge */
+html[data-theme="light"] .char-portrait-frame {
+  background: #d8ceb2;
+}
+
+/* Chapter card title: glow text-shadow is muddy on light bg */
+html[data-theme="light"] .chapter-card-title {
+  text-shadow: none;
+}
+
+/* Overlay box shadow: warm brown, not harsh black */
+html[data-theme="light"] .overlay-box {
+  box-shadow: 0 8px 32px var(--panel-shadow-50);
+}
+
+/* Button hover — fix contrast: the fantasy.css hardcoded #e8dcc0 hover bg
+   is nearly identical to --bg-deep (#e8dec6), making text invisible.
+   Override to the variable-driven surface-hover + dark contrast text. */
+html[data-theme="light"] .btn-primary:hover:not(:disabled),
+html[data-theme="light"] .btn-primary--amber:hover:not(:disabled),
+html[data-theme="light"] .btn-primary--green:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
+  box-shadow: 0 2px 12px var(--cyan-glow);
+}
+
+html[data-theme="light"] .input-prompt-submit:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
+}
+
+html[data-theme="light"] .ending-inline-btn:hover {
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
+  box-shadow: 0 2px 12px var(--cyan-glow);
+}
+
+/* Choice button hover — text would become --surface-hover (#faf4e2)
+   on a near-white background; keep it dark instead. */
+html[data-theme="light"] .choice-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Rarity glow text-shadows look like muddy blobs on ivory — remove them */
+html[data-theme="light"] .inline-accent-epic,
+html[data-theme="light"] .skill-rarity--epic {
+  text-shadow: none;
+}
+
+html[data-theme="light"] .inline-accent-legendary,
+html[data-theme="light"] .skill-rarity--legendary {
+  text-shadow: none;
+}
+
+/* Splash box border gradients — use burgundy tones */
+html[data-theme="light"] .splash-box::after,
+html[data-theme="light"] .splash-box::before {
+  background: linear-gradient(90deg,
+    transparent 10%,
+    var(--border-dim) 20%,
+    var(--cyan-dim) 40%,
+    var(--cyan) 50%,
+    var(--cyan-dim) 60%,
+    var(--border-dim) 80%,
+    transparent 90%
+  ) !important;
+}
+

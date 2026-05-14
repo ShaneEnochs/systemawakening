@@ -6,7 +6,7 @@
 //   src/systems/undo.ts         — Undo snapshot stack
 //   src/systems/save-manager.ts — Save/load UI wiring
 
-import { buildDom, setChapterTitle, setGameTitle, registerChapterCardLog } from './src/core/dom.js';
+import { buildDom, setChapterTitle, setGameTitle, registerChapterCardLog, initThemeToggle } from './src/core/dom.js';
 import {
   playerState, startup,
   setCurrentLines, currentLines,
@@ -91,6 +91,7 @@ function scheduleStatsRender(): void {
 // boot — initialises every module and shows the splash screen
 // ---------------------------------------------------------------------------
 async function boot(): Promise<void> {
+  initThemeToggle();
   const dom = buildDom();
   registerCaches(sceneCache, labelsCache);
   registerChapterCardLog(pushNarrativeLogEntry);

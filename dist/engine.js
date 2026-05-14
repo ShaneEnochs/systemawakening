@@ -260,6 +260,28 @@ function buildDom() {
     toast: req("toast")
   };
 }
+function initThemeToggle() {
+  const btn = document.getElementById("theme-toggle-btn");
+  const html = document.documentElement;
+  function apply(theme) {
+    if (theme === "light") {
+      html.setAttribute("data-theme", "light");
+    } else {
+      html.removeAttribute("data-theme");
+    }
+    if (btn) {
+      btn.textContent = theme === "light" ? "\u2600" : "\u263D";
+      btn.title = theme === "light" ? "Switch to dark theme" : "Switch to light theme";
+    }
+    localStorage.setItem("sa_theme", theme);
+  }
+  const saved = localStorage.getItem("sa_theme");
+  const osLight = window.matchMedia?.("(prefers-color-scheme: light)").matches ?? false;
+  apply(saved ?? (osLight ? "light" : "dark"));
+  btn?.addEventListener("click", () => {
+    apply(html.getAttribute("data-theme") === "light" ? "dark" : "light");
+  });
+}
 
 // src/core/expression.ts
 var TT = {
@@ -3716,6 +3738,7 @@ function scheduleStatsRender() {
   });
 }
 async function boot() {
+  initThemeToggle();
   const dom = buildDom();
   registerCaches(sceneCache, labelsCache);
   registerChapterCardLog(pushNarrativeLogEntry);

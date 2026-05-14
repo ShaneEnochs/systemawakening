@@ -157,3 +157,35 @@ export function buildDom(): Dom {
     toast:            req('toast'),
   };
 }
+
+// ---------------------------------------------------------------------------
+// initThemeToggle — reads saved or OS preference, applies data-theme="light"
+// on <html>, and wires the toggle button click handler.
+// Call this as the first thing in boot() to avoid a FOUC on the JS-driven
+// preference path (the inline <script> in <head> handles the true FOUC case).
+// ---------------------------------------------------------------------------
+export function initThemeToggle(): void {
+  const btn  = document.getElementById('theme-toggle-btn') as HTMLButtonElement | null;
+  const html = document.documentElement;
+
+  function apply(theme: 'light' | 'dark'): void {
+    if (theme === 'light') {
+      html.setAttribute('data-theme', 'light');
+    } else {
+      html.removeAttribute('data-theme');
+    }
+    if (btn) {
+      btn.textContent = theme === 'light' ? '☀' : '☽';
+      btn.title = theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme';
+    }
+    localStorage.setItem('sa_theme', theme);
+  }
+
+  const saved  = localStorage.getItem('sa_theme') as 'light' | 'dark' | null;
+  const osLight = window.matchMedia?.('(prefers-color-scheme: light)').matches ?? false;
+  apply(saved ?? (osLight ? 'light' : 'dark'));
+
+  btn?.addEventListener('click', () => {
+    apply(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+}

@@ -1438,9 +1438,12 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 .slot-list { display: flex; flex-direction: column; gap: var(--space-2); }
 
 .slot-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "badge info"
+    "actions actions";
+  gap: var(--space-2) var(--space-3);
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
   padding: var(--space-3) var(--space-3);
@@ -1450,11 +1453,11 @@ button:disabled .choice-stat-badge { opacity: 0.5; }
 .slot-card:not(.slot-card--empty):hover { border-color: var(--border-glow); }
 .slot-card--empty                        { opacity: 0.45; border-style: dashed; }
 
-.slot-badge   { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-normal); text-transform: uppercase; color: var(--cyan-dim); min-width: 48px; }
-.slot-info    { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.slot-name    { font-family: var(--font-display); font-size: var(--text-base); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slot-badge   { grid-area: badge; align-self: center; font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-normal); text-transform: uppercase; color: var(--cyan-dim); min-width: 48px; }
+.slot-info    { grid-area: info; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.slot-name    { font-family: var(--font-display); font-size: var(--text-base); color: var(--text-primary); }
 .slot-meta    { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: var(--ls-tight); color: var(--text-faint); }
-.slot-actions { display: flex; align-items: center; gap: var(--space-2); }
+.slot-actions { grid-area: actions; display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); }
 
 
 .slot-delete-btn {

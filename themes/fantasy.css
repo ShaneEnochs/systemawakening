@@ -1,41 +1,40 @@
 /* ============================================================
-   THEME: High Fantasy / Parchment
-   Warm earth tones, aged parchment backgrounds, gold/burgundy
-   accents, decorative borders, and a medieval aesthetic.
+   THEME: Cream / Hosted Games
+   Flat warm-cream background, dark warm-gray serif text, muted
+   taupe-brown accents, and a clean book aesthetic modelled on the
+   Hosted Games (ChoiceScript) reader. Single theme — no dark mode.
 
-   Fonts required (add to <head>):
-     Cinzel (display), Crimson Text (body), Inconsolata (mono)
-     Optional: EB Garamond for body text (more period-appropriate)
+   Fonts: Georgia (system serif) throughout — no web font load.
    ============================================================ */
 
 :root {
-  /* --- Backgrounds --- */
-  --bg-deep:       #1a1510;
-  --bg-panel:      #211c14;
-  --bg-card:       #2a2318;
-  --bg-system:     #16120c;
+  /* --- Backgrounds — flat warm cream (Hosted Games look) --- */
+  --bg-deep:       #f3eee4;   /* page */
+  --bg-panel:      #f7f2e9;   /* splash / overlay boxes */
+  --bg-card:       #fbf8f1;   /* choice rows, slot cards, inputs */
+  --bg-system:     #ece4d4;   /* system message blocks */
   --bg-overlay:    var(--bg-panel);
 
-  /* --- Borders --- */
-  --border-dim:    #4a3e2e;
-  --border-glow:   #6b5a3e;
+  /* --- Borders — light gray-tan --- */
+  --border-dim:    #d4cdbf;
+  --border-glow:   #b7ad99;
   --border-color:  var(--border-dim);
 
-  /* --- Accent colors (gold/burgundy palette) --- */
-  --cyan:          #c8a55a;
-  --cyan-dim:      #9e8040;
-  --cyan-glow:     rgba(200, 165, 90, 0.12);
-  --cyan-glow-md:  rgba(200, 165, 90, 0.25);
+  /* --- Accent colors (warm taupe-brown primary, ochre secondary) --- */
+  --cyan:          #8a6f4a;
+  --cyan-dim:      #6f5a3a;
+  --cyan-glow:     rgba(138, 111, 74, 0.10);
+  --cyan-glow-md:  rgba(138, 111, 74, 0.18);
 
-  --amber:         #d4853a;
-  --amber-dim:     #a86828;
-  --amber-glow:    rgba(212, 133, 58, 0.15);
+  --amber:         #9a6a1a;
+  --amber-dim:     #7a5210;
+  --amber-glow:    rgba(154, 106, 26, 0.12);
 
-  --green:         #5a9e5a;
-  --green-glow:    rgba(90, 158, 90, 0.15);
+  --green:         #4a7038;
+  --green-glow:    rgba(74, 112, 56, 0.12);
 
-  --red:           #b84040;
-  --red-glow:      rgba(184, 64, 64, 0.2);
+  --red:           #a83020;
+  --red-glow:      rgba(168, 48, 32, 0.14);
 
 
   /* --- Semantic theme tokens used by base.css --- */
@@ -43,24 +42,24 @@
   --accent-primary-dim: var(--cyan-dim);
   --accent-primary-glow: var(--cyan-glow);
   --accent-primary-glow-md: var(--cyan-glow-md);
-  --accent-primary-rgb: 200, 165, 90;
+  --accent-primary-rgb: 138, 111, 74;   /* must match --cyan #8a6f4a */
 
 
-  --border-subtle-30: rgba(74, 62, 46, 0.3);
-  --border-subtle-35: rgba(74, 62, 46, 0.35);
-  --border-subtle-40: rgba(74, 62, 46, 0.4);
-  --border-subtle-70: rgba(74, 62, 46, 0.7);
-  --surface-tint-20: rgba(74, 62, 46, 0.2);
-  --panel-shadow-50: rgba(0, 0, 0, 0.5);
-  --panel-shadow-60: rgba(0, 0, 0, 0.6);
-  --backdrop-tint-40: rgba(0, 0, 0, 0.4);
-  --green-glow-50: rgba(90, 158, 90, 0.5);
-  --save-hover-bg: #e0b050;
+  --border-subtle-30: rgba(212, 205, 191, 0.5);
+  --border-subtle-35: rgba(212, 205, 191, 0.6);
+  --border-subtle-40: rgba(212, 205, 191, 0.7);
+  --border-subtle-70: rgba(183, 173, 153, 0.7);
+  --surface-tint-20: rgba(138, 111, 74, 0.08);
+  --panel-shadow-50: rgba(60, 50, 30, 0.18);
+  --panel-shadow-60: rgba(60, 50, 30, 0.22);
+  --backdrop-tint-40: rgba(60, 50, 30, 0.30);
+  --green-glow-50: rgba(74, 112, 56, 0.40);
+  --save-hover-bg: #c89030;
 
-  --surface-hover: #e8dcc0;
-  --surface-hover-contrast: #fff;
-  --danger-border: rgba(184, 64, 64, 0.4);
-  --danger-hover-text: #d96a5f;
+  --surface-hover: #ffffff;
+  --surface-hover-contrast: #33302b;
+  --danger-border: rgba(168, 48, 32, 0.35);
+  --danger-hover-text: #c54025;
 
   --accent-surface-04: rgba(var(--accent-primary-rgb), 0.04);
   --accent-surface-06: rgba(var(--accent-primary-rgb), 0.06);
@@ -90,29 +89,29 @@
   --legendary-glow-35: rgba(212, 160, 48, 0.35);
   --legendary-glow-50: rgba(212, 160, 48, 0.5);
 
-  /* --- Rarity colors (warm palette) --- */
+  /* --- Rarity colors (darkened for cream bg) --- */
   --rarity-common:    var(--text-primary);
-  --rarity-uncommon:  #5a9e5a;
-  --rarity-rare:      #5588c0;
-  --rarity-epic:      #9068b8;
-  --rarity-legendary: #d4a030;
+  --rarity-uncommon:  #3d6028;
+  --rarity-rare:      #2a5588;
+  --rarity-epic:      #5a3a82;
+  --rarity-legendary: #8a6010;
 
   /* --- Extra named colors --- */
-  --white:   #e0d8c8;
-  --blue:    #5588c0;
-  --purple:  #9068b8;
-  --gold:    #d4a030;
-  --silver:  #9a9488;
+  --white:   var(--text-primary);
+  --blue:    #2a5588;
+  --purple:  #5a3a82;
+  --gold:    #8a6010;
+  --silver:  #6a5840;
 
-  /* --- Text --- */
-  --text-primary:  #e0d8c8;
-  --text-dim:      #a89880;
-  --text-faint:    #786850;
+  /* --- Text — dark warm gray hierarchy --- */
+  --text-primary:  #33302b;
+  --text-dim:      #5c574e;
+  --text-faint:    #7a7264;
 
-  /* --- Fonts --- */
-  --font-display:  'Cinzel', serif;
-  --font-body:     'Crimson Text', serif;
-  --font-mono:     'Crimson Text', serif;
+  /* --- Fonts — Georgia serif throughout (Hosted Games) --- */
+  --font-display:  Georgia, 'Times New Roman', serif;
+  --font-body:     Georgia, 'Times New Roman', serif;
+  --font-mono:     Georgia, 'Times New Roman', serif;
 
   /* --- Type scale --- */
   --text-2xs:      0.7rem;
@@ -146,54 +145,51 @@
   --transition-fast: 0.15s ease;
 
   /* --- Theme-specific visual properties --- */
-  --bg-body-image:
-    radial-gradient(ellipse at 30% 50%, rgba(120, 80, 30, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 30%, rgba(80, 40, 20, 0.05) 0%, transparent 60%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  /* Flat cream page — no parchment grain (Hosted Games is flat) */
+  --bg-body-image: none;
 
-  --bg-header:       rgba(26, 21, 16, 0.92);
-  --bg-header-accent: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.3), transparent);
-  --bg-chapter-bar:  rgba(22, 18, 12, 0.5);
-  --bg-overlay-backdrop: rgba(10, 8, 5, 0.85);
+  --bg-header:       rgba(243, 238, 228, 0.92);
+  --bg-header-accent: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.25), transparent);
+  --bg-chapter-bar:  rgba(236, 228, 212, 0.55);
+  --bg-overlay-backdrop: rgba(60, 50, 30, 0.45);
   --overlay-backdrop-filter: none;
   --overlay-box-glow: none;
 
   /* Chapter cards */
-  --chapter-border-color: rgba(200, 165, 90, 0.2);
-  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(200, 165, 90, 0.04) 50%, transparent 100%);
+  --chapter-border-color: rgba(138, 111, 74, 0.2);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(138, 111, 74, 0.04) 50%, transparent 100%);
   --chapter-title-glow: none;
 
   /* Choice buttons */
   --choice-indicator: '◆';
-  --choice-hover-sweep: rgba(200, 165, 90, 0.08);
+  --choice-hover-sweep: rgba(138, 111, 74, 0.07);
 
-  /* Splash screen — hide digital elements, show parchment */
+  /* Splash screen */
   --bg-splash-box: var(--bg-panel);
   --splash-backdrop-filter: none;
-  --splash-accent-top: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.4), transparent);
-  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 90, 62, 0.4), transparent);
+  --splash-accent-top: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.4), transparent);
+  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 85, 55, 0.4), transparent);
   --bg-splash-vignette: none;
   --splash-sigil-display: none;
   --splash-canvas-display: none;
   --splash-sigil-glow: none;
-  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(200, 165, 90, 0.3));
-  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(200, 165, 90, 0.3), transparent);
-  --splash-orn-diamond-glow: 0 0 6px rgba(200, 165, 90, 0.4);
+  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.3));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(138, 111, 74, 0.3), transparent);
+  --splash-orn-diamond-glow: 0 0 6px rgba(138, 111, 74, 0.4);
 
-  /* Splash parchment texture background */
+  /* Splash background — flat cream tint */
   --splash-theme-bg:
-    radial-gradient(ellipse at 50% 50%, rgba(200, 165, 90, 0.06) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    radial-gradient(ellipse at 50% 50%, rgba(138, 111, 74, 0.05) 0%, transparent 70%);
 
   /* Character creation */
   --bg-char-pattern: none;
   --bg-char-pattern-size: auto;
 
   /* Ending screen */
-  --bg-ending-inline: linear-gradient(135deg, rgba(200, 165, 90, 0.05) 0%, transparent 60%);
+  --bg-ending-inline: linear-gradient(135deg, rgba(138, 111, 74, 0.05) 0%, transparent 60%);
 
-  /* No glow effects */
-  --shadow-glow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  /* Soft warm shadow */
+  --shadow-glow: 0 4px 24px rgba(60, 50, 30, 0.15);
 }
 
 
@@ -243,17 +239,20 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #e8dcc0;
-  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.3);
+  background: #9b9388;
+  color: #fff;
+  box-shadow: none;
 }
 
 .btn-primary--amber:hover:not(:disabled) {
-  background: #e8dcc0;
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
   box-shadow: 0 2px 12px var(--amber-glow);
 }
 
 .btn-primary--green:hover:not(:disabled) {
-  background: #e8dcc0;
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
   box-shadow: 0 2px 12px var(--green-glow);
 }
 
@@ -291,7 +290,7 @@
 
 .choice-btn:hover {
   border-color: var(--cyan-dim);
-  color: #fff;
+  color: var(--text-primary);
   transform: translateX(4px);
 }
 
@@ -301,11 +300,11 @@
 }
 
 .status-tab:hover {
-  background: rgba(200, 165, 90, 0.06);
+  background: var(--accent-surface-06);
 }
 
 .status-tab--active {
-  background: rgba(200, 165, 90, 0.08);
+  background: var(--accent-surface-08);
 }
 
 /* Stat values: warm color */
@@ -317,7 +316,7 @@
 /* Overlay box: warm border, subtle shadow instead of glow */
 .overlay-box {
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px var(--panel-shadow-50);
 }
 
 /* Splash box: warm styling */
@@ -428,7 +427,8 @@
 }
 
 .input-prompt-submit:hover:not(:disabled) {
-  background: #e8dcc0;
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
 }
 
 /* Journal */
@@ -453,16 +453,12 @@
   border-bottom-color: var(--cyan-dim);
 }
 
-/* Epic/legendary glows — warm-toned */
+/* Epic/legendary glows — removed on cream (glow reads as a muddy blob) */
 .inline-accent-epic,
-.skill-rarity--epic {
-  text-shadow: 0 0 6px rgba(144, 104, 184, 0.35);
-}
-
+.skill-rarity--epic,
 .inline-accent-legendary,
 .skill-rarity--legendary {
-  text-shadow: 0 0 6px rgba(212, 160, 48, 0.4),
-               0 0 14px rgba(212, 160, 48, 0.15);
+  text-shadow: none;
 }
 
 /* Rarity container accents */
@@ -486,7 +482,7 @@
   50% {
     border-color: var(--cyan);
     box-shadow: 0 0 10px var(--cyan-glow-md);
-    color: #fff;
+    color: var(--cyan-dim);
   }
 }
 
@@ -503,8 +499,9 @@
 }
 
 .ending-inline-btn:hover {
-  background: #e8dcc0;
-  box-shadow: 0 2px 12px rgba(200, 165, 90, 0.2);
+  background: var(--surface-hover);
+  color: var(--surface-hover-contrast);
+  box-shadow: 0 2px 12px var(--cyan-glow);
 }
 
 /* Autosave accent — warm */
@@ -579,186 +576,27 @@
 
 
 /* ============================================================
-   VELLUM LIGHT THEME
-   Aged-ivory page · deep walnut text · burgundy/ochre accents.
-   All text–background pairs verified at WCAG AA (4.5 : 1 body,
-   3 : 1 large text) before commit.
+   CREAM THEME — element-level overrides
+   The cream palette lives in :root above (single theme, no
+   dark mode). These rules fix component details that need more
+   than a variable swap on a light background.
    ============================================================ */
 
-html[data-theme="light"] {
-
-  /* --- Backgrounds --- */
-  --bg-deep:    #e8dec6;   /* main page — aged ivory */
-  --bg-panel:   #efe6d0;   /* splash / overlay boxes */
-  --bg-card:    #f3ecd9;   /* slot cards / inputs */
-  --bg-system:  #ddd0b0;   /* system message blocks */
-
-  /* --- Borders --- */
-  --border-dim:    #a89060;
-  --border-glow:   #8a6f3a;
-
-  /* --- Accent colors — burgundy primary, ochre secondary --- */
-  --cyan:          #8a4a2a;   /* primary accent (named --cyan for compat) */
-  --cyan-dim:      #6b3820;
-  --cyan-glow:     rgba(138, 74, 42, 0.10);
-  --cyan-glow-md:  rgba(138, 74, 42, 0.18);
-
-  --amber:         #9a6a1a;
-  --amber-dim:     #7a5210;
-  --amber-glow:    rgba(154, 106, 26, 0.12);
-
-  --green:         #4a7038;
-  --green-glow:    rgba(74, 112, 56, 0.12);
-
-  --red:           #a83020;
-  --red-glow:      rgba(168, 48, 32, 0.14);
-
-  /* --- Semantic theme tokens --- */
-  --accent-primary:     var(--cyan);
-  --accent-primary-dim: var(--cyan-dim);
-  --accent-primary-rgb: 138, 74, 42;   /* must match --cyan #8a4a2a */
-
-  /* --- Border subtle / surface tints --- */
-  --border-subtle-30: rgba(168, 144, 96, 0.30);
-  --border-subtle-35: rgba(168, 144, 96, 0.35);
-  --border-subtle-40: rgba(168, 144, 96, 0.40);
-  --border-subtle-70: rgba(168, 144, 96, 0.70);
-  --surface-tint-20:  rgba(168, 144, 96, 0.20);
-  --green-glow-50:    rgba(74, 112, 56, 0.40);
-
-  /* --- Shadow / backdrop --- */
-  --panel-shadow-50:  rgba(60, 40, 20, 0.18);
-  --panel-shadow-60:  rgba(60, 40, 20, 0.22);
-  --backdrop-tint-40: rgba(60, 40, 20, 0.30);
-
-  /* --- Hover / interaction surface --- */
-  --surface-hover:          #faf4e2;
-  --surface-hover-contrast: #2a1c10;
-
-  /* --- Misc interaction tokens --- */
-  --save-hover-bg:     #c89030;
-  --danger-border:     rgba(168, 48, 32, 0.35);
-  --danger-hover-text: #c54025;
-
-  /* --- Rarity colors — darkened for light bg --- */
-  --rarity-common:    var(--text-primary);
-  --rarity-uncommon:  #3d6028;
-  --rarity-rare:      #2a5588;
-  --rarity-epic:      #5a3a82;
-  --rarity-legendary: #8a6010;
-
-  /* --- Named alias colors --- */
-  --white:   var(--text-primary);
-  --blue:    #2a5588;
-  --purple:  #5a3a82;
-  --gold:    #8a6010;
-  --silver:  #6a5840;
-
-  /* --- Text — deep walnut hierarchy --- */
-  --text-primary: #2a1c10;   /* 12.1 : 1 on --bg-deep */
-  --text-dim:     #5a4528;   /*  6.8 : 1 on --bg-deep */
-  --text-faint:   #7d6438;   /*  4.5 : 1 on --bg-deep — at AA limit */
-
-  /* --- Body background — warm paper grain --- */
-  --bg-body-image:
-    radial-gradient(ellipse at 30% 50%, rgba(180, 130, 70, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 30%, rgba(160, 110, 60, 0.08) 0%, transparent 60%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-
-  /* --- Hardcoded rgba overrides (base.css reads these variables) --- */
-  --bg-header:           rgba(232, 222, 198, 0.92);
-  --bg-chapter-bar:      rgba(220, 208, 178, 0.55);
-  --bg-overlay-backdrop: rgba(70, 50, 25, 0.55);
-
-  /* --- Chapter card --- */
-  --bg-chapter-card:       linear-gradient(180deg, transparent 0%, rgba(138, 74, 42, 0.05) 50%, transparent 100%);
-  --chapter-border-color:  rgba(138, 74, 42, 0.20);
-
-  /* --- Choice button sweep --- */
-  --choice-hover-sweep: rgba(138, 74, 42, 0.08);
-
-  /* --- Splash accents (update gold → burgundy) --- */
-  --splash-accent-top:    linear-gradient(90deg, transparent, rgba(138, 74, 42, 0.40), transparent);
-  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 85, 55, 0.40), transparent);
-  --splash-orn-gradient:     linear-gradient(90deg, transparent, rgba(138, 74, 42, 0.30));
-  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(138, 74, 42, 0.30), transparent);
-  --splash-orn-diamond-glow: 0 0 6px rgba(138, 74, 42, 0.40);
-
-  --splash-theme-bg:
-    radial-gradient(ellipse at 50% 50%, rgba(138, 74, 42, 0.06) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
-
-  /* --- Shadow glow (warm brown instead of black) --- */
-  --shadow-glow: 0 4px 24px rgba(60, 40, 20, 0.15);
+/* Primary "Next" / "Begin" button — muted taupe with white text (HG look).
+   The hover, submit/ending hovers, choice-btn hover, glow removals, and the
+   overlay-box shadow are all handled in the component section above. */
+.btn-primary {
+  background: #8c8478;
+  color: #fff;
 }
 
-/* ── Element-level overrides ──────────────────────────────────────────────── */
-
-/* Portrait frame placeholder: slightly darker than --bg-deep for visible edge */
-html[data-theme="light"] .char-portrait-frame {
-  background: #d8ceb2;
+/* Portrait frame placeholder: slightly darker than --bg-deep for a visible edge */
+.char-portrait-frame {
+  background: #e3dac6;
 }
 
-/* Chapter card title: glow text-shadow is muddy on light bg */
-html[data-theme="light"] .chapter-card-title {
+/* Chapter card title glow reads as a muddy blob on cream */
+.chapter-card-title {
   text-shadow: none;
-}
-
-/* Overlay box shadow: warm brown, not harsh black */
-html[data-theme="light"] .overlay-box {
-  box-shadow: 0 8px 32px var(--panel-shadow-50);
-}
-
-/* Button hover — fix contrast: the fantasy.css hardcoded #e8dcc0 hover bg
-   is nearly identical to --bg-deep (#e8dec6), making text invisible.
-   Override to the variable-driven surface-hover + dark contrast text. */
-html[data-theme="light"] .btn-primary:hover:not(:disabled),
-html[data-theme="light"] .btn-primary--amber:hover:not(:disabled),
-html[data-theme="light"] .btn-primary--green:hover:not(:disabled) {
-  background: var(--surface-hover);
-  color: var(--surface-hover-contrast);
-  box-shadow: 0 2px 12px var(--cyan-glow);
-}
-
-html[data-theme="light"] .input-prompt-submit:hover:not(:disabled) {
-  background: var(--surface-hover);
-  color: var(--surface-hover-contrast);
-}
-
-html[data-theme="light"] .ending-inline-btn:hover {
-  background: var(--surface-hover);
-  color: var(--surface-hover-contrast);
-  box-shadow: 0 2px 12px var(--cyan-glow);
-}
-
-/* Choice button hover — text would become --surface-hover (#faf4e2)
-   on a near-white background; keep it dark instead. */
-html[data-theme="light"] .choice-btn:hover {
-  color: var(--text-primary);
-}
-
-/* Rarity glow text-shadows look like muddy blobs on ivory — remove them */
-html[data-theme="light"] .inline-accent-epic,
-html[data-theme="light"] .skill-rarity--epic {
-  text-shadow: none;
-}
-
-html[data-theme="light"] .inline-accent-legendary,
-html[data-theme="light"] .skill-rarity--legendary {
-  text-shadow: none;
-}
-
-/* Splash box border gradients — use burgundy tones */
-html[data-theme="light"] .splash-box::after,
-html[data-theme="light"] .splash-box::before {
-  background: linear-gradient(90deg,
-    transparent 10%,
-    var(--border-dim) 20%,
-    var(--cyan-dim) 40%,
-    var(--cyan) 50%,
-    var(--cyan-dim) 60%,
-    var(--border-dim) 80%,
-    transparent 90%
-  ) !important;
 }
 

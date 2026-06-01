@@ -221,7 +221,7 @@
 .system-block-rule {
   flex: 1;
   height: 1px;
-  background: rgba(200, 165, 90, 0.4);
+  background: rgba(0, 0, 0, 0.18);
 }
 
 .system-block-label {
@@ -382,11 +382,11 @@
 }
 
 .skill-accordion-btn:hover {
-  background: rgba(200, 165, 90, 0.06);
+  background: var(--accent-surface-06);
 }
 
 .skill-accordion-btn--open {
-  background: rgba(200, 165, 90, 0.08);
+  background: var(--accent-surface-08);
 }
 
 .skill-accordion-name {
@@ -399,11 +399,11 @@
 }
 
 .store-tab:hover {
-  background: rgba(200, 165, 90, 0.06);
+  background: var(--accent-surface-06);
 }
 
 .store-tab--active {
-  background: rgba(200, 165, 90, 0.08);
+  background: var(--accent-surface-08);
 }
 
 .store-card-name {
@@ -475,7 +475,7 @@
 /* Level-up animations — warm */
 @keyframes levelupPulse {
   0%, 100% {
-    border-color: rgba(200, 165, 90, 0.35);
+    border-color: var(--accent-border-35);
     box-shadow: none;
     color: var(--cyan);
   }
@@ -507,7 +507,7 @@
 /* Autosave accent — warm */
 .slot-card--autosave {
   border-left: 3px double var(--cyan) !important;
-  background: rgba(200, 165, 90, 0.04) !important;
+  background: var(--accent-surface-04) !important;
 }
 
 /* Stale save notice — warm */

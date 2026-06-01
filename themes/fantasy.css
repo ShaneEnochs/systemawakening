@@ -8,27 +8,27 @@
    ============================================================ */
 
 :root {
-  /* --- Backgrounds — flat warm cream (Hosted Games look) --- */
-  --bg-deep:       #f3eee4;   /* page */
-  --bg-panel:      #f7f2e9;   /* splash / overlay boxes */
-  --bg-card:       #fbf8f1;   /* choice rows, slot cards, inputs */
-  --bg-system:     #ece4d4;   /* system message blocks */
+  /* --- Backgrounds — flat, light cream (Hosted Games look) --- */
+  --bg-deep:       #f8f5ef;   /* page */
+  --bg-panel:      #fbf9f4;   /* splash / overlay boxes */
+  --bg-card:       #fdfcf8;   /* choice rows, slot cards, inputs */
+  --bg-system:     #f1ece2;   /* system message blocks */
   --bg-overlay:    var(--bg-panel);
 
-  /* --- Borders — light gray-tan --- */
-  --border-dim:    #d4cdbf;
-  --border-glow:   #b7ad99;
+  /* --- Borders — light neutral gray --- */
+  --border-dim:    #d8d4cb;
+  --border-glow:   #b6b1a6;
   --border-color:  var(--border-dim);
 
-  /* --- Accent colors (warm taupe-brown primary, ochre secondary) --- */
-  --cyan:          #8a6f4a;
-  --cyan-dim:      #6f5a3a;
-  --cyan-glow:     rgba(138, 111, 74, 0.10);
-  --cyan-glow-md:  rgba(138, 111, 74, 0.18);
+  /* --- Accent colors — black (all chrome text reads black, no brown) --- */
+  --cyan:          #1a1a1a;
+  --cyan-dim:      #444444;
+  --cyan-glow:     rgba(0, 0, 0, 0.08);
+  --cyan-glow-md:  rgba(0, 0, 0, 0.14);
 
-  --amber:         #9a6a1a;
-  --amber-dim:     #7a5210;
-  --amber-glow:    rgba(154, 106, 26, 0.12);
+  --amber:         #1a1a1a;
+  --amber-dim:     #444444;
+  --amber-glow:    rgba(0, 0, 0, 0.10);
 
   --green:         #4a7038;
   --green-glow:    rgba(74, 112, 56, 0.12);
@@ -42,22 +42,22 @@
   --accent-primary-dim: var(--cyan-dim);
   --accent-primary-glow: var(--cyan-glow);
   --accent-primary-glow-md: var(--cyan-glow-md);
-  --accent-primary-rgb: 138, 111, 74;   /* must match --cyan #8a6f4a */
+  --accent-primary-rgb: 26, 26, 26;   /* must match --cyan #1a1a1a */
 
 
-  --border-subtle-30: rgba(212, 205, 191, 0.5);
-  --border-subtle-35: rgba(212, 205, 191, 0.6);
-  --border-subtle-40: rgba(212, 205, 191, 0.7);
-  --border-subtle-70: rgba(183, 173, 153, 0.7);
-  --surface-tint-20: rgba(138, 111, 74, 0.08);
-  --panel-shadow-50: rgba(60, 50, 30, 0.18);
-  --panel-shadow-60: rgba(60, 50, 30, 0.22);
-  --backdrop-tint-40: rgba(60, 50, 30, 0.30);
+  --border-subtle-30: rgba(216, 212, 203, 0.5);
+  --border-subtle-35: rgba(216, 212, 203, 0.6);
+  --border-subtle-40: rgba(216, 212, 203, 0.7);
+  --border-subtle-70: rgba(182, 177, 166, 0.7);
+  --surface-tint-20: rgba(0, 0, 0, 0.06);
+  --panel-shadow-50: rgba(40, 38, 34, 0.16);
+  --panel-shadow-60: rgba(40, 38, 34, 0.20);
+  --backdrop-tint-40: rgba(40, 38, 34, 0.30);
   --green-glow-50: rgba(74, 112, 56, 0.40);
-  --save-hover-bg: #c89030;
+  --save-hover-bg: #c0bbb0;
 
   --surface-hover: #ffffff;
-  --surface-hover-contrast: #33302b;
+  --surface-hover-contrast: #1a1a1a;
   --danger-border: rgba(168, 48, 32, 0.35);
   --danger-hover-text: #c54025;
 
@@ -101,12 +101,12 @@
   --blue:    #2a5588;
   --purple:  #5a3a82;
   --gold:    #8a6010;
-  --silver:  #6a5840;
+  --silver:  #6a6a6a;
 
-  /* --- Text — dark warm gray hierarchy --- */
-  --text-primary:  #33302b;
-  --text-dim:      #5c574e;
-  --text-faint:    #7a7264;
+  /* --- Text — black hierarchy (neutral grays for meta, no brown) --- */
+  --text-primary:  #1a1a1a;
+  --text-dim:      #333333;
+  --text-faint:    #5f5f5f;
 
   /* --- Fonts — Georgia serif throughout (Hosted Games) --- */
   --font-display:  Georgia, 'Times New Roman', serif;
@@ -148,48 +148,48 @@
   /* Flat cream page — no parchment grain (Hosted Games is flat) */
   --bg-body-image: none;
 
-  --bg-header:       rgba(243, 238, 228, 0.92);
-  --bg-header-accent: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.25), transparent);
-  --bg-chapter-bar:  rgba(236, 228, 212, 0.55);
-  --bg-overlay-backdrop: rgba(60, 50, 30, 0.45);
+  --bg-header:       rgba(248, 245, 239, 0.92);
+  --bg-header-accent: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.12), transparent);
+  --bg-chapter-bar:  rgba(241, 236, 226, 0.6);
+  --bg-overlay-backdrop: rgba(40, 38, 34, 0.45);
   --overlay-backdrop-filter: none;
   --overlay-box-glow: none;
 
   /* Chapter cards */
-  --chapter-border-color: rgba(138, 111, 74, 0.2);
-  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(138, 111, 74, 0.04) 50%, transparent 100%);
+  --chapter-border-color: rgba(0, 0, 0, 0.12);
+  --bg-chapter-card: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.03) 50%, transparent 100%);
   --chapter-title-glow: none;
 
   /* Choice buttons */
   --choice-indicator: '◆';
-  --choice-hover-sweep: rgba(138, 111, 74, 0.07);
+  --choice-hover-sweep: rgba(0, 0, 0, 0.05);
 
   /* Splash screen */
   --bg-splash-box: var(--bg-panel);
   --splash-backdrop-filter: none;
-  --splash-accent-top: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.4), transparent);
-  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(107, 85, 55, 0.4), transparent);
+  --splash-accent-top: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.22), transparent);
+  --splash-accent-bottom: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.16), transparent);
   --bg-splash-vignette: none;
   --splash-sigil-display: none;
   --splash-canvas-display: none;
   --splash-sigil-glow: none;
-  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(138, 111, 74, 0.3));
-  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(138, 111, 74, 0.3), transparent);
-  --splash-orn-diamond-glow: 0 0 6px rgba(138, 111, 74, 0.4);
+  --splash-orn-gradient: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.22));
+  --splash-orn-gradient-rev: linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent);
+  --splash-orn-diamond-glow: 0 0 6px rgba(0, 0, 0, 0.2);
 
-  /* Splash background — flat cream tint */
+  /* Splash background — flat light tint */
   --splash-theme-bg:
-    radial-gradient(ellipse at 50% 50%, rgba(138, 111, 74, 0.05) 0%, transparent 70%);
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.02) 0%, transparent 70%);
 
   /* Character creation */
   --bg-char-pattern: none;
   --bg-char-pattern-size: auto;
 
   /* Ending screen */
-  --bg-ending-inline: linear-gradient(135deg, rgba(138, 111, 74, 0.05) 0%, transparent 60%);
+  --bg-ending-inline: linear-gradient(135deg, rgba(0, 0, 0, 0.04) 0%, transparent 60%);
 
-  /* Soft warm shadow */
-  --shadow-glow: 0 4px 24px rgba(60, 50, 30, 0.15);
+  /* Soft neutral shadow */
+  --shadow-glow: 0 4px 24px rgba(40, 38, 34, 0.15);
 }
 
 
@@ -585,14 +585,20 @@
 /* Primary "Next" / "Begin" button — muted taupe with white text (HG look).
    The hover, submit/ending hovers, choice-btn hover, glow removals, and the
    overlay-box shadow are all handled in the component section above. */
-.btn-primary {
+.btn-primary,
+.btn-primary--amber {
   background: #8c8478;
   color: #fff;
 }
+.btn-primary--amber:hover:not(:disabled) {
+  background: #9b9388;
+  color: #fff;
+  box-shadow: none;
+}
 
-/* Portrait frame placeholder: slightly darker than --bg-deep for a visible edge */
+/* Portrait frame placeholder: slightly lighter than the cream card edge */
 .char-portrait-frame {
-  background: #e3dac6;
+  background: #ece6da;
 }
 
 /* Chapter card title glow reads as a muddy blob on cream */
